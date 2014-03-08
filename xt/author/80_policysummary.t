@@ -34,9 +34,9 @@ if (open my ($fh), '<', $summary_file) {
     my $content = do {local $INPUT_RECORD_SEPARATOR=undef; <$fh> };
     close $fh or confess "Couldn't close $summary_file: $OS_ERROR";
 
-    my @policy_names = bundled_policy_names();
+    my @enforcer_names = bundled_policy_names();
     my @summaries    = $content =~ m/^=head2 [ ]+ L<[\w:]+[|]([\w:]+)>/gxms;
-    plan( tests => 2 + 2 * @policy_names );
+    plan( tests => 2 + 2 * @enforcer_names );
 
     my %num_summaries;
     for my $summary (@summaries) {
@@ -71,7 +71,7 @@ if (open my ($fh), '<', $summary_file) {
         };
     }
 
-    for my $enforcer_name ( @policy_names ) {
+    for my $enforcer_name ( @enforcer_names ) {
         my $label = qq{PolicySummary.pod has "$enforcer_name"};
         my $has_summary = delete $num_summaries{$enforcer_name};
         is( $has_summary, 1, $label );

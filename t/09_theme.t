@@ -119,8 +119,8 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
 {
     my $profile = Perl::Critic::UserProfile->new( -profile => q{} );
     my $factory = Perl::Critic::PolicyFactory->new( -profile => $profile );
-    my @policy_names = Perl::Critic::PolicyFactory::site_policy_names();
-    my @pols = map { $factory->create_policy( -name => $_ ) } @policy_names;
+    my @enforcer_names = Perl::Critic::PolicyFactory::site_policy_names();
+    my @pols = map { $factory->create_policy( -name => $_ ) } @enforcer_names;
 
     #--------------
 

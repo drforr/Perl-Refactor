@@ -26,10 +26,10 @@ our $VERSION = '1.121';
 #-----------------------------------------------------------------------------
 
 my $profile = Perl::Critic::UserProfile->new( -profile => 'NONE' );
-my @policy_names = Perl::Critic::PolicyFactory::site_policy_names();
+my @enforcer_names = Perl::Critic::PolicyFactory::site_policy_names();
 my $factory = Perl::Critic::PolicyFactory->new( -profile => $profile );
-my @policies = map { $factory->create_policy( -name => $_ ) } @policy_names;
-my $listing = Perl::Critic::ThemeListing->new( -policies => \@policies );
+my @enforcers = map { $factory->create_policy( -name => $_ ) } @enforcer_names;
+my $listing = Perl::Critic::ThemeListing->new( -policies => \@enforcers );
 
 my $expected = <<'END_EXPECTED';
 bugs

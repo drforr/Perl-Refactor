@@ -205,11 +205,11 @@ sub _futz_with_policy_order {
     # it needs to be run *after* all the other Policies.  TODO: find
     # a way for Policies to express an ordering preference somehow.
 
-    my @policy_objects = @_;
+    my @enforcer_objects = @_;
     my $magical_policy_name = 'Perl::Critic::Policy::Miscellanea::ProhibitUselessNoCritic';
-    my $idx = firstidx {ref $_ eq $magical_policy_name} @policy_objects;
-    push @policy_objects, splice @policy_objects, $idx, 1;
-    return @policy_objects;
+    my $idx = firstidx {ref $_ eq $magical_policy_name} @enforcer_objects;
+    push @enforcer_objects, splice @enforcer_objects, $idx, 1;
+    return @enforcer_objects;
 }
 
 #-----------------------------------------------------------------------------

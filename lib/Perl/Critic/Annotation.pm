@@ -249,9 +249,9 @@ sub _parse_annotation {
         # Compose the specified modules into a regex alternation.  Wrap each
         # in a no-capturing group to permit "|" in the modules specification.
 
-        my @policy_name_patterns = grep { $_ ne $EMPTY }
+        my @enforcer_name_patterns = grep { $_ ne $EMPTY }
             split m{\s *[,\s] \s*}xms, $patterns_string;
-        my $re = join $PIPE, map {"(?:$_)"} @policy_name_patterns;
+        my $re = join $PIPE, map {"(?:$_)"} @enforcer_name_patterns;
         my @site_policy_names = Perl::Critic::PolicyFactory::site_policy_names();
         @disabled_policy_names = grep {m/$re/ixms} @site_policy_names;
 
@@ -263,7 +263,7 @@ sub _parse_annotation {
         # about this, just to help the author avoid writing invalid Policy names.
 
         if (not @disabled_policy_names) {
-            @disabled_policy_names = @policy_name_patterns;
+            @disabled_policy_names = @enforcer_name_patterns;
         }
     }
 

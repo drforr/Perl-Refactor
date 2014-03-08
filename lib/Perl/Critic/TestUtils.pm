@@ -354,21 +354,21 @@ sub _finalize_subtest {
 sub bundled_policy_names {
     require ExtUtils::Manifest;
     my $manifest = ExtUtils::Manifest::maniread();
-    my @policy_paths = map {m{\A lib/(Perl/Critic/Policy/.*).pm \z}xms} keys %{$manifest};
-    my @policies = map { join q{::}, split m{/}xms, $_} @policy_paths;
-    my @sorted_policies = sort @policies;
+    my @enforcer_paths = map {m{\A lib/(Perl/Critic/Policy/.*).pm \z}xms} keys %{$manifest};
+    my @enforcers = map { join q{::}, split m{/}xms, $_} @enforcer_paths;
+    my @sorted_policies = sort @enforcers;
     return @sorted_policies;
 }
 
 sub names_of_policies_willing_to_work {
     my %configuration = @_;
 
-    my @policies_willing_to_work =
+    my @enforcers_willing_to_work =
         Perl::Critic::Config
             ->new( %configuration )
             ->policies();
 
-    return map { ref $_ } @policies_willing_to_work;
+    return map { ref $_ } @enforcers_willing_to_work;
 }
 
 1;

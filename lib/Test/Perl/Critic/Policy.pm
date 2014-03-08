@@ -305,7 +305,7 @@ against this module until it has stabilized.
 
 =over
 
-=item all_policies_ok('-test-directory' => $path, -policies => \@policy_names)
+=item all_policies_ok('-test-directory' => $path, -policies => \@enforcer_names)
 
 Loads all the F<*.run> files beneath the C<-test-directory> and runs the
 tests.  If C<-test-directory> is not specified, it defaults to F<t/>.
