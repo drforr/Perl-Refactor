@@ -60,7 +60,7 @@ PBP
 pbp
 perl
 perlcritic
-perlcriticrc
+perlrefactorrc
 perldoc
 Perlish
 perlmonk

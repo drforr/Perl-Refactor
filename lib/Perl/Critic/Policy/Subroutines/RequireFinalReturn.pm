@@ -330,7 +330,7 @@ blindly put a C<return;> statement at the end of every subroutine.
 If you've created your own terminal functions that behave like C<die>
 or C<exit>, then you can configure Perl::Critic to recognize those
 functions as well.  Just put something like this in your
-F<.perlcriticrc>:
+F<.perlrefactorrc>:
 
     [Subroutines::RequireFinalReturn]
     terminal_funcs = quit abort bailout

@@ -328,7 +328,7 @@ described in L<Pod::Spell|Pod::Spell>.  For example:
 
 This policy can be configured to tell which spell checker to use or to
 set a global list of spelling exceptions.  To do this, put entries in
-a F<.perlcriticrc> file like this:
+a F<.perlrefactorrc> file like this:
 
     [Documentation::PodSpelling]
     spell_command = aspell list

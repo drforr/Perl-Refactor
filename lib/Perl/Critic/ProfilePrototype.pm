@@ -221,7 +221,7 @@ Perl::Critic::ProfilePrototype - Generate an initial Perl::Critic profile.
 =head1 DESCRIPTION
 
 This is a helper class that generates a prototype of a
-L<Perl::Critic|Perl::Critic> profile (e.g. a F<.perlcriticrc> file.
+L<Perl::Critic|Perl::Critic> profile (e.g. a F<.perlrefactorrc> file.
 There are no user-serviceable parts here.
 
 
@@ -265,7 +265,7 @@ policy name, default themes, and default severity for each
 L<Perl::Critic::Policy|Perl::Critic::Policy> object that was given to
 the constructor of this C<ProfilePrototype>.  If the Policy supports
 an additional parameters, they will also be listed (but
-commented-out).  The format is suitable for use as a F<.perlcriticrc>
+commented-out).  The format is suitable for use as a F<.perlrefactorrc>
 file.
 
 

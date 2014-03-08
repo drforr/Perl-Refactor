@@ -394,7 +394,7 @@ top-level statements, where C<N> defaults to ZERO.  You can override
 this to set it to a higher number with the
 C<short_subroutine_statements> setting.  This is very much not
 recommended but perhaps you REALLY need high performance.  To do this,
-put entries in a F<.perlcriticrc> file like this:
+put entries in a F<.perlrefactorrc> file like this:
 
   [Subroutines::RequireArgUnpacking]
   short_subroutine_statements = 2

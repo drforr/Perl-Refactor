@@ -94,7 +94,7 @@ number of statements.
 =head1 CONFIGURATION
 
 The default number of statements allowed per C<no strict> is three.
-To override this number, put the following in your F<.perlcriticrc>:
+To override this number, put the following in your F<.perlrefactorrc>:
 
     [TestingAndDebugging::ProhibitProlongedStrictureOverride]
     statements = 5

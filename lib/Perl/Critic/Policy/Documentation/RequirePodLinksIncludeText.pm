@@ -232,7 +232,7 @@ Foo>.
 
 By default, this option is asserted.  If you want to prohibit things like
 C<< LE<lt>Foo/bar> >> (while allowing things like C<<< LE<lt>E<lt> Foo->bar()|Foo/bar >>
->>>), put something like this in your F<.perlcriticrc>:
+>>>), put something like this in your F<.perlrefactorrc>:
 
  [Documentation::RequirePodLinksIncludeText]
  allow_external_sections = 0
@@ -243,7 +243,7 @@ specification.  Such links tend to be turned into something like C<bar>.
 
 By default, this option is asserted.  If you want to prohibit things like
 C<< LE<lt>/bar> >> (while allowing things like C<< LE<lt>bar()|/bar> >>), put
-something like this in your F<.perlcriticrc>:
+something like this in your F<.perlrefactorrc>:
 
  [Documentation::RequirePodLinksIncludeText]
  allow_internal_sections = 0

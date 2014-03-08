@@ -151,7 +151,7 @@ passed to the routine.
 =head1 CONFIGURATION
 
 By default, this policy allows up to 5 arguments without warning.  To
-change this threshold, put entries in a F<.perlcriticrc> file like
+change this threshold, put entries in a F<.perlrefactorrc> file like
 this:
 
   [Subroutines::ProhibitManyArgs]

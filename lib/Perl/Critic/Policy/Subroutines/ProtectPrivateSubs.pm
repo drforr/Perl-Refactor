@@ -211,7 +211,7 @@ policy.
 
 You can define what a private subroutine name looks like by specifying
 a regular expression for the C<private_name_regex> option in your
-F<.perlcriticrc>:
+F<.perlrefactorrc>:
 
     [Subroutines::ProtectPrivateSubs]
     private_name_regex = _(?!_)\w+

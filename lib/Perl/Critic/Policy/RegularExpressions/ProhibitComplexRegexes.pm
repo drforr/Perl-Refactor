@@ -191,7 +191,7 @@ implementation is sound even before running tests.
 This policy allows regexps up to C<N> characters long, where C<N>
 defaults to 60.  You can override this to set it to a different number
 with the C<max_characters> setting.  To do this, put entries in a
-F<.perlcriticrc> file like this:
+F<.perlrefactorrc> file like this:
 
     [RegularExpressions::ProhibitComplexRegexes]
     max_characters = 40

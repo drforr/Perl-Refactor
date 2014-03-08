@@ -314,7 +314,7 @@ that correspond to the methods listed below.
 
 This is usually only invoked by
 L<Perl::Critic::UserProfile|Perl::Critic::UserProfile>, which passes
-in the global values from a F<.perlcriticrc> file.  This object
+in the global values from a F<.perlrefactorrc> file.  This object
 contains no information for individual Policies.
 
 =back

@@ -107,7 +107,7 @@ techniques that help create simple and extensible Perl code.
 The maximum acceptable McCabe can be set with the C<max_mccabe>
 configuration item.  Any subroutine with a McCabe score higher than
 this number will generate a policy violation.  The default is 20.  An
-example section for a F<.perlcriticrc>:
+example section for a F<.perlrefactorrc>:
 
   [Subroutines::ProhibitExcessComplexity]
   max_mccabe = 30

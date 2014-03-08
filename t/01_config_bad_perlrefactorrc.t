@@ -55,7 +55,7 @@ $skip_color_severity
 
 plan tests => 13 + scalar @color_severity_params;
 
-Readonly::Scalar my $PROFILE => 't/01_bad_perlcriticrc';
+Readonly::Scalar my $PROFILE => 't/01_bad_perlrefactorrc';
 Readonly::Scalar my $NO_ENABLED_POLICIES_MESSAGE =>
     q<There are no enabled policies.>;
 Readonly::Scalar my $INVALID_PARAMETER_MESSAGE =>
@@ -170,7 +170,7 @@ sub is_require_pod_sections_source_exception {
 #-----------------------------------------------------------------------------
 
 # ensure we return true if this test is loaded by
-# t/01_config_bad_perlcriticrc.t_without_optional_dependencies.t
+# t/01_config_bad_perlrefactorrc.t_without_optional_dependencies.t
 1;
 
 

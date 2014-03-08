@@ -70,7 +70,7 @@ Perl::Critic::Exception::Configuration::Option - A problem with an option in the
 
 A representation of a problem found with an option in the
 configuration of L<Perl::Critic|Perl::Critic>, whether from a
-F<.perlcriticrc>, another profile file, or command line.
+F<.perlrefactorrc>, another profile file, or command line.
 
 This is an abstract class.  It should never be instantiated.
 

@@ -76,7 +76,7 @@ Perl::Critic::Exception::Configuration::Option::Policy::ParameterValue - A probl
 
 A representation of a problem found with the value of a parameter for
 a L<Perl::Critic::Policy|Perl::Critic::Policy>, whether from a
-F<.perlcriticrc>, another profile file, or command line.
+F<.perlrefactorrc>, another profile file, or command line.
 
 
 =head1 INTERFACE SUPPORT

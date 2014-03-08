@@ -368,7 +368,7 @@ are beyond its scope.
 By default, this policy considers C<die>, C<croak>, and C<confess> to
 throw exceptions. If you have additional subroutines or methods that may
 be used in lieu of one of these, you can configure them in your
-perlcriticrc as follows:
+perlrefactorrc as follows:
 
  [RegularExpressions::ProhibitCaptureWithoutTest]
  exception_source = my_exception_generator

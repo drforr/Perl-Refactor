@@ -25,7 +25,7 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlcriticrc();
+Perl::Critic::TestUtils::block_perlrefactorrc();
 
 my @bundled_policy_names = bundled_policy_names();
 
@@ -61,7 +61,7 @@ can_ok('Perl::Critic', 'config');
 can_ok('Perl::Critic', 'critique');
 can_ok('Perl::Critic', 'policies');
 
-#Set -profile to avoid messing with .perlcriticrc
+#Set -profile to avoid messing with .perlrefactorrc
 my $critic = Perl::Critic->new( -profile => 'NONE' );
 isa_ok($critic, 'Perl::Critic');
 is($critic->VERSION(), $version_string, 'Perl::Critic version');
@@ -95,7 +95,7 @@ can_ok('Perl::Critic::Config', 'color_severity_lowest');
 can_ok('Perl::Critic::Config', 'program_extensions');
 can_ok('Perl::Critic::Config', 'program_extensions_as_regexes');
 
-#Set -profile to avoid messing with .perlcriticrc
+#Set -profile to avoid messing with .perlrefactorrc
 my $config = Perl::Critic::Config->new( -profile => 'NONE');
 isa_ok($config, 'Perl::Critic::Config');
 is($config->VERSION(), $version_string, 'Perl::Critic::Config version');

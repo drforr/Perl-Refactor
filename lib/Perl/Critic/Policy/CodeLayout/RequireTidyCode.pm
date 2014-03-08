@@ -168,7 +168,7 @@ This policy can be configured to tell Perl::Tidy to use a particular
 F<perltidyrc> file or no configuration at all.  By default, Perl::Tidy
 is told to look in its default location for configuration.
 Perl::Critic can be told to tell Perl::Tidy to use a specific
-configuration file by putting an entry in a F<.perlcriticrc> file like
+configuration file by putting an entry in a F<.perlrefactorrc> file like
 this:
 
     [CodeLayout::RequireTidyCode]

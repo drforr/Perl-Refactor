@@ -66,7 +66,7 @@ Perl::Critic::Exception::Configuration::Option::Global::ExtraParameter - The con
 
 A representation of the configuration attempting to specify a value
 for an option that L<Perl::Critic|Perl::Critic> doesn't have, whether
-from a F<.perlcriticrc>, another profile file, or command line.
+from a F<.perlrefactorrc>, another profile file, or command line.
 
 
 =head1 INTERFACE SUPPORT

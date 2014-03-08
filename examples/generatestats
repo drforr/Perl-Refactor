@@ -216,7 +216,7 @@ C<generatestats> - Produce some simple quality statistics of a codebase
 Scan a body of code and generate some statistics on violations of the
 installed L<Perl::Critic|Perl::Critic> policies.  While there is no means of
 configuring the policies here, this will take into account your
-F<.perlcriticrc>, if available.
+F<.perlrefactorrc>, if available.
 
 
 =head1 REQUIRED ARGUMENTS

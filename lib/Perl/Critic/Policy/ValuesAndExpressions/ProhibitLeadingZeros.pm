@@ -221,7 +221,7 @@ you really want, its better to use C<oct> and make it obvious.
 =head1 CONFIGURATION
 
 If you want to ban all leading zeros, set C<strict> to a true value in
-a F<.perlcriticrc> file.
+a F<.perlrefactorrc> file.
 
     [ValuesAndExpressions::ProhibitLeadingZeros]
     strict = 1

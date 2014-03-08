@@ -23,7 +23,7 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlcriticrc();
+Perl::Critic::TestUtils::block_perlrefactorrc();
 
 # Configure Critic not to load certain policies.  This
 # just makes it a little easier to create test cases

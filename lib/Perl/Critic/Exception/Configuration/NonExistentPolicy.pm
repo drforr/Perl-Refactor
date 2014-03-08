@@ -58,7 +58,7 @@ Perl::Critic::Exception::Configuration::NonExistentPolicy - The configuration re
 
 A representation of the configuration attempting to specify a
 L<Perl::Critic::Policy|Perl::Critic::Policy> that is not known, whether from a
-F<.perlcriticrc>, another profile file, or command line.
+F<.perlrefactorrc>, another profile file, or command line.
 
 
 =head1 INTERFACE SUPPORT

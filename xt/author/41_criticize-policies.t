@@ -9,7 +9,7 @@
 
 # Extra self-compliance tests for Policy classes.  This just checks for
 # additional POD sections that we want in every Policy module.  See the
-# 41_perlcriticrc-policies file for the precise configuration.
+# 41_perlrefactorrc-policies file for the precise configuration.
 
 use strict;
 use warnings;
@@ -50,7 +50,7 @@ if ( $ENV{PERL_CRITIC_CACHE} ) {
 #-----------------------------------------------------------------------------
 # Run critic against all of our own files
 
-my $rcfile = File::Spec->catfile( qw< xt author 41_perlcriticrc-policies > );
+my $rcfile = File::Spec->catfile( qw< xt author 41_perlrefactorrc-policies > );
 Test::Perl::Critic->import( -profile => $rcfile );
 
 my $path =

@@ -366,7 +366,7 @@ C<$]> is exempt because there is no L<English|English> equivalent and
 L<Module::CoreList|Module::CoreList> is based upon it.
 
 You can add more exceptions to your configuration.  In your
-perlcriticrc file, add a block like this:
+perlrefactorrc file, add a block like this:
 
   [Variables::ProhibitPunctuationVars]
   allow = $@ $!

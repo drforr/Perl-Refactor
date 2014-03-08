@@ -29,7 +29,7 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlcriticrc();
+Perl::Critic::TestUtils::block_perlrefactorrc();
 
 my $code;
 my $policy = 'Documentation::PodSpelling';

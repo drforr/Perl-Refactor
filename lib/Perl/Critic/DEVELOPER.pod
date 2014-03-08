@@ -104,7 +104,7 @@ for why we don't C<use constant>.)
 
 Most policies don't need to override the C<initialize_if_enabled()>
 method provided by L<Perl::Critic::Policy|Perl::Critic::Policy>.
-However, if your Policy is configurable via F<.perlcriticrc>, you
+However, if your Policy is configurable via F<.perlrefactorrc>, you
 should implement a C<supported_parameters()> method and need to
 implement C<initialize_if_enabled()> to examine the C<$config> values.
 Since this Policy isn't configurable, we'll declare that by providing
@@ -436,7 +436,7 @@ above, this would be
 Given this information, C<Perl::Critic> can tell the user when they
 have specified a parameter for a Policy which isn't valid, e.g. when
 they've misspelled the name of the parameter, and can emit the
-parameter as part of a F<.perlcriticrc> prototype.
+parameter as part of a F<.perlrefactorrc> prototype.
 
 You can provide even more information about your Policy's
 configuration by giving each parameter a description and a string
@@ -913,7 +913,7 @@ much help to the user to report every single violation.  If you've got
 such a policy, you should override
 L<default_maximum_violations_per_document()|Perl::Critic::Policy/"default_maximum_violations_per_document()">
 method to provide a limit.  The user can override this value with a
-value for "maximum_violations_per_document" in their F<.perlcriticrc>.
+value for "maximum_violations_per_document" in their F<.perlrefactorrc>.
 
 See the source code for
 L<Perl::Critic::Policy::ValuesAndExpressions::ProhibitMagicNumbers|Perl::Critic::Policy::ValuesAndExpressions::ProhibitMagicNumbers>

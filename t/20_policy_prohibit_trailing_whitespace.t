@@ -22,7 +22,7 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlcriticrc();
+Perl::Critic::TestUtils::block_perlrefactorrc();
 
 # This specific policy is being tested without 20_policies.t because the .run file
 # would have to contain invisible characters.

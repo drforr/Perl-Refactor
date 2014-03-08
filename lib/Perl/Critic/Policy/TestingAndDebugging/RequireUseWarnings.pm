@@ -176,7 +176,7 @@ If you make use of things like
 L<Moose::Exporter|Moose::Exporter>, you can create your own modules
 that import the L<warnings|warnings> pragma into the code that is
 C<use>ing them.  There is an option to add to the default set of
-pragmata and modules in your F<.perlcriticrc>: C<equivalent_modules>.
+pragmata and modules in your F<.perlrefactorrc>: C<equivalent_modules>.
 
     [TestingAndDebugging::RequireUseWarnings]
     equivalent_modules = MooseX::My::Sugar

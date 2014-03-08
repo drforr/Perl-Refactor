@@ -144,7 +144,7 @@ As for programs, most people understand that the default package is
 C<main>, so this Policy doesn't apply to files that begin with a perl
 shebang.  If you want to require an explicit C<package> declaration in
 all files, including programs, then add the following to your
-F<.perlcriticrc> file
+F<.perlrefactorrc> file
 
     [Modules::RequireExplicitPackage]
     exempt_scripts = 0
@@ -154,7 +154,7 @@ from this policy. For example, Perl does not support Unicode module
 names because of portability problems. Users who are not concerned about
 this and intend to use C<UTF-8> module names will need to specify
 C<use utf8;> before the package declaration. To do this, add the
-following to your F<.perlcriticrc> file
+following to your F<.perlrefactorrc> file
 
     [Modules::RequireExplicitPackage]
     allow_import_of = utf8
@@ -168,7 +168,7 @@ separated by spaces.
 This policy was formerly called C<ProhibitUnpackagedCode> which
 sounded a bit odd.  If you get lots of "Cannot load policy module"
 errors, then you probably need to change C<ProhibitUnpackagedCode> to
-C<RequireExplicitPackage> in your F<.perlcriticrc> file.
+C<RequireExplicitPackage> in your F<.perlrefactorrc> file.
 
 
 =head1 AUTHOR

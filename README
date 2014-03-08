@@ -63,12 +63,12 @@ CONSTRUCTOR
         Returns a reference to a new Perl::Critic object. Most arguments are
         just passed directly into Perl::Critic::Config, but I have described
         them here as well. The default value for all arguments can be
-        defined in your .perlcriticrc file. See the "CONFIGURATION" section
+        defined in your .perlrefactorrc file. See the "CONFIGURATION" section
         for more information about that. All arguments are optional
         key-value pairs as follows:
 
         -profile is a path to a configuration file. If $FILE is not defined,
-        Perl::Critic::Config attempts to find a .perlcriticrc configuration
+        Perl::Critic::Config attempts to find a .perlrefactorrc configuration
         file in the current directory, and then in your home directory.
         Alternatively, you can set the "PERLCRITIC" environment variable to
         point to a file in another location. If a configuration file can't
@@ -81,9 +81,9 @@ CONSTRUCTOR
         integers ranging from 1 (least severe violations) to 5 (most severe
         violations). The default is 5. For a given "-profile", decreasing
         the "-severity" will usually reveal more Policy violations. You can
-        set the default value for this option in your .perlcriticrc file.
+        set the default value for this option in your .perlrefactorrc file.
         Users can redefine the severity level for any Policy in their
-        .perlcriticrc file. See "CONFIGURATION" for more information.
+        .perlrefactorrc file. See "CONFIGURATION" for more information.
 
         If it is difficult for you to remember whether severity "5" is the
         most or least restrictive level, then you can use one of these named
@@ -109,7 +109,7 @@ CONSTRUCTOR
 
         Unless the "-severity" option is explicitly given, setting "-theme"
         silently causes the "-severity" to be set to 1. You can set the
-        default value for this option in your .perlcriticrc file. See the
+        default value for this option in your .perlrefactorrc file. See the
         "POLICY THEMES" section for more information about themes.
 
         -include is a reference to a list of string @PATTERNS. Policy
@@ -121,7 +121,7 @@ CONSTRUCTOR
         This would cause Perl::Critic to apply all the "CodeLayout::*"
         Policy modules even though they have a severity level that is less
         than 4. You can set the default value for this option in your
-        .perlcriticrc file. You can also use "-include" in conjunction with
+        .perlrefactorrc file. You can also use "-include" in conjunction with
         the "-exclude" option. Note that "-exclude" takes precedence over
         "-include" when a Policy matches both patterns.
 
@@ -134,7 +134,7 @@ CONSTRUCTOR
         This would cause Perl::Critic to not apply the "RequireUseStrict"
         and "ProhibitNoStrict" Policy modules even though they have a
         severity level that is greater than 1. You can set the default value
-        for this option in your .perlcriticrc file. You can also use
+        for this option in your .perlrefactorrc file. You can also use
         "-exclude" in conjunction with the "-include" option. Note that
         "-exclude" takes precedence over "-include" when a Policy matches
         both patterns.
@@ -143,20 +143,20 @@ CONSTRUCTOR
         "m/$PATTERN/ixms" will be used. Policies that do not match will be
         excluded. This option has precedence over the "-severity", "-theme",
         "-include", "-exclude", and "-only" options. You can set the default
-        value for this option in your .perlcriticrc file.
+        value for this option in your .perlrefactorrc file.
 
         -top is the maximum number of Violations to return when ranked by
         their severity levels. This must be a positive integer. Violations
         are still returned in the order that they occur within the file.
         Unless the "-severity" option is explicitly given, setting "-top"
         silently causes the "-severity" to be set to 1. You can set the
-        default value for this option in your .perlcriticrc file.
+        default value for this option in your .perlrefactorrc file.
 
         -only is a boolean value. If set to a true value, Perl::Critic will
         only choose from Policies that are mentioned in the user's profile.
         If set to a false value (which is the default), then Perl::Critic
         chooses from all the Policies that it finds at your site. You can
-        set the default value for this option in your .perlcriticrc file.
+        set the default value for this option in your .perlrefactorrc file.
 
         -profile-strictness is an enumerated value, one of
         "$PROFILE_STRICTNESS_WARN" in Perl::Critic::Utils::Constants (the
@@ -165,7 +165,7 @@ CONSTRUCTOR
         Perl::Critic::Utils::Constants. If set to
         "$PROFILE_STRICTNESS_FATAL" in Perl::Critic::Utils::Constants,
         Perl::Critic will make certain warnings about problems found in a
-        .perlcriticrc or file specified via the -profile option fatal. For
+        .perlrefactorrc or file specified via the -profile option fatal. For
         example, Perl::Critic normally only "warn"s about profiles referring
         to non-existent Policies, but this value makes this situation fatal.
         Correspondingly, "$PROFILE_STRICTNESS_QUIET" in
@@ -178,12 +178,12 @@ CONSTRUCTOR
         false value (which is the default) Perl::Critic will ignore code
         that is tagged with these annotations. See "BENDING THE RULES" for
         more information. You can set the default value for this option in
-        your .perlcriticrc file.
+        your .perlrefactorrc file.
 
         -verbose can be a positive integer (from 1 to 11), or a literal
         format specification. See Perl::Critic::Violation for an explanation
         of format specifications. You can set the default value for this
-        option in your .perlcriticrc file.
+        option in your .perlrefactorrc file.
 
         -unsafe directs Perl::Critic to allow the use of Policies that are
         marked as "unsafe" by the author. Such policies may compile
@@ -273,7 +273,7 @@ FUNCTIONAL INTERFACE
 CONFIGURATION
     Most of the settings for Perl::Critic and each of the Policy modules can
     be controlled by a configuration file. The default configuration file is
-    called .perlcriticrc. Perl::Critic will look for this file in the
+    called .perlrefactorrc. Perl::Critic will look for this file in the
     current directory first, and then in your home directory. Alternatively,
     you can set the "PERLCRITIC" environment variable to explicitly point to
     a different file in another location. If none of these files exist, and
@@ -407,11 +407,11 @@ CONFIGURATION
         # For all other Policies, I accept the default severity,
         # so no additional configuration is required for them.
 
-    For additional configuration examples, see the perlcriticrc file that is
+    For additional configuration examples, see the perlrefactorrc file that is
     included in this examples directory of this distribution.
 
     Damian Conway's own Perl::Critic configuration is also included in this
-    distribution as examples/perlcriticrc-conway.
+    distribution as examples/perlrefactorrc-conway.
 
 THE POLICIES
     A large number of Policy modules are distributed with Perl::Critic. They
@@ -453,7 +453,7 @@ POLICY THEMES
     Any Policy may fit into multiple themes. Say "perlcritic -list" to get a
     listing of all available Policies and the themes that are associated
     with each one. You can also change the theme for any Policy in your
-    .perlcriticrc file. See the "CONFIGURATION" section for more information
+    .perlrefactorrc file. See the "CONFIGURATION" section for more information
     about that.
 
     Using the "-theme" option, you can create an arbitrarily complex rule

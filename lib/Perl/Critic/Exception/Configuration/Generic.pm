@@ -49,7 +49,7 @@ Perl::Critic::Exception::Configuration::Generic - A problem with L<Perl::Critic|
 =head1 DESCRIPTION
 
 A representation of a problem found with the configuration of
-L<Perl::Critic|Perl::Critic>, whether from a F<.perlcriticrc>, another
+L<Perl::Critic|Perl::Critic>, whether from a F<.perlrefactorrc>, another
 profile file, or command line.
 
 This covers things like file reading and parsing errors.

@@ -158,7 +158,7 @@ tree walking on that single analysis.
 This policy has a single option, C<allow>, which is a list of names to
 never count as duplicates.  It defaults to containing C<$self> and
 C<$class>.  You add to this by adding something like this to your
-F<.perlcriticrc>:
+F<.perlrefactorrc>:
 
     [Variables::ProhibitReusedNames]
     allow = $self $class @blah

@@ -263,7 +263,7 @@ By default, double quotes and back quotes (backticks) are not allowed
 as delimiters for any operators and single quotes are allowed as
 delimiters for the C<m>, C<qr>, C<qx>, and C<s> operators.  These
 defaults are equivalent to having the following in your
-F<.perlcriticrc>:
+F<.perlrefactorrc>:
 
     [ValuesAndExpressions::ProhibitQuotesAsQuotelikeOperatorDelimiters]
     single_quote_allowed_operators = m s qr qx

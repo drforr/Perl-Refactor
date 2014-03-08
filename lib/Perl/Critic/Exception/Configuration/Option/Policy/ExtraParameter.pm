@@ -68,7 +68,7 @@ Perl::Critic::Exception::Configuration::Option::Policy::ExtraParameter - The con
 
 A representation of the configuration attempting to specify a value
 for a parameter that a L<Perl::Critic::Policy|Perl::Critic::Policy>
-doesn't have, whether from a F<.perlcriticrc>, another profile file,
+doesn't have, whether from a F<.perlrefactorrc>, another profile file,
 or command line.
 
 

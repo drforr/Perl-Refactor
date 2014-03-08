@@ -539,7 +539,7 @@ C<allow_to_the_right_of_a_fat_comma>, and C<constant_creator_subroutines>.
 The C<allowed_values> parameter is a whitespace delimited set of
 permitted number I<values>; this does not affect the permitted formats
 for numbers.  The defaults are equivalent to having the following in
-your F<.perlcriticrc>:
+your F<.perlrefactorrc>:
 
     [ValuesAndExpressions::ProhibitMagicNumbers]
     allowed_values = 0 1 2
@@ -586,7 +586,7 @@ are not permitted.
 Multiple ranges are permitted.
 
 To put this all together, the following is a valid, though not likely
-to be used, F<.perlcriticrc> entry:
+to be used, F<.perlrefactorrc> entry:
 
     [ValuesAndExpressions::ProhibitMagicNumbers]
     allowed_values = 3.1415269 82..103 -507.4..57.8:by(0.2) all_integers
@@ -639,7 +639,7 @@ This parameter allows you to specify the names of subroutines that create
 constants, in addition to C<Readonly>, C<Const::Fast>, and friends.  For
 example, if you use a custom C<Const::Fast>-like module that supports a
 C<create_constant> subroutine to create constants, you could add something
-like the following to your F<.perlcriticrc>:
+like the following to your F<.perlrefactorrc>:
 
     [ValuesAndExpressions::ProhibitMagicNumbers]
     constant_creator_subroutines = create_constant

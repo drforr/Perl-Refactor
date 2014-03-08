@@ -57,7 +57,7 @@ Perl::Critic::Exception::Configuration::Option::Policy - A problem with configur
 
 A representation of a problem found with the configuration of a
 L<Perl::Critic::Policy|Perl::Critic::Policy>, whether from a
-F<.perlcriticrc>, another profile file, or command line.
+F<.perlrefactorrc>, another profile file, or command line.
 
 This is an abstract class.  It should never be instantiated.
 

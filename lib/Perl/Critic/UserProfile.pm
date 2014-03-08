@@ -249,7 +249,7 @@ sub _load_profile_from_hash {
 sub _find_profile_path {
 
     #Define default filename
-    my $rc_file = '.perlcriticrc';
+    my $rc_file = '.perlrefactorrc';
 
     #Check explicit environment setting
     return $ENV{PERLCRITIC} if exists $ENV{PERLCRITIC};
@@ -313,13 +313,13 @@ __END__
 
 =head1 NAME
 
-Perl::Critic::UserProfile - The contents of the user's profile, often F<.perlcriticrc>.
+Perl::Critic::UserProfile - The contents of the user's profile, often F<.perlrefactorrc>.
 
 
 =head1 DESCRIPTION
 
 This is a helper class that encapsulates the contents of the user's
-profile, which is usually stored in a F<.perlcriticrc> file. There are
+profile, which is usually stored in a F<.perlrefactorrc> file. There are
 no user-serviceable parts here.
 
 
@@ -336,8 +336,8 @@ to change without notice.
 =item C< new( -profile => $p ) >
 
 B<-profile> is the path to the user's profile.  If -profile is not
-defined, then it looks for the profile at F<./.perlcriticrc> and then
-F<$HOME/.perlcriticrc>.  If neither of those files exists, then the
+defined, then it looks for the profile at F<./.perlrefactorrc> and then
+F<$HOME/.perlrefactorrc>.  If neither of those files exists, then the
 UserProfile is created with default values.
 
 This object does not take into account any command-line overrides;
@@ -397,7 +397,7 @@ Perl::Critic::Foo).
 =item C< source() >
 
 The place where the profile information came from, if available.
-Usually the path to a F<.perlcriticrc>.
+Usually the path to a F<.perlrefactorrc>.
 
 
 =back

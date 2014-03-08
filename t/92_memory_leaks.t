@@ -29,7 +29,7 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlcriticrc();
+Perl::Critic::TestUtils::block_perlrefactorrc();
 
 eval 'use Test::Memory::Cycle; 1'
     or plan skip_all => 'Test::Memory::Cycle requried to test memory leaks';

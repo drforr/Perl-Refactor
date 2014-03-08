@@ -741,7 +741,7 @@ L<Moose|Moose>.
 For example, if you want all local variables to be in all lower-case
 and global variables to start with "G_" and otherwise not contain
 underscores, but exempt any variable with a name that contains
-"THINGY", you could put the following in your F<.perlcriticrc>:
+"THINGY", you could put the following in your F<.perlrefactorrc>:
 
     [NamingConventions::Capitalization]
     local_lexical_variables = :all_lower

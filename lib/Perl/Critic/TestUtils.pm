@@ -44,11 +44,11 @@ Readonly::Array our @EXPORT_OK => qw(
 );
 
 #-----------------------------------------------------------------------------
-# If the user already has an existing perlcriticrc file, it will get
+# If the user already has an existing perlrefactorrc file, it will get
 # in the way of these test.  This little tweak to ensures that we
-# don't find the perlcriticrc file.
+# don't find the perlrefactorrc file.
 
-sub block_perlcriticrc {
+sub block_perlrefactorrc {
     no warnings 'redefine';  ## no critic (ProhibitNoWarnings);
     *Perl::Critic::UserProfile::_find_profile_path = sub { return }; ## no critic (ProtectPrivateVars)
     return 1;
@@ -428,9 +428,9 @@ Perl::Critic for more examples of how to use these subroutines.
 
 =over
 
-=item block_perlcriticrc()
+=item block_perlrefactorrc()
 
-If a user has a F<~/.perlcriticrc> file, this can interfere with
+If a user has a F<~/.perlrefactorrc> file, this can interfere with
 testing.  This handy method disables the search for that file --
 simply call it at the top of your F<.t> program.  Note that this is
 not easily reversible, but that should not matter.
@@ -577,7 +577,7 @@ so like this:
     ## parms { allow_y => '0' }
 
 Note that all the values in this hash must be strings because that's
-what Perl::Critic will hand you from a F<.perlcriticrc>.
+what Perl::Critic will hand you from a F<.perlrefactorrc>.
 
 If it's a TODO subtest (probably because of some weird corner of PPI
 that we exercised that Adam is getting around to fixing, right?), then

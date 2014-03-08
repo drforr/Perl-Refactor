@@ -110,7 +110,7 @@ The maximum acceptable McCabe score can be set with the C<max_mccabe>
 
 configuration item.  If the sum of all code B<outside> any subroutine has a
 McCabe score higher than this number, it will generate a Policy violation.
-The default is 20.  An example section for a F<.perlcriticrc>:
+The default is 20.  An example section for a F<.perlrefactorrc>:
 
     [Modules::ProhibitExcessMainComplexity]
     max_mccabe = 30

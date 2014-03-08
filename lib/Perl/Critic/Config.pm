@@ -1173,7 +1173,7 @@ have been installed.
 
 Most of the settings for Perl::Critic and each of the Policy modules
 can be controlled by a configuration file.  The default configuration
-file is called F<.perlcriticrc>.
+file is called F<.perlrefactorrc>.
 L<Perl::Critic::Config|Perl::Critic::Config> will look for this file
 in the current directory first, and then in your home directory.
 Alternatively, you can set the C<PERLCRITIC> environment variable to
@@ -1286,7 +1286,7 @@ A simple configuration might look like this:
     # and other parameters, so no additional configuration is
     # required for them.
 
-For additional configuration examples, see the F<perlcriticrc> file
+For additional configuration examples, see the F<perlrefactorrc> file
 that is included in this F<t/examples> directory of this distribution.
 
 
@@ -1325,7 +1325,7 @@ needs.
 
 Say C<`perlcritic -list`> to get a listing of all available policies
 and the themes that are associated with each one.  You can also change
-the theme for any Policy in your F<.perlcriticrc> file.  See the
+the theme for any Policy in your F<.perlrefactorrc> file.  See the
 L<"CONFIGURATION"> section for more information about that.
 
 Using the C<-theme> option, you can combine theme names with

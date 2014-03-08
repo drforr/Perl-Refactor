@@ -131,7 +131,7 @@ This policy can be configured to only pay attention to word lists with
 at least a particular number of elements.  By default, this value is
 2, which means that lists containing zero or one elements are ignored.
 The minimum list size to be looked at can be specified by giving a
-value for C<min_elements> in F<.perlcriticrc> like this:
+value for C<min_elements> in F<.perlrefactorrc> like this:
 
     [CodeLayout::ProhibitQuotedWordLists]
     min_elements = 4
@@ -160,7 +160,7 @@ edge cases that I haven't covered.  If you find one, send me a note.
 This policy was formerly called C<RequireQuotedWords> which seemed a
 little counter-intuitive.  If you get lots of "Cannot load policy
 module" errors, then you probably need to change C<RequireQuotedWords>
-to C<ProhibitQuotedWordLists> in your F<.perlcriticrc> file.
+to C<ProhibitQuotedWordLists> in your F<.perlrefactorrc> file.
 
 
 =head1 AUTHOR

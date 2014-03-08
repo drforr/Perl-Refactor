@@ -124,8 +124,8 @@ examples to help get you started.
     # Report additional violations of Policies that match m/variables/xms
     perlcritic --include variables YourModule.pm
 
-    # Use defaults from somewhere other than ~/.perlcriticrc
-    perlcriticrc --profile project/specific/perlcriticrc YourModule.pm
+    # Use defaults from somewhere other than ~/.perlrefactorrc
+    perlrefactorrc --profile project/specific/perlrefactorrc YourModule.pm
 
 
 =head1 ARGUMENTS
@@ -148,7 +148,7 @@ Option names are also case-sensitive.
 =item C<--profile FILE> or C<-p FILE>
 
 Directs C<perlcritic> to use a profile named by FILE rather than
-looking for the default F<.perlcriticrc> file in the current directory
+looking for the default F<.perlrefactorrc> file in the current directory
 or your home directory.  See L<Perl::Critic/"CONFIGURATION"> for more
 information.
 
@@ -163,9 +163,9 @@ Directs C<perlcritic> to only apply Policies with a severity greater
 than C<N>.  Severity values are integers ranging from 1 (least severe)
 to 5 (most severe).  The default is 5.  For a given C<--profile>,
 decreasing the C<--severity> will usually produce more violations.
-You can set the default value for this option in your F<.perlcriticrc>
+You can set the default value for this option in your F<.perlrefactorrc>
 file.  You can also redefine the C<severity> for any Policy in your
-F<.perlcriticrc> file.  See L<"CONFIGURATION"> for more information.
+F<.perlrefactorrc> file.  See L<"CONFIGURATION"> for more information.
 
 =item C<-5 | -4 | -3 | -2 | -1>
 
@@ -211,7 +211,7 @@ would apply only Policies that have a 'bugs' AND 'pbp' theme:
 
 Unless the C<--severity> option is explicitly given, setting
 C<--theme> silently causes the C<--severity> to be set to 1.  You can
-set the default value for this option in your F<.perlcriticrc> file.
+set the default value for this option in your F<.perlrefactorrc> file.
 See L<Perl::Critic/"POLICY THEMES"> for more information about themes.
 
 =item C<--include PATTERN>
@@ -225,12 +225,12 @@ example:
 
 This would cause C<perlcritic> to apply all the C<CodeLayout::*>
 policies even if they have a severity level that is less than the
-default level of 5, or have been disabled in your F<.perlcriticrc>
+default level of 5, or have been disabled in your F<.perlrefactorrc>
 file.  You can specify multiple C<--include> options and you can use
 it in conjunction with the C<--exclude> option.  Note that
 C<--exclude> takes precedence over C<--include> when a Policy matches
 both patterns.  You can set the default value for this option in your
-F<.perlcriticrc> file.
+F<.perlrefactorrc> file.
 
 =item C<--exclude PATTERN>
 
@@ -246,7 +246,7 @@ severity level.  You can specify multiple C<--exclude> options and you
 can use it in conjunction with the C<--include> option.  Note that
 C<--exclude> takes precedence over C<--include> when a Policy matches
 both patterns.  You can set the default value for this option in your
-F<.perlcriticrc> file.
+F<.perlrefactorrc> file.
 
 =item C<--single-policy PATTERN> or C<-s PATTERN>
 
@@ -280,9 +280,9 @@ each file, ranked by their severity.  If C<N> is not specified, it
 defaults to 20.  If the C<--severity> option (or one of the shortcuts)
 is not explicitly given, the C<--top> option implies that the minimum
 severity level is "1" (i.e. "brutal"). Users can redefine the severity
-for any Policy in their F<.perlcriticrc> file.  See L<"CONFIGURATION">
+for any Policy in their F<.perlrefactorrc> file.  See L<"CONFIGURATION">
 for more information.  You can set the default value for this option
-in your F<.perlcriticrc> file.  NOTE: Be careful not to put one of the
+in your F<.perlrefactorrc> file.  NOTE: Be careful not to put one of the
 severity shortcut options immediately after the C<--top> flag or
 C<perlcritic> will interpret it as the number of violations to report.
 
@@ -291,7 +291,7 @@ C<perlcritic> will interpret it as the number of violations to report.
 Directs C<perlcritic> to ignore the magical C<"## no critic">
 annotations in the source code. See L<"BENDING THE RULES"> for more
 information.  You can set the default value for this option in your
-F<.perlcriticrc> file.
+F<.perlrefactorrc> file.
 
 =item C<--statistics>
 
@@ -312,7 +312,7 @@ is interpreted to be an actual format specification.  If the
 C<--verbose> option is not specified, it defaults to either 4 or 5,
 depending on whether multiple files were given as arguments to
 C<perlcritic>.  You can set the default value for this option in your
-F<.perlcriticrc> file.
+F<.perlrefactorrc> file.
 
     Verbosity     Format Specification
     -----------   -------------------------------------------------------
@@ -357,7 +357,7 @@ input. See L<"EDITOR INTEGRATION"> for more information about that.
 Displays a condensed listing of all the
 L<Perl::Critic::Policy|Perl::Critic::Policy> modules that are found on this
 machine.  This option lists I<all> Policies, regardless of your
-F<.perlcriticrc> or command line options.  For each Policy, the name, default
+F<.perlrefactorrc> or command line options.  For each Policy, the name, default
 severity and default themes are shown.
 
 =item C<--list-enabled>
@@ -366,7 +366,7 @@ Displays a condensed listing of all the
 L<Perl::Critic::Policy|Perl::Critic::Policy> modules that I<would> be
 enforced, if you were actually going to critique a file with this command.
 This is useful when you've constructed a complicated command or modified your
-F<.perlcriticrc> file and you want to see exactly which Policies are going to
+F<.perlrefactorrc> file and you want to see exactly which Policies are going to
 be enforced (or not enforced, as the case may be). For each Policy, the name,
 default severity and default themes are shown.
 
@@ -383,24 +383,24 @@ L<Perl::Critic::Policy|Perl::Critic::Policy> modules that are found on
 this machine.  For each Policy, the name, default severity and default
 themes are shown, as well as the name of any additional parameters
 that the Policy supports.  The format is suitable as a prototype for
-your F<.perlcriticrc> file.
+your F<.perlrefactorrc> file.
 
 =item C<--only>
 
 Directs perlcritic to apply only Policies that are explicitly
-mentioned in your F<.perlcriticrc> file.  This is useful if you want
+mentioned in your F<.perlrefactorrc> file.  This is useful if you want
 to use just a small subset of Policies without having to disable all
 the others.  You can set the default value for this option in your
-F<.perlcriticrc> file.
+F<.perlrefactorrc> file.
 
 =item C<--profile-strictness {warn|fatal|quiet}>
 
 Directs perlcritic how to treat certain recoverable problems found in
-a F<.perlcriticrc> or file specified via the C<--profile> option.
+a F<.perlrefactorrc> or file specified via the C<--profile> option.
 Valid values are C<warn> (the default), C<fatal>, and C<quiet>.  For
 example, perlcritic normally only warns about profiles referring to
 non-existent Policies, but this option can make this situation fatal.
-You can set the default value for this option in your F<.perlcriticrc>
+You can set the default value for this option in your F<.perlrefactorrc>
 file.
 
 =item C<--count>
@@ -423,14 +423,14 @@ This option is on when outputting to a tty.  When set, Severity 5 and 4 are
 colored red and yellow, respectively.  Colorization only happens if
 L<Term::ANSIColor|Term::ANSIColor> is installed and it only works on
 non-Windows environments.  Negate this switch to disable color.  You can set
-the default value for this option in your F<.perlcriticrc> file.
+the default value for this option in your F<.perlrefactorrc> file.
 
 Can also be specified as C<--colour>.
 
 =item C<--pager PAGER_COMMAND_STRING>
 
 If set, perlcritic will pipe it's output to the given PAGER_COMMAND_STRING.
-You can set the default value for this option in your F<.perlcriticrc> file.
+You can set the default value for this option in your F<.perlrefactorrc> file.
 
 Setting a pager turns off color by default.  You will have to turn color on
 explicitly.  If you want color, you'll probably also want to tell your pager
@@ -556,7 +556,7 @@ Displays the version number of C<perlcritic> and exits.
 
 Most of the settings for Perl::Critic and each of the Policy modules
 can be controlled by a configuration file.  The default configuration
-file is called F<.perlcriticrc>.  C<perlcritic> will look for this
+file is called F<.perlrefactorrc>.  C<perlcritic> will look for this
 file in the current directory first, and then in your home directory.
 Alternatively, you can set the C<PERLCRITIC> environment variable to
 explicitly point to a different file in another location.  If none of
@@ -571,7 +571,7 @@ pairs if you desire.
 
 Default settings for perlcritic itself can be set B<before the first
 named block.> For example, putting any or all of these at the top of
-your F<.perlcriticrc> file will set the default value for the
+your F<.perlrefactorrc> file will set the default value for the
 corresponding command-line argument.
 
     severity  = 3                                     #Integer or named level
@@ -685,11 +685,11 @@ as with Perl numeric literals.  For example,
     [ValuesAndExpressions::RequireNumberSeparators]
     min_value = 1_000
 
-For additional configuration examples, see the F<perlcriticrc> file
+For additional configuration examples, see the F<perlrefactorrc> file
 that is included in this F<examples> directory of this distribution.
 
 Damian Conway's own Perl::Critic configuration is also included in
-this distribution as F<examples/perlcriticrc-conway>.
+this distribution as F<examples/perlrefactorrc-conway>.
 
 
 =head1 THE POLICIES
@@ -736,7 +736,7 @@ needs.
 
 Say C<"perlcritic --list"> to get a listing of all available policies
 and the themes that are associated with each one.  You can also change
-the theme for any Policy in your F<.perlcriticrc> file.  See the
+the theme for any Policy in your F<.perlrefactorrc> file.  See the
 L<"CONFIGURATION"> section for more information about that.
 
 Using the C<--theme> command-line option, you can create an
@@ -839,7 +839,7 @@ if the file requires a shebang line, it is impossible to put C<"## no
 critic"> on the first line of the file.  This is a known limitation
 and it will be addressed in a future release.  As a workaround, you
 can disable the affected policies at the command-line or in your
-F<.perlcriticrc> file.  But beware that this will affect the analysis
+F<.perlrefactorrc> file.  But beware that this will affect the analysis
 of B<all> files.
 
 Use this feature wisely.  C<"## no critic"> should be used in the

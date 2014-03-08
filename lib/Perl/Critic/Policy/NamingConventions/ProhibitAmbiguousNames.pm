@@ -143,7 +143,7 @@ of forbidden words separated by spaces.
 
 For example, if you decide that C<bases> is an OK name for variables
 (e.g.  in bioinformatics), then put something like the following in
-C<$HOME/.perlcriticrc>:
+C<$HOME/.perlrefactorrc>:
 
     [NamingConventions::ProhibitAmbiguousNames]
     forbid = last set left right no abstract contract record second close

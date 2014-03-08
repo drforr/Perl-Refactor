@@ -162,7 +162,7 @@ apply special syntax highlighting within certain styles of quotes.
 For example, you can tweak C<vim> to use SQL highlighting for
 everything that appears within C<qq{}> or C<qq[]> quotes.  But if
 those strings are literal, Perl::Critic will complain.  To prevent
-this, put the following in your F<.perlcriticrc> file:
+this, put the following in your F<.perlrefactorrc> file:
 
     [ValuesAndExpressions::ProhibitInterpolationOfLiterals]
     allow = qq{} qq[]
@@ -170,7 +170,7 @@ this, put the following in your F<.perlcriticrc> file:
 The flag C<allow_if_string_contains_single_quote> permits
 double-quoted strings if the string contains a single quote (')
 character.  It defaults to off; to turn it on put the following in
-your F<.perlcriticrc> file:
+your F<.perlrefactorrc> file:
 
     [ValuesAndExpressions::ProhibitInterpolationOfLiterals]
     allow_if_string_contains_single_quote = 1

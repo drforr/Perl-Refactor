@@ -42,7 +42,7 @@ Perl::Critic::Exception::Configuration - A problem with L<Perl::Critic|Perl::Cri
 =head1 DESCRIPTION
 
 A representation of a problem found with the configuration of
-L<Perl::Critic|Perl::Critic>, whether from a F<.perlcriticrc>, another profile
+L<Perl::Critic|Perl::Critic>, whether from a F<.perlrefactorrc>, another profile
 file, or command line.
 
 This is an abstract class.  It should never be instantiated.

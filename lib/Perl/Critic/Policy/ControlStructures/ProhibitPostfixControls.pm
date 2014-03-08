@@ -150,7 +150,7 @@ A set of constructs to be ignored by this policy can specified by
 giving a value for 'allow' of a string of space-delimited keywords:
 C<if>, C<for>, C<unless>, C<until>, C<when>, and/or C<while>.  An
 example of specifying allowed flow-control structures in a
-F<.perlcriticrc> file:
+F<.perlrefactorrc> file:
 
     [ControlStructures::ProhibitPostfixControls]
     allow = for if until
@@ -159,7 +159,7 @@ By default, all postfix control keywords are prohibited.
 
 The set of flow-control functions that are exempt from the restriction
 can also be configured with the 'flowcontrol' directive in your
-F<.perlcriticrc> file:
+F<.perlrefactorrc> file:
 
     [ControlStructures::ProhibitPostfixControls]
     flowcontrol = warn die carp croak cluck confess goto exit

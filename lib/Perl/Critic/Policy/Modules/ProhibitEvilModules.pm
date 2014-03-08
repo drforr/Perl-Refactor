@@ -305,7 +305,7 @@ C<modules_file> options.
 
 The value of C<modules> should be a string of space-delimited, fully
 qualified module names and/or regular expressions.  An example of
-prohibiting two specific modules in a F<.perlcriticrc> file:
+prohibiting two specific modules in a F<.perlrefactorrc> file:
 
     [Modules::ProhibitEvilModules]
     modules = Getopt::Std Autoload

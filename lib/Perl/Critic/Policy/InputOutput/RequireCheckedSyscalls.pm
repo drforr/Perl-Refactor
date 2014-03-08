@@ -161,7 +161,7 @@ This policy watches for a configurable list of function names.  By
 default, it applies to C<open>, C<print>, C<say> and C<close>.  You can
 override this to set it to a different list of functions with the
 C<functions> and C<exclude_functions> settings.  To do this, put
-entries in a F<.perlcriticrc> file like this:
+entries in a F<.perlrefactorrc> file like this:
 
     [InputOutput::RequireCheckedSyscalls]
     functions = open opendir read readline readdir close closedir

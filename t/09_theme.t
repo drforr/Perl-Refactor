@@ -114,7 +114,7 @@ TRANSLATIONS: {
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlcriticrc();
+Perl::Critic::TestUtils::block_perlrefactorrc();
 
 {
     my $profile = Perl::Critic::UserProfile->new( -profile => q{} );

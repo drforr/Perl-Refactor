@@ -293,7 +293,7 @@ By default, this policy applies to the following list functions:
                        first_index lastidx last_index insert_after
                        insert_after_string)
 
-This list can be overridden the F<.perlcriticrc> file like this:
+This list can be overridden the F<.perlrefactorrc> file like this:
 
     [ControlStructures::ProhibitMutatingListFunctions]
     list_funcs = map grep List::Util::first

@@ -444,7 +444,7 @@ sub test_is_function_call {
 #-----------------------------------------------------------------------------
 
 sub test_find_bundled_policies {
-    Perl::Critic::TestUtils::block_perlcriticrc();
+    Perl::Critic::TestUtils::block_perlrefactorrc();
 
     my @native_policies = bundled_policy_names();
     my $policy_dir = File::Spec->catfile( qw(lib Perl Critic Policy) );

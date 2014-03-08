@@ -234,7 +234,7 @@ In the case of multi-valued items, the accessor must return the array
 reference, so the above specimen code works in that case also.
 
 Note that no validation is done here -- this class is simply a bridge
-between the physical F<.perlcriticrc> file and
+between the physical F<.perlrefactorrc> file and
 L<Perl::Critic::Config|Perl::Critic::Config>, which is where the
 action is.
 
@@ -289,13 +289,13 @@ If your new item has no corresponding global configuration item, you
 do not need to change this file.
 
 
-=head3 F<bin/perlcriticrc>
+=head3 F<bin/perlrefactorrc>
 
 If your new item has a corresponding command option, you must document
 it here. If it does not, you do not need to change this file.
 
 
-=head3 F<examples/perlcriticrc>
+=head3 F<examples/perlrefactorrc>
 
 If your new item has a corresponding global configuration item, you
 must add it here. If it does not, you do not need to change this file.

@@ -124,7 +124,7 @@ the name of the Policy that I'm trying to suppress.
 
 =head1 NOTE
 
-Changing your F<.perlcriticrc> file and disabling policies globally or running
+Changing your F<.perlrefactorrc> file and disabling policies globally or running
 at a higher (i.e. less restrictive) severity level may cause this Policy to
 emit additional violations.  So you might want to defer using this Policy
 until you have a fairly stable profile.

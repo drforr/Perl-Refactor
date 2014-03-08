@@ -460,14 +460,14 @@ none of the L<Carp|Carp> functions are necessary.
 
 By default, this policy allows uses of C<die> and C<warn> ending in an
 explicit newline. If you give this policy an
-C<allow_messages_ending_with_newlines> option in your F<.perlcriticrc>
+C<allow_messages_ending_with_newlines> option in your F<.perlrefactorrc>
 with a false value, then this policy will prohibit such uses.
 
     [ErrorHandling::RequireCarping]
     allow_messages_ending_with_newlines = 0
 
 If you give this policy an C<allow_in_main_unless_in_subroutine> option
-in your F<.perlcriticrc> with a true value, then this policy will allow
+in your F<.perlrefactorrc> with a true value, then this policy will allow
 C<die> and C<warn> in name space main:: unless they appear in a
 subroutine, even if they do not end in an explicit newline.
 

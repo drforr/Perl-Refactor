@@ -308,7 +308,7 @@ The STDIN, STDOUT, and STDERR handles are exempt from this policy.
 This policy allows C<close()> invocations to be up to C<N> lines after
 their corresponding C<open()> calls, where C<N> defaults to 9.  You
 can override this to set it to a different number with the C<lines>
-setting.  To do this, put entries in a F<.perlcriticrc> file like
+setting.  To do this, put entries in a F<.perlrefactorrc> file like
 this:
 
   [InputOutput::RequireBriefOpen]

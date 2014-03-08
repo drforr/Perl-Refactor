@@ -111,7 +111,7 @@ sub test_wrappers_to_generate {
     my @tests_to_be_wrapped = qw<
         t/00_modules.t
         t/01_config.t
-        t/01_config_bad_perlcriticrc.t
+        t/01_config_bad_perlrefactorrc.t
         t/01_policy_config.t
         t/02_policy.t
         t/03_pragmas.t

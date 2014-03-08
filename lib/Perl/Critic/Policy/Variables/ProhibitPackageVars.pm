@@ -181,7 +181,7 @@ which seems to be the usual practice anyway.
 There is room for exceptions.  Some modules, like the core File::Find
 module, use package variables as their only interface, and others like
 Data::Dumper use package variables as their most common interface.
-These module can be specified from your F<.perlcriticrc> file, and the
+These module can be specified from your F<.perlrefactorrc> file, and the
 policy will ignore them.
 
     [Variables::ProhibitPackageVars]

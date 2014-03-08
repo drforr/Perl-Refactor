@@ -99,7 +99,7 @@ output and let the application decide what to do with it.
 
 Alternatively, if you do want to use backticks, you can restrict
 checks to void contexts by adding the following to your
-F<.perlcriticrc> file:
+F<.perlrefactorrc> file:
 
     [InputOutput::ProhibitBacktickOperators]
     only_in_void_context = 1

@@ -344,7 +344,7 @@ C<variables_file> options.
 
 The value of C<variables> should be a string of space-delimited, fully
 qualified variable names and/or regular expressions.  An example of
-prohibiting two specific variables in a F<.perlcriticrc> file:
+prohibiting two specific variables in a F<.perlrefactorrc> file:
 
     [Variables::ProhibitEvilVariables]
     variables = $[ $^S $SIG{__DIE__}

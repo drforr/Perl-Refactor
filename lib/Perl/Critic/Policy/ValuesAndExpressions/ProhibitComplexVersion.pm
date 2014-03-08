@@ -240,7 +240,7 @@ The construction
 
 is exempt from this policy by default, because it is recommended by Perl Best
 Practices. Should you wish to identify C<use version;> as a violation, add the
-following to your perlcriticrc file:
+following to your perlrefactorrc file:
 
     [ValuesAndExpressions::ProhibitComplexVersion]
     forbid_use_version = 1

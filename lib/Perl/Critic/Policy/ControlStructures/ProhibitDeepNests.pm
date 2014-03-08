@@ -93,10 +93,10 @@ Design of Existing Code".
 =head1 CONFIGURATION
 
 The maximum number of nested control structures can be configured via
-a value for C<max_nests> in a F<.perlcriticrc> file.  Each for-loop,
+a value for C<max_nests> in a F<.perlrefactorrc> file.  Each for-loop,
 if-else, while, and until block is counted as one nest.  Postfix forms
 of these constructs are not counted.  The default maximum is 5.
-Customization in a F<.perlcriticrc> file looks like this:
+Customization in a F<.perlrefactorrc> file looks like this:
 
     [ControlStructures::ProhibitDeepNests]
     max_nests = 3

@@ -32,7 +32,7 @@ L<http://perlcritic.tigris.org/>.
 
 =pod
 
-The L<Perl::Critic> configuration file is F<~/.perlcriticrc>
+The L<Perl::Critic> configuration file is F<~/.perlrefactorrc>
 
 =cut
 

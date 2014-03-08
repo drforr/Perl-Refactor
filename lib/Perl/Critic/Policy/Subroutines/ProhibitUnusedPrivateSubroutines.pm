@@ -332,7 +332,7 @@ argument to C<< use overload >>.
 
 You can define what a private subroutine name looks like by specifying
 a regular expression for the C<private_name_regex> option in your
-F<.perlcriticrc>:
+F<.perlrefactorrc>:
 
     [Subroutines::ProhibitUnusedPrivateSubroutines]
     private_name_regex = _(?!_)\w+

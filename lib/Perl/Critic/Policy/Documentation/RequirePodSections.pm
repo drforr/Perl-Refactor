@@ -433,7 +433,7 @@ is because the default values for programs don't actually match the
 book, even taking spelling into account, i.e. C<CONFIGURATION> instead
 of C<CONFIGURATION AND ENVIRONMENT>, the removal of C<VERSION>, and
 the addition of C<EXIT STATUS>.  To get precisely the sections as
-specified in the book, put the following in your F<.perlcriticrc>
+specified in the book, put the following in your F<.perlrefactorrc>
 file:
 
     [Documentation::RequirePodSections]
@@ -456,7 +456,7 @@ The sections required for modules and programs can be independently
 customized, overriding any values for C<source> and C<language>, by
 giving values for C<script_sections> and C<lib_sections> of a string
 of pipe-delimited required POD section names.  An example of entries
-in a F<.perlcriticrc> file:
+in a F<.perlrefactorrc> file:
 
     [Documentation::RequirePodSections]
     lib_sections    = NAME | SYNOPSIS | BUGS AND LIMITATIONS | AUTHOR

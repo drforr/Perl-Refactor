@@ -34,7 +34,7 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlcriticrc();
+Perl::Critic::TestUtils::block_perlrefactorrc();
 
 #-----------------------------------------------------------------------------
 
@@ -212,7 +212,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 
 {
     my $examples_dir = 'examples';
-    my $profile = File::Spec->catfile( $examples_dir, 'perlcriticrc' );
+    my $profile = File::Spec->catfile( $examples_dir, 'perlrefactorrc' );
     my $c = Perl::Critic::Config->new( -profile => $profile );
 
     is_deeply([$c->exclude()], [ qw(Documentation Naming) ],

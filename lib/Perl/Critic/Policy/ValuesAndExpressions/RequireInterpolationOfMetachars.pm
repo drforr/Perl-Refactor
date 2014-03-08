@@ -205,7 +205,7 @@ You can specify
     [ValuesAndExpressions::RequireInterpolationOfMetachars]
     rcs_keywords = Revision
 
-in your F<.perlcriticrc> to provide an exemption.
+in your F<.perlrefactorrc> to provide an exemption.
 
 
 =head1 NOTES

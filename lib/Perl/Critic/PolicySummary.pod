@@ -13,7 +13,7 @@ Conway's book B<Perl Best Practices>. Since most coding standards take the
 form "do this..." or "don't do that...", I have adopted the convention of
 naming each module C<RequireSomething> or C<ProhibitSomething>.  Each Policy
 is listed here with its default severity.  If you don't agree with the default
-severity, you can change it in your F<.perlcriticrc> file (try C<perlcritic
+severity, you can change it in your F<.perlrefactorrc> file (try C<perlcritic
 --profile-proto> for a starting version).  See the documentation of each
 module for its specific details.
 

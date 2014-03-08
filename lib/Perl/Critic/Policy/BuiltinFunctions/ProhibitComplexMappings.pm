@@ -118,7 +118,7 @@ violation:
 
 By default this policy flags any mappings with more than one
 statement.  While we do not recommend it, you can increase this limit
-as follows in a F<.perlcriticrc> file:
+as follows in a F<.perlrefactorrc> file:
 
     [BuiltinFunctions::ProhibitComplexMappings]
     max_statements = 2

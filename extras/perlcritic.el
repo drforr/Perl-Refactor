@@ -162,14 +162,14 @@ per-file basis with File Variables."
 (make-variable-buffer-local 'perlcritic-pass-required)
 
 (defcustom perlcritic-profile nil
-  "Specify an alternate .perlcriticrc file. This is only used if
+  "Specify an alternate .perlrefactorrc file. This is only used if
 non-nil."
   :type '(string)
   :group 'perlcritic)
 (make-variable-buffer-local 'perlcritic-profile)
 
 (defcustom perlcritic-noprofile nil
-  "Disables the use of any .perlcriticrc file."
+  "Disables the use of any .perlrefactorrc file."
   :type '(boolean)
   :group 'perlcritic)
 (make-variable-buffer-local 'perlcritic-noprofile)
@@ -180,7 +180,7 @@ severity greater than N. Severity values are integers ranging from
 1 (least severe) to 5 (most severe). The default is 5. For a given
 -profile, decreasing the -severity will usually produce more
 violations.  Users can redefine the severity for any Policy in their
-.perlcriticrc file.
+.perlrefactorrc file.
 
 This variable is automatically buffer-local and may be overridden on a
 per-file basis with File Variables."
@@ -190,7 +190,7 @@ per-file basis with File Variables."
 	  (const :tag "3" 3)
 	  (const :tag "2" 2)
 	  (const :tag "Show everything including the least severe: 1" 1)
-	  (const :tag "Default from .perlcriticrc" nil))
+	  (const :tag "Default from .perlrefactorrc" nil))
   :group 'perlcritic)
 (make-variable-buffer-local 'perlcritic-severity)
 
@@ -199,7 +199,7 @@ per-file basis with File Variables."
 each file, ranked by their severity. If the -severity option is not
 explicitly given, the -top option implies that the minimum severity
 level is 1. Users can redefine the severity for any Policy in their
-.perlcriticrc file.
+.perlrefactorrc file.
 
 This variable is automatically buffer-local and may be overridden on a
 per-file basis with File Variables."
@@ -217,11 +217,11 @@ For example:
 
 This would cause \"perlcritic\" to apply all the \"CodeLayout::*\" policies
 even if they have a severity level that is less than the default level of 5,
-or have been disabled in your .perlcriticrc file.  You can specify multiple
+or have been disabled in your .perlrefactorrc file.  You can specify multiple
 `perlcritic-include' options and you can use it in conjunction with the
 `perlcritic-exclude' option.  Note that `perlcritic-exclude' takes precedence
 over `perlcritic-include' when a Policy matches both patterns.  You can set
-the default value for this option in your .perlcriticrc file."
+the default value for this option in your .perlrefactorrc file."
   :type '(string)
   :group 'perlcritic)
 (make-variable-buffer-local 'perlcritic-include)
@@ -239,7 +239,7 @@ level.  You can specify multiple `perlcritic-exclude' options and you can use
 it in conjunction with the `perlcritic-include' option.  Note that
 `perlcritic-exclude' takes precedence over `perlcritic-include' when a Policy
 matches both patterns.  You can set the default value for this option in your
-.perlcriticrc file."
+.perlrefactorrc file."
   :type '(string)
   :group 'perlcritic)
 (make-variable-buffer-local 'perlcritic-exclude)
@@ -248,7 +248,7 @@ matches both patterns.  You can set the default value for this option in your
 (defcustom perlcritic-force nil
   "Directs \"perlcritic\" to ignore the magical \"## no critic\"
 pseudo-pragmas in the source code. You can set the default value for this
-option in your .perlcriticrc file."
+option in your .perlrefactorrc file."
   :type '(boolean)
   :group 'perlcritic)
 (make-variable-buffer-local 'perlcritic-force)
@@ -259,7 +259,7 @@ given a number (\"N\"), \"perlcritic\" reports violations using one of the
 predefined formats described below. If the `perlcritic-verbose' option is not
 specified, it defaults to either 4 or 5, depending on whether multiple files
 were given as arguments to \"perlcritic\".  You can set the default value for
-this option in your .perlcriticrc file.
+this option in your .perlrefactorrc file.
 
 Verbosity     Format Specification
 -----------   -------------------------------------------------------------

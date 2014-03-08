@@ -27,7 +27,7 @@ our $VERSION = '1.121';
 
 use Test::More; #plan set below!
 
-Perl::Critic::TestUtils::block_perlcriticrc();
+Perl::Critic::TestUtils::block_perlrefactorrc();
 
 #-----------------------------------------------------------------------------
 # This program proves that each policy that ships with Perl::Critic overrides
