@@ -14,7 +14,7 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Readonly::Scalar my $DESC => q{No package-scoped "$VERSION" variable found}; ## no critic (RequireInterpolation)
+Readonly::Scalar my $DESC => q{No package-scoped "$VERSION" variable found}; ## no refactor (RequireInterpolation)
 Readonly::Scalar my $EXPL => [ 404 ];
 
 #-----------------------------------------------------------------------------
@@ -37,7 +37,7 @@ sub violates {
 
 #-----------------------------------------------------------------------------
 
-sub _is_version_declaration {  ## no critic (ArgUnpacking)
+sub _is_version_declaration {  ## no refactor (ArgUnpacking)
     return 1 if _is_our_version(@_);
     return 1 if _is_vars_version(@_);
     return 1 if _is_package_version(@_);
@@ -52,7 +52,7 @@ sub _is_our_version {
     my (undef, $elem) = @_;
     $elem->isa('PPI::Statement::Variable') || return 0;
     $elem->type() eq 'our' || return 0;
-    return any { $_ eq '$VERSION' } $elem->variables(); ## no critic (RequireInterpolation)
+    return any { $_ eq '$VERSION' } $elem->variables(); ## no refactor (RequireInterpolation)
 }
 
 #-----------------------------------------------------------------------------

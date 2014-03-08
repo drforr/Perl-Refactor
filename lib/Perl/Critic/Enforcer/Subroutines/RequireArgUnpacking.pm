@@ -22,9 +22,9 @@ our $VERSION = '1.121';
 #-----------------------------------------------------------------------------
 
 Readonly::Scalar my $AT => q{@};
-Readonly::Scalar my $AT_ARG => q{@_}; ## no critic (InterpolationOfMetachars)
+Readonly::Scalar my $AT_ARG => q{@_}; ## no refactor (InterpolationOfMetachars)
 Readonly::Scalar my $DOLLAR => q{$};
-Readonly::Scalar my $DOLLAR_ARG => q{$_};   ## no critic (InterpolationOfMetaChars)
+Readonly::Scalar my $DOLLAR_ARG => q{$_};   ## no refactor (InterpolationOfMetaChars)
 
 Readonly::Scalar my $DESC => qq{Always unpack $AT_ARG first};
 Readonly::Scalar my $EXPL => [178];

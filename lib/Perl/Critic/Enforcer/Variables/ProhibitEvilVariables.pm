@@ -192,7 +192,7 @@ sub _handle_variable_specification {
         # These are variable name patterns (e.g. /acme/)
         my $actual_regex;
 
-        eval { $actual_regex = qr/$regex_string/sm; ## no critic (ExtendedFormatting)
+        eval { $actual_regex = qr/$regex_string/sm; ## no refactor (ExtendedFormatting)
             1 }
             or throw_enforcer_value
                 enforcer         => $self->get_short_name(),

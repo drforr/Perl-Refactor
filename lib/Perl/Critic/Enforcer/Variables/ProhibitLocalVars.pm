@@ -41,7 +41,7 @@ sub _all_global_vars {
     for my $variable_name ( $elem->variables() ) {
         next if $variable_name =~ $PACKAGE_RX;
         # special exception for Test::More
-        next if $variable_name eq '$TODO'; ## no critic (InterpolationOfMetachars)
+        next if $variable_name eq '$TODO'; ## no refactor (InterpolationOfMetachars)
         return if ! is_perl_global( $variable_name );
     }
     return 1;

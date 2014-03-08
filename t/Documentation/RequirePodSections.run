@@ -121,7 +121,7 @@ Blah...
 
 print 'Hello World';
 
-## no critic (RequirePodSections)
+## no refactor (RequirePodSections)
 
 __END__
 
@@ -142,7 +142,7 @@ Blah...
 ## cut
 #!/usr/bin/perl
 
-## no critic (RequirePodSections)
+## no refactor (RequirePodSections)
 
 __END__
 

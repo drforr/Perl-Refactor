@@ -54,10 +54,10 @@ our $Version;
 
 #-----------------------------------------------------------------------------
 
-## name pass with "no critic" on
+## name pass with "no refactor" on
 ## failures 0
 ## cut
-#!anything              ## no critic (RequireVersionVar)
+#!anything              ## no refactor (RequireVersionVar)
 
 #-----------------------------------------------------------------------------
 

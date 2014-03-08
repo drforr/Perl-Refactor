@@ -25,7 +25,7 @@ sub create_annotations {
 
     my @annotations = ();
     my $comment_elements_ref  = $doc->find('PPI::Token::Comment') || return;
-    my $annotation_rx  = qr{\A (?: [#]! .*? )? \s* [#][#] \s* no  \s+ critic}xms;
+    my $annotation_rx  = qr{\A (?: [#]! .*? )? \s* [#][#] \s* no  \s+ refactor}xms;
     for my $annotation_element ( grep { $_ =~ $annotation_rx } @{$comment_elements_ref} ) {
         push @annotations, Perl::Critic::Annotation->new( -element => $annotation_element);
     }
@@ -90,17 +90,17 @@ sub _init {
     }
 
 
-    # Handle multi-line usage.  This is either a "no critic" ..
-    # "use critic" region or a block where "no critic" is in effect
+    # Handle multi-line usage.  This is either a "no refactor" ..
+    # "use refactor" region or a block where "no refactor" is in effect
     # until the end of the scope.  The start is the always the "no
-    # critic" which we already found.  So now we have to search for the end.
+    # refactor" which we already found.  So now we have to search for the end.
     my $end = $annotation_element;
-    my $use_critic = qr{\A \s* [#][#] \s* use \s+ critic}xms;
+    my $use_refactor = qr{\A \s* [#][#] \s* use \s+ refactor}xms;
 
   SIB:
     while ( my $esib = $end->next_sibling() ) {
         $end = $esib; # keep track of last sibling encountered in this scope
-        last SIB if $esib->isa('PPI::Token::Comment') && $esib =~ $use_critic;
+        last SIB if $esib->isa('PPI::Token::Comment') && $esib =~ $use_refactor;
     }
 
     # PPI parses __END__ as a PPI::Statement::End, and everything following is
@@ -112,7 +112,7 @@ sub _init {
         while ( my $esib = $end->next_sibling() ) {
             $end = $esib;
             last SIB if $esib->isa( 'PPI::Token::Comment' ) &&
-                $esib->content() =~ $use_critic;
+                $esib->content() =~ $use_refactor;
         }
     }
 
@@ -220,13 +220,13 @@ sub _parse_annotation {
     #############################################################################
     # This regex captures the list of Enforcer name patterns that are to be
     # disabled.  It is generally assumed that the element has already been
-    # verified as a no-critic annotation.  So if this regex does not match,
+    # verified as a no-refactor annotation.  So if this regex does not match,
     # then it implies that all Policies are to be disabled.
     #
-    my $no_critic = qr{\#\# \s* no \s+ critic \s* (?:qw)? [("'] ([\s\w:,]+) }xms;
+    my $no_refactor = qr{\#\# \s* no \s+ refactor \s* (?:qw)? [("'] ([\s\w:,]+) }xms;
     #                  -------------------------- ------- ----- -----------
     #                                 |              |      |        |
-    #   "## no critic" with optional spaces          |      |        |
+    #   "## no refactor" with optional spaces          |      |        |
     #                                                |      |        |
     #             Enforcer list may be prefixed with "qw"     |        |
     #                                                       |        |
@@ -237,7 +237,7 @@ sub _parse_annotation {
     #############################################################################
 
     my @disabled_enforcer_names = ();
-    if ( my ($patterns_string) = $annotation_element =~ $no_critic ) {
+    if ( my ($patterns_string) = $annotation_element =~ $no_refactor ) {
 
         # Compose the specified modules into a regex alternation.  Wrap each
         # in a no-capturing group to permit "|" in the modules specification.
@@ -273,13 +273,13 @@ __END__
 
 =head1 NAME
 
-Perl::Critic::Annotation - A "## no critic" annotation in a document.
+Perl::Critic::Annotation - A "## no refactor" annotation in a document.
 
 
 =head1 SYNOPSIS
 
   use Perl::Critic::Annotation;
-  $annotation = Perl::Critic::Annotation->new( -element => $no_critic_ppi_element );
+  $annotation = Perl::Critic::Annotation->new( -element => $no_refactor_ppi_element );
 
   $bool = $annotation->disables_line( $number );
   $bool = $annotation->disables_enforcer( $enforcer_object );
@@ -291,10 +291,10 @@ Perl::Critic::Annotation - A "## no critic" annotation in a document.
 
 =head1 DESCRIPTION
 
-C<Perl::Critic::Annotation> represents a single C<"## no critic">
+C<Perl::Critic::Annotation> represents a single C<"## no refactor">
 annotation in a L<PPI:Document>.  The Annotation takes care of parsing
 the annotation and keeps track of which lines and Policies it affects.
-It is intended to encapsulate the details of the no-critic
+It is intended to encapsulate the details of the no-refactor
 annotations, and to provide a way for Enforcer objects to interact with
 the annotations (via a L<Perl::Critic::Document|Perl::Critic::Document>).
 
@@ -311,7 +311,7 @@ to change without notice.
 
 =item create_annotations( -doc => $doc )
 
-Given a L<Perl::Critic::Document|Perl::Critic::Document>, finds all the C<"## no critic">
+Given a L<Perl::Critic::Document|Perl::Critic::Document>, finds all the C<"## no refactor">
 annotations and constructs a new C<Perl::Critic::Annotation> for each
 one and returns them.  The order of the returned objects is not
 defined.  It is generally expected that clients will use this
@@ -330,7 +330,7 @@ constructor directly.
 
 Returns a reference to a new Annotation object.  The B<-element>
 argument is required and should be a C<PPI::Token::Comment> that
-conforms to the C<"## no critic"> syntax.
+conforms to the C<"## no refactor"> syntax.
 
 
 =back

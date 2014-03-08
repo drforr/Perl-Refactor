@@ -88,8 +88,8 @@ sub _cast {
     # return (varname, isref=0|1, isindex=0|1) if this could be a violation
     my ( $expr ) = @_;
     my $cast = shift @{$expr};
-    if ( $cast eq q{$#} || $cast eq q{@} ) { ## no critic(RequireInterpolationOfMetachars)
-        my $isindex = $cast eq q{$#} ? 1 : 0;  ## no critic(RequireInterpolationOfMetachars)
+    if ( $cast eq q{$#} || $cast eq q{@} ) { ## no refactor(RequireInterpolationOfMetachars)
+        my $isindex = $cast eq q{$#} ? 1 : 0;  ## no refactor(RequireInterpolationOfMetachars)
         my $arrvar = shift @{$expr};
         if ($arrvar->isa('PPI::Structure::Block')) {
             # look for [$#{$arr} ...] or [@{$arr} ...]

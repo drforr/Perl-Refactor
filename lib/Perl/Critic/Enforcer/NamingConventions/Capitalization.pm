@@ -170,7 +170,7 @@ sub supported_parameters {
         {
             name               => 'global_variable_exemptions',
             description        => 'Global variable names that are exempt from capitalization rules.  The values here are regexes that will be surrounded by \A and \z.',
-            default_string     => '\$VERSION @ISA @EXPORT(?:_OK)? %EXPORT_TAGS \$AUTOLOAD %ENV %SIG \$TODO',  ## no critic (RequireInterpolation)
+            default_string     => '\$VERSION @ISA @EXPORT(?:_OK)? %EXPORT_TAGS \$AUTOLOAD %ENV %SIG \$TODO',  ## no refactor (RequireInterpolation)
             behavior           => 'string list',
         },
         {

@@ -19,7 +19,7 @@ our $VERSION = '1.121';
 #-----------------------------------------------------------------------------
 
 Readonly::Scalar my $AT => q{@};
-Readonly::Scalar my $AT_ARG => q{@_}; ## no critic (InterpolationOfMetachars)
+Readonly::Scalar my $AT_ARG => q{@_}; ## no refactor (InterpolationOfMetachars)
 
 Readonly::Scalar my $DESC => q{Too many arguments};
 Readonly::Scalar my $EXPL => [182];

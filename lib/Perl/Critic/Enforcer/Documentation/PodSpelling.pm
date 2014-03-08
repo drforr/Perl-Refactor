@@ -190,7 +190,7 @@ sub _run_spell_command {
 
     eval {
         # temporarily add our special wordlist to this annoying global
-        local %Pod::Wordlist::Wordlist =    ## no critic (ProhibitPackageVars)
+        local %Pod::Wordlist::Wordlist =    ## no refactor (ProhibitPackageVars)
             %{ $self->_get_stop_words() };
 
         Pod::Spell->new()->parse_from_filehandle($infh, $outfh);
@@ -212,7 +212,7 @@ sub _run_spell_command {
         }
 
         # Why is this extra step needed???
-        @words = grep { not exists $Pod::Wordlist::Wordlist{$_} } @words;  ## no critic (ProhibitPackageVars)
+        @words = grep { not exists $Pod::Wordlist::Wordlist{$_} } @words;  ## no refactor (ProhibitPackageVars)
         1;
     }
         or do {
@@ -221,7 +221,7 @@ sub _run_spell_command {
                     $EVAL_ERROR
                 and not ref Perl::Critic::Exception::Fatal::Generic->caught()
             ) {
-                ref $EVAL_ERROR ? $EVAL_ERROR->rethrow() : die $EVAL_ERROR;  ## no critic (ErrorHandling::RequireCarping)
+                ref $EVAL_ERROR ? $EVAL_ERROR->rethrow() : die $EVAL_ERROR;  ## no refactor (ErrorHandling::RequireCarping)
             }
 
             return;

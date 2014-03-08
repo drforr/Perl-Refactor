@@ -102,7 +102,7 @@ sub load {
 
 
 sub connect_to_database {
-    my $database_file_name = 'perl_critic_analysis.sqlite';
+    my $database_file_name = 'perl_refactor_analysis.sqlite';
 
     my $database_connection =
         DBI->connect(
@@ -148,7 +148,7 @@ END_SQL
     # without calling bind_param() each time. See "Binding Values Without
     # bind_param()" on pages 126-7 of "Programming the Perl DBI".
 
-    ## no critic (ProhibitMagicNumbers)
+    ## no refactor (ProhibitMagicNumbers)
     $insert_statement->bind_param( 1, 'x', SQL_VARCHAR);
     $insert_statement->bind_param( 2,   1, SQL_INTEGER);
     $insert_statement->bind_param( 3,   1, SQL_INTEGER);
@@ -156,13 +156,13 @@ END_SQL
     $insert_statement->bind_param( 5, 'x', SQL_VARCHAR);
     $insert_statement->bind_param( 6, 'x', SQL_VARCHAR);
     $insert_statement->bind_param( 7, 'x', SQL_VARCHAR);
-    ## use critic
+    ## use refactor
 
     return $insert_statement;
 }
 
 
-sub execute_insert_statement {  ##no critic(ProhibitManyArgs)
+sub execute_insert_statement {  ##no refactor(ProhibitManyArgs)
     my (
         $statement,
         $file_path,
@@ -272,7 +272,7 @@ L<DBD::SQLite|DBD::SQLite>
 L<Perl6::Say|Perl6::Say>
 L<Readonly|Readonly>
 
-An SQLite database named "perl_critic_analysis.sqlite" with the
+An SQLite database named "perl_refactor_analysis.sqlite" with the
 following schema:
 
   CREATE TABLE violation (

@@ -19,7 +19,7 @@ our $VERSION = '1.121';
 
 Readonly::Scalar my $EXPL => q{Don't use whitespace at the end of lines};
 
-## no critic (RequireInterpolationOfMetachars)
+## no refactor (RequireInterpolationOfMetachars)
 Readonly::Hash my %C_STYLE_ESCAPES =>
     (
         ord "\t" => q{\t},
@@ -30,7 +30,7 @@ Readonly::Hash my %C_STYLE_ESCAPES =>
         ord "\a" => q{\a},
         ord "\e" => q{\e},
     );
-## use critic
+## use refactor
 
 #-----------------------------------------------------------------------------
 
@@ -75,7 +75,7 @@ sub _escape {
     # is not supported, then just substitute something.
 
 
-    ## no critic (RequireInterpolationOfMetachars)
+    ## no refactor (RequireInterpolationOfMetachars)
     if ( charnames->can( 'viacode' ) ) {
         return q/\N{/ . charnames::viacode($ordinal) . q/}/;
     }

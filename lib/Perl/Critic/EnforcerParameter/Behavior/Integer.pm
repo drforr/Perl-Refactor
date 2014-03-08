@@ -26,7 +26,7 @@ sub initialize_parameter {
             # Normally bad thing, obscuring a variable in a outer scope
             # with a variable with the same name is being done here in
             # order to remain consistent with the parser function interface.
-            my ($enforcer, $parameter, $config_string) = @_;  ## no critic(Variables::ProhibitReusedNames)
+            my ($enforcer, $parameter, $config_string) = @_;  ## no refactor(Variables::ProhibitReusedNames)
 
             my $value_string = $parameter->get_default_string();
 

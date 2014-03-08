@@ -146,7 +146,7 @@ details.
 
 =head1 ADDING A GLOBAL CONFIGURATION ITEM
 
-Perlcritic handles global configuration items and command line options
+Perlrefactor handles global configuration items and command line options
 in very similar ways. These notes will cover adding both a global
 configuration item and a corresponding, same-named command option.
 These notes can not, of course, cover implementing the functionality

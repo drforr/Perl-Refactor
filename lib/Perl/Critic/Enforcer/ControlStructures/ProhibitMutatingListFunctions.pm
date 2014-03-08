@@ -40,13 +40,13 @@ sub _is_topic {
     my $elem = shift;
     return defined $elem
         && $elem->isa('PPI::Token::Magic')
-            && $elem eq q{$_}; ##no critic (InterpolationOfMetachars)
+            && $elem eq q{$_}; ##no refactor (InterpolationOfMetachars)
 }
 
 
 #-----------------------------------------------------------------------------
 
-Readonly::Scalar my $DESC => q{Don't modify $_ in list functions};  ##no critic (InterpolationOfMetachars)
+Readonly::Scalar my $DESC => q{Don't modify $_ in list functions};  ##no refactor (InterpolationOfMetachars)
 Readonly::Scalar my $EXPL => [ 114 ];
 
 #-----------------------------------------------------------------------------
@@ -230,7 +230,7 @@ sub _is_topic_mutating_substr {
 #-----------------------------------------------------------------------------
 
 {
-    ##no critic(ArgUnpacking)
+    ##no refactor(ArgUnpacking)
 
     my %assignment_ops = hashify qw(
         = *= /= += -= %= **= x= .= &= |= ^=  &&= ||= <<= >>= //= ++ --

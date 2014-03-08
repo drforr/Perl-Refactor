@@ -26,7 +26,7 @@ print "\n\nGenerating $test_file_name.\n";
 
 
 
-open my $test_file, '>', $test_file_name    ## no critic (RequireBriefOpen)
+open my $test_file, '>', $test_file_name    ## no refactor (RequireBriefOpen)
     or confess "Could not open $test_file_name: $ERRNO";
 
 

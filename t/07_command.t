@@ -214,7 +214,7 @@ foreach my $severity ([qw{
 # Intercept pod2usage so we can test invalid options and special switches
 
 {
-    no warnings qw(redefine once); ## no critic (ProhibitNoWarnings)
+    no warnings qw(redefine once); ## no refactor (ProhibitNoWarnings)
     local *Perl::Critic::Command::pod2usage =
         sub { my %args = @_; confess $args{-message} || q{} };
 

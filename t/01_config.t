@@ -333,7 +333,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
     );
 
     # Can't use IO::Interactive here because we /don't/ want to check STDIN.
-    my $color = -t *STDOUT ? $TRUE : $FALSE; ## no critic (ProhibitInteractiveTest)
+    my $color = -t *STDOUT ? $TRUE : $FALSE; ## no refactor (ProhibitInteractiveTest)
 
     my %undef_args = map { $_ => undef } @switches;
     my $c = Perl::Critic::Config->new( %undef_args );
@@ -500,7 +500,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
     eval{ Perl::Critic::Config->new( -severity => 'bogus' ) };
     like(
         $EVAL_ERROR,
-        qr/The value for the global "-severity" option [(]"bogus"[)] is not one of the valid severity names/ms, ## no critic (RequireExtendedFormatting)
+        qr/The value for the global "-severity" option [(]"bogus"[)] is not one of the valid severity names/ms, ## no refactor (RequireExtendedFormatting)
         'invalid severity'
     );
 
@@ -530,7 +530,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
     );
 
     # Pretend that ProhibitQuotedWordLists is actually unsafe
-    no warnings qw(redefine once);  ## no critic qw(ProhibitNoWarnings)
+    no warnings qw(redefine once);  ## no refactor qw(ProhibitNoWarnings)
     local *Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists::is_safe = sub {return 0};
 
     my %safe_pc_config = (-severity => 1, -only => 1, -profile => \%profile);

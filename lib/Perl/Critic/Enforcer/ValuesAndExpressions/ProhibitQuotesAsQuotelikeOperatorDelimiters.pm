@@ -152,9 +152,9 @@ sub violates {
 sub _info_for_single_character_operator {
     my ( $elem ) = @_;
 
-    ## no critic (ProhibitParensWithBuiltins)
+    ## no refactor (ProhibitParensWithBuiltins)
     return ( substr ($elem, 0, 1), substr ($elem, 1, 1) );
-    ## use critic
+    ## use refactor
 }
 
 #-----------------------------------------------------------------------------
@@ -162,9 +162,9 @@ sub _info_for_single_character_operator {
 sub _info_for_two_character_operator {
     my ( $elem ) = @_;
 
-    ## no critic (ProhibitParensWithBuiltins)
+    ## no refactor (ProhibitParensWithBuiltins)
     return ( substr ($elem, 0, 2), substr ($elem, 2, 1) );
-    ## use critic
+    ## use refactor
 }
 
 #-----------------------------------------------------------------------------

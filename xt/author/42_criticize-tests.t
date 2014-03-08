@@ -44,7 +44,7 @@ if ( $ENV{PERL_CRITIC_CACHE} ) {
     my $cache_path =
         File::Spec->catdir(
             File::Spec->tmpdir,
-            "test-perl-critic-cache-$ENV{USER}",
+            "test-perl-refactor-cache-$ENV{USER}",
         );
     if ( ! -d $cache_path) {
         mkdir $cache_path, oct 700;
@@ -53,12 +53,12 @@ if ( $ENV{PERL_CRITIC_CACHE} ) {
 }
 
 #-----------------------------------------------------------------------------
-# Run critic against all of our own files
+# Run refactor against all of our own files
 
 my $rcfile = File::Spec->catfile( 'xt', 'author', '42_perlrefactorrc-tests' );
 Test::Perl::Critic->import( -profile => $rcfile );
 
-all_critic_ok(
+all_refactor_ok(
     glob ('t/*.t'),
     glob ('xt/author/*.t'),
     'generate_without_optional_dependencies_wrappers.PL',

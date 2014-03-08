@@ -39,7 +39,7 @@ sub generate_enforcer_summary {
     my @policies = $configuration->all_policies_enabled_or_not();
     my $enforcer_summary = 'lib/Perl/Critic/EnforcerSummary.pod';
 
-    ## no critic (RequireBriefOpen)
+    ## no refactor (RequireBriefOpen)
     open my $pod_file, '>', $enforcer_summary
       or confess "Could not open $enforcer_summary: $ERRNO";
 

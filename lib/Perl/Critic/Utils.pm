@@ -212,7 +212,7 @@ Readonly::Scalar our $FALSE        => 0;
 
 
 #-----------------------------------------------------------------------------
-## no critic (ProhibitNoisyQuotes);
+## no refactor (ProhibitNoisyQuotes);
 
 Readonly::Hash my %PRECEDENCE_OF => (
     '->'   => 1,
@@ -310,14 +310,14 @@ Readonly::Hash my %PRECEDENCE_OF => (
     'xor'  => 24,
 );
 
-## use critic
+## use refactor
 
 Readonly::Scalar my $MIN_PRECEDENCE_TO_TERMINATE_PARENLESS_ARG_LIST =>
     precedence_of( 'not' );
 
 #-----------------------------------------------------------------------------
 
-sub hashify {  ## no critic (ArgUnpacking)
+sub hashify {  ## no refactor (ArgUnpacking)
     return map { $_ => 1 } @_;
 }
 
@@ -325,7 +325,7 @@ sub hashify {  ## no critic (ArgUnpacking)
 
 sub interpolate {
     my ( $literal ) = @_;
-    return eval "\"$literal\"" || confess $EVAL_ERROR;  ## no critic (StringyEval);
+    return eval "\"$literal\"" || confess $EVAL_ERROR;  ## no refactor (StringyEval);
 }
 
 #-----------------------------------------------------------------------------
@@ -351,7 +351,7 @@ sub _name_for_sub_or_stringified_element {
 }
 
 #-----------------------------------------------------------------------------
-## no critic (ProhibitPackageVars)
+## no refactor (ProhibitPackageVars)
 
 Readonly::Hash my %BUILTINS => hashify( @B::Keywords::Functions );
 
@@ -382,7 +382,7 @@ sub _build_globals_without_sigils {
             @B::Keywords::Arrays,
             @B::Keywords::Hashes,
             @B::Keywords::Scalars,
-            '$\\'; ## no critic (RequireInterpolationOfMetachars)
+            '$\\'; ## no refactor (RequireInterpolationOfMetachars)
 
     # Not all of these have sigils
     foreach my $filehandle (@B::Keywords::Filehandles) {
@@ -416,7 +416,7 @@ sub is_perl_filehandle {
     return exists $FILEHANDLES{ _name_for_sub_or_stringified_element($elem) };
 }
 
-## use critic
+## use refactor
 #-----------------------------------------------------------------------------
 
 # egrep '=item.*LIST' perlfunc.pod
@@ -641,7 +641,7 @@ sub is_perl_builtin_with_one_argument {
 
 #-----------------------------------------------------------------------------
 
-## no critic (ProhibitPackageVars)
+## no refactor (ProhibitPackageVars)
 Readonly::Hash my %BUILTINS_WHICH_TAKE_OPTIONAL_ARGUMENT =>
     hashify(
         grep { not exists $BUILTINS_WHICH_TAKE_ONE_ARGUMENT{ $_ } }
@@ -649,7 +649,7 @@ Readonly::Hash my %BUILTINS_WHICH_TAKE_OPTIONAL_ARGUMENT =>
         grep { not exists $BUILTINS_WHICH_TAKE_MULTIPLE_ARGUMENTS{ $_ } }
         @B::Keywords::Functions
     );
-## use critic
+## use refactor
 
 sub is_perl_builtin_with_optional_argument {
     my $elem = shift;
@@ -843,7 +843,7 @@ sub is_script {
 
     warnings::warnif(
         'deprecated',
-        'Perl::Critic::Utils::is_script($doc) deprecated, use $doc->is_program() instead.',  ## no critic (ValuesAndExpressions::RequireInterpolationOfMetachars)
+        'Perl::Critic::Utils::is_script($doc) deprecated, use $doc->is_program() instead.',  ## no refactor (ValuesAndExpressions::RequireInterpolationOfMetachars)
     );
 
     return $doc->is_program()
@@ -856,7 +856,7 @@ sub is_script {
 
 #-----------------------------------------------------------------------------
 
-sub _is_PL_file {  ## no critic (NamingConventions::Capitalization)
+sub _is_PL_file {  ## no refactor (NamingConventions::Capitalization)
     my ($doc) = @_;
     return if not $doc->can('filename');
     my $filename = $doc->filename() || return;
@@ -1188,7 +1188,7 @@ sub is_unchecked_call {
         # the elements to this statement to see if we find 'or' or '||'.
 
         my $or_operators = sub  {
-            my (undef, $elem) = @_;  ## no critic(Variables::ProhibitReusedNames)
+            my (undef, $elem) = @_;  ## no refactor(Variables::ProhibitReusedNames)
             return if not $elem->isa('PPI::Token::Operator');
             return if $elem ne q{or} && $elem ne q{||};
             return 1;

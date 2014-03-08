@@ -66,7 +66,7 @@ sub applies_to {
 
 
 # This list matches the initialization of %PPI::Token::Magic::magic.
-## no critic (ValuesAndExpressions::RequireInterpolationOfMetachars)
+## no refactor (ValuesAndExpressions::RequireInterpolationOfMetachars)
 Readonly::Array my @MAGIC_VARIABLES =>
     qw{
         $1 $2 $3 $4 $5 $6 $7 $8 $9
@@ -86,7 +86,7 @@ Readonly::Array my @MAGIC_VARIABLES =>
     q<$#>,
     q<$#+>,
     q<$#->;
-## use critic
+## use refactor
 
 # The main regular expression for detecting magic variables.
 Readonly::Scalar my $MAGIC_REGEX => _create_magic_detector();
@@ -94,7 +94,7 @@ Readonly::Scalar my $MAGIC_REGEX => _create_magic_detector();
 # The magic vars in this array will be ignored in interpolated strings
 # in simple mode. See CONFIGURATION in the pod.
 Readonly::Array my @IGNORE_FOR_INTERPOLATION =>
-    ( q{$'}, q{$$}, q{$#}, q{$:}, );    ## no critic ( RequireInterpolationOfMetachars, ProhibitQuotedWordLists )
+    ( q{$'}, q{$$}, q{$#}, q{$:}, );    ## no refactor ( RequireInterpolationOfMetachars, ProhibitQuotedWordLists )
 
 #-----------------------------------------------------------------------------
 
@@ -216,7 +216,7 @@ sub _strings_thorough {
 
         # possibly *not* a magic variable
         if ($c =~ m/ ^  \$  .*  [  \w  :  \$  {  ]  $ /xms) {
-            ## no critic (RequireInterpolationOfMetachars)
+            ## no refactor (RequireInterpolationOfMetachars)
 
             if (
                     $c =~ m/ ^(\$(?:\_[\w:]|::)) /xms

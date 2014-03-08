@@ -39,7 +39,7 @@ my $numvars = @globals - keys %exemptions;
 my $numcarats = grep {!$exemptions{$_} && m/ $carat_re /xms} @globals;
 
 
-open my $test_file, '>', $test_file_name    ## no critic (RequireBriefOpen)
+open my $test_file, '>', $test_file_name    ## no refactor (RequireBriefOpen)
     or confess "Could not open $test_file_name: $ERRNO";
 
 print_header($test_file);

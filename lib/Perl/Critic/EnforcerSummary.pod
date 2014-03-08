@@ -254,11 +254,11 @@ Do not use C<tie>. [Default severity 2]
 
 =head2 L<Miscellanea::ProhibitUnrestrictedNoCritic|Perl::Critic::Enforcer::Miscellanea::ProhibitUnrestrictedNoCritic>
 
-Forbid a bare C<## no critic> [Default severity 3]
+Forbid a bare C<## no refactor> [Default severity 3]
 
 =head2 L<Miscellanea::ProhibitUselessNoCritic|Perl::Critic::Enforcer::Miscellanea::ProhibitUselessNoCritic>
 
-Remove ineffective "## no critic" annotations. [Default severity 2]
+Remove ineffective "## no refactor" annotations. [Default severity 2]
 
 =head2 L<Modules::ProhibitAutomaticExportation|Perl::Critic::Enforcer::Modules::ProhibitAutomaticExportation>
 

@@ -14,7 +14,7 @@ our $VERSION = '1.121';
 #-----------------------------------------------------------------------------
 
 Readonly::Scalar my $DESC => q{Symbols are exported by default};
-Readonly::Scalar my $EXPL => q{Use '@EXPORT_OK' or '%EXPORT_TAGS' instead};  ## no critic (RequireInterpolation)
+Readonly::Scalar my $EXPL => q{Use '@EXPORT_OK' or '%EXPORT_TAGS' instead};  ## no refactor (RequireInterpolation)
 
 #-----------------------------------------------------------------------------
 
@@ -67,7 +67,7 @@ sub _our_export {
     $elem->isa('PPI::Statement::Variable') or return 0;
     $elem->type() eq 'our' or return 0;
 
-    return any { $_ eq '@EXPORT' } $elem->variables(); ## no critic(RequireInterpolationOfMetachars)
+    return any { $_ eq '@EXPORT' } $elem->variables(); ## no refactor(RequireInterpolationOfMetachars)
 }
 
 #------------------

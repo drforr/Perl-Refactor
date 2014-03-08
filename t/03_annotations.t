@@ -45,7 +45,7 @@ EOD
 
 annotate( <<"EOD", 1, 'Single block annotation for entire document' );
 
-## no critic
+## no refactor
 
 print "Hello, world!\n";
 
@@ -68,7 +68,7 @@ SKIP: {
 annotate( <<"EOD", 1, 'Block annotation for block (sorry!)' );
 
 {
-    ## no critic
+    ## no refactor
 
     print "Hello, world!\n";
 }
@@ -98,7 +98,7 @@ SKIP: {
 
     annotate( <<"EOD", 1, 'Bogus annotation' );
 
-## no critic ( FroBozzBazzle )
+## no refactor ( FroBozzBazzle )
 
 print "Goodbye, cruel world!\n";
 
@@ -130,14 +130,14 @@ SKIP: {
     foreach my $fmt ( '(%s)', '( %s )', '"%s"', q<'%s'> ) {
         my $enforcer_name = $bundled_enforcer_names[$max++];
         $enforcer_name =~ s/ .* :: //smx;
-        $note = sprintf "no critic $fmt", $enforcer_name;
+        $note = sprintf "no refactor $fmt", $enforcer_name;
         push @annot, $note;
-        $doc .= "## $note\n## use critic\n";
+        $doc .= "## $note\n## use refactor\n";
         $enforcer_name = $bundled_enforcer_names[$max++];
         $enforcer_name =~ s/ .* :: //smx;
-        $note = sprintf "no critic qw$fmt", $enforcer_name;
+        $note = sprintf "no refactor qw$fmt", $enforcer_name;
         push @annot, $note;
-        $doc .= "## $note\n## use critic\n";
+        $doc .= "## $note\n## use refactor\n";
     }
 
     annotate( $doc, $max, 'Specific policies in various formats' );
@@ -167,7 +167,7 @@ SKIP: {
 annotate( <<"EOD", 1, 'Annotation on split statement' );
 
 my \$foo =
-    'bar'; ## no critic ($bundled_enforcer_names[0])
+    'bar'; ## no refactor ($bundled_enforcer_names[0])
 
 my \$baz = 'burfle';
 EOD
@@ -187,7 +187,7 @@ SKIP: {
 }
 
 annotate (<<'EOD', 1, 'Ensure annotations can span __END__' );
-## no critic (RequirePackageMatchesPodName)
+## no refactor (RequirePackageMatchesPodName)
 
 package Foo;
 
@@ -216,7 +216,7 @@ SKIP: {
                         # going away due to garbage collection of the parent.
     my @annotations;    # P::C::Annotation objects
 
-    sub annotate {  ## no critic (RequireArgUnpacking)
+    sub annotate {  ## no refactor (RequireArgUnpacking)
         my ( $source, $count, $title ) = @_;
         $doc = PPI::Document->new( \$source ) or do {
             @_ = ( "Can not make PPI::Document for $title" );

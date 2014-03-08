@@ -71,7 +71,7 @@ sub _get_character_class_violations {
         $elements{ _fixup( $element ) } = 1;
     }
 
-    for (my $i = 0; $i < @PATTERNS; $i += 2) {  ##no critic (CStyleForLoop)
+    for (my $i = 0; $i < @PATTERNS; $i += 2) {  ##no refactor (CStyleForLoop)
         if (all { exists $elements{$_} } @{$PATTERNS[$i]}) {
             my $neg = $anyof->negated();
             my $improvement = $PATTERNS[$i + 1]->[$neg ? 1 : 0];

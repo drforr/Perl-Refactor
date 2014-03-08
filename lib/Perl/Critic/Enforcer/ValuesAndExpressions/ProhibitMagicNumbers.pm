@@ -148,7 +148,7 @@ sub _determine_allowed_values {
                 $maximum += 0;
                 $increment += 0;
 
-                for (                       ## no critic (ProhibitCStyleForLoops)
+                for (                       ## no refactor (ProhibitCStyleForLoops)
                     my $value = $minimum;
                     $value <= $maximum;
                     $value += $increment
@@ -309,7 +309,7 @@ sub _element_is_in_an_include_readonly_or_version_statement {
                     my @variables = $parent->variables();
                     if (
                             scalar @variables == 1
-                        and $variables[0] eq '$VERSION' ## no critic (RequireInterpolationOfMetachars)
+                        and $variables[0] eq '$VERSION' ## no refactor (RequireInterpolationOfMetachars)
                     ) {
                         return 1;
                     }

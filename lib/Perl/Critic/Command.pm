@@ -259,7 +259,7 @@ sub _critique {
             }
             else {
                 die qq<Fatal error while critiquing "$file". Unfortunately, >,
-                    q<$@/$EVAL_ERROR >, ## no critic (RequireInterpolationOfMetachars)
+                    q<$@/$EVAL_ERROR >, ## no refactor (RequireInterpolationOfMetachars)
                     qq<is empty, so the reason can't be shown.\n>;
             }
         }
@@ -327,7 +327,7 @@ sub _set_up_pager {
     return if not $pager_command;
     return if not _at_tty();
 
-    open my $pager, q<|->, $pager_command  ## no critic (InputOutput::RequireBriefOpen)
+    open my $pager, q<|->, $pager_command  ## no refactor (InputOutput::RequireBriefOpen)
         or die qq<Unable to pipe to pager "$pager_command": $ERRNO\n>;
 
     $output = $pager;
@@ -563,7 +563,7 @@ sub _this_is_windows {
 #-----------------------------------------------------------------------------
 
 sub _at_tty {
-    return -t STDOUT; ## no critic (ProhibitInteractiveTest);
+    return -t STDOUT; ## no refactor (ProhibitInteractiveTest);
 }
 
 #-----------------------------------------------------------------------------
@@ -635,7 +635,7 @@ sub _render_enforcer_docs {
     my @matching_policies  = grep { $_ =~ m/$pattern/ixms } @site_policies;
 
     # "-T" means don't send to pager
-    my @perldoc_output = map {`perldoc -T $_`} @matching_policies;  ## no critic (ProhibitBacktick)
+    my @perldoc_output = map {`perldoc -T $_`} @matching_policies;  ## no refactor (ProhibitBacktick)
     _out @perldoc_output;
 
     exit $EXIT_SUCCESS;

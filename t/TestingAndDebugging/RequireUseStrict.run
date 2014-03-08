@@ -12,7 +12,7 @@ use strict;
 ## cut
 
 $foo = $bar;   ## This one violates.
-$baz = $nuts;  ## no critic;  This one is exempted
+$baz = $nuts;  ## no refactor;  This one is exempted
 $blamo;        ## This one should be squelched
 use strict;
 

@@ -86,12 +86,12 @@ sub new {
 
 #-----------------------------------------------------------------------------
 
-sub set_format { return $format = verbosity_to_format( $_[0] ); }  ## no critic(ArgUnpacking)
+sub set_format { return $format = verbosity_to_format( $_[0] ); }  ## no refactor(ArgUnpacking)
 sub get_format { return $format;         }
 
 #-----------------------------------------------------------------------------
 
-sub sort_by_location {  ## no critic(ArgUnpacking)
+sub sort_by_location {  ## no refactor(ArgUnpacking)
 
     ref $_[0] || shift;              # Can call as object or class method
     return scalar @_ if ! wantarray; # In case we are called in scalar context
@@ -106,7 +106,7 @@ sub sort_by_location {  ## no critic(ArgUnpacking)
 
 #-----------------------------------------------------------------------------
 
-sub sort_by_severity {  ## no critic(ArgUnpacking)
+sub sort_by_severity {  ## no refactor(ArgUnpacking)
 
     ref $_[0] || shift;              # Can call as object or class method
     return scalar @_ if ! wantarray; # In case we are called in scalar context
@@ -166,7 +166,7 @@ sub diagnostics {
     my $enforcer = $self->enforcer();
 
     if ( not $diagnostics{$enforcer} ) {
-        eval {              ## no critic (RequireCheckingReturnValueOfEval)
+        eval {              ## no refactor (RequireCheckingReturnValueOfEval)
             my $module_name = ref $enforcer || $enforcer;
             $diagnostics{$enforcer} =
                 trim_pod_section(

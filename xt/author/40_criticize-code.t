@@ -44,7 +44,7 @@ if ( $ENV{PERL_CRITIC_CACHE} ) {
     my $cache_path =
         File::Spec->catdir(
             File::Spec->tmpdir,
-            "test-perl-critic-cache-$ENV{USER}",
+            "test-perl-refactor-cache-$ENV{USER}",
         );
     if ( ! -d $cache_path) {
         mkdir $cache_path, oct 700;
@@ -61,12 +61,12 @@ foreach my $pkg ( $EMPTY, qw< ::Config ::Enforcer ::Violation> ) {
 }
 
 #-----------------------------------------------------------------------------
-# Run critic against all of our own files
+# Run refactor against all of our own files
 
 my $rcfile = File::Spec->catfile( 'xt', 'author', '40_perlrefactorrc-code' );
 Test::Perl::Critic->import( -profile => $rcfile );
 
-all_critic_ok( starting_points_including_examples() );
+all_refactor_ok( starting_points_including_examples() );
 
 #-----------------------------------------------------------------------------
 

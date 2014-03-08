@@ -166,29 +166,29 @@ sharing model, this shouldn't be an issue.
 
 =item * Add support in .run files for regexes for violation descriptions.
 
-=item * Add support for "## use critic (blah)".
+=item * Add support for "## use refactor (blah)".
 
 If I've got:
 
-    ## no critic (SomeEnforcer)
+    ## no refactor (SomeEnforcer)
 
     ...
 
-    ## no critic (ADifferentEnforcer)
+    ## no refactor (ADifferentEnforcer)
 
     ...
 
-    ## no critic (YetAnotherEnforcer)
+    ## no refactor (YetAnotherEnforcer)
 
 If I want to turn C<YetAnotherEnforcer> back on but neither C<SomeEnforcer> nor
 C<ADifferentEnforcer>, I've got to do this:
 
-    ## use critic
-    ## no critic (SomeEnforcer, ADifferentEnforcer)
+    ## use refactor
+    ## no refactor (SomeEnforcer, ADifferentEnforcer)
 
 Why can't I do this:
 
-    ## use critic (SomeOtherEnforcer)
+    ## use refactor (SomeOtherEnforcer)
 
 
 =item * Make color work on Windows.
@@ -575,11 +575,11 @@ it available to users.
 
 =item * Create constants for the PPI location array elements.
 
-=item * Some means of detecting "runaway" C<##no critic>
+=item * Some means of detecting "runaway" C<##no refactor>
 
 Elliot was talking to a couple of users at ETech and one of their major
-concerns was that they were using C<##no critic> and forgetting to do a
-C<##use critic> after the problematic section.  Perhaps an option to
+concerns was that they were using C<##no refactor> and forgetting to do a
+C<##use refactor> after the problematic section.  Perhaps an option to
 F<perlrefactor> to scan for such things is in order.
 
 
@@ -600,7 +600,7 @@ Just like F<bin/perlrefactor> does now.
 If enabled, this turns on L<PPI::Cache|PPI::Cache>:
 
     require PPI::Cache;
-    my $cache_path = "/tmp/test-perl-critic-cache-$ENV{USER}";
+    my $cache_path = "/tmp/test-perl-refactor-cache-$ENV{USER}";
     mkdir $cache_path, oct 700 if (! -d $cache_path);
     PPI::Cache->import(path => $cache_path);
 

@@ -238,7 +238,7 @@ matches both patterns.  You can set the default value for this option in your
 
 
 (defcustom perlrefactor-force nil
-  "Directs \"perlrefactor\" to ignore the magical \"## no critic\"
+  "Directs \"perlrefactor\" to ignore the magical \"## no refactor\"
 pseudo-pragmas in the source code. You can set the default value for this
 option in your .perlrefactorrc file."
   :type '(boolean)
@@ -428,7 +428,7 @@ warnings those are displayed in a separate buffer."
                                    unless (null p)
                                    append p)))
                                         ;
-        (message "Perl critic...running")
+        (message "Perl refactor...running")
         ;; Seriously. Is this the nicest way to call
         ;; CALL-PROCESS-REGION with variadic arguments? This blows!
         ;; (apply FUNCTION (append STATIC-PART DYNAMIC-PART))
@@ -458,11 +458,11 @@ warnings those are displayed in a separate buffer."
 		;; Ok!
                 (progn
                   (kill-buffer err-buf)
-                  (message "Perl critic...ok"))
+                  (message "Perl refactor...ok"))
 
 
 	      ;; Not ok!
-	      (message "Perl critic...not ok")
+	      (message "Perl refactor...not ok")
 
               ;; Set up the output buffer now I know it'll be used.  I
               ;; scooped the guts out of compile-internal. It is
@@ -655,7 +655,7 @@ require that the perl document exist in a file anywhere."
       (add-hook 'write-file-hooks 'perlrefactor-write-hook)
     (remove-hook 'write-file-hooks 'perlrefactor-write-hook)))
 
-;; Make a nice name for perl critic mode. This string will appear at
+;; Make a nice name for perl refactor mode. This string will appear at
 ;; the bottom of the screen.
 (if (not (assq 'perlrefactor-mode minor-mode-alist))
     (setq minor-mode-alist

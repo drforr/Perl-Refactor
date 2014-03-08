@@ -24,7 +24,7 @@ our $VERSION = '1.121';
 ILLEGAL_RULES: {
 
     my @invalid_rules = (
-        '$cosmetic',    ## no critic (RequireInterpolationOfMetachars)
+        '$cosmetic',    ## no refactor (RequireInterpolationOfMetachars)
         '"cosmetic"',
         '#cosmetic > bugs',
         'cosmetic / bugs',

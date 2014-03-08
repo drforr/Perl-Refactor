@@ -463,7 +463,7 @@ below the C<=head1> level.  Also, it does not require the sections to
 appear in any particular order.
 
 This Enforcer applies to the entire document, but can be disabled for a
-particular document by a C<## no critic (RequirePodSections)> annotation
+particular document by a C<## no refactor (RequirePodSections)> annotation
 anywhere between the beginning of the document and the first POD section
 containing a C<=head1>, the C<__END__> (if any), or the C<__DATA__> (if any),
 whichever comes first.

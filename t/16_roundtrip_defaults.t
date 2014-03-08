@@ -219,7 +219,7 @@ SKIP: {
             $enforcer_test_count
         if not $enforcer_counts_match;
 
-    for (my $x = 0; $x < @default_policies; $x++) { ## no critic (ProhibitCStyleForLoops)
+    for (my $x = 0; $x < @default_policies; $x++) { ## no refactor (ProhibitCStyleForLoops)
         my $derived_enforcer = $derived_policies[$x];
         my $default_enforcer = $default_policies[$x];
 

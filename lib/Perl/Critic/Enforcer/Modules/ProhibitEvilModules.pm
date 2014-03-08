@@ -196,7 +196,7 @@ sub _handle_module_specification {
         # These are module name patterns (e.g. /Acme/)
         my $actual_regex;
 
-        eval { $actual_regex = qr/$regex_string/; 1 }  ## no critic (ExtendedFormatting, LineBoundaryMatching, DotMatchAnything)
+        eval { $actual_regex = qr/$regex_string/; 1 }  ## no refactor (ExtendedFormatting, LineBoundaryMatching, DotMatchAnything)
             or throw_enforcer_value
                 enforcer         => $self->get_short_name(),
                 option_name    => $arguments{option_name},

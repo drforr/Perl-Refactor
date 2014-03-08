@@ -70,7 +70,7 @@ sub statistics {
 
 #-----------------------------------------------------------------------------
 
-sub critique {  ## no critic (ArgUnpacking)
+sub critique {  ## no refactor (ArgUnpacking)
 
     #-------------------------------------------------------------------
     # This subroutine can be called as an object method or as a static
@@ -265,9 +265,9 @@ native Perl::Critic API, but it should give you a good idea of what it does.
 You can also invoke the perlrefactor web-service from the command-line by doing
 an HTTP-post, such as one of these:
 
-    $> lwp-request -m POST http://perlrefactor.com/perl/critic.pl < MyModule.pm
-    $> wget -q -O - --post-file=MyModule.pm http://perlrefactor.com/perl/critic.pl
-    $> curl --data @MyModule.pm http://perlrefactor.com/perl/critic.pl
+    $> lwp-request -m POST http://perlrefactor.com/perl/refactor.pl < MyModule.pm
+    $> wget -q -O - --post-file=MyModule.pm http://perlrefactor.com/perl/refactor.pl
+    $> curl --data @MyModule.pm http://perlrefactor.com/perl/refactor.pl
 
 Please note that the perlrefactor web-service is still alpha code.  The
 URL and interface to the service are subject to change.
@@ -406,7 +406,7 @@ L<Perl::Critic::Utils::Constants/"$PROFILE_STRICTNESS_QUIET"> makes
 Perl::Critic shut up about these things.
 
 B<-force> is a boolean value that controls whether Perl::Critic
-observes the magical C<"## no critic"> annotations in your code.
+observes the magical C<"## no refactor"> annotations in your code.
 If set to a true value, Perl::Critic will analyze all code.  If set to
 a false value (which is the default) Perl::Critic will ignore code
 that is tagged with these annotations.  See L<"BENDING THE RULES"> for
@@ -746,38 +746,38 @@ standards and that you have a Damn Good Reason (DGR) for doing so.
 To help with those situations, you can direct Perl::Critic to ignore
 certain lines or blocks of code by using annotations:
 
-    require 'LegacyLibaray1.pl';  ## no critic
-    require 'LegacyLibrary2.pl';  ## no critic
+    require 'LegacyLibaray1.pl';  ## no refactor
+    require 'LegacyLibrary2.pl';  ## no refactor
 
     for my $element (@list) {
 
-        ## no critic
+        ## no refactor
 
         $foo = "";               #Violates 'ProhibitEmptyQuotes'
         $barf = bar() if $foo;   #Violates 'ProhibitPostfixControls'
         #Some more evil code...
 
-        ## use critic
+        ## use refactor
 
         #Some good code...
         do_something($_);
     }
 
-The C<"## no critic"> annotations direct Perl::Critic to ignore the remaining
-lines of code until a C<"## use critic"> annotation is found. If the C<"## no
-critic"> annotation is on the same line as a code statement, then only that
+The C<"## no refactor"> annotations direct Perl::Critic to ignore the remaining
+lines of code until a C<"## use refactor"> annotation is found. If the C<"## no
+refactor"> annotation is on the same line as a code statement, then only that
 line of code is overlooked.  To direct perlrefactor to ignore the C<"## no
-critic"> annotations, use the C<--force> option.
+refactor"> annotations, use the C<--force> option.
 
-A bare C<"## no critic"> annotation disables all the active Policies.  If
+A bare C<"## no refactor"> annotation disables all the active Policies.  If
 you wish to disable only specific Policies, add a list of Enforcer names
 as arguments, just as you would for the C<"no strict"> or C<"no
 warnings"> pragmas.  For example, this would disable the
 C<ProhibitEmptyQuotes> and C<ProhibitPostfixControls> policies until
-the end of the block or until the next C<"## use critic"> annotation
+the end of the block or until the next C<"## use refactor"> annotation
 (whichever comes first):
 
-    ## no critic (EmptyQuotes, PostfixControls)
+    ## no refactor (EmptyQuotes, PostfixControls)
 
     # Now exempt from ValuesAndExpressions::ProhibitEmptyQuotes
     $foo = "";
@@ -788,11 +788,11 @@ the end of the block or until the next C<"## use critic"> annotation
     # Still subjected to ValuesAndExpression::RequireNumberSeparators
     $long_int = 10000000000;
 
-Since the Enforcer names are matched against the C<"## no critic">
+Since the Enforcer names are matched against the C<"## no refactor">
 arguments as regular expressions, you can abbreviate the Enforcer names
 or disable an entire family of Policies in one shot like this:
 
-    ## no critic (NamingConventions)
+    ## no refactor (NamingConventions)
 
     # Now exempt from NamingConventions::Capitalization
     my $camelHumpVar = 'foo';
@@ -802,25 +802,25 @@ or disable an entire family of Policies in one shot like this:
 
 The argument list must be enclosed in parentheses and must contain one
 or more comma-separated barewords (e.g. don't use quotes).  The
-C<"## no critic"> annotations can be nested, and Policies named by an
+C<"## no refactor"> annotations can be nested, and Policies named by an
 inner annotation will be disabled along with those already disabled an
 outer annotation.
 
 Some Policies like C<Subroutines::ProhibitExcessComplexity> apply to
-an entire block of code.  In those cases, C<"## no critic"> must
+an entire block of code.  In those cases, C<"## no refactor"> must
 appear on the line where the violation is reported.  For example:
 
-    sub complicated_function {  ## no critic (ProhibitExcessComplexity)
+    sub complicated_function {  ## no refactor (ProhibitExcessComplexity)
         # Your code here...
     }
 
 Policies such as C<Documentation::RequirePodSections> apply to the
 entire document, in which case violations are reported at line 1.
 
-Use this feature wisely.  C<"## no critic"> annotations should be used in the
+Use this feature wisely.  C<"## no refactor"> annotations should be used in the
 smallest possible scope, or only on individual lines of code. And you
 should always be as specific as possible about which Policies you want
-to disable (i.e. never use a bare C<"## no critic">).  If Perl::Critic
+to disable (i.e. never use a bare C<"## no refactor">).  If Perl::Critic
 complains about your code, try and find a compliant solution before
 resorting to this feature.
 

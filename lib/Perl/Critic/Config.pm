@@ -229,7 +229,7 @@ sub _load_policies {
         # To load, or not to load -- that is the question.
         my $load_me = $self->only() ? $FALSE : $TRUE;
 
-        ## no critic (ProhibitPostfixControls)
+        ## no refactor (ProhibitPostfixControls)
         $load_me = $FALSE if     $self->_enforcer_is_disabled( $enforcer );
         $load_me = $TRUE  if     $self->_enforcer_is_enabled( $enforcer );
         $load_me = $FALSE if     $self->_enforcer_is_unimportant( $enforcer );
@@ -635,7 +635,7 @@ sub _validate_and_save_theme {
 
         # eval of an empty string does not reset $@ in Perl 5.6.
         local $EVAL_ERROR = $EMPTY;
-        eval $rule_as_code; ## no critic (ProhibitStringyEval, RequireCheckingReturnValueOfEval)
+        eval $rule_as_code; ## no refactor (ProhibitStringyEval, RequireCheckingReturnValueOfEval)
 
         if ($EVAL_ERROR) {
             $errors->add_exception(
@@ -678,7 +678,7 @@ sub _validate_and_save_pager {
         $pager = $profile->options_processor()->pager();
     }
 
-    if ($pager eq '$PAGER') {   ## no critic (RequireInterpolationOfMetachars)
+    if ($pager eq '$PAGER') {   ## no refactor (RequireInterpolationOfMetachars)
         $pager = $ENV{PAGER};
     }
     $pager ||= $EMPTY;
@@ -1316,7 +1316,7 @@ needs.
     security          Policies that relate to security issues
     tests             Policies that are specific to test programs
 
-Say C<`perlcritic -list`> to get a listing of all available policies
+Say C<`perlrefactor -list`> to get a listing of all available policies
 and the themes that are associated with each one.  You can also change
 the theme for any Enforcer in your F<.perlrefactorrc> file.  See the
 L<"CONFIGURATION"> section for more information about that.

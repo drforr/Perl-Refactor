@@ -30,7 +30,7 @@ sub supported_parameters {
         {
             name            => 'private_name_regex',
             description     => 'Pattern that determines what a private subroutine is.',
-            default_string  => '\b_\w+\b',  ## no critic (RequireInterpolationOfMetachars)
+            default_string  => '\b_\w+\b',  ## no refactor (RequireInterpolationOfMetachars)
             behavior        => 'string',
             parser          => \&_parse_private_name_regex,
         },
@@ -56,7 +56,7 @@ sub _parse_private_name_regex {
         or $config_string = $parameter->get_default_string();
 
     my $regex;
-    eval { $regex = qr/$config_string/; 1 } ## no critic (RegularExpressions)
+    eval { $regex = qr/$config_string/; 1 } ## no refactor (RegularExpressions)
         or $self->throw_parameter_value_exception(
             'private_name_regex',
             $config_string,

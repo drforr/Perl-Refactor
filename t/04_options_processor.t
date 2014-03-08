@@ -20,7 +20,7 @@ our $VERSION = '1.121';
 
 {
     # Can't use IO::Interactive here because we /don't/ want to check STDIN.
-    my $color = -t *STDOUT ? $TRUE : $FALSE; ## no critic (ProhibitInteractiveTest)
+    my $color = -t *STDOUT ? $TRUE : $FALSE; ## no refactor (ProhibitInteractiveTest)
 
     my $processor = Perl::Critic::OptionsProcessor->new();
     is($processor->force(),    0,           'native default force');

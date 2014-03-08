@@ -38,9 +38,9 @@ DESCRIPTION
     does. You can also invoke the perlrefactor web-service from the
     command-line by doing an HTTP-post, such as one of these:
 
-        $> lwp-request -m POST http://perlrefactor.com/perl/critic.pl < MyModule.pm
-        $> wget -q -O - --post-file=MyModule.pm http://perlrefactor.com/perl/critic.pl
-        $> curl --data @MyModule.pm http://perlrefactor.com/perl/critic.pl
+        $> lwp-request -m POST http://perlrefactor.com/perl/refactor.pl < MyModule.pm
+        $> wget -q -O - --post-file=MyModule.pm http://perlrefactor.com/perl/refactor.pl
+        $> curl --data @MyModule.pm http://perlrefactor.com/perl/refactor.pl
 
     Please note that the perlrefactor web-service is still alpha code. The URL
     and interface to the service are subject to change.
@@ -173,7 +173,7 @@ CONSTRUCTOR
         these things.
 
         -force is a boolean value that controls whether Perl::Critic
-        observes the magical "## no critic" annotations in your code. If set
+        observes the magical "## no refactor" annotations in your code. If set
         to a true value, Perl::Critic will analyze all code. If set to a
         false value (which is the default) Perl::Critic will ignore code
         that is tagged with these annotations. See "BENDING THE RULES" for
@@ -480,37 +480,37 @@ BENDING THE RULES
     To help with those situations, you can direct Perl::Critic to ignore
     certain lines or blocks of code by using annotations:
 
-        require 'LegacyLibaray1.pl';  ## no critic
-        require 'LegacyLibrary2.pl';  ## no critic
+        require 'LegacyLibaray1.pl';  ## no refactor
+        require 'LegacyLibrary2.pl';  ## no refactor
 
         for my $element (@list) {
 
-            ## no critic
+            ## no refactor
 
             $foo = "";               #Violates 'ProhibitEmptyQuotes'
             $barf = bar() if $foo;   #Violates 'ProhibitPostfixControls'
             #Some more evil code...
 
-            ## use critic
+            ## use refactor
 
             #Some good code...
             do_something($_);
         }
 
-    The "## no critic" annotations direct Perl::Critic to ignore the
-    remaining lines of code until a "## use critic" annotation is found. If
-    the ""## no critic"" annotation is on the same line as a code statement,
+    The "## no refactor" annotations direct Perl::Critic to ignore the
+    remaining lines of code until a "## use refactor" annotation is found. If
+    the ""## no refactor"" annotation is on the same line as a code statement,
     then only that line of code is overlooked. To direct perlrefactor to
-    ignore the ""## no critic"" annotations, use the "--force" option.
+    ignore the ""## no refactor"" annotations, use the "--force" option.
 
-    A bare "## no critic" annotation disables all the active Policies. If
+    A bare "## no refactor" annotation disables all the active Policies. If
     you wish to disable only specific Policies, add a list of Enforcer names
     as arguments, just as you would for the "no strict" or ""no warnings""
     pragmas. For example, this would disable the "ProhibitEmptyQuotes" and
     "ProhibitPostfixControls" policies until the end of the block or until
-    the next "## use critic" annotation (whichever comes first):
+    the next "## use refactor" annotation (whichever comes first):
 
-        ## no critic (EmptyQuotes, PostfixControls)
+        ## no refactor (EmptyQuotes, PostfixControls)
 
         # Now exempt from ValuesAndExpressions::ProhibitEmptyQuotes
         $foo = "";
@@ -521,11 +521,11 @@ BENDING THE RULES
         # Still subjected to ValuesAndExpression::RequireNumberSeparators
         $long_int = 10000000000;
 
-    Since the Enforcer names are matched against the "## no critic" arguments
+    Since the Enforcer names are matched against the "## no refactor" arguments
     as regular expressions, you can abbreviate the Enforcer names or disable
     an entire family of Policies in one shot like this:
 
-        ## no critic (NamingConventions)
+        ## no refactor (NamingConventions)
 
         # Now exempt from NamingConventions::Capitalization
         my $camelHumpVar = 'foo';
@@ -535,25 +535,25 @@ BENDING THE RULES
 
     The argument list must be enclosed in parentheses and must contain one
     or more comma-separated barewords (e.g. don't use quotes). The "## no
-    critic" annotations can be nested, and Policies named by an inner
+    refactor" annotations can be nested, and Policies named by an inner
     annotation will be disabled along with those already disabled an outer
     annotation.
 
     Some Policies like "Subroutines::ProhibitExcessComplexity" apply to an
-    entire block of code. In those cases, "## no critic" must appear on the
+    entire block of code. In those cases, "## no refactor" must appear on the
     line where the violation is reported. For example:
 
-        sub complicated_function {  ## no critic (ProhibitExcessComplexity)
+        sub complicated_function {  ## no refactor (ProhibitExcessComplexity)
             # Your code here...
         }
 
     Policies such as "Documentation::RequirePodSections" apply to the entire
     document, in which case violations are reported at line 1.
 
-    Use this feature wisely. "## no critic" annotations should be used in
+    Use this feature wisely. "## no refactor" annotations should be used in
     the smallest possible scope, or only on individual lines of code. And
     you should always be as specific as possible about which Policies you
-    want to disable (i.e. never use a bare "## no critic"). If Perl::Critic
+    want to disable (i.e. never use a bare "## no refactor"). If Perl::Critic
     complains about your code, try and find a compliant solution before
     resorting to this feature.
 

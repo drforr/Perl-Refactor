@@ -224,7 +224,7 @@ only the F<unnecessary> parentheses.  This enforcer makes exceptions for
 some common situations where parentheses are usually required.
 However, you may find other situations where the parentheses are
 necessary to enforce precedence, but they cause still violations.  In
-those cases, consider using the '## no critic' comments to silence
+those cases, consider using the '## no refactor' comments to silence
 Perl::Critic.
 
 

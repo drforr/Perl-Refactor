@@ -93,7 +93,7 @@ sub enforcer_is_thematic {
 
     my $as_code = $rule; #Making a copy, so $rule is preserved
     $as_code =~ s/ ( [\w\d]+ ) /exists $themes{$1} || 0/gexms;
-    my $is_thematic = eval $as_code;  ## no critic (ProhibitStringyEval)
+    my $is_thematic = eval $as_code;  ## no refactor (ProhibitStringyEval)
 
     if ($EVAL_ERROR) {
         throw_global_value

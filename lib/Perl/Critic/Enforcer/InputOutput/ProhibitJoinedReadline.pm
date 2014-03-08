@@ -13,7 +13,7 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Readonly::Scalar my $DESC => q{Use "local $/ = undef" or File::Slurp instead of joined readline}; ## no critic qw(InterpolationOfMetachars)
+Readonly::Scalar my $DESC => q{Use "local $/ = undef" or File::Slurp instead of joined readline}; ## no refactor qw(InterpolationOfMetachars)
 Readonly::Scalar my $EXPL => [213];
 
 #-----------------------------------------------------------------------------

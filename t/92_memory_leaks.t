@@ -42,7 +42,7 @@ eval 'use Test::Memory::Cycle; 1'
     # about it.  The particular input we use here does not seem to create
     # circular references.
 
-    my $code    = q<print foo(); split /this/, $that;>; ## no critic (RequireInterpolationOfMetachars)
+    my $code    = q<print foo(); split /this/, $that;>; ## no refactor (RequireInterpolationOfMetachars)
     my $ppi_doc    = PPI::Document->new( \$code );
     my $pc_doc     = Perl::Critic::Document->new( '-source' => $ppi_doc );
     my $refactor   = Perl::Critic->new( -severity => 1 );

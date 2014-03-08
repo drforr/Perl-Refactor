@@ -12,7 +12,7 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Readonly::Scalar my $DESC => q{Forbid $b before $a in sort blocks}; ## no critic (InterpolationOfMetachars)
+Readonly::Scalar my $DESC => q{Forbid $b before $a in sort blocks}; ## no refactor (InterpolationOfMetachars)
 Readonly::Scalar my $EXPL => [ 152 ];
 
 #-----------------------------------------------------------------------------

@@ -22,13 +22,13 @@ Readonly::Array our @EXPORT_OK => qw(
 
 #-----------------------------------------------------------------------------
 
-sub boolean_to_number {  ## no critic (RequireArgUnpacking)
+sub boolean_to_number {  ## no refactor (RequireArgUnpacking)
     return $_[0] ? $TRUE : $FALSE;
 }
 
 #-----------------------------------------------------------------------------
 
-sub dor {  ## no critic (RequireArgUnpacking)
+sub dor {  ## no refactor (RequireArgUnpacking)
     foreach (@_) {
         defined $_ and return $_;
     }
@@ -37,7 +37,7 @@ sub dor {  ## no critic (RequireArgUnpacking)
 
 #-----------------------------------------------------------------------------
 
-sub defined_or_empty {  ## no critic (RequireArgUnpacking)
+sub defined_or_empty {  ## no refactor (RequireArgUnpacking)
     return defined $_[0] ? $_[0] : $EMPTY;
 }
 

@@ -40,8 +40,8 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-require 'some_library.pl';  ## no critic
-print $crap if $condition;  ## no critic
+require 'some_library.pl';  ## no refactor
+print $crap if $condition;  ## no refactor
 
 1;
 END_PERL
@@ -52,7 +52,7 @@ is(
         {-profile => $profile, -severity => 1, -theme => 'core'}
     ),
     0,
-    'inline no-critic disables violations'
+    'inline no-refactor disables violations'
 );
 
 #-----------------------------------------------------------------------------
@@ -65,12 +65,12 @@ our $VERSION = 1.0;
 
 $foo = $bar;
 
-## no critic
+## no refactor
 
 require 'some_library.pl';
 print $crap if $condition;
 
-## use critic
+## use refactor
 
 $baz = $nuts;
 1;
@@ -82,7 +82,7 @@ is(
         {-profile => $profile, -severity => 1, -theme => 'core'},
     ),
     0,
-    'region no-critic',
+    'region no-refactor',
 );
 
 #-----------------------------------------------------------------------------
@@ -94,7 +94,7 @@ use warnings;
 our $VERSION = 1.0;
 
 for my $foo (@list) {
-  ## no critic
+  ## no refactor
   $long_int = 12345678;
   $oct_num  = 033;
 }
@@ -110,7 +110,7 @@ is(
         {-profile => $profile, -severity => 1, -theme => 'core'},
     ),
     1,
-    'scoped no-critic',
+    'scoped no-refactor',
 );
 
 #-----------------------------------------------------------------------------
@@ -122,7 +122,7 @@ use warnings;
 our $VERSION = 1.0;
 
 {
-  ## no critic
+  ## no refactor
   $long_int = 12345678;
   $oct_num  = 033;
 }
@@ -138,7 +138,7 @@ is(
         {-profile => $profile, -severity => 1, -theme => 'core'},
     ),
     1,
-    'scoped no-critic',
+    'scoped no-refactor',
 );
 
 #-----------------------------------------------------------------------------
@@ -149,13 +149,13 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-## no critic
+## no refactor
 for my $foo (@list) {
   $long_int = 12345678;
   $oct_num  = 033;
 }
 
-## use critic
+## use refactor
 my $noisy = '!';
 
 1;
@@ -167,7 +167,7 @@ is(
         {-profile => $profile, -severity => 1, -theme => 'core'},
     ),
     1,
-    'region no-critic across a scope',
+    'region no-refactor across a scope',
 );
 
 #-----------------------------------------------------------------------------
@@ -179,10 +179,10 @@ use warnings;
 our $VERSION = 1.0;
 
 for my $foo (@list) {
-  ## no critic
+  ## no refactor
   $long_int = 12345678;
   $oct_num  = 033;
-  ## use critic
+  ## use refactor
 }
 
 my $noisy = '!';
@@ -197,7 +197,7 @@ is(
         {-profile => $profile, -severity => 1, -theme => 'core'},
     ),
     2,
-    'scoped region no-critic',
+    'scoped region no-refactor',
 );
 
 #-----------------------------------------------------------------------------
@@ -208,7 +208,7 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-## no critic
+## no refactor
 for my $foo (@list) {
   $long_int = 12345678;
   $oct_num  = 033;
@@ -226,7 +226,7 @@ is(
         {-profile => $profile, -severity => 1, -theme => 'core'},
     ),
     0,
-    'unterminated no-critic across a scope',
+    'unterminated no-refactor across a scope',
 );
 
 #-----------------------------------------------------------------------------
@@ -237,11 +237,11 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-$long_int = 12345678;  ## no critic
-$oct_num  = 033;       ## no critic
-my $noisy = '!';       ## no critic
-my $empty = '';        ## no critic
-my $empty = '';        ## use critic
+$long_int = 12345678;  ## no refactor
+$oct_num  = 033;       ## no refactor
+my $noisy = '!';       ## no refactor
+my $empty = '';        ## no refactor
+my $empty = '';        ## use refactor
 
 1;
 END_PERL
@@ -252,7 +252,7 @@ is(
         {-profile => $profile, -severity => 1, -theme => 'core'},
     ),
     1,
-    'inline use-critic',
+    'inline use-refactor',
 );
 
 #-----------------------------------------------------------------------------
@@ -263,10 +263,10 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-$long_int = 12345678;  ## no critic
-$oct_num  = 033;       ## no critic
-my $noisy = '!';       ## no critic
-my $empty = '';        ## no critic
+$long_int = 12345678;  ## no refactor
+$oct_num  = 033;       ## no refactor
+my $noisy = '!';       ## no refactor
+my $empty = '';        ## no refactor
 
 $long_int = 12345678;
 $oct_num  = 033;
@@ -282,7 +282,7 @@ is(
         {-profile => $profile, -severity => 1, -theme => 'core'},
     ),
     5,
-    q<inline no-critic doesn't block later violations>,
+    q<inline no-refactor doesn't block later violations>,
 );
 
 #-----------------------------------------------------------------------------
@@ -293,12 +293,12 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-$long_int = 12345678;  ## no critic
-$oct_num  = 033;       ## no critic
-my $noisy = '!';       ## no critic
-my $empty = '';        ## no critic
+$long_int = 12345678;  ## no refactor
+$oct_num  = 033;       ## no refactor
+my $noisy = '!';       ## no refactor
+my $empty = '';        ## no refactor
 
-## no critic
+## no refactor
 $long_int = 12345678;
 $oct_num  = 033;
 my $noisy = '!';
@@ -330,13 +330,13 @@ use warnings;
 our $VERSION = 1.0;
 
 for my $foo (@list) {
-  ## no critic
+  ## no refactor
   $long_int = 12345678;
   $oct_num  = 033;
 }
 
-my $noisy = '!'; ## no critic
-my $empty = '';  ## no critic
+my $noisy = '!'; ## no refactor
+my $empty = '';  ## no refactor
 
 1;
 END_PERL
@@ -364,12 +364,12 @@ use warnings;
 our $VERSION = 1.0;
 
 for my $foo (@list) {
-  ## no critic
+  ## no refactor
   $long_int = 12345678;
   $oct_num  = 033;
 }
 
-## no critic
+## no refactor
 my $noisy = '!';
 my $empty = '';
 
@@ -391,7 +391,7 @@ is(
 );
 
 #-----------------------------------------------------------------------------
-# Check that '## no critic' on the top of a block doesn't extend
+# Check that '## no refactor' on the top of a block doesn't extend
 # to all code within the block.  See RT bug #15295
 
 $code = <<'END_PERL';
@@ -400,13 +400,13 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-for ($i;$i++;$i<$j) { ## no critic
+for ($i;$i++;$i<$j) { ## no refactor
     my $long_int = 12345678;
     my $oct_num  = 033;
 }
 
 unless ( $condition1
-         && $condition2 ) { ## no critic
+         && $condition2 ) { ## no refactor
     my $noisy = '!';
     my $empty = '';
 }
@@ -424,7 +424,7 @@ is(
 );
 
 #-----------------------------------------------------------------------------
-# Check that '## no critic' on the top of a block doesn't extend
+# Check that '## no refactor' on the top of a block doesn't extend
 # to all code within the block.  See RT bug #15295
 
 $code = <<'END_PERL';
@@ -433,7 +433,7 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-for ($i; $i++; $i<$j) { ## no critic
+for ($i; $i++; $i<$j) { ## no refactor
     my $long_int = 12345678;
     my $oct_num  = 033;
 }
@@ -442,7 +442,7 @@ for ($i; $i++; $i<$j) { ## no critic
 $Global::Variable = "foo";  #Package var; double-quotes
 
 unless ( $condition1
-         && $condition2 ) { ## no critic
+         && $condition2 ) { ## no refactor
     my $noisy = '!';
     my $empty = '';
 }
@@ -467,11 +467,11 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-sub grep {  ## no critic;
+sub grep {  ## no refactor;
     return $foo;
 }
 
-sub grep { return $foo; } ## no critic
+sub grep { return $foo; } ## no refactor
 1;
 END_PERL
 
@@ -481,7 +481,7 @@ is(
         {-profile  => $profile, -severity => 1, -theme => 'core'},
     ),
     0,
-    'no-critic on sub name',
+    'no-refactor on sub name',
 );
 
 #-----------------------------------------------------------------------------
@@ -492,7 +492,7 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-sub grep {  ## no critic;
+sub grep {  ## no refactor;
    return undef; #Should find this!
 }
 
@@ -505,7 +505,7 @@ is(
         {-profile  => $profile, -severity =>1, -theme => 'core'}
     ),
     1,
-    'no-critic on sub name',
+    'no-refactor on sub name',
 );
 
 #-----------------------------------------------------------------------------
@@ -516,7 +516,7 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-## no critic (NoisyQuotes)
+## no refactor (NoisyQuotes)
 my $noisy = '!';
 my $empty = '';
 eval $string;
@@ -530,7 +530,7 @@ is(
         {-profile  => $profile, -severity => 1, -theme => 'core'}
     ),
     2,
-    'per-enforcer no-critic',
+    'per-enforcer no-refactor',
 );
 
 #-----------------------------------------------------------------------------
@@ -541,7 +541,7 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-## no critic (ValuesAndExpressions)
+## no refactor (ValuesAndExpressions)
 my $noisy = '!';
 my $empty = '';
 eval $string;
@@ -555,7 +555,7 @@ is(
         {-profile  => $profile, -severity => 1, -theme => 'core'}
     ),
     1,
-    'per-enforcer no-critic',
+    'per-enforcer no-refactor',
 );
 
 #-----------------------------------------------------------------------------
@@ -566,7 +566,7 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-## no critic (Noisy, Empty)
+## no refactor (Noisy, Empty)
 my $noisy = '!';
 my $empty = '';
 eval $string;
@@ -580,7 +580,7 @@ is(
         {-profile  => $profile, -severity => 1, -theme => 'core'}
     ),
     1,
-    'per-enforcer no-critic',
+    'per-enforcer no-refactor',
 );
 
 #-----------------------------------------------------------------------------
@@ -591,7 +591,7 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-## no critic (NOISY, EMPTY, EVAL)
+## no refactor (NOISY, EMPTY, EVAL)
 my $noisy = '!';
 my $empty = '';
 eval $string;
@@ -605,7 +605,7 @@ is(
         {-profile  => $profile, -severity => 1, -theme => 'core'}
     ),
     0,
-    'per-enforcer no-critic',
+    'per-enforcer no-refactor',
 );
 
 #-----------------------------------------------------------------------------
@@ -616,12 +616,12 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-## no critic (Noisy, Empty, Eval)
+## no refactor (Noisy, Empty, Eval)
 my $noisy = '!';
 my $empty = '';
 eval $string;
 
-## use critic
+## use refactor
 my $noisy = '!';
 my $empty = '';
 eval $string;
@@ -635,7 +635,7 @@ is(
         {-profile  => $profile, -severity => 1, -theme => 'core'}
     ),
     3,
-    'per-enforcer no-critic',
+    'per-enforcer no-refactor',
 );
 
 #-----------------------------------------------------------------------------
@@ -646,7 +646,7 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-## no critic (Critic::Enforcer)
+## no refactor (Critic::Enforcer)
 my $noisy = '!';
 my $empty = '';
 eval $string;
@@ -660,7 +660,7 @@ is(
         {-profile  => $profile, -severity => 1, -theme => 'core'}
     ),
     0,
-    'per-enforcer no-critic',
+    'per-enforcer no-refactor',
 );
 
 #-----------------------------------------------------------------------------
@@ -671,7 +671,7 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-## no critic (Foo::Bar, Baz, Boom)
+## no refactor (Foo::Bar, Baz, Boom)
 my $noisy = '!';
 my $empty = '';
 eval $string;
@@ -685,7 +685,7 @@ is(
         {-profile  => $profile, -severity => 1, -theme => 'core'}
     ),
     3,
-    'per-enforcer no-critic',
+    'per-enforcer no-refactor',
 );
 
 #-----------------------------------------------------------------------------
@@ -696,16 +696,16 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-## no critic (Noisy)
+## no refactor (Noisy)
 my $noisy = '!';     #Should not find this
 my $empty = '';      #Should find this
 
 sub foo {
 
-   ## no critic (Empty)
+   ## no refactor (Empty)
    my $nosiy = '!';  #Should not find this
    my $empty = '';   #Should not find this
-   ## use critic;
+   ## use refactor;
 
    return 1;
 }
@@ -722,7 +722,7 @@ is(
         {-profile  => $profile, -severity => 1, -theme => 'core'}
     ),
     2,
-    'per-enforcer no-critic',
+    'per-enforcer no-refactor',
 );
 
 #-----------------------------------------------------------------------------
@@ -734,34 +734,34 @@ use warnings;
 our $VERSION = 1.0;
 
 # with parentheses
-my $noisy = '!';           ##no critic (NoisyQuotes)
-barf() unless $$ eq '';    ##no critic (Postfix,Empty,Punctuation)
-barf() unless $$ eq '';    ##no critic (Postfix , Empty , Punctuation)
-barf() unless $$ eq '';    ##no critic (Postfix Empty Punctuation)
+my $noisy = '!';           ##no refactor (NoisyQuotes)
+barf() unless $$ eq '';    ##no refactor (Postfix,Empty,Punctuation)
+barf() unless $$ eq '';    ##no refactor (Postfix , Empty , Punctuation)
+barf() unless $$ eq '';    ##no refactor (Postfix Empty Punctuation)
 
 # qw() style
-my $noisy = '!';           ##no critic qw(NoisyQuotes);
-barf() unless $$ eq '';    ##no critic qw(Postfix,Empty,Punctuation)
-barf() unless $$ eq '';    ##no critic qw(Postfix , Empty , Punctuation)
-barf() unless $$ eq '';    ##no critic qw(Postfix Empty Punctuation)
+my $noisy = '!';           ##no refactor qw(NoisyQuotes);
+barf() unless $$ eq '';    ##no refactor qw(Postfix,Empty,Punctuation)
+barf() unless $$ eq '';    ##no refactor qw(Postfix , Empty , Punctuation)
+barf() unless $$ eq '';    ##no refactor qw(Postfix Empty Punctuation)
 
 # with quotes
-my $noisy = '!';           ##no critic 'NoisyQuotes';
-barf() unless $$ eq '';    ##no critic 'Postfix,Empty,Punctuation';
-barf() unless $$ eq '';    ##no critic 'Postfix , Empty , Punctuation';
-barf() unless $$ eq '';    ##no critic 'Postfix Empty Punctuation';
+my $noisy = '!';           ##no refactor 'NoisyQuotes';
+barf() unless $$ eq '';    ##no refactor 'Postfix,Empty,Punctuation';
+barf() unless $$ eq '';    ##no refactor 'Postfix , Empty , Punctuation';
+barf() unless $$ eq '';    ##no refactor 'Postfix Empty Punctuation';
 
 # with double quotes
-my $noisy = '!';           ##no critic "NoisyQuotes";
-barf() unless $$ eq '';    ##no critic "Postfix,Empty,Punctuation";
-barf() unless $$ eq '';    ##no critic "Postfix , Empty , Punctuation";
-barf() unless $$ eq '';    ##no critic "Postfix Empty Punctuation";
+my $noisy = '!';           ##no refactor "NoisyQuotes";
+barf() unless $$ eq '';    ##no refactor "Postfix,Empty,Punctuation";
+barf() unless $$ eq '';    ##no refactor "Postfix , Empty , Punctuation";
+barf() unless $$ eq '';    ##no refactor "Postfix Empty Punctuation";
 
 # with spacing variations
-my $noisy = '!';           ##no critic (NoisyQuotes)
-barf() unless $$ eq '';    ##  no   critic   (Postfix,Empty,Punctuation)
-barf() unless $$ eq '';    ##no critic(Postfix , Empty , Punctuation)
-barf() unless $$ eq '';    ##   no critic(Postfix Empty Punctuation)
+my $noisy = '!';           ##no refactor (NoisyQuotes)
+barf() unless $$ eq '';    ##  no   refactor   (Postfix,Empty,Punctuation)
+barf() unless $$ eq '';    ##no refactor(Postfix , Empty , Punctuation)
+barf() unless $$ eq '';    ##   no refactor(Postfix Empty Punctuation)
 
 1;
 
@@ -773,7 +773,7 @@ is(
         {-profile => $profile, -severity => 1, -theme => 'core'},
     ),
     0,
-    'no critic: syntaxes',
+    'no refactor: syntaxes',
 );
 
 #-----------------------------------------------------------------------------
@@ -781,14 +781,14 @@ is(
 # only return one Violation at a time.  But the next three cases
 # involve policies that apply to the whole document and can return
 # multiple violations at a time.  These tests make sure that the 'no
-# critic' pragmas are effective with those Enforcers
+# refactor' pragmas are effective with those Enforcers
 #-----------------------------------------------------------------------------
 
 $code = <<'END_PERL';
 package FOO;
 
 #Code before 'use strict'
-my $foo = 'baz';  ## no critic
+my $foo = 'baz';  ## no refactor
 my $bar = 42;     # Should find this
 
 use strict;
@@ -804,7 +804,7 @@ is(
         {-profile  => $profile, -severity => 5, -theme => 'core'},
     ),
     1,
-    'no critic & RequireUseStrict',
+    'no refactor & RequireUseStrict',
 );
 
 #-----------------------------------------------------------------------------
@@ -814,7 +814,7 @@ package FOO;
 use strict;
 
 #Code before 'use warnings'
-my $foo = 'baz';  ## no critic
+my $foo = 'baz';  ## no refactor
 my $bar = 42;  # Should find this
 
 use warnings;
@@ -829,13 +829,13 @@ is(
         {-profile  => $profile, -severity => 4, -theme => 'core'},
     ),
     1,
-    'no critic & RequireUseWarnings',
+    'no refactor & RequireUseWarnings',
 );
 
 #-----------------------------------------------------------------------------
 
 $code = <<'END_PERL';
-use strict;      ##no critic
+use strict;      ##no refactor
 use warnings;    #should find this
 my $bar = 42;    #this one will be squelched
 
@@ -852,13 +852,13 @@ is(
         {-profile  => $profile, -severity => 4, -theme => 'core'},
     ),
     1,
-    'no critic & RequireExplicitPackage',
+    'no refactor & RequireExplicitPackage',
 );
 
 #-----------------------------------------------------------------------------
 
 $code = <<'END_PERL';
-#!/usr/bin/perl -w ## no critic
+#!/usr/bin/perl -w ## no refactor
 
 package Foo;
 use strict;
@@ -875,20 +875,20 @@ is(
         {-profile  => $profile, -severity => 1, -theme => 'core'},
     ),
     1,
-    'no-critic on shebang line'
+    'no-refactor on shebang line'
 );
 
 #-----------------------------------------------------------------------------
 
 $code = <<'END_PERL';
 #line 1
-## no critic;
+## no refactor;
 
 =pod
 
 =head1 SOME POD HERE
 
-This code has several POD-related violations at line 1.  The "## no critic"
+This code has several POD-related violations at line 1.  The "## no refactor"
 marker is on the second physical line.  However, the "#line" directive should
 cause it to treat it as if it actually were on the first physical line.  Thus,
 the violations should be supressed.
@@ -903,20 +903,20 @@ is(
         {-profile  => $profile, -severity => 1, -theme => 'core'},
     ),
     0,
-    'no-critic where logical line == 1, but physical line != 1'
+    'no-refactor where logical line == 1, but physical line != 1'
 );
 
 #-----------------------------------------------------------------------------
 
 $code = <<'END_PERL';
 #line 7
-## no critic;
+## no refactor;
 
 =pod
 
 =head1 SOME POD HERE
 
-This code has several POD-related violations at line 1.  The "## no critic"
+This code has several POD-related violations at line 1.  The "## no refactor"
 marker is on the second physical line, and the "#line" directive should cause
 it to treat it as if it actually were on the 7th physical line.  Thus, the
 violations should NOT be supressed.
@@ -931,21 +931,21 @@ is(
         {-profile  => $profile, -severity => 1, -theme => 'core'},
     ),
     2,
-    'no-critic at logical line != 1, and physical line != 1'
+    'no-refactor at logical line != 1, and physical line != 1'
 );
 
 #-----------------------------------------------------------------------------
 
 $code = <<'END_PERL';
 #line 1
-#!perl ### no critic;
+#!perl ### no refactor;
 
 package Foo;
 use strict;
 use warnings;
 our $VERSION = 1;
 
-# In this case, the "## no critic" marker is on the first logical line, which
+# In this case, the "## no refactor" marker is on the first logical line, which
 # is also the shebang line.
 
 1;
@@ -958,7 +958,7 @@ is(
         {-profile  => $profile, -severity => 1, -theme => 'core'},
     ),
     0,
-    'no-critic on shebang line, where physical line != 1, but logical line == 1'
+    'no-refactor on shebang line, where physical line != 1, but logical line == 1'
 );
 
 #-----------------------------------------------------------------------------

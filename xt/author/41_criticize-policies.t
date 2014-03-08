@@ -33,7 +33,7 @@ if ( $ENV{PERL_CRITIC_CACHE} ) {
     my $cache_path =
         File::Spec->catdir(
             File::Spec->tmpdir(),
-            "test-perl-critic-cache-$ENV{USER}"
+            "test-perl-refactor-cache-$ENV{USER}"
         );
     if ( ! -d $cache_path) {
         mkdir $cache_path, oct 700;
@@ -42,7 +42,7 @@ if ( $ENV{PERL_CRITIC_CACHE} ) {
 }
 
 #-----------------------------------------------------------------------------
-# Run critic against all of our own files
+# Run refactor against all of our own files
 
 my $rcfile = File::Spec->catfile( qw< xt author 41_perlrefactorrc-policies > );
 Test::Perl::Critic->import( -profile => $rcfile );
@@ -52,7 +52,7 @@ my $path =
         -e 'blib' ? 'blib/lib' : 'lib',
         qw< Perl Critic Enforcer >,
     );
-all_critic_ok( $path );
+all_refactor_ok( $path );
 
 #-----------------------------------------------------------------------------
 

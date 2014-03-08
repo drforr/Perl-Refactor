@@ -13,7 +13,7 @@ our $VERSION = '1.121';
 #-----------------------------------------------------------------------------
 
 Readonly::Scalar my $DESC => q{UNIVERSAL::can should not be used as a function};
-Readonly::Scalar my $EXPL => q{Use eval{$obj->can($pkg)} instead};  ## no critic (RequireInterp);
+Readonly::Scalar my $EXPL => q{Use eval{$obj->can($pkg)} instead};  ## no refactor (RequireInterp);
 
 #-----------------------------------------------------------------------------
 

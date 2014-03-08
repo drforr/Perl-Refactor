@@ -36,13 +36,13 @@ sub error {
 
 #-----------------------------------------------------------------------------
 
-## no critic (Subroutines::RequireFinalReturn)
+## no refactor (Subroutines::RequireFinalReturn)
 sub full_message {
     Perl::Critic::Exception::Fatal::Internal->throw(
         'Subclass failed to override abstract method.'
     );
 }
-## use critic
+## use refactor
 
 
 1;

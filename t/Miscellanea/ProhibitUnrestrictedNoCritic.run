@@ -3,10 +3,10 @@
 ## failures 4
 ## cut
 
-##no critic
-## no critic
-## no critic;
-## no critic #blah,blah
+##no refactor
+## no refactor
+## no refactor;
+## no refactor #blah,blah
 
 ##----------------------------------------------------------------------------
 ## name slightly more complicated failures
@@ -14,36 +14,36 @@
 ## cut
 
 # just some spacing variations here...
-$foo = $bar; ##  no critic
-$foo = $bar; ##no critic
+$foo = $bar; ##  no refactor
+$foo = $bar; ##no refactor
 
-$foo = $bar; ## no critic ()
-#$foo = $bar; ## no critic ''
-#$foo = $bar; ## no critic ""
-$foo = $bar; ## no critic qw()
+$foo = $bar; ## no refactor ()
+#$foo = $bar; ## no refactor ''
+#$foo = $bar; ## no refactor ""
+$foo = $bar; ## no refactor qw()
 
 #----------------------------------------------------------------------------
-## name unrestricted "no critic" on a sub block
+## name unrestricted "no refactor" on a sub block
 ## failures 5
 ## cut
 
-sub frobulate { ##no critic
+sub frobulate { ##no refactor
     return $frob;
 }
 
-sub frobulate { ## no critic #blah,blah
+sub frobulate { ## no refactor #blah,blah
     return $frob;
 }
 
-sub frobulate { ## no critic ''
+sub frobulate { ## no refactor ''
     return $frob;
 }
 
-sub frobulate { ## no critic ""
+sub frobulate { ## no refactor ""
     return $frob;
 }
 
-sub frobulate { ## no critic ()
+sub frobulate { ## no refactor ()
     return $frob;
 }
 
@@ -52,30 +52,30 @@ sub frobulate { ## no critic ()
 ## failures 0
 ## cut
 
-## no critic (shizzle)
-## no critic 'shizzle'
-## no critic "shizzle"
-## no critic qw(shizzle) #blah,blah
+## no refactor (shizzle)
+## no refactor 'shizzle'
+## no refactor "shizzle"
+## no refactor qw(shizzle) #blah,blah
 
-$foo = $bar; ## no critic 'shizzle';
-$foo = $bar; ## no critic "shizzle";
-$foo = $bar; ## no critic (shizzle);
-$foo = $bar; ## no critic qw(shizzle);
+$foo = $bar; ## no refactor 'shizzle';
+$foo = $bar; ## no refactor "shizzle";
+$foo = $bar; ## no refactor (shizzle);
+$foo = $bar; ## no refactor qw(shizzle);
 
 
-sub frobulate { ## no critic 'shizzle'
+sub frobulate { ## no refactor 'shizzle'
     return $frob;
 }
 
-sub frobulate { ## no critic "shizzle"
+sub frobulate { ## no refactor "shizzle"
     return $frob;
 }
 
-sub frobulate { ## no critic (shizzle)
+sub frobulate { ## no refactor (shizzle)
     return $frob;
 }
 
-sub fornicate { ## no critic qw(shizzle)
+sub fornicate { ## no refactor qw(shizzle)
     return $forn;
 }
 

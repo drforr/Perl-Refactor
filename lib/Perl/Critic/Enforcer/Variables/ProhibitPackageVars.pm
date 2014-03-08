@@ -117,7 +117,7 @@ sub _is_vars_pragma {
     return 1;
 }
 
-sub _all_upcase {  ##no critic(ArgUnpacking)
+sub _all_upcase {  ##no refactor(ArgUnpacking)
     return all { $_ eq uc $_ } @_;
 }
 

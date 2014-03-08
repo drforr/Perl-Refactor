@@ -12,7 +12,7 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Readonly::Scalar my $DESC => q{Unrestricted '## no critic' annotation};
+Readonly::Scalar my $DESC => q{Unrestricted '## no refactor' annotation};
 Readonly::Scalar my $EXPL => q{Only disable the Policies you really need to disable};
 
 #-----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ __END__
 
 =head1 NAME
 
-Perl::Critic::Enforcer::Miscellanea::ProhibitUnrestrictedNoCritic - Forbid a bare C<## no critic>
+Perl::Critic::Enforcer::Miscellanea::ProhibitUnrestrictedNoCritic - Forbid a bare C<## no refactor>
 
 
 =head1 AFFILIATION
@@ -66,36 +66,36 @@ distribution.
 
 =head1 DESCRIPTION
 
-A bare C<## no critic> annotation will disable B<all> the active Policies.  This
+A bare C<## no refactor> annotation will disable B<all> the active Policies.  This
 creates holes for other, unintended violations to appear in your code.  It is
 better to disable B<only> the particular Policies that you need to get around.
-By putting Enforcer names in a comma-separated list after the C<## no critic>
+By putting Enforcer names in a comma-separated list after the C<## no refactor>
 annotation, then it will only disable the named Policies.  Enforcer names are
 matched as regular expressions, so you can use shortened Enforcer names, or
 patterns that match several Policies. This Enforcer generates a violation any
-time that an unrestricted C<## no critic> annotation appears.
+time that an unrestricted C<## no refactor> annotation appears.
 
-    ## no critic                     # not ok
-    ## no critic ''                  # not ok
-    ## no critic ()                  # not ok
-    ## no critic qw()                # not ok
+    ## no refactor                     # not ok
+    ## no refactor ''                  # not ok
+    ## no refactor ()                  # not ok
+    ## no refactor qw()                # not ok
 
-    ## no critic   (Enforcer1, Enforcer2)  # ok
-    ## no critic   (Enforcer1 Enforcer2)   # ok (can use spaces to separate)
-    ## no critic qw(Enforcer1 Enforcer2)   # ok (the preferred style)
+    ## no refactor   (Enforcer1, Enforcer2)  # ok
+    ## no refactor   (Enforcer1 Enforcer2)   # ok (can use spaces to separate)
+    ## no refactor qw(Enforcer1 Enforcer2)   # ok (the preferred style)
 
 
 =head1 NOTE
 
 Unfortunately, L<Perl::Critic|Perl::Critic> is very sloppy about
-parsing the Enforcer names that appear after a C<##no critic>
+parsing the Enforcer names that appear after a C<##no refactor>
 annotation.  For example, you might be using one of these
 broken syntaxes...
 
-    ## no critic Enforcer1 Enforcer2
-    ## no critic 'Enforcer1, Enforcer2'
-    ## no critic "Enforcer1, Enforcer2"
-    ## no critic "Enforcer1", "Enforcer2"
+    ## no refactor Enforcer1 Enforcer2
+    ## no refactor 'Enforcer1, Enforcer2'
+    ## no refactor "Enforcer1, Enforcer2"
+    ## no refactor "Enforcer1", "Enforcer2"
 
 In all of these cases, Perl::Critic will silently disable B<all> Policies,
 rather than just the ones you requested.  But if you use the

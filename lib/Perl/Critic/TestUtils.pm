@@ -42,8 +42,8 @@ Readonly::Array our @EXPORT_OK => qw(
 # don't find the perlrefactorrc file.
 
 sub block_perlrefactorrc {
-    no warnings 'redefine';  ## no critic (ProhibitNoWarnings);
-    *Perl::Critic::UserProfile::_find_profile_path = sub { return }; ## no critic (ProtectPrivateVars)
+    no warnings 'redefine';  ## no refactor (ProhibitNoWarnings);
+    *Perl::Critic::UserProfile::_find_profile_path = sub { return }; ## no refactor (ProtectPrivateVars)
     return 1;
 }
 
@@ -61,7 +61,7 @@ sub pcritique_with_violations {
 # Criticize a code snippet using only one enforcer.  Returns the number
 # of violations
 
-sub pcritique {  ##no critic(ArgUnpacking)
+sub pcritique {  ##no refactor(ArgUnpacking)
     return scalar pcritique_with_violations(@_);
 }
 
@@ -78,7 +78,7 @@ sub critique_with_violations {
 # Criticize a code snippet using a specified config.  Returns the
 # number of violations
 
-sub critique {  ##no critic(ArgUnpacking)
+sub critique {  ##no refactor(ArgUnpacking)
     return scalar critique_with_violations(@_);
 }
 
@@ -121,7 +121,7 @@ sub fcritique_with_violations {
 # Like pcritique, but forces a PPI::Document::File context.  The
 # $filename arg is a Unix-style relative path, like 'Foo/Bar.pm'
 
-sub fcritique {  ##no critic(ArgUnpacking)
+sub fcritique {  ##no refactor(ArgUnpacking)
     return scalar fcritique_with_violations(@_);
 }
 
@@ -146,7 +146,7 @@ sub subtests_in_tree {
                     throw_internal 'confusing enforcer test filename ' . $_;
                 }
 
-                my $enforcer = join q{::}, @pathparts[-2, -1]; ## no critic (MagicNumbers)
+                my $enforcer = join q{::}, @pathparts[-2, -1]; ## no refactor (MagicNumbers)
 
                 my $globals = _globals_from_file( $_ );
                 if ( my $prerequisites = $globals->{prerequisites} ) {
@@ -186,7 +186,7 @@ sub should_skip_author_tests {
 }
 
 sub get_author_test_skip_message {
-    ## no critic (RequireInterpolation);
+    ## no refactor (RequireInterpolation);
     return 'Author test.  Set $ENV{TEST_AUTHOR_PERL_CRITIC} to a true value to run.';
 }
 
@@ -204,7 +204,7 @@ sub _globals_from_file {
 
     my %globals;
 
-    open my $handle, '<', $test_file   ## no critic (RequireBriefOpen)
+    open my $handle, '<', $test_file   ## no refactor (RequireBriefOpen)
         or throw_internal "Couldn't open $test_file: $OS_ERROR";
 
     while ( my $line = <$handle> ) {
@@ -240,7 +240,7 @@ sub _subtests_from_file {
 
     return if -z $test_file;  # Skip if the Enforcer has a regular .t file.
 
-    open my $fh, '<', $test_file   ## no critic (RequireBriefOpen)
+    open my $fh, '<', $test_file   ## no refactor (RequireBriefOpen)
         or throw_internal "Couldn't open $test_file: $OS_ERROR";
 
     my @subtests;
@@ -252,7 +252,7 @@ sub _subtests_from_file {
     while ( <$fh> ) {
         ++$lineno;
         chomp;
-        my $inheader = /^## name/ .. /^## cut/; ## no critic (ExtendedFormatting LineBoundaryMatching DotMatchAnything)
+        my $inheader = /^## name/ .. /^## cut/; ## no refactor (ExtendedFormatting LineBoundaryMatching DotMatchAnything)
 
         my $line = $_;
 
@@ -317,7 +317,7 @@ sub _finalize_subtest {
         throw_internal "$subtest->{name} does not specify failures";
     }
     if ($subtest->{parms}) {
-        $subtest->{parms} = eval $subtest->{parms}; ## no critic(StringyEval)
+        $subtest->{parms} = eval $subtest->{parms}; ## no refactor(StringyEval)
         if ($EVAL_ERROR) {
             throw_internal
                 "$subtest->{name} has an error in the 'parms' property:\n"
@@ -333,7 +333,7 @@ sub _finalize_subtest {
 
     if (defined $subtest->{error}) {
         if ( $subtest->{error} =~ m{ \A / (.*) / \z }xms) {
-            $subtest->{error} = eval {qr/$1/}; ## no critic (ExtendedFormatting LineBoundaryMatching DotMatchAnything)
+            $subtest->{error} = eval {qr/$1/}; ## no refactor (ExtendedFormatting LineBoundaryMatching DotMatchAnything)
             if ($EVAL_ERROR) {
                 throw_internal
                     "$subtest->{name} 'error' has a malformed regular expression";
@@ -397,8 +397,8 @@ interface will go through a deprecation cycle.
     END_CODE
 
     # Critique code against all loaded policies...
-    my $perl_critic_config = { -severity => 2 };
-    my $violation_count = critique( \$code, $perl_critic_config);
+    my $perl_refactor_config = { -severity => 2 };
+    my $violation_count = critique( \$code, $perl_refactor_config);
 
     # Critique code against one enforcer...
     my $custom_enforcer = 'Miscellanea::ProhibitFrobulation'

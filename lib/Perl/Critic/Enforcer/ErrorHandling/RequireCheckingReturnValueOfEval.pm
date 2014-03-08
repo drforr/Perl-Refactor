@@ -17,10 +17,10 @@ our $VERSION = '1.121';
 #-----------------------------------------------------------------------------
 
 Readonly::Scalar my $DESC => 'Return value of eval not tested.';
-## no critic (RequireInterpolationOfMetachars)
+## no refactor (RequireInterpolationOfMetachars)
 Readonly::Scalar my $EXPL =>
     q<You can't depend upon the value of $@/$EVAL_ERROR to tell whether an eval failed.>;
-## use critic
+## use refactor
 
 Readonly::Hash my %BOOLEAN_OPERATORS => hashify qw< || && // or and >;
 Readonly::Hash my %POSTFIX_OPERATORS =>
