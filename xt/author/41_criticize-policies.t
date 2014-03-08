@@ -1,16 +1,10 @@
 #!perl
 
-##############################################################################
-#      $URL$
-#     $Date$
-#   $Author$
-# $Revision$
-##############################################################################
-
 # Extra self-compliance tests for Enforcer classes.  This just checks for
 # additional POD sections that we want in every Enforcer module.  See the
 # 41_perlrefactorrc-policies file for the precise configuration.
 
+use 5.006001;
 use strict;
 use warnings;
 

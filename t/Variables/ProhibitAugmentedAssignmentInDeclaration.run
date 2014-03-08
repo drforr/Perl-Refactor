@@ -119,13 +119,6 @@ my $output .= '<?' . $_[0]->getNodeName;
 my $data .= &stripzerobytes(inet_aton($self->address()));
 
 
-##############################################################################
-#      $URL$
-#     $Date$
-#   $Author$
-# $Revision$
-##############################################################################
-
 # Local Variables:
 #   mode: cperl
 #   cperl-indent-level: 4
