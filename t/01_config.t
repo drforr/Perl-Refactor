@@ -166,7 +166,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 #-----------------------------------------------------------------------------
 # Test config w/ multiple severity levels.  In this profile, we
 # define an arbitrary severity for each Enforcer so that severity
-# levels 5 through 2 each have 10 Policies.  All remaining Policies
+# levels 5 through 2 each have 10 Enforcers.  All remaining Enforcers
 # are in the 1st severity level.
 
 

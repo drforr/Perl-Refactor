@@ -121,7 +121,7 @@ examples to help get you started.
     # Report top 20 most severe violations (severity >= 1)
     perlrefactor --top YourModule.pm
 
-    # Report additional violations of Policies that match m/variables/xms
+    # Report additional violations of Enforcers that match m/variables/xms
     perlrefactor --include variables YourModule.pm
 
     # Use defaults from somewhere other than ~/.perlrefactorrc
@@ -155,11 +155,11 @@ information.
 =item C<--noprofile>
 
 Directs C<perlrefactor> not to load any configuration file, thus
-reverting to the default configuration for all Policies.
+reverting to the default configuration for all Enforcers.
 
 =item C<--severity N>
 
-Directs C<perlrefactor> to only apply Policies with a severity greater
+Directs C<perlrefactor> to only apply Enforcers with a severity greater
 than C<N>.  Severity values are integers ranging from 1 (least severe)
 to 5 (most severe).  The default is 5.  For a given C<--profile>,
 decreasing the C<--severity> will usually produce more violations.
@@ -201,11 +201,11 @@ are silently ignored.
 
 =item C<--theme RULE>
 
-Directs C<perlrefactor> to apply only Policies with themes that satisfy
+Directs C<perlrefactor> to apply only Enforcers with themes that satisfy
 the C<RULE>.  Themes are arbitrary names for groups of related
 policies.  You can combine theme names with boolean operators to
 create an arbitrarily complex C<RULE>.  For example, the following
-would apply only Policies that have a 'bugs' AND 'pbp' theme:
+would apply only Enforcers that have a 'bugs' AND 'pbp' theme:
 
     $> perlrefactor --theme='bugs && pbp' MyModule.pm
 
@@ -216,7 +216,7 @@ See L<Perl::Critic/"POLICY THEMES"> for more information about themes.
 
 =item C<--include PATTERN>
 
-Directs C<perlrefactor> to apply additional Policies that match the
+Directs C<perlrefactor> to apply additional Enforcers that match the
 regex C</PATTERN/imx>.  Use this option to temporarily override your
 profile and/or the severity settings at the command-line.  For
 example:
@@ -241,7 +241,7 @@ and/or the severity settings at the command-line.  For example:
     perlrefactor --exclude=strict my_file.pl
 
 This would cause C<perlrefactor> to not apply the C<RequireUseStrict>
-and C<ProhibitNoStrict> Policies even though they have the highest
+and C<ProhibitNoStrict> Enforcers even though they have the highest
 severity level.  You can specify multiple C<--exclude> options and you
 can use it in conjunction with the C<--include> option.  Note that
 C<--exclude> takes precedence over C<--include> when a Enforcer matches
@@ -251,14 +251,14 @@ F<.perlrefactorrc> file.
 =item C<--single-enforcer PATTERN> or C<-s PATTERN>
 
 Directs C<perlrefactor> to apply just one Enforcer module matching the
-regex C</PATTERN/ixms>, and exclude all other Policies.  This option
+regex C</PATTERN/ixms>, and exclude all other Enforcers.  This option
 has precedence over the C<--severity>, C<--theme>, C<--include>,
 C<--exclude>, and C<--only> options.  For example:
 
     perlrefactor --single-enforcer=nowarnings my_file.pl
 
 This would cause C<perlrefactor> to apply just the C<ProhibitNoWarnings>
-Enforcer, regardless of the severity level setting.  No other Policies
+Enforcer, regardless of the severity level setting.  No other Enforcers
 would be applied.
 
 This is equivalent to what one might intend by...
@@ -356,7 +356,7 @@ input. See L<"EDITOR INTEGRATION"> for more information about that.
 
 Displays a condensed listing of all the
 L<Perl::Critic::Enforcer|Perl::Critic::Enforcer> modules that are found on this
-machine.  This option lists I<all> Policies, regardless of your
+machine.  This option lists I<all> Enforcers, regardless of your
 F<.perlrefactorrc> or command line options.  For each Enforcer, the name, default
 severity and default themes are shown.
 
@@ -366,7 +366,7 @@ Displays a condensed listing of all the
 L<Perl::Critic::Enforcer|Perl::Critic::Enforcer> modules that I<would> be
 enforced, if you were actually going to critique a file with this command.
 This is useful when you've constructed a complicated command or modified your
-F<.perlrefactorrc> file and you want to see exactly which Policies are going to
+F<.perlrefactorrc> file and you want to see exactly which Enforcers are going to
 be enforced (or not enforced, as the case may be). For each Enforcer, the name,
 default severity and default themes are shown.
 
@@ -387,9 +387,9 @@ your F<.perlrefactorrc> file.
 
 =item C<--only>
 
-Directs perlrefactor to apply only Policies that are explicitly
+Directs perlrefactor to apply only Enforcers that are explicitly
 mentioned in your F<.perlrefactorrc> file.  This is useful if you want
-to use just a small subset of Policies without having to disable all
+to use just a small subset of Enforcers without having to disable all
 the others.  You can set the default value for this option in your
 F<.perlrefactorrc> file.
 
@@ -399,7 +399,7 @@ Directs perlrefactor how to treat certain recoverable problems found in
 a F<.perlrefactorrc> or file specified via the C<--profile> option.
 Valid values are C<warn> (the default), C<fatal>, and C<quiet>.  For
 example, perlrefactor normally only warns about profiles referring to
-non-existent Policies, but this option can make this situation fatal.
+non-existent Enforcers, but this option can make this situation fatal.
 You can set the default value for this option in your F<.perlrefactorrc>
 file.
 
@@ -513,15 +513,15 @@ at the command prompt.
 
 =item C<--allow-unsafe>
 
-This option directs C<perlrefactor> to allow the use of Policies that have been
-marked as "unsafe".  Unsafe Policies may result in risky operations by
-compiling and executing the code they analyze.  All the Policies that ship in
+This option directs C<perlrefactor> to allow the use of Enforcers that have been
+marked as "unsafe".  Unsafe Enforcers may result in risky operations by
+compiling and executing the code they analyze.  All the Enforcers that ship in
 the core L<Perl::Critic|Perl::Critic> distribution are safe.  However,
-third-party Policies, such as those in the
+third-party Enforcers, such as those in the
 L<Perl::Critic::Dynamic|Perl::Critic::Dynamic> distribution are not safe.
 Note that "safety" is honorary -- if a Enforcer author marks a Enforcer as safe,
 it is not a guarantee that it won't do nasty things.  B<If you don't trust
-your Policies and the code you are analyzing, then do not use this switch>.
+your Enforcers and the code you are analyzing, then do not use this switch>.
 
 =item C<--quiet>
 
@@ -561,7 +561,7 @@ file in the current directory first, and then in your home directory.
 Alternatively, you can set the C<PERLCRITIC> environment variable to
 explicitly point to a different file in another location.  If none of
 these files exist, and the C<--profile> option is not given on the
-command-line, then all Policies will be loaded with their default
+command-line, then all Enforcers will be loaded with their default
 configuration.
 
 The format of the configuration file is a series of INI-style blocks
@@ -675,7 +675,7 @@ A simple configuration might look like this:
     [-ValuesAndExpressions::ProhibitMagicNumbers]
 
     #--------------------------------------------------------------
-    # For all other Policies, I accept the default severity,
+    # For all other Enforcers, I accept the default severity,
     # so no additional configuration is required for them.
 
 Note that all policies included with the Perl::Critic distribution
@@ -710,13 +710,13 @@ ALSO"> for a list of some of these distributions.
 =head1 POLICY THEMES
 
 Each Enforcer is defined with one or more "themes".  Themes can be used
-to create arbitrary groups of Policies.  They are intended to provide
-an alternative mechanism for selecting your preferred set of Policies.
-For example, you may wish disable a certain set of Policies when
+to create arbitrary groups of Enforcers.  They are intended to provide
+an alternative mechanism for selecting your preferred set of Enforcers.
+For example, you may wish disable a certain set of Enforcers when
 analyzing test programs.  Conversely, you may wish to enable only a
-specific subset of Policies when analyzing modules.
+specific subset of Enforcers when analyzing modules.
 
-The Policies that ship with Perl::Critic are have been divided into
+The Enforcers that ship with Perl::Critic are have been divided into
 the following themes.  This is just our attempt to provide some basic
 logical groupings.  You are free to invent new themes that suit your
 needs.
@@ -724,15 +724,15 @@ needs.
     THEME             DESCRIPTION
     ------------------------------------------------------------------------
     core              All policies that ship with Perl::Critic
-    pbp               Policies that come directly from "Perl Best Practices"
-    bugs              Policies that that prevent or reveal bugs
-    certrec           Policies that CERT recommends
-    certrule          Policies that CERT considers rules
-    maintenance       Policies that affect the long-term health of the code
-    cosmetic          Policies that only have a superficial effect
-    complexity        Policies that specificaly relate to code complexity
-    security          Policies that relate to security issues
-    tests             Policies that are specific to test programs
+    pbp               Enforcers that come directly from "Perl Best Practices"
+    bugs              Enforcers that that prevent or reveal bugs
+    certrec           Enforcers that CERT recommends
+    certrule          Enforcers that CERT considers rules
+    maintenance       Enforcers that affect the long-term health of the code
+    cosmetic          Enforcers that only have a superficial effect
+    complexity        Enforcers that specificaly relate to code complexity
+    security          Enforcers that relate to security issues
+    tests             Enforcers that are specific to test programs
 
 Say C<"perlrefactor --list"> to get a listing of all available policies
 and the themes that are associated with each one.  You can also change
@@ -740,7 +740,7 @@ the theme for any Enforcer in your F<.perlrefactorrc> file.  See the
 L<"CONFIGURATION"> section for more information about that.
 
 Using the C<--theme> command-line option, you can create an
-arbitrarily complex rule that determines which Policies to apply.
+arbitrarily complex rule that determines which Enforcers to apply.
 Precedence is the same as regular Perl code, and you can use
 parentheses to enforce precedence as well.  Supported operators are:
 
@@ -751,7 +751,7 @@ parentheses to enforce precedence as well.  Supported operators are:
     !           not            'pbp && ! (portability || complexity)'
 
 Theme names are case-insensitive.  If the C<--theme> is set to an
-empty string, then it evaluates as true all Policies.
+empty string, then it evaluates as true all Enforcers.
 
 
 =head1 BENDING THE RULES
@@ -788,8 +788,8 @@ critic"> annotation is on the same line as a code statement, then only that
 line of code is overlooked.  To direct perlrefactor to ignore the C<"## no
 critic"> annotations, use the C<--force> option.
 
-A bare C<"## no critic"> annotation disables all the active Policies.  If
-you wish to disable only specific Policies, add a list of Enforcer names
+A bare C<"## no critic"> annotation disables all the active Enforcers.  If
+you wish to disable only specific Enforcers, add a list of Enforcer names
 as arguments just as you would for the C<"no strict"> or C<"no
 warnings"> pragma.  For example, this would disable the
 C<ProhibitEmptyQuotes> and C<ProhibitPostfixControls> policies until
@@ -809,7 +809,7 @@ the end of the block or until the next C<"## use critic"> annotation
 
 Since the Enforcer names are matched against the C<"## no critic">
 arguments as regular expressions, you can abbreviate the Enforcer names
-or disable an entire family of Policies in one shot like this:
+or disable an entire family of Enforcers in one shot like this:
 
     ## no critic (NamingConventions)
 
@@ -821,11 +821,11 @@ or disable an entire family of Policies in one shot like this:
 
 The argument list must be enclosed in parentheses and must contain one
 or more comma-separated barewords (i.e. don't use quotes).  The C<"##
-no critic"> annotations can be nested, and Policies named by an inner
+no critic"> annotations can be nested, and Enforcers named by an inner
 annotation will be disabled along with those already disabled an outer
 annotation.
 
-Some Policies like C<Subroutines::ProhibitExcessComplexity> apply to
+Some Enforcers like C<Subroutines::ProhibitExcessComplexity> apply to
 an entire block of code.  In those cases, C<"## no critic"> must
 appear on the line where the violation is reported.  For example:
 
@@ -833,7 +833,7 @@ appear on the line where the violation is reported.  For example:
         # Your code here...
     }
 
-Some Policies like C<Documentation::RequirePodSections> apply to the
+Some Enforcers like C<Documentation::RequirePodSections> apply to the
 entire document, in which case violations are reported at line 1.  But
 if the file requires a shebang line, it is impossible to put C<"## no
 critic"> on the first line of the file.  This is a known limitation
@@ -955,7 +955,7 @@ into Perl::Critic.
 =head1 EXTENDING THE CRITIC
 
 The modular design of Perl::Critic is intended to facilitate the
-addition of new Policies.  You'll need to have some understanding of
+addition of new Enforcers.  You'll need to have some understanding of
 L<PPI|PPI>, but most Enforcer modules are pretty straightforward and
 only require about 20 lines of code, and half of those lines are
 simple use statements and simple declarations..  Please see the
@@ -972,8 +972,8 @@ send a message to L<mailto:dev-subscribe@perlrefactor.tigris.org>.
 
 The Perl::Critic team is also available for hire.  If your
 organization has its own coding standards, we can create custom
-Policies to enforce your local guidelines.  Or if your code base is
-prone to a particular defect pattern, we can design Policies that will
+Enforcers to enforce your local guidelines.  Or if your code base is
+prone to a particular defect pattern, we can design Enforcers that will
 help you catch those costly defects B<before> they go into production.
 To discuss your needs with the Perl::Critic team, just contact C<<
 <jeff@imaginative-software.com> >>.
@@ -995,7 +995,7 @@ L<https://twitter.com/perlrefactor>.
 
 =head1 SEE ALSO
 
-There are a number of distributions of additional Policies available.
+There are a number of distributions of additional Enforcers available.
 A few are listed here:
 
 L<Perl::Critic::More|Perl::Critic::More>

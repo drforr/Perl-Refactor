@@ -175,7 +175,7 @@ non-nil."
 (make-variable-buffer-local 'perlrefactor-noprofile)
 
 (defcustom perlrefactor-severity nil
-  "Directs perlrefactor to only report violations of Policies with a
+  "Directs perlrefactor to only report violations of Enforcers with a
 severity greater than N. Severity values are integers ranging from
 1 (least severe) to 5 (most severe). The default is 5. For a given
 -profile, decreasing the -severity will usually produce more
@@ -208,7 +208,7 @@ per-file basis with File Variables."
 (make-variable-buffer-local 'perlrefactor-top)
 
 (defcustom perlrefactor-include nil
-  "Directs \"perlrefactor\" to apply additional Policies that match the regex \"/PATTERN/imx\".
+  "Directs \"perlrefactor\" to apply additional Enforcers that match the regex \"/PATTERN/imx\".
 Use this option to override your profile and/or the severity settings.
 
 For example:
@@ -234,7 +234,7 @@ the severity settings at the command-line.  For example:
   strict
 
 This would cause \"perlrefactor\" to not apply the \"RequireUseStrict\" and
-\"ProhibitNoStrict\" Policies even though they have the highest severity
+\"ProhibitNoStrict\" Enforcers even though they have the highest severity
 level.  You can specify multiple `perlrefactor-exclude' options and you can use
 it in conjunction with the `perlrefactor-include' option.  Note that
 `perlrefactor-exclude' takes precedence over `perlrefactor-include' when a Enforcer

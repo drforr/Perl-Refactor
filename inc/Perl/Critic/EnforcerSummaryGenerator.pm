@@ -60,7 +60,7 @@ Perl::Critic::EnforcerSummary - Descriptions of the Enforcer modules included wi
 =head1 DESCRIPTION
 
 The following Enforcer modules are distributed with Perl::Critic. (There are
-additional Policies that can be found in add-on distributions.)  The Enforcer
+additional Enforcers that can be found in add-on distributions.)  The Enforcer
 modules have been categorized according to the table of contents in Damian
 Conway's book B<Perl Best Practices>. Since most coding standards take the
 form "do this..." or "don't do that...", I have adopted the convention of
@@ -167,7 +167,7 @@ Perl::Critic::EnforcerSummaryGenerator - Create F<EnforcerSummary.pod> file.
 
 This module contains subroutines for generating the
 L<Perl::Critic::EnforcerSummary> POD file.  This file contains a brief
-summary of all the Policies that ship with L<Perl::Critic>.  These
+summary of all the Enforcers that ship with L<Perl::Critic>.  These
 summaries are extracted from the C<NAME> section of the POD for each
 Enforcer module.
 
@@ -183,7 +183,7 @@ also the C<enforcersummary> action in L<Perl::Critic::Module::Build>.
 =item C<generate_enforcer_summary()>
 
 Generates the F<EnforcerSummary.pod> file which contains a brief summary of all
-the Policies in this distro.  Returns the relative path this file.  Unlike
+the Enforcers in this distro.  Returns the relative path this file.  Unlike
 most of the other subroutines here, this subroutine should be used when
 creating a distribution, not when building or installing an existing
 distribution.

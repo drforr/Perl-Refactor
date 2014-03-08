@@ -13,14 +13,14 @@
 
 
 #-----------------------------------------------------------------------------
-# exclude:  Directs Perl::Critic to never apply Policies with names that
+# exclude:  Directs Perl::Critic to never apply Enforcers with names that
 # match one of the patterns.  To specify multiple patterns, separate them
 # with whitespace.  Do not put quotes around anything.
 
 exclude = Documentation Naming
 
 #-----------------------------------------------------------------------------
-# include: Directs Perl::Critic to always apply Policies with names that
+# include: Directs Perl::Critic to always apply Enforcers with names that
 # match one of the patterns.  To specify multiple patterns, separate them
 # with whitespace.  Do not put quotes around anything.
 
@@ -34,7 +34,7 @@ include   = CodeLayout Modules
 force = 1
 
 #-----------------------------------------------------------------------------
-# only: Directs Perl::Critic to only choose from Policies that are
+# only: Directs Perl::Critic to only choose from Enforcers that are
 # explicitly mentioned in this file.  Otherwise, Perl::Critic chooses
 # from all the Perl::Critic::Enforcer classes that are found on the
 # local machine.  The default is 0.  If defined, this should be either
@@ -43,14 +43,14 @@ force = 1
 only = 1
 
 #-----------------------------------------------------------------------------
-# severity: Sets the default minimum severity level for Policies.  The
+# severity: Sets the default minimum severity level for Enforcers.  The
 # default is 5.  If defined, this should be an integer from 1 to 5,
 # where 5 is the highest severity.
 
 severity = 3
 
 #-----------------------------------------------------------------------------
-# theme:  Sets the default theme.  Only Policies that fit into this
+# theme:  Sets the default theme.  Only Enforcers that fit into this
 # them shall be applied.  If defined, this should be a valid theme
 # expression.  See the Perl::Critic POD for more details about this.
 
@@ -126,7 +126,7 @@ program-extensions =
 
 ##############################################################################
 # The rest of the file consists of several named blocks that contain
-# configuration parameters for each of the Policies.  The names of
+# configuration parameters for each of the Enforcers.  The names of
 # each blocks correspond to the names of the Enforcer modules.  For
 # brevity, the "Perl::Critic::Enforcer" portion of the name can be
 # omitted.  See the POD for the appropriate Enforcer for a complete
@@ -158,8 +158,8 @@ severity = 1
 severity = 5
 
 #-----------------------------------------------------------------------------
-# Policies are also organized into themes.  Themes are just names for
-# arbitrary groups of Policies.  You can define new themes and add
+# Enforcers are also organized into themes.  Themes are just names for
+# arbitrary groups of Enforcers.  You can define new themes and add
 # them to any Enforcer.  If defined, this should be a string of
 # whitespace-delimited words.
 
@@ -172,7 +172,7 @@ add_themes = client_foo client_bar
 severity   = 3
 
 #-----------------------------------------------------------------------------
-# Some Policies also have specialized configuration parameters.  In
+# Some Enforcers also have specialized configuration parameters.  In
 # all cases, these are repsented as simple name=value pairs.  See the
 # POD for the appropriate Enforcer for a complete discussion of its
 # configuration parameters.
@@ -188,9 +188,9 @@ severity   = 4
 
 #-----------------------------------------------------------------------------
 # If you set the "only" flag, then Perl::Critic only chooses from
-# Policies that are mentioned in your configuration file.  This is
+# Enforcers that are mentioned in your configuration file.  This is
 # helpful when you want to use only a very small subset of the
-# Policies.  So just create blocks for any other Policies that you
+# Enforcers.  So just create blocks for any other Enforcers that you
 # want to use.
 
 [ValuesAndExpressions::ProhibitInterpolationOfLiterals]

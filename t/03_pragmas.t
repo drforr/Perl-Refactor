@@ -788,7 +788,7 @@ is(
 # only return one Violation at a time.  But the next three cases
 # involve policies that apply to the whole document and can return
 # multiple violations at a time.  These tests make sure that the 'no
-# critic' pragmas are effective with those Policies
+# critic' pragmas are effective with those Enforcers
 #-----------------------------------------------------------------------------
 
 $code = <<'END_PERL';
