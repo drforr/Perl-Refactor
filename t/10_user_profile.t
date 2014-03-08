@@ -26,13 +26,13 @@ our $VERSION = '1.121';
 # Create profile from hash
 
 {
-    my %policy_params = (min_elements => 4);
+    my %enforcer_params = (min_elements => 4);
     my %profile_hash = ( '-NamingConventions::Capitalization' => {},
-                         'CodeLayout::ProhibitQuotedWordLists' => \%policy_params );
+                         'CodeLayout::ProhibitQuotedWordLists' => \%enforcer_params );
 
     my $up = Perl::Critic::UserProfile->new( -profile => \%profile_hash );
 
-    # Using short policy names
+    # Using short enforcer names
     is(
         $up->policy_is_enabled('CodeLayout::ProhibitQuotedWordLists'),
         1,
@@ -45,11 +45,11 @@ our $VERSION = '1.121';
     );
     is_deeply(
         $up->raw_policy_params('CodeLayout::ProhibitQuotedWordLists'),
-        \%policy_params,
+        \%enforcer_params,
         'CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
-    # Now using long policy names
+    # Now using long enforcer names
     is(
         $up->policy_is_enabled('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
         1,
@@ -62,11 +62,11 @@ our $VERSION = '1.121';
     );
     is_deeply(
         $up->raw_policy_params('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
-        \%policy_params,
+        \%enforcer_params,
         'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
-    # Using bogus policy names
+    # Using bogus enforcer names
     is(
         $up->policy_is_enabled('Perl::Critic::Policy::Bogus'),
         q{},
@@ -88,7 +88,7 @@ our $VERSION = '1.121';
 # Create profile from array
 
 {
-    my %policy_params = (min_elements => 4);
+    my %enforcer_params = (min_elements => 4);
     my @profile_array = ( q{ [-NamingConventions::Capitalization] },
                           q{ [CodeLayout::ProhibitQuotedWordLists]           },
                           q{ min_elements = 4                         },
@@ -97,7 +97,7 @@ our $VERSION = '1.121';
 
     my $up = Perl::Critic::UserProfile->new( -profile => \@profile_array );
 
-    # Now using long policy names
+    # Now using long enforcer names
     is(
         $up->policy_is_enabled('CodeLayout::ProhibitQuotedWordLists'),
         1,
@@ -110,11 +110,11 @@ our $VERSION = '1.121';
     );
     is_deeply(
         $up->raw_policy_params('CodeLayout::ProhibitQuotedWordLists'),
-        \%policy_params,
+        \%enforcer_params,
         'CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
-    # Now using long policy names
+    # Now using long enforcer names
     is(
         $up->policy_is_enabled('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
         1,
@@ -127,11 +127,11 @@ our $VERSION = '1.121';
     );
     is_deeply(
         $up->raw_policy_params('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
-        \%policy_params,
+        \%enforcer_params,
         'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
-    # Using bogus policy names
+    # Using bogus enforcer names
     is(
         $up->policy_is_enabled('Perl::Critic::Policy::Bogus'),
         q{},
@@ -153,7 +153,7 @@ our $VERSION = '1.121';
 # Create profile from string
 
 {
-    my %policy_params = (min_elements => 4);
+    my %enforcer_params = (min_elements => 4);
     my $profile_string = <<'END_PROFILE';
 [-NamingConventions::Capitalization]
 [CodeLayout::ProhibitQuotedWordLists]
@@ -162,7 +162,7 @@ END_PROFILE
 
     my $up = Perl::Critic::UserProfile->new( -profile => \$profile_string );
 
-    # Now using long policy names
+    # Now using long enforcer names
     is(
         $up->policy_is_enabled('CodeLayout::ProhibitQuotedWordLists'),
         1,
@@ -175,11 +175,11 @@ END_PROFILE
     );
     is_deeply(
         $up->raw_policy_params('CodeLayout::ProhibitQuotedWordLists'),
-        \%policy_params,
+        \%enforcer_params,
         'CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
-    # Now using long policy names
+    # Now using long enforcer names
     is(
         $up->policy_is_enabled('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
         1,
@@ -192,11 +192,11 @@ END_PROFILE
     );
     is_deeply(
         $up->raw_policy_params('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
-        \%policy_params,
+        \%enforcer_params,
         'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
-    # Using bogus policy names
+    # Using bogus enforcer names
     is(
         $up->policy_is_enabled('Perl::Critic::Policy::Bogus'),
         q{},
@@ -215,10 +215,10 @@ END_PROFILE
 }
 
 #-----------------------------------------------------------------------------
-# Test long policy names
+# Test long enforcer names
 
 {
-    my %policy_params = (min_elements => 4);
+    my %enforcer_params = (min_elements => 4);
     my $long_profile_string = <<'END_PROFILE';
 [-Perl::Critic::Policy::NamingConventions::Capitalization]
 [Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists]
@@ -227,7 +227,7 @@ END_PROFILE
 
     my $up = Perl::Critic::UserProfile->new( -profile => \$long_profile_string );
 
-    # Now using long policy names
+    # Now using long enforcer names
     is(
         $up->policy_is_enabled('CodeLayout::ProhibitQuotedWordLists'),
         1,
@@ -240,11 +240,11 @@ END_PROFILE
     );
     is_deeply(
         $up->raw_policy_params('CodeLayout::ProhibitQuotedWordLists'),
-        \%policy_params,
+        \%enforcer_params,
         'CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
-    # Now using long policy names
+    # Now using long enforcer names
     is(
         $up->policy_is_enabled('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
         1,
@@ -257,11 +257,11 @@ END_PROFILE
     );
     is_deeply(
         $up->raw_policy_params('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
-        \%policy_params,
+        \%enforcer_params,
         'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
-    # Using bogus policy names
+    # Using bogus enforcer names
     is(
         $up->policy_is_enabled('Perl::Critic::Policy::Bogus'),
         q{},
