@@ -279,7 +279,7 @@ bad code.  Here's an example:
     =cut
 
 When your policy has a section like this, users can invoke
-L<perlcritic|perlcritic> with a C<--verbose> parameter of C<10> or
+L<perlrefactor|perlrefactor> with a C<--verbose> parameter of C<10> or
 C<11> or with a "%d" escape to see it along with the rest of the
 output for violations of your policy.
 
@@ -296,7 +296,7 @@ conversion of that string to a useful form yourself.  However, if you
 provide some metadata about your parameters, the parameter handling
 will be taken care of for you.  (Additionally, tools that deal with
 Policies themselves can use this information to enhance their
-functionality.  See the L<perlcritic|perlcritic> C<--profile-proto>
+functionality.  See the L<perlrefactor|perlrefactor> C<--profile-proto>
 option for an example.)
 
 You can look at
@@ -333,7 +333,7 @@ be:
     }
 
 As stated above, what you get in C<$config> are trimmed strings.  For
-example, if the user's F<.perlcritic> contains
+example, if the user's F<.perlrefactor> contains
 
     [Your::Policy]
     foo          = bar baz
@@ -1018,7 +1018,7 @@ in the C<CONFIGURATION AND ENVIRONMENT> POD section as shown above.
     default_themes { return qw< example math > }
 
 If you're looking for ideas of what themes to use, have a look at the
-output of C<perlcritic --list-themes>.
+output of C<perlrefactor --list-themes>.
 
 
 =head2 Documentation
@@ -1082,7 +1082,7 @@ This is part of L<Perl::Critic|Perl::Critic> version 1.116.
 =head1 SEE ALSO
 
 Chas. Owens has a blog post about developing in-house policies at
-L<http://svok.blogspot.com/2009/09/adding-house-policies-to-perlcritic.html>.
+L<http://svok.blogspot.com/2009/09/adding-house-policies-to-perlrefactor.html>.
 
 
 =head1 AUTHOR

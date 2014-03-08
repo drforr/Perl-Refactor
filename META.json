@@ -869,14 +869,14 @@
       "bugtracker" : {
          "web" : "https://github.com/Perl-Critic/Perl-Critic/issues"
       },
-      "homepage" : "http://perlcritic.com",
+      "homepage" : "http://perlrefactor.com",
       "license" : [
          "http://dev.perl.org/licenses"
       ],
       "repository" : {
          "url" : "git://github.com/Perl-Critic/Perl-Critic.git"
       },
-      "x_MailingList" : "http://perlcritic.tigris.org/servlets/SummarizeList?listName=users"
+      "x_MailingList" : "http://perlrefactor.tigris.org/servlets/SummarizeList?listName=users"
    },
    "version" : "1.121"
 }

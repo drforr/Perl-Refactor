@@ -1,7 +1,7 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/00_modules.t $
+#      $URL: http://perlrefactor.tigris.org/svn/perlrefactor/trunk/distributions/Perl-Critic/t/00_modules.t $
 #     $Date: 2009-11-01 20:13:44 -0500 (Sun, 01 Nov 2009) $
 #   $Author: clonezone $
 # $Revision: 3699 $

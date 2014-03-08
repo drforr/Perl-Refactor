@@ -121,7 +121,7 @@ sub test_wrappers_to_generate {
         t/05_utils_pod.t
         t/06_violation.t
         t/07_command.t
-        t/07_perlcritic.t
+        t/07_perlrefactor.t
         t/08_document.t
         t/09_theme.t
         t/10_user_profile.t

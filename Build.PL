@@ -49,14 +49,14 @@ my $builder = Perl::Critic::Module::Build->new(
 
     PL_files            => get_PL_files(),
 
-    script_files        => ['bin/perlcritic'],
+    script_files        => ['bin/perlrefactor'],
 
     meta_merge          => {
         resources => {
             bugtracker  => 'https://github.com/Perl-Critic/Perl-Critic/issues',
-            homepage    => 'http://perlcritic.com',
+            homepage    => 'http://perlrefactor.com',
             license     => 'http://dev.perl.org/licenses',
-            MailingList => 'http://perlcritic.tigris.org/servlets/SummarizeList?listName=users',
+            MailingList => 'http://perlrefactor.tigris.org/servlets/SummarizeList?listName=users',
             repository  => 'git://github.com/Perl-Critic/Perl-Critic.git',
         },
         no_index        => {

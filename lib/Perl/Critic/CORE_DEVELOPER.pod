@@ -39,7 +39,7 @@ in L<Perl::Critic/EXTENDING THE CRITIC>. The F<commits> mailing list
 is another good one.
 
 ** You will need to be registered as a developer before you can
-actually change code. L<http://perlcritic.tigris.org/> only lets you
+actually change code. L<http://perlrefactor.tigris.org/> only lets you
 register as an observer. I got promoted on registration, but if that
 doesn't happen, a note to the developers' mailing list might help.
 
@@ -88,11 +88,11 @@ This is not recommended.
     Issue the following commands (we assume '$ ' is your system prompt):
 
     $ svn copy
-        http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic
-        http://perlcritic.tigris.org/svn/perlcritic/branches/rt25046
+        http://perlrefactor.tigris.org/svn/perlrefactor/trunk/distributions/Perl-Critic
+        http://perlrefactor.tigris.org/svn/perlrefactor/branches/rt25046
         -m "Put your comment here" --username your_username
 
-    $ svn checkout http://perlcritic.tigris.org/svn/perlcritic/branches/rt25046
+    $ svn checkout http://perlrefactor.tigris.org/svn/perlrefactor/branches/rt25046
         --username your_username
 
 The 'svn copy' command is the one that does the branch. Each 'svn'
@@ -307,7 +307,7 @@ The following test files must be considered for modification:
 
     t/00_modules.t
     t/01_config.t
-    t/01_config_bad_perlcritic.t
+    t/01_config_bad_perlrefactor.t
     t/04_options_processor.t
     t/07_command.t
     t/10_user_profile.t

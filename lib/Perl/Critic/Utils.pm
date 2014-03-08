@@ -1012,7 +1012,7 @@ sub split_nodes_on_comma {
 
 #-----------------------------------------------------------------------------
 
-# XXX: You must keep the regular expressions in extras/perlcritic.el in sync
+# XXX: You must keep the regular expressions in extras/perlrefactor.el in sync
 # if you change these.
 Readonly::Hash my %FORMAT_OF => (
     1 => "%f:%l:%c:%m\n",
@@ -1720,7 +1720,7 @@ Given a verbosity level between 1 and 10, returns the corresponding
 predefined format string.  These formats are suitable for passing to
 the C<set_format> method in
 L<Perl::Critic::Violation|Perl::Critic::Violation>.  See the
-L<perlcritic|perlcritic> documentation for a listing of the predefined
+L<perlrefactor|perlrefactor> documentation for a listing of the predefined
 formats.
 
 

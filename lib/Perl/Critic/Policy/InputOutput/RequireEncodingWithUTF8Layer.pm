@@ -1,5 +1,5 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/InputOutput/RequireEncodingWithUTF8Layer.pm $
+#      $URL: http://perlrefactor.tigris.org/svn/perlrefactor/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/InputOutput/RequireEncodingWithUTF8Layer.pm $
 #     $Date: 2010-06-22 16:14:07 -0400 (Tue, 22 Jun 2010) $
 #   $Author: clonezone $
 # $Revision: 3843 $

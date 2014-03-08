@@ -21,17 +21,17 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-my $perlcritic = File::Spec->catfile( qw(blib script perlcritic) );
-if (not -e $perlcritic) {
-    $perlcritic = File::Spec->catfile( qw(bin perlcritic) )
+my $perlrefactor = File::Spec->catfile( qw(blib script perlrefactor) );
+if (not -e $perlrefactor) {
+    $perlrefactor = File::Spec->catfile( qw(bin perlrefactor) )
 }
 
-require_ok($perlcritic);
+require_ok($perlrefactor);
 
 #-----------------------------------------------------------------------------
 
 # ensure we return true if this test is loaded by
-# t/07_perlcritic.t_without_optional_dependencies.t
+# t/07_perlrefactor.t_without_optional_dependencies.t
 1;
 
 # Local Variables:

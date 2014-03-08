@@ -253,7 +253,7 @@ Polices through the Perl::Critic interface.  You can also create new
 Policy modules that suit your own tastes.
 
 For a command-line interface to Perl::Critic, see the documentation
-for L<perlcritic|perlcritic>.  If you want to integrate Perl::Critic
+for L<perlrefactor|perlrefactor>.  If you want to integrate Perl::Critic
 with your build process, L<Test::Perl::Critic|Test::Perl::Critic>
 provides an interface that is suitable for test programs.  Also,
 L<Test::Perl::Critic::Progressive|Test::Perl::Critic::Progressive> is
@@ -263,24 +263,24 @@ L<criticism|criticism> pragma.
 
 Win32 and ActivePerl users can find PPM distributions of Perl::Critic at
 L<http://theoryx5.uwinnipeg.ca/ppms/> and Alexandr Ciornii's downloadable
-executable at L<http://chorny.net/perl/perlcritic.html>.
+executable at L<http://chorny.net/perl/perlrefactor.html>.
 
 If you'd like to try L<Perl::Critic|Perl::Critic> without installing anything,
-there is a web-service available at L<http://perlcritic.com>.  The web-service
+there is a web-service available at L<http://perlrefactor.com>.  The web-service
 does not yet support all the configuration features that are available in the
 native Perl::Critic API, but it should give you a good idea of what it does.
-You can also invoke the perlcritic web-service from the command-line by doing
+You can also invoke the perlrefactor web-service from the command-line by doing
 an HTTP-post, such as one of these:
 
-    $> lwp-request -m POST http://perlcritic.com/perl/critic.pl < MyModule.pm
-    $> wget -q -O - --post-file=MyModule.pm http://perlcritic.com/perl/critic.pl
-    $> curl --data @MyModule.pm http://perlcritic.com/perl/critic.pl
+    $> lwp-request -m POST http://perlrefactor.com/perl/critic.pl < MyModule.pm
+    $> wget -q -O - --post-file=MyModule.pm http://perlrefactor.com/perl/critic.pl
+    $> curl --data @MyModule.pm http://perlrefactor.com/perl/critic.pl
 
-Please note that the perlcritic web-service is still alpha code.  The
+Please note that the perlrefactor web-service is still alpha code.  The
 URL and interface to the service are subject to change.
 
 Also, ActivePerl includes a very slick graphical interface to Perl-Critic
-called C<perlcritic-gui>.  You can get a free community edition of ActivePerl
+called C<perlrefactor-gui>.  You can get a free community edition of ActivePerl
 from L<http://www.activestate.com>.
 
 
@@ -431,7 +431,7 @@ as "unsafe" by the author.  Such policies may compile untrusted code or do
 other nefarious things.
 
 B<-color> and B<-pager> are not used by Perl::Critic but is provided for the benefit
-of L<perlcritic|perlcritic>.
+of L<perlrefactor|perlrefactor>.
 
 B<-criticism-fatal> is not used by Perl::Critic but is provided for
 the benefit of L<criticism|criticism>.
@@ -439,12 +439,12 @@ the benefit of L<criticism|criticism>.
 B<-color-severity-highest>, B<-color-severity-high>,
 B<-color-severity-medium>, B<-color-severity-low>, and
 B<-color-severity-lowest> are not used by Perl::Critic, but are provided for
-the benefit of L<perlcritic|perlcritic>. Each is set to the Term::ANSIColor
+the benefit of L<perlrefactor|perlrefactor>. Each is set to the Term::ANSIColor
 color specification to be used to display violations of the corresponding
 severity.
 
 B<-files-with-violations> and B<-files-without-violations> are not used by
-Perl::Critic, but are provided for the benefit of L<perlcritic|perlcritic>, to
+Perl::Critic, but are provided for the benefit of L<perlrefactor|perlrefactor>, to
 cause only the relevant filenames to be displayed.
 
 =back
@@ -653,7 +653,7 @@ A simple configuration might look like this:
 
     #--------------------------------------------------------------
     # Give these policies a custom theme.  I can activate just
-    # these policies by saying `perlcritic -theme larry`
+    # these policies by saying `perlrefactor -theme larry`
 
     [Modules::RequireFilenameMatchesPackage]
     add_themes = larry
@@ -683,7 +683,7 @@ this distribution as F<examples/perlrefactorrc-conway>.
 A large number of Policy modules are distributed with Perl::Critic.
 They are described briefly in the companion document
 L<Perl::Critic::PolicySummary|Perl::Critic::PolicySummary> and in more
-detail in the individual modules themselves.  Say C<"perlcritic -doc
+detail in the individual modules themselves.  Say C<"perlrefactor -doc
 PATTERN"> to see the perldoc for all Policy modules that match the
 regex C<m/PATTERN/ixms>
 
@@ -721,7 +721,7 @@ needs.
     tests             Policies that are specific to test programs
 
 
-Any Policy may fit into multiple themes.  Say C<"perlcritic -list"> to
+Any Policy may fit into multiple themes.  Say C<"perlrefactor -list"> to
 get a listing of all available Policies and the themes that are
 associated with each one.  You can also change the theme for any
 Policy in your F<.perlrefactorrc> file.  See the L<"CONFIGURATION">
@@ -773,7 +773,7 @@ certain lines or blocks of code by using annotations:
 The C<"## no critic"> annotations direct Perl::Critic to ignore the remaining
 lines of code until a C<"## use critic"> annotation is found. If the C<"## no
 critic"> annotation is on the same line as a code statement, then only that
-line of code is overlooked.  To direct perlcritic to ignore the C<"## no
+line of code is overlooked.  To direct perlrefactor to ignore the C<"## no
 critic"> annotations, use the C<--force> option.
 
 A bare C<"## no critic"> annotation disables all the active Policies.  If
@@ -859,8 +859,8 @@ If you develop any new Policy modules, feel free to send them to C<<
 <jeff@imaginative-software.com> >> and I'll be happy to put them into the
 Perl::Critic distribution.  Or if you would like to work on the
 Perl::Critic project directly, check out our repository at
-L<http://perlcritic.tigris.org>.  To subscribe to our mailing list,
-send a message to L<mailto:dev-subscribe@perlcritic.tigris.org>.
+L<http://perlrefactor.tigris.org>.  To subscribe to our mailing list,
+send a message to L<mailto:dev-subscribe@perlrefactor.tigris.org>.
 
 The Perl::Critic team is also available for hire.  If your
 organization has its own coding standards, we can create custom
@@ -931,15 +931,15 @@ L<File::Which|File::Which>
 =head1 CONTACTING THE DEVELOPMENT TEAM
 
 You are encouraged to subscribe to the mailing list; send a message to
-L<mailto:users-subscribe@perlcritic.tigris.org>.  See also the archives at
-L<http://perlcritic.tigris.org/servlets/SummarizeList?listName=users>.
+L<mailto:users-subscribe@perlrefactor.tigris.org>.  See also the archives at
+L<http://perlrefactor.tigris.org/servlets/SummarizeList?listName=users>.
 You can also contact the author at C<< <jeff@imaginative-software.com> >>.
 
 At least one member of the development team has started hanging around
-in L<irc://irc.perl.org/#perlcritic>.
+in L<irc://irc.perl.org/#perlrefactor>.
 
 You can also follow Perl::Critic on Twitter, at
-L<https://twitter.com/perlcritic>.
+L<https://twitter.com/perlrefactor>.
 
 
 =head1 SEE ALSO

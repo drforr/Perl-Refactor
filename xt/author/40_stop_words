@@ -59,7 +59,7 @@ optimizations
 PBP
 pbp
 perl
-perlcritic
+perlrefactor
 perlrefactorrc
 perldoc
 Perlish

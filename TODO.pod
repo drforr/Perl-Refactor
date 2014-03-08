@@ -83,7 +83,7 @@ For the benefit of PodSpelling, etc.
 For things like RequirePodSections.
 
 
-=item * Add queries to --list option to F<perlcritic>.
+=item * Add queries to --list option to F<perlrefactor>.
 
 List Policies based upon severity, theme, and (what I want this second)
 applies_to.
@@ -577,7 +577,7 @@ isn't necessary.
 
 =item * Give L<Perl::Critic::Command> a proper API.
 
-Now that we've got the guts of L<perlcritic> in there, we should make the
+Now that we've got the guts of L<perlrefactor> in there, we should make the
 it available to users.
 
 
@@ -588,7 +588,7 @@ it available to users.
 Elliot was talking to a couple of users at ETech and one of their major
 concerns was that they were using C<##no critic> and forgetting to do a
 C<##use critic> after the problematic section.  Perhaps an option to
-F<perlcritic> to scan for such things is in order.
+F<perlrefactor> to scan for such things is in order.
 
 
 =item * Change API to use named parameters
@@ -600,10 +600,10 @@ Static methods can still use positional parameters.
 
 =item * Enhance P::C::critique() to accept files, directories, or code strings
 
-Just like F<bin/perlcritic> does now.
+Just like F<bin/perlrefactor> does now.
 
 
-=item * Add C<-cache> flag to F<bin/perlcritic>
+=item * Add C<-cache> flag to F<bin/perlrefactor>
 
 If enabled, this turns on L<PPI::Cache|PPI::Cache>:
 
