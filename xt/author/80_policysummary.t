@@ -43,9 +43,9 @@ if (open my ($fh), '<', $summary_file) {
         ++$num_summaries{$summary};
     }
     if (!ok(@summaries == keys %num_summaries, 'right number of summaries')) {
-        for my $policy_name (sort keys %num_summaries) {
-            next if 1 == $num_summaries{$policy_name};
-            diag('Duplicate summary for ' . $policy_name);
+        for my $enforcer_name (sort keys %num_summaries) {
+            next if 1 == $num_summaries{$enforcer_name};
+            diag('Duplicate summary for ' . $enforcer_name);
         }
     }
 
@@ -54,10 +54,10 @@ if (open my ($fh), '<', $summary_file) {
     my %found_policies = map { ref $_ => $_ } $factory->create_all_policies();
 
     my %descriptions = $content =~ m/^=head2 [ ]+ L<[\w:]+[|]([\w:]+)>\n\n([^\n]+)/gxms;
-    for my $policy_name (keys %descriptions) {
+    for my $enforcer_name (keys %descriptions) {
         my $severity;
         if (
-            $descriptions{$policy_name} =~ s/ [ ] \[ Default [ ] severity [ ] (\d+) \] //xms
+            $descriptions{$enforcer_name} =~ s/ [ ] \[ Default [ ] severity [ ] (\d+) \] //xms
         ) {
             $severity = $1;
         }
@@ -65,26 +65,26 @@ if (open my ($fh), '<', $summary_file) {
             $severity = '<unknown>';
         }
 
-        $descriptions{$policy_name} = {
-            desc => $descriptions{$policy_name},
+        $descriptions{$enforcer_name} = {
+            desc => $descriptions{$enforcer_name},
             severity => $severity,
         };
     }
 
-    for my $policy_name ( @policy_names ) {
-        my $label = qq{PolicySummary.pod has "$policy_name"};
-        my $has_summary = delete $num_summaries{$policy_name};
+    for my $enforcer_name ( @policy_names ) {
+        my $label = qq{PolicySummary.pod has "$enforcer_name"};
+        my $has_summary = delete $num_summaries{$enforcer_name};
         is( $has_summary, 1, $label );
 
-        my $summary_severity = $descriptions{$policy_name}->{severity};
-        my $real_severity = $found_policies{$policy_name} &&
-          $found_policies{$policy_name}->default_severity;
-        is( $summary_severity, $real_severity, "severity for $policy_name" );
+        my $summary_severity = $descriptions{$enforcer_name}->{severity};
+        my $real_severity = $found_policies{$enforcer_name} &&
+          $found_policies{$enforcer_name}->default_severity;
+        is( $summary_severity, $real_severity, "severity for $enforcer_name" );
     }
 
     if (!ok(0 == keys %num_summaries, 'no extra summaries')) {
-        for my $policy_name (sort keys %num_summaries) {
-            diag('Extraneous summary for ' . $policy_name);
+        for my $enforcer_name (sort keys %num_summaries) {
+            diag('Extraneous summary for ' . $enforcer_name);
         }
     }
 }

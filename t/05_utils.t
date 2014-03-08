@@ -447,8 +447,8 @@ sub test_find_bundled_policies {
     Perl::Critic::TestUtils::block_perlrefactorrc();
 
     my @native_policies = bundled_policy_names();
-    my $policy_dir = File::Spec->catfile( qw(lib Perl Critic Policy) );
-    my @found_policies  = all_perl_files( $policy_dir );
+    my $enforcer_dir = File::Spec->catfile( qw(lib Perl Critic Policy) );
+    my @found_policies  = all_perl_files( $enforcer_dir );
     is( scalar @found_policies, scalar @native_policies, 'Find all perl code');
 
     return;

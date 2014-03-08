@@ -28,7 +28,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
 # would have to contain invisible characters.
 
 my $code;
-my $policy = 'CodeLayout::ProhibitHardTabs';
+my $enforcer = 'CodeLayout::ProhibitHardTabs';
 my %config;
 
 #-----------------------------------------------------------------------------
@@ -46,7 +46,7 @@ sub my_sub {
 
 END_PERL
 
-is( pcritique($policy, \$code), 0, $policy );
+is( pcritique($enforcer, \$code), 0, $enforcer );
 
 #-----------------------------------------------------------------------------
 
@@ -55,7 +55,7 @@ $code = <<"END_PERL";
 print "\t  \t  foobar  \t";
 END_PERL
 
-is( pcritique($policy, \$code), 1, $policy );
+is( pcritique($enforcer, \$code), 1, $enforcer );
 
 #-----------------------------------------------------------------------------
 
@@ -70,7 +70,7 @@ my \@list = qw(
 
 END_PERL
 
-is( pcritique($policy, \$code, \%config), 0, 'Leading tabs in qw()' );
+is( pcritique($enforcer, \$code, \%config), 0, 'Leading tabs in qw()' );
 
 #-----------------------------------------------------------------------------
 
@@ -84,7 +84,7 @@ my \@list = qw(
 
 END_PERL
 
-is( pcritique($policy, \$code, \%config), 1, 'Non-leading tabs in qw()' );
+is( pcritique($enforcer, \$code, \%config), 1, 'Non-leading tabs in qw()' );
 
 #-----------------------------------------------------------------------------
 # RT #32440
@@ -106,7 +106,7 @@ $code = <<"END_PERL";
 
 END_PERL
 
-is( pcritique($policy, \$code, \%config), 0, 'Leading tabs in extended regex' );
+is( pcritique($enforcer, \$code, \%config), 0, 'Leading tabs in extended regex' );
 
 #-----------------------------------------------------------------------------
 # RT #32440
@@ -130,7 +130,7 @@ $code = <<"END_PERL";
 
 END_PERL
 
-is( pcritique($policy, \$code, \%config), 2, 'Leading tabs in non-extended regex' );
+is( pcritique($enforcer, \$code, \%config), 2, 'Leading tabs in non-extended regex' );
 
 #-----------------------------------------------------------------------------
 # RT #32440
@@ -145,7 +145,7 @@ $code = <<"END_PERL";
 
 END_PERL
 
-is( pcritique($policy, \$code, \%config), 1, 'Non-leading tabs in extended regex' );
+is( pcritique($enforcer, \$code, \%config), 1, 'Non-leading tabs in extended regex' );
 
 #-----------------------------------------------------------------------------
 
@@ -161,7 +161,7 @@ sub my_sub {
 END_PERL
 
 %config = (allow_leading_tabs => 0);
-is( pcritique($policy, \$code, \%config), 3, $policy );
+is( pcritique($enforcer, \$code, \%config), 3, $enforcer );
 
 #-----------------------------------------------------------------------------
 
@@ -177,7 +177,7 @@ sub my_sub {
 END_PERL
 
 %config = (allow_leading_tabs => 0);
-is( pcritique($policy, \$code, \%config), 3, $policy );
+is( pcritique($enforcer, \$code, \%config), 3, $enforcer );
 
 #-----------------------------------------------------------------------------
 
@@ -191,7 +191,7 @@ foo\tbar\tbaz
 END_PERL
 
 %config = (allow_leading_tabs => 0);
-is( pcritique($policy, \$code, \%config), 0, 'Tabs in __DATA__' );
+is( pcritique($enforcer, \$code, \%config), 0, 'Tabs in __DATA__' );
 
 #-----------------------------------------------------------------------------
 

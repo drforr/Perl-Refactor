@@ -59,13 +59,13 @@ sub options_processor {
 
 sub policy_params {
 
-    my ( $self, $policy ) = @_;
+    my ( $self, $enforcer ) = @_;
 
-    my $short_name = policy_short_name($policy);
+    my $short_name = policy_short_name($enforcer);
 
     return Perl::Critic::PolicyConfig->new(
         $short_name,
-        $self->raw_policy_params($policy),
+        $self->raw_policy_params($enforcer),
     );
 }
 
@@ -73,9 +73,9 @@ sub policy_params {
 
 sub raw_policy_params {
 
-    my ( $self, $policy ) = @_;
+    my ( $self, $enforcer ) = @_;
     my $profile = $self->{_profile};
-    my $long_name  = ref $policy || policy_long_name( $policy );
+    my $long_name  = ref $enforcer || policy_long_name( $enforcer );
     my $short_name = policy_short_name( $long_name );
 
     return
@@ -90,9 +90,9 @@ sub raw_policy_params {
 
 sub policy_is_disabled {
 
-    my ( $self, $policy ) = @_;
+    my ( $self, $enforcer ) = @_;
     my $profile = $self->{_profile};
-    my $long_name  = ref $policy || policy_long_name( $policy );
+    my $long_name  = ref $enforcer || policy_long_name( $enforcer );
     my $short_name = policy_short_name( $long_name );
 
     return exists $profile->{"-$short_name"}
@@ -103,9 +103,9 @@ sub policy_is_disabled {
 
 sub policy_is_enabled {
 
-    my ( $self, $policy ) = @_;
+    my ( $self, $enforcer ) = @_;
     my $profile = $self->{_profile};
-    my $long_name  = ref $policy || policy_long_name( $policy );
+    my $long_name  = ref $enforcer || policy_long_name( $enforcer );
     my $short_name = policy_short_name( $long_name );
 
     return exists $profile->{$short_name}
@@ -116,13 +116,13 @@ sub policy_is_enabled {
 
 sub listed_policies {
 
-    my ( $self, $policy ) = @_;
+    my ( $self, $enforcer ) = @_;
     my @normalized_policy_names = ();
 
-    for my $policy_name ( sort keys %{$self->{_profile}} ) {
-        $policy_name =~ s/\A - //xmso; #Chomp leading "-"
-        my $policy_long_name = policy_long_name( $policy_name );
-        push @normalized_policy_names, $policy_long_name;
+    for my $enforcer_name ( sort keys %{$self->{_profile}} ) {
+        $enforcer_name =~ s/\A - //xmso; #Chomp leading "-"
+        my $enforcer_long_name = policy_long_name( $enforcer_name );
+        push @normalized_policy_names, $enforcer_long_name;
     }
 
     return @normalized_policy_names;
@@ -358,21 +358,21 @@ L<Perl::Critic::OptionsProcessor|Perl::Critic::OptionsProcessor>
 object for this UserProfile.
 
 
-=item C< policy_is_disabled( $policy ) >
+=item C< policy_is_disabled( $enforcer ) >
 
 Given a reference to a L<Perl::Critic::Policy|Perl::Critic::Policy>
 object or the name of one, returns true if the user has disabled that
 policy in their profile.
 
 
-=item C< policy_is_enabled( $policy ) >
+=item C< policy_is_enabled( $enforcer ) >
 
 Given a reference to a L<Perl::Critic::Policy|Perl::Critic::Policy>
 object or the name of one, returns true if the user has explicitly
 enabled that policy in their user profile.
 
 
-=item C< policy_params( $policy ) >
+=item C< policy_params( $enforcer ) >
 
 Given a reference to a L<Perl::Critic::Policy|Perl::Critic::Policy>
 object or the name of one, returns a
@@ -380,7 +380,7 @@ L<Perl::Critic::PolicyConfig|Perl::Critic::PolicyConfig> for the
 user's configuration parameters for that policy.
 
 
-=item C< raw_policy_params( $policy ) >
+=item C< raw_policy_params( $enforcer ) >
 
 Given a reference to a L<Perl::Critic::Policy|Perl::Critic::Policy>
 object or the name of one, returns a reference to a hash of the user's

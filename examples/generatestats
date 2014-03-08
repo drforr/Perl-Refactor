@@ -185,10 +185,10 @@ sub report_severities {
 sub report_policies {
     my ($policies) = @_;
 
-    foreach my $policy ( sort keys %{$policies} ) {
-        (my $short_policy = $policy) =~ s/ \A Perl::Critic::Policy:: //xms;
+    foreach my $enforcer ( sort keys %{$policies} ) {
+        (my $short_policy = $enforcer) =~ s/ \A Perl::Critic::Policy:: //xms;
 
-        say qq{\t}, $short_policy, ': ', $policies->{$policy};
+        say qq{\t}, $short_policy, ': ', $policies->{$enforcer};
     }
 
     return;

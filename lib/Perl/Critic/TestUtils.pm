@@ -58,9 +58,9 @@ sub block_perlrefactorrc {
 # Criticize a code snippet using only one policy.  Returns the violations.
 
 sub pcritique_with_violations {
-    my($policy, $code_ref, $config_ref) = @_;
+    my($enforcer, $code_ref, $config_ref) = @_;
     my $c = Perl::Critic->new( -profile => 'NONE' );
-    $c->add_policy(-policy => $policy, -config => $config_ref);
+    $c->add_policy(-policy => $enforcer, -config => $config_ref);
     return $c->critique($code_ref);
 }
 
@@ -96,9 +96,9 @@ sub critique {  ##no critic(ArgUnpacking)
 Readonly::Scalar my $TEMP_FILE_PERMISSIONS => oct 700;
 
 sub fcritique_with_violations {
-    my($policy, $code_ref, $filename, $config_ref) = @_;
+    my($enforcer, $code_ref, $filename, $config_ref) = @_;
     my $c = Perl::Critic->new( -profile => 'NONE' );
-    $c->add_policy(-policy => $policy, -config => $config_ref);
+    $c->add_policy(-policy => $enforcer, -config => $config_ref);
 
     my $dir = File::Temp::tempdir( 'PerlCritic-tmpXXXXXX', TMPDIR => 1 );
     $filename ||= 'Temp.pm';
@@ -153,7 +153,7 @@ sub subtests_in_tree {
                     throw_internal 'confusing policy test filename ' . $_;
                 }
 
-                my $policy = join q{::}, @pathparts[-2, -1]; ## no critic (MagicNumbers)
+                my $enforcer = join q{::}, @pathparts[-2, -1]; ## no critic (MagicNumbers)
 
                 my $globals = _globals_from_file( $_ );
                 if ( my $prerequisites = $globals->{prerequisites} ) {
@@ -165,11 +165,11 @@ sub subtests_in_tree {
                 my @subtests = _subtests_from_file( $_ );
 
                 if ($include_extras) {
-                    $subtests{$policy} =
+                    $subtests{$enforcer} =
                         { subtests => [ @subtests ], globals => $globals };
                 }
                 else {
-                    $subtests{$policy} = [ @subtests ];
+                    $subtests{$enforcer} = [ @subtests ];
                 }
 
                 return;
@@ -450,19 +450,19 @@ instance (or C<undef> for the default).  Returns the number of
 violations that occurred.
 
 
-=item pcritique_with_violations( $policy_name, $code_string_ref, $config_ref )
+=item pcritique_with_violations( $enforcer_name, $code_string_ref, $config_ref )
 
 Like C<critique_with_violations()>, but tests only a single policy
 instead of the whole bunch.
 
 
-=item pcritique( $policy_name, $code_string_ref, $config_ref )
+=item pcritique( $enforcer_name, $code_string_ref, $config_ref )
 
 Like C<critique()>, but tests only a single policy instead of the
 whole bunch.
 
 
-=item fcritique_with_violations( $policy_name, $code_string_ref, $filename, $config_ref )
+=item fcritique_with_violations( $enforcer_name, $code_string_ref, $filename, $config_ref )
 
 Like C<pcritique_with_violations()>, but pretends that the code was
 loaded from the specified filename.  This is handy for testing
@@ -474,7 +474,7 @@ file and all necessary subdirectories will be created via
 L<File::Temp|File::Temp> and will be automatically deleted.
 
 
-=item fcritique( $policy_name, $code_string_ref, $filename, $config_ref )
+=item fcritique( $enforcer_name, $code_string_ref, $filename, $config_ref )
 
 Like C<pcritique()>, but pretends that the code was loaded from the
 specified filename.  This is handy for testing policies like

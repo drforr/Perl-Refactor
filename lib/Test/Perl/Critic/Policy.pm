@@ -65,19 +65,19 @@ sub all_policies_ok {
     my $policies_to_test = join q{, }, keys %{$subtests_with_extras};
     $TEST->note("Running tests for policies: $policies_to_test");
 
-    for my $policy ( sort keys %{$subtests_with_extras} ) {
+    for my $enforcer ( sort keys %{$subtests_with_extras} ) {
 
-        my ($full_policy_name, $method) = ("Perl::Critic::Policy::$policy", 'violates');
+        my ($full_policy_name, $method) = ("Perl::Critic::Policy::$enforcer", 'violates');
         my $can_ok_label = qq{Class '$full_policy_name' has method '$method'};
         $TEST->ok( $full_policy_name->can($method), $can_ok_label );
 
-        for my $subtest ( @{ $subtests_with_extras->{$policy}{subtests} } ) {
+        for my $subtest ( @{ $subtests_with_extras->{$enforcer}{subtests} } ) {
             my $todo = $subtest->{TODO};
             if ($todo) { $TEST->todo_start( $todo ); }
 
-            my ($error, @violations) = _run_subtest($policy, $subtest);
+            my ($error, @violations) = _run_subtest($enforcer, $subtest);
             my ($ok, @diag)= _evaluate_test_results($subtest, $error, \@violations);
-            $TEST->ok( $ok, _create_test_name($policy, $subtest) );
+            $TEST->ok( $ok, _create_test_name($enforcer, $subtest) );
 
             if (@diag) { $TEST->diag(@diag); }
             if ($todo) { $TEST->todo_end(); }
@@ -120,7 +120,7 @@ sub _filter_unwanted_subtests {
 #-----------------------------------------------------------------------------
 
 sub _run_subtest {
-    my ($policy, $subtest) = @_;
+    my ($enforcer, $subtest) = @_;
 
     my @violations;
     my $error;
@@ -128,7 +128,7 @@ sub _run_subtest {
         eval {
             @violations =
                 fcritique_with_violations(
-                    $policy,
+                    $enforcer,
                     \$subtest->{code},
                     $subtest->{filename},
                     $subtest->{parms},
@@ -142,7 +142,7 @@ sub _run_subtest {
         eval {
             @violations =
                 pcritique_with_violations(
-                    $policy,
+                    $enforcer,
                     \$subtest->{code},
                     $subtest->{parms},
                 );
@@ -246,8 +246,8 @@ sub _all_optional_modules_are_available {
 #-----------------------------------------------------------------------------
 
 sub _create_test_name {
-    my ($policy, $subtest) = @_;
-    return join ' - ', $policy, "line $subtest->{lineno}", $subtest->{name};
+    my ($enforcer, $subtest) = @_;
+    return join ' - ', $enforcer, "line $subtest->{lineno}", $subtest->{name};
 }
 
 #-----------------------------------------------------------------------------

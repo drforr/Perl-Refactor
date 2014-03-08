@@ -900,19 +900,19 @@ sub is_in_void_context {
 #-----------------------------------------------------------------------------
 
 sub policy_long_name {
-    my ( $policy_name ) = @_;
-    if ( $policy_name !~ m{ \A $POLICY_NAMESPACE }xms ) {
-        $policy_name = $POLICY_NAMESPACE . q{::} . $policy_name;
+    my ( $enforcer_name ) = @_;
+    if ( $enforcer_name !~ m{ \A $POLICY_NAMESPACE }xms ) {
+        $enforcer_name = $POLICY_NAMESPACE . q{::} . $enforcer_name;
     }
-    return $policy_name;
+    return $enforcer_name;
 }
 
 #-----------------------------------------------------------------------------
 
 sub policy_short_name {
-    my ( $policy_name ) = @_;
-    $policy_name =~ s{\A $POLICY_NAMESPACE ::}{}xms;
-    return $policy_name;
+    my ( $enforcer_name ) = @_;
+    $enforcer_name =~ s{\A $POLICY_NAMESPACE ::}{}xms;
+    return $enforcer_name;
 }
 
 #-----------------------------------------------------------------------------
@@ -1669,12 +1669,12 @@ Given a L<PPI::Token|PPI::Token>, answer whether it appears to be in a
 void context.
 
 
-=item C<policy_long_name( $policy_name )>
+=item C<policy_long_name( $enforcer_name )>
 
 Given a policy class name in long or short form, return the long form.
 
 
-=item C<policy_short_name( $policy_name )>
+=item C<policy_short_name( $enforcer_name )>
 
 Given a policy class name in long or short form, return the short
 form.

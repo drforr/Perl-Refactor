@@ -408,18 +408,18 @@ sub process_annotations {
 #-----------------------------------------------------------------------------
 
 sub line_is_disabled_for_policy {
-    my ($self, $line, $policy) = @_;
-    my $policy_name = ref $policy || $policy;
+    my ($self, $line, $enforcer) = @_;
+    my $enforcer_name = ref $enforcer || $enforcer;
 
     # HACK: This Policy is special.  If it is active, it cannot be
     # disabled by a "## no critic" annotation.  Rather than create a general
     # hook in Policy.pm for enabling this behavior, we chose to hack
     # it here, since this isn't the kind of thing that most policies do
 
-    return 0 if $policy_name eq
+    return 0 if $enforcer_name eq
         'Perl::Critic::Policy::Miscellanea::ProhibitUnrestrictedNoCritic';
 
-    return 1 if $self->{_disabled_line_map}->{$line}->{$policy_name};
+    return 1 if $self->{_disabled_line_map}->{$line}->{$enforcer_name};
     return 1 if $self->{_disabled_line_map}->{$line}->{ALL};
     return 0;
 }
@@ -438,8 +438,8 @@ sub add_annotation {
 
         # TODO: Find clever way to do this with hash slices
         for my $line ($start .. $end) {
-            for my $policy (@affected_policies) {
-                $self->{_disabled_line_map}->{$line}->{$policy} = 1;
+            for my $enforcer (@affected_policies) {
+                $self->{_disabled_line_map}->{$line}->{$enforcer} = 1;
             }
         }
     }
@@ -821,9 +821,9 @@ Causes this Document to scan itself and mark which lines &
 policies are disabled by the C<"## no critic"> annotations.
 
 
-=item C<< line_is_disabled_for_policy($line, $policy_object) >>
+=item C<< line_is_disabled_for_policy($line, $enforcer_object) >>
 
-Returns true if the given C<$policy_object> or C<$policy_name> has
+Returns true if the given C<$enforcer_object> or C<$enforcer_name> has
 been disabled for at C<$line> in this Document.  Otherwise, returns false.
 
 

@@ -35,18 +35,18 @@ my $default_configuration =
     );
 my @default_policies = $default_configuration->policies();
 
-my $policy_test_count;
+my $enforcer_test_count;
 
-$policy_test_count = 4 * @default_policies;
-foreach my $policy (@default_policies) {
+$enforcer_test_count = 4 * @default_policies;
+foreach my $enforcer (@default_policies) {
     if (
-            $policy->parameter_metadata_available()
-        and not $policy->isa('Perl::Critic::Policy::CodeLayout::RequireTidyCode')
+            $enforcer->parameter_metadata_available()
+        and not $enforcer->isa('Perl::Critic::Policy::CodeLayout::RequireTidyCode')
     ) {
-        $policy_test_count += scalar @{$policy->get_parameters()};
+        $enforcer_test_count += scalar @{$enforcer->get_parameters()};
     }
 }
-my $test_count = 18 + $policy_test_count;
+my $test_count = 18 + $enforcer_test_count;
 plan tests => $test_count;
 
 #-----------------------------------------------------------------------------
@@ -213,7 +213,7 @@ cmp_deeply(
 
 my @derived_policies = $derived_configuration->policies();
 
-my $policy_counts_match =
+my $enforcer_counts_match =
     is(
         scalar @derived_policies,
         scalar @default_policies,
@@ -223,8 +223,8 @@ my $policy_counts_match =
 SKIP: {
     skip
         q{because there weren't the same number of policies},
-            $policy_test_count
-        if not $policy_counts_match;
+            $enforcer_test_count
+        if not $enforcer_counts_match;
 
     for (my $x = 0; $x < @default_policies; $x++) { ## no critic (ProhibitCStyleForLoops)
         my $derived_policy = $derived_policies[$x];

@@ -153,8 +153,8 @@ sub disabled_policies {
 #-----------------------------------------------------------------------------
 
 sub disables_policy {
-    my ($self, $policy_name) = @_;
-    return 1 if $self->{_disabled_policies}->{$policy_name};
+    my ($self, $enforcer_name) = @_;
+    return 1 if $self->{_disabled_policies}->{$enforcer_name};
     return 1 if $self->disables_all_policies();
     return 0;
 }
@@ -289,7 +289,7 @@ Perl::Critic::Annotation - A "## no critic" annotation in a document.
   $annotation = Perl::Critic::Annotation->new( -element => $no_critic_ppi_element );
 
   $bool = $annotation->disables_line( $number );
-  $bool = $annotation->disables_policy( $policy_object );
+  $bool = $annotation->disables_policy( $enforcer_object );
   $bool = $annotation->disables_all_policies();
 
   ($start, $end) = $annotation->effective_range();
@@ -353,12 +353,12 @@ Returns true if this Annotation disables C<$line> for any (or all)
 Policies.
 
 
-=item C<< disables_policy( $policy_object ) >>
+=item C<< disables_policy( $enforcer_object ) >>
 
-=item C<< disables_policy( $policy_name ) >>
+=item C<< disables_policy( $enforcer_name ) >>
 
-Returns true if this Annotation disables C<$polciy_object> or
-C<$policy_name> at any (or all) lines.
+Returns true if this Annotation disables C<$enforcer_object> or
+C<$enforcer_name> at any (or all) lines.
 
 
 =item C<< disables_all_policies() >>

@@ -37,8 +37,8 @@ sub to_string {
     my ($self) = @_;
 
     my %themes;
-    foreach my $policy ( @{ $self->{_policies} } ) {
-        my @themes = $policy->get_themes();
+    foreach my $enforcer ( @{ $self->{_policies} } ) {
+        my @themes = $enforcer->get_themes();
         @themes{ @themes } = @themes;
     }
 

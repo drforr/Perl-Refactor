@@ -74,10 +74,10 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
                 -severity   => $severity,
                 -theme      => 'core',
             );
-        my $policy_count = scalar $configuration->policies();
+        my $enforcer_count = scalar $configuration->policies();
         my $test_name = "Count native policies, severity: $severity";
-        cmp_ok($policy_count, '<', $last_policy_count, $test_name);
-        $last_policy_count = $policy_count;
+        cmp_ok($enforcer_count, '<', $last_policy_count, $test_name);
+        $last_policy_count = $enforcer_count;
     }
 }
 
@@ -95,10 +95,10 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
             -theme      => 'core',
         );
         my $refactor = Perl::Critic::Config->new( %pc_args );
-        my $policy_count = scalar $refactor->policies();
+        my $enforcer_count = scalar $refactor->policies();
         my $test_name = "Count all policies, severity: $severity";
-        cmp_ok($policy_count, '<', $last_policy_count, $test_name);
-        $last_policy_count = $policy_count;
+        cmp_ok($enforcer_count, '<', $last_policy_count, $test_name);
+        $last_policy_count = $enforcer_count;
     }
 }
 
@@ -113,18 +113,18 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
     my %policies_by_name =
         map { $_->get_short_name() => $_ } $configuration->policies();
 
-    foreach my $policy ( $configuration->all_policies_enabled_or_not() ) {
-        my $enabled = $policy->is_enabled();
-        if ( delete $policies_by_name{ $policy->get_short_name() } ) {
+    foreach my $enforcer ( $configuration->all_policies_enabled_or_not() ) {
+        my $enabled = $enforcer->is_enabled();
+        if ( delete $policies_by_name{ $enforcer->get_short_name() } ) {
             ok(
                 $enabled,
-                $policy->get_short_name() . ' is enabled.',
+                $enforcer->get_short_name() . ' is enabled.',
             );
         }
         else {
             ok(
                 ! $enabled && defined $enabled,
-                $policy->get_short_name() . ' is not enabled.',
+                $enforcer->get_short_name() . ' is not enabled.',
             );
         }
     }
@@ -192,19 +192,19 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
             -theme      => 'core',
         );
         my $refactor = Perl::Critic::Config->new( %pc_args );
-        my $policy_count = scalar $refactor->policies();
+        my $enforcer_count = scalar $refactor->policies();
         my $expected_count = ($SEVERITY_HIGHEST - $severity + 1) * 10;
         my $test_name = "user-defined severity level: $severity";
-        is( $policy_count, $expected_count, $test_name );
+        is( $enforcer_count, $expected_count, $test_name );
     }
 
     # All remaining policies should be at the lowest severity
     my %pc_args = (-profile => \%profile, -severity => $SEVERITY_LOWEST);
     my $refactor = Perl::Critic::Config->new( %pc_args );
-    my $policy_count = scalar $refactor->policies();
+    my $enforcer_count = scalar $refactor->policies();
     my $expected_count = $SEVERITY_HIGHEST * 10;
     my $test_name = 'user-defined severity, all remaining policies';
-    cmp_ok( $policy_count, '>=', $expected_count, $test_name);
+    cmp_ok( $enforcer_count, '>=', $expected_count, $test_name);
 }
 
 #-----------------------------------------------------------------------------

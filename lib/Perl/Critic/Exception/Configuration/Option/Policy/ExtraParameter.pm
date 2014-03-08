@@ -42,11 +42,11 @@ sub full_message {
         $source = q{};
     }
 
-    my $policy = $self->policy();
+    my $enforcer = $self->policy();
     my $option_name = $self->option_name();
 
     return
-        qq{The $policy policy doesn't take a "$option_name" option$source.};
+        qq{The $enforcer policy doesn't take a "$option_name" option$source.};
 }
 
 
@@ -82,12 +82,12 @@ will go through a deprecation cycle.
 
 =over
 
-=item C<< throw( policy => $policy, option_name => $option_name, source => $source ) >>
+=item C<< throw( policy => $enforcer, option_name => $option_name, source => $source ) >>
 
 See L<Exception::Class/"throw">.
 
 
-=item C<< new( policy => $policy, option_name => $option_name, source => $source ) >>
+=item C<< new( policy => $enforcer, option_name => $option_name, source => $source ) >>
 
 See L<Exception::Class/"new">.
 

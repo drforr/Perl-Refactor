@@ -33,7 +33,7 @@ sub initialize_parameter {
             # Normally bad thing, obscuring a variable in a outer scope
             # with a variable with the same name is being done here in
             # order to remain consistent with the parser function interface.
-            my ($policy, $parameter, $config_string) = @_;  ## no critic(Variables::ProhibitReusedNames)
+            my ($enforcer, $parameter, $config_string) = @_;  ## no critic(Variables::ProhibitReusedNames)
 
             my $value_string = $parameter->get_default_string();
 
@@ -47,7 +47,7 @@ sub initialize_parameter {
                         $value_string !~ m/ \A [-+]? [1-9] [\d_]* \z /xms
                     and $value_string ne '0'
                 ) {
-                    $policy->throw_parameter_value_exception(
+                    $enforcer->throw_parameter_value_exception(
                         $parameter->get_name(),
                         $value_string,
                         undef,
@@ -59,7 +59,7 @@ sub initialize_parameter {
                 $value = $value_string + 0;
 
                 if ( defined $minimum and $minimum > $value ) {
-                    $policy->throw_parameter_value_exception(
+                    $enforcer->throw_parameter_value_exception(
                         $parameter->get_name(),
                         $value_string,
                         undef,
@@ -68,7 +68,7 @@ sub initialize_parameter {
                 }
 
                 if ( defined $maximum and $maximum < $value ) {
-                    $policy->throw_parameter_value_exception(
+                    $enforcer->throw_parameter_value_exception(
                         $parameter->get_name(),
                         $value_string,
                         undef,
@@ -77,7 +77,7 @@ sub initialize_parameter {
                 }
             }
 
-            $policy->__set_parameter_value($parameter, $value);
+            $enforcer->__set_parameter_value($parameter, $value);
             return;
         }
     );

@@ -170,19 +170,19 @@ sub visual_column_number {
 
 sub diagnostics {
     my ($self) = @_;
-    my $policy = $self->policy();
+    my $enforcer = $self->policy();
 
-    if ( not $diagnostics{$policy} ) {
+    if ( not $diagnostics{$enforcer} ) {
         eval {              ## no critic (RequireCheckingReturnValueOfEval)
-            my $module_name = ref $policy || $policy;
-            $diagnostics{$policy} =
+            my $module_name = ref $enforcer || $enforcer;
+            $diagnostics{$enforcer} =
                 trim_pod_section(
                     get_pod_section_for_module( $module_name, 'DESCRIPTION' )
                 );
         };
-        $diagnostics{$policy} ||= "    No diagnostics available\n";
+        $diagnostics{$enforcer} ||= "    No diagnostics available\n";
     }
-    return $diagnostics{$policy};
+    return $diagnostics{$enforcer};
 }
 
 #-----------------------------------------------------------------------------

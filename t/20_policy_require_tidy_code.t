@@ -24,7 +24,7 @@ our $VERSION = '1.121';
 Perl::Critic::TestUtils::block_perlrefactorrc();
 
 my $code;
-my $policy = 'CodeLayout::RequireTidyCode';
+my $enforcer = 'CodeLayout::RequireTidyCode';
 my %config;
 
 #-----------------------------------------------------------------------------
@@ -37,7 +37,7 @@ END_PERL
 
 %config = (perltidyrc => q{});
 is(
-    pcritique($policy, \$code, \%config),
+    pcritique($enforcer, \$code, \%config),
     1,
     'Untidy code',
 );
@@ -52,7 +52,7 @@ END_PERL
 
 %config = (perltidyrc => q{});
 is(
-    pcritique($policy, \$code, \%config),
+    pcritique($enforcer, \$code, \%config),
     0,
     'Tidy with one trailing newline',
 );
@@ -68,7 +68,7 @@ END_PERL
 
 %config = (perltidyrc => q{});
 is(
-    pcritique($policy, \$code, \%config),
+    pcritique($enforcer, \$code, \%config),
     0,
     'Tidy with two trailing newlines',
 );
@@ -91,7 +91,7 @@ END_PERL
 
 %config = (perltidyrc => q{});
 is(
-    pcritique($policy, \$code, \%config),
+    pcritique($enforcer, \$code, \%config),
     0,
     'Tidy with several trailing newlines',
 );
@@ -109,7 +109,7 @@ END_PERL
 
 %config = (perltidyrc => q{});
 is(
-    pcritique($policy, \$code, \%config),
+    pcritique($enforcer, \$code, \%config),
     0,
     'Tidy with heredoc',
 );
@@ -127,7 +127,7 @@ END_PERL
 
 %config = (perltidyrc => q{});
 is(
-    pcritique($policy, \$code, \%config),
+    pcritique($enforcer, \$code, \%config),
     0,
     'Tidy with shell escape',
 );

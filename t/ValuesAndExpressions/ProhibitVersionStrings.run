@@ -11,7 +11,7 @@ require Foo 1.0203;
 use Foo 1.0203 qw(foo bar);
 require Foo 1.0203 qw(foo bar);
 
-is( pcritique($policy, \$code), 0, $policy);
+is( pcritique($enforcer, \$code), 0, $enforcer);
 
 use lib '/usr/lib/perl5/vendor_perl/5.8.8'; # RT #30388
 

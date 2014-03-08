@@ -149,7 +149,7 @@ our $VERSION = '1.121';
 
 sub test_standard_parameters_undef_via_get {
     my ($config) = @_;
-    my $policy_short_name = $config->get_policy_short_name();
+    my $enforcer_short_name = $config->get_policy_short_name();
 
     foreach my $parameter (
         qw<
@@ -163,7 +163,7 @@ sub test_standard_parameters_undef_via_get {
         is(
             $config->get($parameter),
             undef,
-            qq<"$parameter" is not defined via get() for $policy_short_name.>,
+            qq<"$parameter" is not defined via get() for $enforcer_short_name.>,
         )
     }
 

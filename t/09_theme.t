@@ -311,8 +311,8 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
 #-----------------------------------------------------------------------------
 
 sub has_theme {
-    my ($policy, $theme) = @_;
-    return any { $_ eq $theme } $policy->get_themes();
+    my ($enforcer, $theme) = @_;
+    return any { $_ eq $theme } $enforcer->get_themes();
 }
 
 #-----------------------------------------------------------------------------

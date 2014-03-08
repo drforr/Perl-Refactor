@@ -176,32 +176,32 @@ sub create_policy {
 
     my ($self, %args ) = @_;
 
-    my $policy_name = $args{-name}
+    my $enforcer_name = $args{-name}
         or throw_internal q{The -name argument is required};
 
     # Normalize policy name to a fully-qualified package name
-    $policy_name = policy_long_name( $policy_name );
-    my $policy_short_name = policy_short_name( $policy_name );
+    $enforcer_name = policy_long_name( $enforcer_name );
+    my $enforcer_short_name = policy_short_name( $enforcer_name );
 
 
     # Get the policy parameters from the user profile if they were
     # not given to us directly.  If none exist, use an empty hash.
     my $profile = $self->_profile();
-    my $policy_config;
+    my $enforcer_config;
     if ( $args{-params} ) {
-        $policy_config =
+        $enforcer_config =
             Perl::Critic::PolicyConfig->new(
-                $policy_short_name, $args{-params}
+                $enforcer_short_name, $args{-params}
             );
     }
     else {
-        $policy_config = $profile->policy_params($policy_name);
-        $policy_config ||=
-            Perl::Critic::PolicyConfig->new( $policy_short_name );
+        $enforcer_config = $profile->policy_params($enforcer_name);
+        $enforcer_config ||=
+            Perl::Critic::PolicyConfig->new( $enforcer_short_name );
     }
 
     # Pull out base parameters.
-    return $self->_instantiate_policy( $policy_name, $policy_config );
+    return $self->_instantiate_policy( $enforcer_name, $enforcer_config );
 }
 
 #-----------------------------------------------------------------------------
@@ -217,12 +217,12 @@ sub create_all_policies {
     my @policies;
 
     foreach my $name ( site_policy_names() ) {
-        my $policy = eval { $self->create_policy( -name => $name ) };
+        my $enforcer = eval { $self->create_policy( -name => $name ) };
 
         $errors->add_exception_or_rethrow( $EVAL_ERROR );
 
-        if ( $policy ) {
-            push @policies, $policy;
+        if ( $enforcer ) {
+            push @policies, $enforcer;
         }
     }
 
@@ -253,29 +253,29 @@ sub _profile {
 # This two-phase initialization is caused by the historical lack of a
 # requirement for Policies to invoke their super-constructor.
 sub _instantiate_policy {
-    my ($self, $policy_name, $policy_config) = @_;
+    my ($self, $enforcer_name, $enforcer_config) = @_;
 
-    $policy_config->set_profile_strictness( $self->{_profile_strictness} );
+    $enforcer_config->set_profile_strictness( $self->{_profile_strictness} );
 
-    my $policy = eval { $policy_name->new( %{$policy_config} ) };
+    my $enforcer = eval { $enforcer_name->new( %{$enforcer_config} ) };
     _handle_policy_instantiation_exception(
-        $policy_name,
-        $policy,        # Note: being used as a boolean here.
+        $enforcer_name,
+        $enforcer,        # Note: being used as a boolean here.
         $EVAL_ERROR,
     );
 
-    $policy->__set_config( $policy_config );
+    $enforcer->__set_config( $enforcer_config );
 
-    my $eval_worked = eval { $policy->__set_base_parameters(); 1; };
+    my $eval_worked = eval { $enforcer->__set_base_parameters(); 1; };
     _handle_policy_instantiation_exception(
-        $policy_name, $eval_worked, $EVAL_ERROR,
+        $enforcer_name, $eval_worked, $EVAL_ERROR,
     );
 
-    return $policy;
+    return $enforcer;
 }
 
 sub _handle_policy_instantiation_exception {
-    my ($policy_name, $eval_worked, $eval_error) = @_;
+    my ($enforcer_name, $eval_worked, $eval_error) = @_;
 
     if (not $eval_worked) {
         if ($eval_error) {
@@ -286,11 +286,11 @@ sub _handle_policy_instantiation_exception {
             }
 
             throw_policy_definition
-                qq<Unable to create policy "$policy_name": $eval_error>;
+                qq<Unable to create policy "$enforcer_name": $eval_error>;
         }
 
         throw_policy_definition
-            qq<Unable to create policy "$policy_name" for an unknown reason.>;
+            qq<Unable to create policy "$enforcer_name" for an unknown reason.>;
     }
 
     return;
@@ -304,14 +304,14 @@ sub _validate_policies_in_profile {
     my $profile = $self->_profile();
     my %known_policies = hashify( $self->site_policy_names() );
 
-    for my $policy_name ( $profile->listed_policies() ) {
-        if ( not exists $known_policies{$policy_name} ) {
-            my $message = qq{Policy "$policy_name" is not installed.};
+    for my $enforcer_name ( $profile->listed_policies() ) {
+        if ( not exists $known_policies{$enforcer_name} ) {
+            my $message = qq{Policy "$enforcer_name" is not installed.};
 
             if ( $errors ) {
                 $errors->add_exception(
                     Perl::Critic::Exception::Configuration::NonExistentPolicy->new(
-                        policy  => $policy_name,
+                        policy  => $enforcer_name,
                     )
                 );
             }
@@ -378,7 +378,7 @@ added to the object.
 
 =over
 
-=item C<< create_policy( -name => $policy_name, -params => \%param_hash ) >>
+=item C<< create_policy( -name => $enforcer_name, -params => \%param_hash ) >>
 
 Creates one Policy object.  If the object cannot be instantiated, it
 will throw a fatal exception.  Otherwise, it returns a reference to

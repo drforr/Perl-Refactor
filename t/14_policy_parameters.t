@@ -48,17 +48,17 @@ plan( tests => $ntests );
 
 #-----------------------------------------------------------------------------
 
-for my $policy ( @all_policies ) {
-    test_has_declared_parameters( $policy );
-    test_invalid_parameters( $policy );
-    test_supported_parameters( $policy );
+for my $enforcer ( @all_policies ) {
+    test_has_declared_parameters( $enforcer );
+    test_invalid_parameters( $enforcer );
+    test_supported_parameters( $enforcer );
 }
 
 #-----------------------------------------------------------------------------
 
 sub test_supported_parameters {
-    my $policy_name = shift;
-    my @supported_params = $policy_name->supported_parameters();
+    my $enforcer_name = shift;
+    my @supported_params = $enforcer_name->supported_parameters();
     my $config = Perl::Critic::Config->new( -profile => 'NONE' );
 
     for my $param_specification ( @supported_params ) {
@@ -69,11 +69,11 @@ sub test_supported_parameters {
 
         ok(
             $description && $description ne $NO_DESCRIPTION_AVAILABLE,
-            qq{Param "$param_name" for policy "$policy_name" has a description},
+            qq{Param "$param_name" for policy "$enforcer_name" has a description},
         );
 
         my %args = (
-            -policy => $policy_name,
+            -policy => $enforcer_name,
             -params => {
                  $param_name => $parameter->get_default_string(),
             }
@@ -82,7 +82,7 @@ sub test_supported_parameters {
         is(
             $EVAL_ERROR,
             q{},
-            qq{Created policy "$policy_name" with param "$param_name"},
+            qq{Created policy "$enforcer_name" with param "$param_name"},
         );
     }
 
@@ -92,19 +92,19 @@ sub test_supported_parameters {
 #-----------------------------------------------------------------------------
 
 sub test_invalid_parameters {
-    my $policy = shift;
+    my $enforcer = shift;
     my $bogus_params  = { bogus => 'shizzle' };
     my $profile = Perl::Critic::UserProfile->new( -profile => 'NONE' );
     my $factory = Perl::Critic::PolicyFactory->new(
         -profile => $profile, '-profile-strictness' => 'fatal' );
 
-    my $policy_name = policy_short_name($policy);
-    my $label = qq{Created $policy_name with bogus parameters};
+    my $enforcer_name = policy_short_name($enforcer);
+    my $label = qq{Created $enforcer_name with bogus parameters};
 
-    eval { $factory->create_policy(-name => $policy, -params => $bogus_params) };
+    eval { $factory->create_policy(-name => $enforcer, -params => $bogus_params) };
     like(
         $EVAL_ERROR,
-        qr/The [ ] $policy_name [ ] policy [ ] doesn't [ ] take [ ] a [ ] "bogus" [ ] option/xms,
+        qr/The [ ] $enforcer_name [ ] policy [ ] doesn't [ ] take [ ] a [ ] "bogus" [ ] option/xms,
         $label
     );
 
@@ -114,10 +114,10 @@ sub test_invalid_parameters {
 #-----------------------------------------------------------------------------
 
 sub test_has_declared_parameters {
-    my $policy = shift;
-    if ( not $policy->can('supported_parameters') ) {
-        fail( qq{I don't know if $policy supports params} );
-        diag( qq{This means $policy needs a supported_parameters() method} );
+    my $enforcer = shift;
+    if ( not $enforcer->can('supported_parameters') ) {
+        fail( qq{I don't know if $enforcer supports params} );
+        diag( qq{This means $enforcer needs a supported_parameters() method} );
     }
     return;
 }

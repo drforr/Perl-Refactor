@@ -20,7 +20,7 @@ our $VERSION = '1.121';
 #-----------------------------------------------------------------------------
 
 sub _parse {
-    my ($policy, $parameter, $config_string) = @_;
+    my ($enforcer, $parameter, $config_string) = @_;
 
     my $value = $parameter->get_default_string();
 
@@ -28,7 +28,7 @@ sub _parse {
         $value = $config_string;
     }
 
-    $policy->__set_parameter_value($parameter, $value);
+    $enforcer->__set_parameter_value($parameter, $value);
 
     return;
 }

@@ -57,7 +57,7 @@ sub initialize_parameter {
                 # Normally bad thing, obscuring a variable in a outer scope
                 # with a variable with the same name is being done here in
                 # order to remain consistent with the parser function interface.
-                my ($policy, $parameter, $config_string) = @_;  ## no critic(Variables::ProhibitReusedNames)
+                my ($enforcer, $parameter, $config_string) = @_;  ## no critic(Variables::ProhibitReusedNames)
 
                 my @potential_values;
                 my $value_string = $parameter->get_default_string();
@@ -72,7 +72,7 @@ sub initialize_parameter {
                     my @bad_values =
                         grep { not exists $value_lookup->{$_} } @potential_values;
                     if (@bad_values) {
-                        $policy->throw_parameter_value_exception(
+                        $enforcer->throw_parameter_value_exception(
                             $parameter->get_name(),
                             $value_string,
                             undef,
@@ -87,7 +87,7 @@ sub initialize_parameter {
 
                 my %actual_values = hashify(@potential_values);
 
-                $policy->__set_parameter_value($parameter, \%actual_values);
+                $enforcer->__set_parameter_value($parameter, \%actual_values);
 
                 return;
             }
@@ -98,7 +98,7 @@ sub initialize_parameter {
                 # Normally bad thing, obscuring a variable in a outer scope
                 # with a variable with the same name is being done here in
                 # order to remain consistent with the parser function interface.
-                my ($policy, $parameter, $config_string) = @_;  ## no critic(Variables::ProhibitReusedNames)
+                my ($enforcer, $parameter, $config_string) = @_;  ## no critic(Variables::ProhibitReusedNames)
 
                 my $value_string = $parameter->get_default_string();
 
@@ -111,7 +111,7 @@ sub initialize_parameter {
                     and $EMPTY ne $value_string
                     and not defined $value_lookup->{$value_string}
                 ) {
-                    $policy->throw_parameter_value_exception(
+                    $enforcer->throw_parameter_value_exception(
                         $parameter->get_name(),
                         $value_string,
                         undef,
@@ -121,7 +121,7 @@ sub initialize_parameter {
                     );
                 }
 
-                $policy->__set_parameter_value($parameter, $value_string);
+                $enforcer->__set_parameter_value($parameter, $value_string);
 
                 return;
             }

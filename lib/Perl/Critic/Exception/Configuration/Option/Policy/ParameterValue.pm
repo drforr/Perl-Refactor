@@ -44,7 +44,7 @@ sub full_message {
         $source = $EMPTY;
     }
 
-    my $policy = $self->policy();
+    my $enforcer = $self->policy();
     my $option_name = $self->option_name();
     my $option_value =
         defined $self->option_value()
@@ -53,7 +53,7 @@ sub full_message {
     my $message_suffix = $self->message_suffix() || $EMPTY;
 
     return
-            qq{The value for the $policy "$option_name" option }
+            qq{The value for the $enforcer "$option_name" option }
         .   qq{($option_value)$source $message_suffix};
 }
 
@@ -89,12 +89,12 @@ will go through a deprecation cycle.
 
 =over
 
-=item C<< throw( policy => $policy, option_name => $option_name, option_value => $option_value, source => $source, message_suffix => $message_suffix ) >>
+=item C<< throw( policy => $enforcer, option_name => $option_name, option_value => $option_value, source => $source, message_suffix => $message_suffix ) >>
 
 See L<Exception::Class/"throw">.
 
 
-=item C<< new( policy => $policy, option_name => $option_name, option_value => $option_value, source => $source, message_suffix => $message_suffix ) >>
+=item C<< new( policy => $enforcer, option_name => $option_name, option_value => $option_value, source => $source, message_suffix => $message_suffix ) >>
 
 See L<Exception::Class/"new">.
 

@@ -152,17 +152,17 @@ sub _gather_violations {
 # PRIVATE functions
 
 sub _critique {
-    my ($policy, $doc) = @_;
+    my ($enforcer, $doc) = @_;
 
-    return if not $policy->prepare_to_scan_document($doc);
+    return if not $enforcer->prepare_to_scan_document($doc);
 
-    my $maximum_violations = $policy->get_maximum_violations_per_document();
+    my $maximum_violations = $enforcer->get_maximum_violations_per_document();
     return if defined $maximum_violations && $maximum_violations == 0;
 
     my @violations = ();
 
   TYPE:
-    for my $type ( $policy->applies_to() ) {
+    for my $type ( $enforcer->applies_to() ) {
         my @elements;
         if ($type eq 'PPI::Document') {
             @elements = ($doc);
@@ -180,10 +180,10 @@ sub _critique {
             # disabled.
 
           VIOLATION:
-            for my $violation ( $policy->violates( $element, $doc ) ) {
+            for my $violation ( $enforcer->violates( $element, $doc ) ) {
 
                 my $line = $violation->location()->[0];
-                if ( $doc->line_is_disabled_for_policy($line, $policy) ) {
+                if ( $doc->line_is_disabled_for_policy($line, $enforcer) ) {
                     $doc->add_suppressed_violation($violation);
                     next VIOLATION;
                 }
@@ -468,7 +468,7 @@ violation of the loaded Policies.  The list is sorted in the order
 that the Violations appear in the code.  If there are no violations,
 this method returns an empty list.
 
-=item C<< add_policy( -policy => $policy_name, -params => \%param_hash ) >>
+=item C<< add_policy( -policy => $enforcer_name, -params => \%param_hash ) >>
 
 Creates a Policy object and loads it into this Critic.  If the object
 cannot be instantiated, it will throw a fatal exception.  Otherwise,

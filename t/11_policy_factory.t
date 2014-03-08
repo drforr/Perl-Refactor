@@ -30,7 +30,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
 #-----------------------------------------------------------------------------
 
 {
-    my $policy_name = 'Perl::Critic::Policy::Modules::ProhibitEvilModules';
+    my $enforcer_name = 'Perl::Critic::Policy::Modules::ProhibitEvilModules';
     my $params = {severity => 2, set_themes => 'betty', add_themes => 'wilma'};
 
     my $userprof = Perl::Critic::UserProfile->new( -profile => 'NONE' );
@@ -38,20 +38,20 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
 
 
     # Now test...
-    my $policy = $pf->create_policy( -name => $policy_name, -params => $params );
-    is( ref $policy, $policy_name, 'Created correct type of policy');
+    my $enforcer = $pf->create_policy( -name => $enforcer_name, -params => $params );
+    is( ref $enforcer, $enforcer_name, 'Created correct type of policy');
 
-    my $severity = $policy->get_severity();
+    my $severity = $enforcer->get_severity();
     is( $severity, 2, 'Set the severity');
 
-    my @themes = $policy->get_themes();
+    my @themes = $enforcer->get_themes();
     is_deeply( \@themes, [ qw(betty wilma) ], 'Set the theme');
 }
 
 #-----------------------------------------------------------------------------
 # Using short module name.
 {
-    my $policy_name = 'Variables::ProhibitPunctuationVars';
+    my $enforcer_name = 'Variables::ProhibitPunctuationVars';
     my $params = {set_themes => 'betty', add_themes => 'wilma'};
 
     my $userprof = Perl::Critic::UserProfile->new( -profile => 'NONE' );
@@ -59,11 +59,11 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
 
 
     # Now test...
-    my $policy = $pf->create_policy( -name => $policy_name, -params => $params );
-    my $policy_name_long = 'Perl::Critic::Policy::' . $policy_name;
-    is( ref $policy, $policy_name_long, 'Created correct type of policy');
+    my $enforcer = $pf->create_policy( -name => $enforcer_name, -params => $params );
+    my $enforcer_name_long = 'Perl::Critic::Policy::' . $enforcer_name;
+    is( ref $enforcer, $enforcer_name_long, 'Created correct type of policy');
 
-    my @themes = $policy->get_themes();
+    my @themes = $enforcer->get_themes();
     is_deeply( \@themes, [ qw(betty wilma) ], 'Set the theme');
 }
 
@@ -91,9 +91,9 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     );
 
     # Try using a bogus severity level
-    my $policy_name = 'Modules::RequireVersionVar';
-    my $policy_params = {severity => 'bogus'};
-    eval{ $pf->create_policy( -name => $policy_name, -params => $policy_params)};
+    my $enforcer_name = 'Modules::RequireVersionVar';
+    my $enforcer_params = {severity => 'bogus'};
+    eval{ $pf->create_policy( -name => $enforcer_name, -params => $enforcer_params)};
     like(
         $EVAL_ERROR,
         qr/Invalid [ ] severity: [ ] "bogus"/xms,

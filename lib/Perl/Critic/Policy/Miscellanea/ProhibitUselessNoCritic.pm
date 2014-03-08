@@ -57,11 +57,11 @@ sub violates {
 sub _annotation_suppresses_violation {
     my ($annotation, $violation) = @_;
 
-    my $policy_name = $violation->policy();
+    my $enforcer_name = $violation->policy();
     my $line = $violation->location()->[0];
 
     return $annotation->disables_line($line)
-        && $annotation->disables_policy($policy_name);
+        && $annotation->disables_policy($enforcer_name);
 }
 
 #-----------------------------------------------------------------------------

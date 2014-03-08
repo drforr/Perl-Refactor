@@ -29,8 +29,8 @@ sub ACTION_policysummary {
         qw< generate_policy_summary >
     );
 
-    my $policy_summary_file = generate_policy_summary();
-    $self->add_to_cleanup( $policy_summary_file );
+    my $enforcer_summary_file = generate_policy_summary();
+    $self->add_to_cleanup( $enforcer_summary_file );
 
     return;
 }

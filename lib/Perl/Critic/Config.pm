@@ -169,11 +169,11 @@ sub add_policy {
         throw_internal q{The -policy argument is required};
     }
 
-    my $policy  = $args{-policy};
+    my $enforcer  = $args{-policy};
 
     # If the -policy is already a blessed object, then just add it directly.
-    if ( blessed $policy ) {
-        $self->_add_policy_if_enabled($policy);
+    if ( blessed $enforcer ) {
+        $self->_add_policy_if_enabled($enforcer);
         return $self;
     }
 
@@ -181,9 +181,9 @@ sub add_policy {
     my $params = $args{-params} || $args{-config};
 
     my $factory       = $self->{_factory};
-    my $policy_object =
-        $factory->create_policy(-name=>$policy, -params=>$params);
-    $self->_add_policy_if_enabled($policy_object);
+    my $enforcer_object =
+        $factory->create_policy(-name=>$enforcer, -params=>$params);
+    $self->_add_policy_if_enabled($enforcer_object);
 
     return $self;
 }
@@ -191,20 +191,20 @@ sub add_policy {
 #-----------------------------------------------------------------------------
 
 sub _add_policy_if_enabled {
-    my ( $self, $policy_object ) = @_;
+    my ( $self, $enforcer_object ) = @_;
 
-    my $config = $policy_object->__get_config()
+    my $config = $enforcer_object->__get_config()
         or throw_internal
             q{Policy was not set up properly because it does not have }
                 . q{a value for its config attribute.};
 
-    push @{ $self->{_all_policies_enabled_or_not} }, $policy_object;
-    if ( $policy_object->initialize_if_enabled( $config ) ) {
-        $policy_object->__set_enabled($TRUE);
-        push @{ $self->{_policies} }, $policy_object;
+    push @{ $self->{_all_policies_enabled_or_not} }, $enforcer_object;
+    if ( $enforcer_object->initialize_if_enabled( $config ) ) {
+        $enforcer_object->__set_enabled($TRUE);
+        push @{ $self->{_policies} }, $enforcer_object;
     }
     else {
-        $policy_object->__set_enabled($FALSE);
+        $enforcer_object->__set_enabled($FALSE);
     }
 
     return;
@@ -220,33 +220,33 @@ sub _load_policies {
 
     return if $errors->has_exceptions();
 
-    for my $policy ( @policies ) {
+    for my $enforcer ( @policies ) {
 
         # If -single-policy is true, only load policies that match it
         if ( $self->single_policy() ) {
-            if ( $self->_policy_is_single_policy( $policy ) ) {
-                $self->add_policy( -policy => $policy );
+            if ( $self->_policy_is_single_policy( $enforcer ) ) {
+                $self->add_policy( -policy => $enforcer );
             }
             next;
         }
 
         # Always exclude unsafe policies, unless instructed not to
-        next if not ( $policy->is_safe() or $self->unsafe_allowed() );
+        next if not ( $enforcer->is_safe() or $self->unsafe_allowed() );
 
         # To load, or not to load -- that is the question.
         my $load_me = $self->only() ? $FALSE : $TRUE;
 
         ## no critic (ProhibitPostfixControls)
-        $load_me = $FALSE if     $self->_policy_is_disabled( $policy );
-        $load_me = $TRUE  if     $self->_policy_is_enabled( $policy );
-        $load_me = $FALSE if     $self->_policy_is_unimportant( $policy );
-        $load_me = $FALSE if not $self->_policy_is_thematic( $policy );
-        $load_me = $TRUE  if     $self->_policy_is_included( $policy );
-        $load_me = $FALSE if     $self->_policy_is_excluded( $policy );
+        $load_me = $FALSE if     $self->_policy_is_disabled( $enforcer );
+        $load_me = $TRUE  if     $self->_policy_is_enabled( $enforcer );
+        $load_me = $FALSE if     $self->_policy_is_unimportant( $enforcer );
+        $load_me = $FALSE if not $self->_policy_is_thematic( $enforcer );
+        $load_me = $TRUE  if     $self->_policy_is_included( $enforcer );
+        $load_me = $FALSE if     $self->_policy_is_excluded( $enforcer );
 
 
         next if not $load_me;
-        $self->add_policy( -policy => $policy );
+        $self->add_policy( -policy => $enforcer );
     }
 
     # When using -single-policy, only one policy should ever be loaded.
@@ -260,64 +260,64 @@ sub _load_policies {
 #-----------------------------------------------------------------------------
 
 sub _policy_is_disabled {
-    my ($self, $policy) = @_;
+    my ($self, $enforcer) = @_;
     my $profile = $self->_profile();
-    return $profile->policy_is_disabled( $policy );
+    return $profile->policy_is_disabled( $enforcer );
 }
 
 #-----------------------------------------------------------------------------
 
 sub _policy_is_enabled {
-    my ($self, $policy) = @_;
+    my ($self, $enforcer) = @_;
     my $profile = $self->_profile();
-    return $profile->policy_is_enabled( $policy );
+    return $profile->policy_is_enabled( $enforcer );
 }
 
 #-----------------------------------------------------------------------------
 
 sub _policy_is_thematic {
-    my ($self, $policy) = @_;
+    my ($self, $enforcer) = @_;
     my $theme = $self->theme();
-    return $theme->policy_is_thematic( -policy => $policy );
+    return $theme->policy_is_thematic( -policy => $enforcer );
 }
 
 #-----------------------------------------------------------------------------
 
 sub _policy_is_unimportant {
-    my ($self, $policy) = @_;
-    my $policy_severity = $policy->get_severity();
+    my ($self, $enforcer) = @_;
+    my $enforcer_severity = $enforcer->get_severity();
     my $min_severity    = $self->{_severity};
-    return $policy_severity < $min_severity;
+    return $enforcer_severity < $min_severity;
 }
 
 #-----------------------------------------------------------------------------
 
 sub _policy_is_included {
-    my ($self, $policy) = @_;
-    my $policy_long_name = ref $policy;
+    my ($self, $enforcer) = @_;
+    my $enforcer_long_name = ref $enforcer;
     my @inclusions  = $self->include();
-    return any { $policy_long_name =~ m/$_/ixms } @inclusions;
+    return any { $enforcer_long_name =~ m/$_/ixms } @inclusions;
 }
 
 #-----------------------------------------------------------------------------
 
 sub _policy_is_excluded {
-    my ($self, $policy) = @_;
-    my $policy_long_name = ref $policy;
+    my ($self, $enforcer) = @_;
+    my $enforcer_long_name = ref $enforcer;
     my @exclusions  = $self->exclude();
-    return any { $policy_long_name =~ m/$_/ixms } @exclusions;
+    return any { $enforcer_long_name =~ m/$_/ixms } @exclusions;
 }
 
 #-----------------------------------------------------------------------------
 
 sub _policy_is_single_policy {
-    my ($self, $policy) = @_;
+    my ($self, $enforcer) = @_;
 
     my @patterns = $self->single_policy();
     return if not @patterns;
 
-    my $policy_long_name = ref $policy;
-    return any { $policy_long_name =~ m/$_/ixms } @patterns;
+    my $enforcer_long_name = ref $enforcer;
+    return any { $enforcer_long_name =~ m/$_/ixms } @patterns;
 }
 
 #-----------------------------------------------------------------------------
@@ -1004,7 +1004,7 @@ Not properly documented because you shouldn't be using this.
 
 =over
 
-=item C<< add_policy( -policy => $policy_name, -params => \%param_hash ) >>
+=item C<< add_policy( -policy => $enforcer_name, -params => \%param_hash ) >>
 
 Creates a Policy object and loads it into this Config.  If the object
 cannot be instantiated, it will throw a fatal exception.  Otherwise,

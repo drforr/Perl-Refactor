@@ -44,11 +44,11 @@ sub generate_policy_summary {
       Perl::Critic::Config->new(-profile => $EMPTY, -severity => 1, -theme => 'core');
 
     my @policies = $configuration->all_policies_enabled_or_not();
-    my $policy_summary = 'lib/Perl/Critic/PolicySummary.pod';
+    my $enforcer_summary = 'lib/Perl/Critic/PolicySummary.pod';
 
     ## no critic (RequireBriefOpen)
-    open my $pod_file, '>', $policy_summary
-      or confess "Could not open $policy_summary: $ERRNO";
+    open my $pod_file, '>', $enforcer_summary
+      or confess "Could not open $enforcer_summary: $ERRNO";
 
     print {$pod_file} <<'END_HEADER';
 
@@ -84,16 +84,16 @@ my $format = <<'END_POLICY';
 END_POLICY
 
 eval {
-    foreach my $policy (@policies) {
-        my $module_abstract = $policy->get_raw_abstract();
+    foreach my $enforcer (@policies) {
+        my $module_abstract = $enforcer->get_raw_abstract();
 
         printf
             {$pod_file}
             $format,
-            $policy->get_short_name(),
-            $policy->get_long_name(),
+            $enforcer->get_short_name(),
+            $enforcer->get_long_name(),
             $module_abstract,
-            $policy->default_severity();
+            $enforcer->default_severity();
     }
 
     1;
@@ -139,11 +139,11 @@ can be found in the LICENSE file included with this module.
 END_FOOTER
 
 
-    close $pod_file or confess "Could not close $policy_summary: $ERRNO";
+    close $pod_file or confess "Could not close $enforcer_summary: $ERRNO";
 
     print "Done.\n\n";
 
-    return $policy_summary;
+    return $enforcer_summary;
 
 }
 

@@ -165,9 +165,9 @@ can_ok('Perl::Critic::Policy', 'violation');
 can_ok('Perl::Critic::Policy', 'is_safe');
 
 {
-    my $policy = Perl::Critic::Policy->new();
-    isa_ok($policy, 'Perl::Critic::Policy');
-    is($policy->VERSION(), $version_string, 'Perl::Critic::Policy version');
+    my $enforcer = Perl::Critic::Policy->new();
+    isa_ok($enforcer, 'Perl::Critic::Policy');
+    is($enforcer->VERSION(), $version_string, 'Perl::Critic::Policy version');
 }
 
 #-----------------------------------------------------------------------------
@@ -304,10 +304,10 @@ can_ok('Perl::Critic::Command', 'run');
         can_ok($mod, 'violation');
         can_ok($mod, 'is_safe');
 
-        my $policy = $mod->new();
-        isa_ok($policy, 'Perl::Critic::Policy');
-        is($policy->VERSION(), $version_string, "Version of $mod");
-        ok($policy->is_safe(), "CORE policy $mod is marked safe");
+        my $enforcer = $mod->new();
+        isa_ok($enforcer, 'Perl::Critic::Policy');
+        is($enforcer->VERSION(), $version_string, "Version of $mod");
+        ok($enforcer->is_safe(), "CORE policy $mod is marked safe");
     }
 }
 

@@ -438,19 +438,19 @@ sub _report_statistics {
 
         _out "\n";
 
-        my %policy_violations = %{ $statistics->violations_by_policy() };
-        my @policies = sort keys %policy_violations;
+        my %enforcer_violations = %{ $statistics->violations_by_policy() };
+        my @policies = sort keys %enforcer_violations;
         $width =
             max
-                map { length _commaify( $policy_violations{$_} ) }
+                map { length _commaify( $enforcer_violations{$_} ) }
                     @policies;
-        foreach my $policy (@policies) {
+        foreach my $enforcer (@policies) {
             _out
                 sprintf
                     "%*s violations of %s.\n",
                     $width,
-                    _commaify($policy_violations{$policy}),
-                    policy_short_name($policy);
+                    _commaify($enforcer_violations{$enforcer}),
+                    policy_short_name($enforcer);
         }
     }
 

@@ -177,7 +177,7 @@ sub execute_insert_statement {  ##no critic(ProhibitManyArgs)
         $line_number,
         $column_number,
         $severity,
-        $policy,
+        $enforcer,
         $explanation,
         $source_code,
     )
@@ -188,7 +188,7 @@ sub execute_insert_statement {  ##no critic(ProhibitManyArgs)
         $line_number,
         $column_number,
         $severity,
-        $policy,
+        $enforcer,
         $explanation,
         $source_code,
     );

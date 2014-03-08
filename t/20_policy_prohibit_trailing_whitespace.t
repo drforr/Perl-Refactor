@@ -28,7 +28,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
 # would have to contain invisible characters.
 
 my $code;
-my $policy = 'CodeLayout::ProhibitTrailingWhitespace';
+my $enforcer = 'CodeLayout::ProhibitTrailingWhitespace';
 
 #-----------------------------------------------------------------------------
 
@@ -42,7 +42,7 @@ chomp;\t${SPACE}${SPACE}
 chomp;${SPACE}${SPACE}\t
 END_PERL
 
-is( pcritique($policy, \$code), 5, 'Basic failure' );
+is( pcritique($enforcer, \$code), 5, 'Basic failure' );
 
 #-----------------------------------------------------------------------------
 
@@ -55,7 +55,7 @@ ${SPACE}${SPACE}${SPACE}${SPACE}frobnicate();
 
 END_PERL
 
-is( pcritique($policy, \$code), 0, 'Basic passing' );
+is( pcritique($enforcer, \$code), 0, 'Basic passing' );
 
 #-----------------------------------------------------------------------------
 
@@ -65,7 +65,7 @@ ${SPACE}\$x
 END_PERL
 
 is(
-    pcritique($policy, \$code),
+    pcritique($enforcer, \$code),
     1,
     'Multiple lines in a single PPI::Token::Whitespace',
 );

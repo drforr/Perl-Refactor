@@ -30,9 +30,9 @@ use Exception::Class (
 sub new {
     my ($class, %options) = @_;
 
-    my $policy = $options{policy};
-    if ($policy) {
-        $options{policy} = policy_short_name($policy);
+    my $enforcer = $options{policy};
+    if ($enforcer) {
+        $options{policy} = policy_short_name($enforcer);
     }
 
     return $class->SUPER::new(%options);

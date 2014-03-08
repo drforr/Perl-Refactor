@@ -8,8 +8,8 @@ no;      #incomplete statement
 {require}; # for Devel::Cover
 END_PERL
 
-$policy = 'Modules::RequireBarewordIncludes';
-is( pcritique($policy, \$code), 0, $policy);
+$enforcer = 'Modules::RequireBarewordIncludes';
+is( pcritique($enforcer, \$code), 0, $enforcer);
 
 #-----------------------------------------------------------------------------
 

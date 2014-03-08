@@ -135,14 +135,14 @@ SKIP: {
     my $doc;
     my @annot;
     foreach my $fmt ( '(%s)', '( %s )', '"%s"', q<'%s'> ) {
-        my $policy_name = $bundled_policy_names[$max++];
-        $policy_name =~ s/ .* :: //smx;
-        $note = sprintf "no critic $fmt", $policy_name;
+        my $enforcer_name = $bundled_policy_names[$max++];
+        $enforcer_name =~ s/ .* :: //smx;
+        $note = sprintf "no critic $fmt", $enforcer_name;
         push @annot, $note;
         $doc .= "## $note\n## use critic\n";
-        $policy_name = $bundled_policy_names[$max++];
-        $policy_name =~ s/ .* :: //smx;
-        $note = sprintf "no critic qw$fmt", $policy_name;
+        $enforcer_name = $bundled_policy_names[$max++];
+        $enforcer_name =~ s/ .* :: //smx;
+        $note = sprintf "no critic qw$fmt", $enforcer_name;
         push @annot, $note;
         $doc .= "## $note\n## use critic\n";
     }
@@ -155,10 +155,10 @@ SKIP: {
             $note or skip( "No annotation $inx found", 5 );
             ok( ! $note->disables_all_policies(),
                 "Specific annotation $inx does not disable all policies" );
-            my ( $policy_name ) = $bundled_policy_names[$inx] =~
+            my ( $enforcer_name ) = $bundled_policy_names[$inx] =~
                 m/ ( \w+ :: \w+ ) \z /smx;
             ok ( $note->disables_policy( $bundled_policy_names[$inx] ),
-                "Specific annotation $inx disables $policy_name" );
+                "Specific annotation $inx disables $enforcer_name" );
             my $line = $inx * 2 + 1;
             ok( $note->disables_line( $line ),
                 "Specific annotation $inx disables line $line" );

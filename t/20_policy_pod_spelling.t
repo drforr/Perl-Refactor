@@ -32,7 +32,7 @@ our $VERSION = '1.121';
 Perl::Critic::TestUtils::block_perlrefactorrc();
 
 my $code;
-my $policy = 'Documentation::PodSpelling';
+my $enforcer = 'Documentation::PodSpelling';
 my $can_podspell = can_determine_spell_command() && can_run_spell_command();
 
 sub can_determine_spell_command {
@@ -73,7 +73,7 @@ END_PERL
 # non-zero number we want to skip. We have to negate the eval to catch the
 # aspell failure, and then negate pcritique because we negated the eval.
 # Clearer code welcome.
-if ( ! eval { ! pcritique($policy, \$code) } ) {
+if ( ! eval { ! pcritique($enforcer, \$code) } ) {
    skip 'Test environment is not English', $NUMBER_OF_TESTS;
 }
 
@@ -86,7 +86,7 @@ $code = <<'END_PERL';
 END_PERL
 
 is(
-    eval { pcritique($policy, \$code) },
+    eval { pcritique($enforcer, \$code) },
     can_podspell() ? 1 : undef,
     'Mispelled header',
 );
@@ -102,7 +102,7 @@ arglbargl
 END_PERL
 
 is(
-    eval { pcritique($policy, \$code) },
+    eval { pcritique($enforcer, \$code) },
     can_podspell() ? 1 : undef,
     'Mispelled body',
 );
@@ -121,7 +121,7 @@ arglbargl
 END_PERL
 
 is(
-    eval { pcritique($policy, \$code) },
+    eval { pcritique($enforcer, \$code) },
     can_podspell() ? 0 : undef,
     'local stopwords',
 );
@@ -139,7 +139,7 @@ END_PERL
 {
     my %config = (stop_words => 'foo arglbargl bar');
     is(
-        eval { pcritique($policy, \$code, \%config) },
+        eval { pcritique($enforcer, \$code, \%config) },
         can_podspell() ? 0 : undef ,
         'global stopwords',
     );
@@ -148,7 +148,7 @@ END_PERL
 {
     my %config = (stop_words_file => 't/20_policy_pod_spelling.d/stop-words.txt');
     is(
-        eval { pcritique($policy, \$code, \%config) },
+        eval { pcritique($enforcer, \$code, \%config) },
         can_podspell() ? 0 : undef ,
         'global stopwords from file',
     );

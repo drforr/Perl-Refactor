@@ -37,7 +37,7 @@ sort();
 
 {sort}; # for Devel::Cover
 
-is( pcritique($policy, \$code), 0, $policy );
+is( pcritique($enforcer, \$code), 0, $enforcer );
 
 #-----------------------------------------------------------------------------
 

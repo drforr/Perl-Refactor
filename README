@@ -219,7 +219,7 @@ METHODS
         Violations appear in the code. If there are no violations, this
         method returns an empty list.
 
-    "add_policy( -policy => $policy_name, -params => \%param_hash )"
+    "add_policy( -policy => $enforcer_name, -params => \%param_hash )"
         Creates a Policy object and loads it into this Critic. If the object
         cannot be instantiated, it will throw a fatal exception. Otherwise,
         it returns a reference to this Critic.

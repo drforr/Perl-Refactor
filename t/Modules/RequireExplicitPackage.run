@@ -5,8 +5,8 @@ $foo = $bar;
 package foo;
 END_PERL
 
-$policy = 'Modules::RequireExplicitPackage';
-is( pcritique($policy, \$code), 1, $policy.' 1 stmnt before package');
+$enforcer = 'Modules::RequireExplicitPackage';
+is( pcritique($enforcer, \$code), 1, $enforcer.' 1 stmnt before package');
 
 #-----------------------------------------------------------------------------
 

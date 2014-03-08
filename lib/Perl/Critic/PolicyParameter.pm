@@ -223,13 +223,13 @@ sub _set_parser {
 #-----------------------------------------------------------------------------
 
 sub parse_and_validate_config_value {
-    my ($self, $policy, $config) = @_;
+    my ($self, $enforcer, $config) = @_;
 
     my $config_string = $config->{$self->get_name()};
 
     my $parser = $self->_get_parser();
     if ($parser) {
-        $parser->($policy, $self, $config_string);
+        $parser->($enforcer, $self, $config_string);
     }
 
     return;

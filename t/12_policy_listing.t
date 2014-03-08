@@ -30,9 +30,9 @@ my @policy_names = Perl::Critic::PolicyFactory::site_policy_names();
 my $factory = Perl::Critic::PolicyFactory->new( -profile => $profile );
 my @policies = map { $factory->create_policy( -name => $_ ) } @policy_names;
 my $listing = Perl::Critic::PolicyListing->new( -policies => \@policies );
-my $policy_count = scalar @policies;
+my $enforcer_count = scalar @policies;
 
-plan( tests => $policy_count + 1);
+plan( tests => $enforcer_count + 1);
 
 #-----------------------------------------------------------------------------
 # These tests verify that the listing has the right number of lines (one per
@@ -42,7 +42,7 @@ plan( tests => $policy_count + 1);
 my $listing_as_string = "$listing";
 my @listing_lines = split m/ \n /xms, $listing_as_string;
 my $line_count = scalar @listing_lines;
-is( $line_count, $policy_count, qq{Listing has all $policy_count policies} );
+is( $line_count, $enforcer_count, qq{Listing has all $enforcer_count policies} );
 
 
 my $listing_pattern = qr< \A \d [ ] [\w:]+ [ ] \[ [\w\s]+ \] \z >xms;

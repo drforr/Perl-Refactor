@@ -29,12 +29,12 @@ Readonly::Scalar my $NO_LIMIT           => 'no_limit';
 #-----------------------------------------------------------------------------
 
 sub new {
-    my ($class, $policy_short_name, $specification) = @_;
+    my ($class, $enforcer_short_name, $specification) = @_;
 
     my %self = $specification ? %{ $specification } : ();
     my %non_public_data;
 
-    $non_public_data{_policy_short_name} = $policy_short_name;
+    $non_public_data{_policy_short_name} = $enforcer_short_name;
     $non_public_data{_profile_strictness} =
         $self{$NON_PUBLIC_DATA}{_profile_strictness};
 
@@ -159,7 +159,7 @@ sub get_parameter_names {
 #-----------------------------------------------------------------------------
 
 sub handle_extra_parameters {
-    my ($self, $policy, $errors) = @_;
+    my ($self, $enforcer, $errors) = @_;
 
     my $profile_strictness = $self->{$NON_PUBLIC_DATA}{_profile_strictness};
     defined $profile_strictness
@@ -173,7 +173,7 @@ sub handle_extra_parameters {
     foreach my $offered_param ( $self->get_parameter_names() ) {
         $parameter_errors->add_exception(
             Perl::Critic::Exception::Configuration::Option::Policy::ExtraParameter->new(
-                policy => $policy->get_short_name(),
+                policy => $enforcer->get_short_name(),
                 option_name => $offered_param,
                 source  => undef,
             )
@@ -290,7 +290,7 @@ Retrieve the names of the parameters in this object.
 Sets the profile strictness associated with the configuration.
 
 
-=item C< handle_extra_parameters($policy,$errors) >
+=item C< handle_extra_parameters($enforcer,$errors) >
 
 Deals with any extra parameters according to the profile_strictness
 setting.  To be called by Perl::Critic::Policy->new() once all valid

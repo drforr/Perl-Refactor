@@ -34,9 +34,9 @@ Readonly::Array our @EXPORT_OK => qw< throw_extra_parameter >;
 sub full_message {
     my ( $self ) = @_;
 
-    my $policy = $self->policy();
+    my $enforcer = $self->policy();
 
-    return qq<There is no $policy policy installed.>;
+    return qq<There is no $enforcer policy installed.>;
 }
 
 
@@ -71,12 +71,12 @@ will go through a deprecation cycle.
 
 =over
 
-=item C<< throw( policy => $policy ) >>
+=item C<< throw( policy => $enforcer ) >>
 
 See L<Exception::Class/"throw">.
 
 
-=item C<< new( policy => $policy ) >>
+=item C<< new( policy => $enforcer ) >>
 
 See L<Exception::Class/"new">.
 
