@@ -74,7 +74,7 @@ sub load {
 
     # Force reporting level to be really strict, just so that the database
     # has everything.
-    my $critic = Perl::Critic->new( -severity => 1 );
+    my $refactor = Perl::Critic->new( -severity => 1 );
 
     foreach my $file ( @{$files} ) {
         my $relative_path;
@@ -89,7 +89,7 @@ sub load {
 
         say "Processing $relative_path.";
 
-        foreach my $violation ( $critic->critique($file) ) {
+        foreach my $violation ( $refactor->critique($file) ) {
             my ($line, $column) = @{ $violation->location() };
 
             execute_insert_statement(

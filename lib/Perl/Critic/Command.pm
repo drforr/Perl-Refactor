@@ -52,7 +52,7 @@ Readonly::Scalar my $EXIT_HAD_FILE_PROBLEMS => 3;
 #-----------------------------------------------------------------------------
 
 my @files = ();
-my $critic = undef;
+my $refactor = undef;
 my $output = \*STDOUT;
 
 #-----------------------------------------------------------------------------
@@ -235,10 +235,10 @@ sub _critique {
     # why not save a few seconds if you can.
 
     require Perl::Critic;
-    $critic = Perl::Critic->new( %{$opts_ref} );
-    $critic->policies() || die "No policies selected.\n";
+    $refactor = Perl::Critic->new( %{$opts_ref} );
+    $refactor->policies() || die "No policies selected.\n";
 
-    _set_up_pager($critic->config()->pager());
+    _set_up_pager($refactor->config()->pager());
 
     my $number_of_violations = undef;
     my $had_error_in_file = 0;
@@ -246,7 +246,7 @@ sub _critique {
     for my $file (@files_to_critique) {
 
         eval {
-            my @violations = $critic->critique($file);
+            my @violations = $refactor->critique($file);
             $number_of_violations += scalar @violations;
 
             if (not $opts_ref->{'-statistics-only'}) {
@@ -273,7 +273,7 @@ sub _critique {
     }
 
     if ( $opts_ref->{-statistics} or $opts_ref->{'-statistics-only'} ) {
-        my $stats = $critic->statistics();
+        my $stats = $refactor->statistics();
         _report_statistics( $opts_ref, $stats );
     }
 
@@ -311,7 +311,7 @@ sub _render_report {
     }
 
     # Otherwise, format and print violations
-    my $verbosity = $critic->config->verbose();
+    my $verbosity = $refactor->config->verbose();
     # $verbosity can be numeric or string, so use "eq" for comparison;
     $verbosity =
         ($verbosity eq $DEFAULT_VERBOSITY && @files > 1)
@@ -321,7 +321,7 @@ sub _render_report {
     if (not -f $file) { $fmt =~ s< \%[fF] ><STDIN>xms; } #HACK!
     Perl::Critic::Violation::set_format( $fmt );
 
-    my $color = $critic->config->color();
+    my $color = $refactor->config->color();
     _out $color ? _colorize_by_severity(@violations) : @violations;
 
     return $number_of_violations;
@@ -532,7 +532,7 @@ sub _colorize_by_severity {
         1;
     };
 
-    my $config = $critic->config();
+    my $config = $refactor->config();
     my %color_of = (
         $SEVERITY_HIGHEST   => $config->color_severity_highest(),
         $SEVERITY_HIGH      => $config->color_severity_high(),
@@ -634,8 +634,8 @@ sub _render_policy_docs {
     my $pattern = delete $opts{-doc};
 
     require Perl::Critic;
-    $critic = Perl::Critic->new(%opts);
-    _set_up_pager($critic->config()->pager());
+    $refactor = Perl::Critic->new(%opts);
+    _set_up_pager($refactor->config()->pager());
 
     require Perl::Critic::PolicyFactory;
     my @site_policies  = Perl::Critic::PolicyFactory->site_policy_names();

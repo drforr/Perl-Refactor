@@ -77,7 +77,7 @@ L<Foo> >> is still not seen as a link.
 
 L<Perl::Critic/critique> critiques a file, returning any violations found.
 
-L<< $critic->critique()|Perl::Critic/critique >> critiques a file, returning
+L<< $refactor->critique()|Perl::Critic/critique >> critiques a file, returning
 any violations found.
 
 =cut
@@ -93,7 +93,7 @@ any violations found.
 
 L<Perl::Critic/critique> critiques a file, returning any violations found.
 
-L<< $critic->critique()|Perl::Critic/critique >> critiques a file, returning
+L<< $refactor->critique()|Perl::Critic/critique >> critiques a file, returning
 any violations found.
 
 =cut

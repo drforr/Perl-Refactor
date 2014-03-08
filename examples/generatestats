@@ -56,7 +56,7 @@ sub summarize {
 
     # Force reporting level to be really strict, just so that the statistics
     # include everything.
-    my $critic = Perl::Critic->new( -severity => 1 );
+    my $refactor = Perl::Critic->new( -severity => 1 );
 
     my %total_severities;
     my %total_policies;
@@ -82,7 +82,7 @@ sub summarize {
         }
 
         $types{$type}{files}++;
-        foreach my $violation ( $critic->critique($file) ) {
+        foreach my $violation ( $refactor->critique($file) ) {
             $files{ $relative_path }{ severities }{ $violation->severity() }++;
             $files{ $relative_path }{ policies   }{ $violation->policy()   }++;
 

@@ -94,8 +94,8 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
             -severity   => $severity,
             -theme      => 'core',
         );
-        my $critic = Perl::Critic::Config->new( %pc_args );
-        my $policy_count = scalar $critic->policies();
+        my $refactor = Perl::Critic::Config->new( %pc_args );
+        my $policy_count = scalar $refactor->policies();
         my $test_name = "Count all policies, severity: $severity";
         cmp_ok($policy_count, '<', $last_policy_count, $test_name);
         $last_policy_count = $policy_count;
@@ -191,8 +191,8 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
             -severity   => $severity,
             -theme      => 'core',
         );
-        my $critic = Perl::Critic::Config->new( %pc_args );
-        my $policy_count = scalar $critic->policies();
+        my $refactor = Perl::Critic::Config->new( %pc_args );
+        my $policy_count = scalar $refactor->policies();
         my $expected_count = ($SEVERITY_HIGHEST - $severity + 1) * 10;
         my $test_name = "user-defined severity level: $severity";
         is( $policy_count, $expected_count, $test_name );
@@ -200,8 +200,8 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 
     # All remaining policies should be at the lowest severity
     my %pc_args = (-profile => \%profile, -severity => $SEVERITY_LOWEST);
-    my $critic = Perl::Critic::Config->new( %pc_args );
-    my $policy_count = scalar $critic->policies();
+    my $refactor = Perl::Critic::Config->new( %pc_args );
+    my $policy_count = scalar $refactor->policies();
     my $expected_count = $SEVERITY_HIGHEST * 10;
     my $test_name = 'user-defined severity, all remaining policies';
     cmp_ok( $policy_count, '>=', $expected_count, $test_name);

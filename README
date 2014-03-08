@@ -4,8 +4,8 @@ NAME
 SYNOPSIS
         use Perl::Critic;
         my $file = shift;
-        my $critic = Perl::Critic->new();
-        my @violations = $critic->critique($file);
+        my $refactor = Perl::Critic->new();
+        my @violations = $refactor->critique($file);
         print @violations;
 
 DESCRIPTION
@@ -105,7 +105,7 @@ CONSTRUCTOR
         based on their respective themes. For example, the following would
         load only Policies that have a 'bugs' AND 'pbp' theme:
 
-          my $critic = Perl::Critic->new( -theme => 'bugs && pbp' );
+          my $refactor = Perl::Critic->new( -theme => 'bugs && pbp' );
 
         Unless the "-severity" option is explicitly given, setting "-theme"
         silently causes the "-severity" to be set to 1. You can set the
@@ -116,7 +116,7 @@ CONSTRUCTOR
         modules that match at least one "m/$PATTERN/ixms" will always be
         loaded, irrespective of all other settings. For example:
 
-            my $critic = Perl::Critic->new(-include => ['layout'] -severity => 4);
+            my $refactor = Perl::Critic->new(-include => ['layout'] -severity => 4);
 
         This would cause Perl::Critic to apply all the "CodeLayout::*"
         Policy modules even though they have a severity level that is less
@@ -129,7 +129,7 @@ CONSTRUCTOR
         modules that match at least one "m/$PATTERN/ixms" will not be
         loaded, irrespective of all other settings. For example:
 
-            my $critic = Perl::Critic->new(-exclude => ['strict'] -severity => 1);
+            my $refactor = Perl::Critic->new(-exclude => ['strict'] -severity => 1);
 
         This would cause Perl::Critic to not apply the "RequireUseStrict"
         and "ProhibitNoStrict" Policy modules even though they have a

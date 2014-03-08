@@ -50,17 +50,17 @@ eval 'use Test::Memory::Cycle; 1'
     # circular references.
 
     my $code    = q<print foo(); split /this/, $that;>; ## no critic (RequireInterpolationOfMetachars)
-    my $ppi_doc = PPI::Document->new( \$code );
-    my $pc_doc  = Perl::Critic::Document->new( '-source' => $ppi_doc );
-    my $critic  = Perl::Critic->new( -severity => 1 );
-    my @violations = $critic->critique( $pc_doc );
+    my $ppi_doc    = PPI::Document->new( \$code );
+    my $pc_doc     = Perl::Critic::Document->new( '-source' => $ppi_doc );
+    my $refactor   = Perl::Critic->new( -severity => 1 );
+    my @violations = $refactor->critique( $pc_doc );
     confess 'No violations were created' if not @violations;
 
     # One test for each violation, plus one each for Critic and Document.
     plan( tests => scalar @violations + 2 );
 
     memory_cycle_ok( $pc_doc );
-    memory_cycle_ok( $critic );
+    memory_cycle_ok( $refactor );
     foreach my $violation (@violations) {
         memory_cycle_ok($_);
     }

@@ -65,13 +65,13 @@ END_PERL
 
 # Just don't get involved with Perl::Tidy.
 my $profile = { '-CodeLayout::RequireTidyCode' => {} };
-my $critic =
+my $refactor =
     Perl::Critic->new(
         -severity => 1,
         -profile => $profile,
         -theme => 'core',
     );
-my @violations = $critic->critique( \$code );
+my @violations = $refactor->critique( \$code );
 
 #print @violations;
 #exit;
@@ -89,7 +89,7 @@ my %expected_stats = (
     violations_per_statement      => 1.4, # 7 violations / 5 lines
 );
 
-my $stats = $critic->statistics();
+my $stats = $refactor->statistics();
 isa_ok($stats, $package);
 
 while ( my($method, $expected) = each %expected_stats) {

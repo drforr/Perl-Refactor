@@ -88,7 +88,7 @@ sub critique {  ## no critic (ArgUnpacking)
     # of the ways this subroutine might get called:
     #
     # #Object style...
-    # $critic->critique( $code );
+    # $refactor->critique( $code );
     #
     # #Functional style...
     # critique( $code );
@@ -234,8 +234,8 @@ Perl::Critic - Critique Perl source code for best-practices.
 
     use Perl::Critic;
     my $file = shift;
-    my $critic = Perl::Critic->new();
-    my @violations = $critic->critique($file);
+    my $refactor = Perl::Critic->new();
+    my @violations = $refactor->critique($file);
     print @violations;
 
 
@@ -344,7 +344,7 @@ B<-theme> is special expression that determines which Policies to
 apply based on their respective themes.  For example, the following
 would load only Policies that have a 'bugs' AND 'pbp' theme:
 
-  my $critic = Perl::Critic->new( -theme => 'bugs && pbp' );
+  my $refactor = Perl::Critic->new( -theme => 'bugs && pbp' );
 
 Unless the C<-severity> option is explicitly given, setting C<-theme>
 silently causes the C<-severity> to be set to 1.  You can set the
@@ -356,7 +356,7 @@ B<-include> is a reference to a list of string C<@PATTERNS>.  Policy
 modules that match at least one C<m/$PATTERN/ixms> will always be
 loaded, irrespective of all other settings.  For example:
 
-    my $critic = Perl::Critic->new(-include => ['layout'] -severity => 4);
+    my $refactor = Perl::Critic->new(-include => ['layout'] -severity => 4);
 
 This would cause Perl::Critic to apply all the C<CodeLayout::*> Policy
 modules even though they have a severity level that is less than 4.
@@ -369,7 +369,7 @@ B<-exclude> is a reference to a list of string C<@PATTERNS>.  Policy
 modules that match at least one C<m/$PATTERN/ixms> will not be loaded,
 irrespective of all other settings.  For example:
 
-    my $critic = Perl::Critic->new(-exclude => ['strict'] -severity => 1);
+    my $refactor = Perl::Critic->new(-exclude => ['strict'] -severity => 1);
 
 This would cause Perl::Critic to not apply the C<RequireUseStrict> and
 C<ProhibitNoStrict> Policy modules even though they have a severity

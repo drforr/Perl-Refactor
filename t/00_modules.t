@@ -62,9 +62,9 @@ can_ok('Perl::Critic', 'critique');
 can_ok('Perl::Critic', 'policies');
 
 #Set -profile to avoid messing with .perlrefactorrc
-my $critic = Perl::Critic->new( -profile => 'NONE' );
-isa_ok($critic, 'Perl::Critic');
-is($critic->VERSION(), $version_string, 'Perl::Critic version');
+my $refactor = Perl::Critic->new( -profile => 'NONE' );
+isa_ok($refactor, 'Perl::Critic');
+is($refactor->VERSION(), $version_string, 'Perl::Critic version');
 
 #-----------------------------------------------------------------------------
 # Test Perl::Critic::Config module interface
