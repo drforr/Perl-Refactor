@@ -9,9 +9,9 @@ use Carp qw< carp >;
 use version;
 
 
-use Perl::Critic::Document qw< >;
-use Perl::Critic::Utils qw< $EMPTY >;
-use Perl::Critic::Utils::DataConversion qw< dor >;
+use Perl::Refactor::Document qw< >;
+use Perl::Refactor::Utils qw< $EMPTY >;
+use Perl::Refactor::Utils::DataConversion qw< dor >;
 
 
 use Test::Deep;
@@ -23,24 +23,24 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-can_ok('Perl::Critic::Document', 'new');
-can_ok('Perl::Critic::Document', 'filename');
-can_ok('Perl::Critic::Document', 'find');
-can_ok('Perl::Critic::Document', 'find_first');
-can_ok('Perl::Critic::Document', 'find_any');
-can_ok('Perl::Critic::Document', 'namespaces');
-can_ok('Perl::Critic::Document', 'subdocuments_for_namespace');
-can_ok('Perl::Critic::Document', 'highest_explicit_perl_version');
-can_ok('Perl::Critic::Document', 'uses_module');
-can_ok('Perl::Critic::Document', 'ppi_document');
-can_ok('Perl::Critic::Document', 'is_program');
-can_ok('Perl::Critic::Document', 'is_module');
+can_ok('Perl::Refactor::Document', 'new');
+can_ok('Perl::Refactor::Document', 'filename');
+can_ok('Perl::Refactor::Document', 'find');
+can_ok('Perl::Refactor::Document', 'find_first');
+can_ok('Perl::Refactor::Document', 'find_any');
+can_ok('Perl::Refactor::Document', 'namespaces');
+can_ok('Perl::Refactor::Document', 'subdocuments_for_namespace');
+can_ok('Perl::Refactor::Document', 'highest_explicit_perl_version');
+can_ok('Perl::Refactor::Document', 'uses_module');
+can_ok('Perl::Refactor::Document', 'ppi_document');
+can_ok('Perl::Refactor::Document', 'is_program');
+can_ok('Perl::Refactor::Document', 'is_module');
 
 {
     my $code = q{'print 'Hello World';};  #Has 6 PPI::Element
     my $ppi_doc = PPI::Document->new( \$code );
-    my $pc_doc  = Perl::Critic::Document->new( '-source' => $ppi_doc );
-    isa_ok($pc_doc, 'Perl::Critic::Document');
+    my $pc_doc  = Perl::Refactor::Document->new( '-source' => $ppi_doc );
+    isa_ok($pc_doc, 'Perl::Refactor::Document');
     isa_ok($pc_doc, 'PPI::Document');
     isa_ok($pc_doc, 'PPI::Node');
     isa_ok($pc_doc, 'PPI::Element');
@@ -113,7 +113,7 @@ can_ok('Perl::Critic::Document', 'is_module');
 {
     my $ppi_document = PPI::Document->new(\'foo(); package Foo; package Bar');
     my $refactor_document =
-        Perl::Critic::Document->new(-source => $ppi_document);
+        Perl::Refactor::Document->new(-source => $ppi_document);
 
     cmp_deeply(
         [ $refactor_document->namespaces() ],
@@ -127,14 +127,14 @@ can_ok('Perl::Critic::Document', 'is_module');
 {
     my $ppi_document = PPI::Document->new(\'use Moose');
     my $refactor_document =
-        Perl::Critic::Document->new(-source => $ppi_document);
+        Perl::Refactor::Document->new(-source => $ppi_document);
 
     ok(!! $refactor_document->uses_module('Moose'),       'Moose is used.');
     ok( ! $refactor_document->uses_module('Moose::Role'), 'Moose::Role is not used.');
 
     $ppi_document = PPI::Document->new( \q{ } );
     $refactor_document =
-        Perl::Critic::Document->new(-source => $ppi_document);
+        Perl::Refactor::Document->new(-source => $ppi_document);
 
     ok(
         ! $refactor_document->uses_module('Blah'),
@@ -163,7 +163,7 @@ sub test_version {
     my $description_version = dor( $expected_version, '<undef>' );
 
     my $document =
-        Perl::Critic::Document->new(
+        Perl::Refactor::Document->new(
             '-source' => PPI::Document->new( \$code )
         );
 
@@ -179,7 +179,7 @@ sub test_version {
 #-----------------------------------------------------------------------------
 
 my $nameless_code = 'use strict';
-my $nameless_doc = Perl::Critic::Document->new(
+my $nameless_doc = Perl::Refactor::Document->new(
     '-source'               => \$nameless_code,
     '-filename-override'    => 'Build.PL'
 );

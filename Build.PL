@@ -4,7 +4,7 @@ use warnings;
 
 use lib 'inc';
 
-use Perl::Critic::BuildUtilities qw<
+use Perl::Refactor::BuildUtilities qw<
     required_module_versions
     build_required_module_versions
     recommended_module_versions
@@ -13,14 +13,14 @@ use Perl::Critic::BuildUtilities qw<
     dump_unlisted_or_optional_module_versions
     emit_tar_warning_if_necessary
 >;
-use Perl::Critic::Module::Build;
+use Perl::Refactor::Module::Build;
 
 
 emit_tar_warning_if_necessary();
 
 
-my $builder = Perl::Critic::Module::Build->new(
-    module_name         => 'Perl::Critic',
+my $builder = Perl::Refactor::Module::Build->new(
+    module_name         => 'Perl::Refactor',
     dist_author         => 'Jeffrey Thalhammer <jeff@imaginative-software.com>',
     dist_abstract       => 'Critique Perl source code for best-practices.',
     license             => 'perl',
@@ -45,11 +45,11 @@ my $builder = Perl::Critic::Module::Build->new(
 
     meta_merge          => {
         resources => {
-            bugtracker  => 'https://github.com/Perl-Critic/Perl-Critic/issues',
+            bugtracker  => 'https://github.com/Perl-Refactor/Perl-Refactor/issues',
             homepage    => 'http://perlrefactor.com',
             license     => 'http://dev.perl.org/licenses',
             MailingList => 'http://perlrefactor.tigris.org/servlets/SummarizeList?listName=users',
-            repository  => 'git://github.com/Perl-Critic/Perl-Critic.git',
+            repository  => 'git://github.com/Perl-Refactor/Perl-Refactor.git',
         },
         no_index        => {
             file        => [

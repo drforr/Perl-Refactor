@@ -6,8 +6,8 @@ use warnings;
 
 use English qw(-no_match_vars);
 
-use Perl::Critic::Enforcer;
-use Perl::Critic::EnforcerParameter;
+use Perl::Refactor::Enforcer;
+use Perl::Refactor::EnforcerParameter;
 
 use Test::More tests => 24;
 
@@ -30,7 +30,7 @@ $specification =
     };
 
 
-eval { $parameter = Perl::Critic::EnforcerParameter->new($specification); };
+eval { $parameter = Perl::Refactor::EnforcerParameter->new($specification); };
 like(
     $EVAL_ERROR,
     qr/\b enumeration_values \b/xms,
@@ -38,7 +38,7 @@ like(
 );
 
 $specification->{enumeration_values} = 'cranberries';
-eval { $parameter = Perl::Critic::EnforcerParameter->new($specification); };
+eval { $parameter = Perl::Refactor::EnforcerParameter->new($specification); };
 like(
     $EVAL_ERROR,
     qr/\b enumeration_values \b/xms,
@@ -46,7 +46,7 @@ like(
 );
 
 $specification->{enumeration_values} = [ ];
-eval { $parameter = Perl::Critic::EnforcerParameter->new($specification); };
+eval { $parameter = Perl::Refactor::EnforcerParameter->new($specification); };
 like(
     $EVAL_ERROR,
     qr/\b enumeration_values \b/xms,
@@ -54,7 +54,7 @@ like(
 );
 
 $specification->{enumeration_values} = [ qw{ cranberries } ];
-eval { $parameter = Perl::Critic::EnforcerParameter->new($specification); };
+eval { $parameter = Perl::Refactor::EnforcerParameter->new($specification); };
 like(
     $EVAL_ERROR,
     qr/\b enumeration_values \b/xms,
@@ -64,17 +64,17 @@ like(
 
 $specification->{enumeration_values} = [ qw{ mercury gemini apollo } ];
 
-$parameter = Perl::Critic::EnforcerParameter->new($specification);
-$enforcer = Perl::Critic::Enforcer->new();
+$parameter = Perl::Refactor::EnforcerParameter->new($specification);
+$enforcer = Perl::Refactor::Enforcer->new();
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 is($enforcer->{_test}, undef, q{no value, no default});
 
-$enforcer = Perl::Critic::Enforcer->new();
+$enforcer = Perl::Refactor::Enforcer->new();
 $config{test} = 'gemini';
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 is($enforcer->{_test}, 'gemini', q{'gemini', no default});
 
-$enforcer = Perl::Critic::Enforcer->new();
+$enforcer = Perl::Refactor::Enforcer->new();
 $config{test} = 'easter_bunny';
 eval {$parameter->parse_and_validate_config_value($enforcer, \%config); };
 ok($EVAL_ERROR, q{invalid value});
@@ -82,12 +82,12 @@ ok($EVAL_ERROR, q{invalid value});
 $specification->{default_string} = 'apollo';
 delete $config{test};
 
-$parameter = Perl::Critic::EnforcerParameter->new($specification);
-$enforcer = Perl::Critic::Enforcer->new();
+$parameter = Perl::Refactor::EnforcerParameter->new($specification);
+$enforcer = Perl::Refactor::Enforcer->new();
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 is($enforcer->{_test}, 'apollo', q{no value, default 'apollo'});
 
-$enforcer = Perl::Critic::Enforcer->new();
+$enforcer = Perl::Refactor::Enforcer->new();
 $config{test} = 'gemini';
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 is($enforcer->{_test}, 'gemini', q{'gemini', default 'apollo'});
@@ -100,20 +100,20 @@ delete $config{test};
 
 my $values;
 
-$parameter = Perl::Critic::EnforcerParameter->new($specification);
-$enforcer = Perl::Critic::Enforcer->new();
+$parameter = Perl::Refactor::EnforcerParameter->new($specification);
+$enforcer = Perl::Refactor::Enforcer->new();
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 $values = $enforcer->{_test};
 is( scalar( keys %{$values} ), 0, q{no value, no default} );
 
-$enforcer = Perl::Critic::Enforcer->new();
+$enforcer = Perl::Refactor::Enforcer->new();
 $config{test} = 'moore';
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 $values = $enforcer->{_test};
 is( scalar( keys %{$values} ), 1, q{'moore', no default} );
 ok( $values->{moore}, q{'moore', no default} );
 
-$enforcer = Perl::Critic::Enforcer->new();
+$enforcer = Perl::Refactor::Enforcer->new();
 $config{test} = 'gaiman miller';
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 $values = $enforcer->{_test};
@@ -121,7 +121,7 @@ is( scalar( keys %{$values} ), 2, q{'gaiman miller', no default} );
 ok( $values->{gaiman}, q{'gaiman miller', no default} );
 ok( $values->{miller}, q{'gaiman miller', no default} );
 
-$enforcer = Perl::Critic::Enforcer->new();
+$enforcer = Perl::Refactor::Enforcer->new();
 $config{test} = 'leeb';
 eval {$parameter->parse_and_validate_config_value($enforcer, \%config); };
 ok($EVAL_ERROR, q{invalid value});
@@ -129,22 +129,22 @@ ok($EVAL_ERROR, q{invalid value});
 $specification->{default_string} = 'ellis miller';
 delete $config{test};
 
-$parameter = Perl::Critic::EnforcerParameter->new($specification);
-$enforcer = Perl::Critic::Enforcer->new();
+$parameter = Perl::Refactor::EnforcerParameter->new($specification);
+$enforcer = Perl::Refactor::Enforcer->new();
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 $values = $enforcer->{_test};
 is( scalar( keys %{$values} ), 2, q{no value, default 'ellis miller'} );
 ok( $values->{ellis}, q{no value, default 'ellis miller'} );
 ok( $values->{miller}, q{no value, default 'ellis miller'} );
 
-$enforcer = Perl::Critic::Enforcer->new();
+$enforcer = Perl::Refactor::Enforcer->new();
 $config{test} = 'moore';
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 $values = $enforcer->{_test};
 is( scalar( keys %{$values} ), 1, q{'moore', default 'ellis miller'} );
 ok( $values->{moore}, q{'moore', default 'ellis miller'} );
 
-$enforcer = Perl::Critic::Enforcer->new();
+$enforcer = Perl::Refactor::Enforcer->new();
 $config{test} = 'gaiman miller';
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 $values = $enforcer->{_test};

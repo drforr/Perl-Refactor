@@ -4,7 +4,7 @@ use 5.006001;
 use strict;
 use warnings;
 
-use Test::Perl::Critic::Enforcer qw< all_policies_ok >;
+use Test::Perl::Refactor::Enforcer qw< all_policies_ok >;
 
 #-----------------------------------------------------------------------------
 

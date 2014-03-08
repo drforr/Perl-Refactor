@@ -6,7 +6,7 @@ use warnings;
 
 use Carp qw< confess >;
 
-use Perl::Critic::EnforcerConfig;
+use Perl::Refactor::EnforcerConfig;
 
 use Test::More tests => 28;
 
@@ -19,7 +19,7 @@ our $VERSION = '1.121';
 
 {
     my $config =
-        Perl::Critic::EnforcerConfig->new('Some::Enforcer');
+        Perl::Refactor::EnforcerConfig->new('Some::Enforcer');
 
     is(
         $config->get_enforcer_short_name(),
@@ -63,7 +63,7 @@ our $VERSION = '1.121';
 
 {
     my $config =
-        Perl::Critic::EnforcerConfig->new(
+        Perl::Refactor::EnforcerConfig->new(
             'Some::Other::Enforcer',
             {
                 custom_parameter   => 'blargh',

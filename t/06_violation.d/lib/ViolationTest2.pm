@@ -5,15 +5,15 @@ use strict;
 use warnings;
 
 use PPI::Document;
-use Perl::Critic::Violation;
+use Perl::Refactor::Violation;
 
-# This file exists solely to test Perl::Critic::Violation::import()
+# This file exists solely to test Perl::Refactor::Violation::import()
 
 sub get_violation {
 
     my $code = 'Hello World;';
     my $doc = PPI::Document->new(\$code);
-    return Perl::Critic::Violation->new('', '', [0,0], 0);
+    return Perl::Refactor::Violation->new('', '', [0,0], 0);
 }
 
 1;

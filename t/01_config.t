@@ -9,15 +9,15 @@ use English qw< -no_match_vars >;
 use File::Spec;
 use List::MoreUtils qw(all any);
 
-use Perl::Critic::Exception::AggregateConfiguration;
-use Perl::Critic::Config qw<>;
-use Perl::Critic::EnforcerFactory (-test => 1);
-use Perl::Critic::TestUtils qw<
+use Perl::Refactor::Exception::AggregateConfiguration;
+use Perl::Refactor::Config qw<>;
+use Perl::Refactor::EnforcerFactory (-test => 1);
+use Perl::Refactor::TestUtils qw<
     bundled_enforcer_names
     names_of_policies_willing_to_work
 >;
-use Perl::Critic::Utils qw< :booleans :characters :severities >;
-use Perl::Critic::Utils::Constants qw< :color_severity >;
+use Perl::Refactor::Utils qw< :booleans :characters :severities >;
+use Perl::Refactor::Utils::Constants qw< :color_severity >;
 
 use Test::More;
 
@@ -27,7 +27,7 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlrefactorrc();
+Perl::Refactor::TestUtils::block_perlrefactorrc();
 
 #-----------------------------------------------------------------------------
 
@@ -44,7 +44,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 {
     my $all_enforcer_count =
         scalar
-            Perl::Critic::Config
+            Perl::Refactor::Config
                 ->new(
                     -severity   => $SEVERITY_LOWEST,
                     -theme      => 'core',
@@ -63,7 +63,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
     my $last_enforcer_count = $total_policies + 1;
     for my $severity ($SEVERITY_LOWEST .. $SEVERITY_HIGHEST) {
         my $configuration =
-            Perl::Critic::Config->new(
+            Perl::Refactor::Config->new(
                 -severity   => $severity,
                 -theme      => 'core',
             );
@@ -87,7 +87,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
             -severity   => $severity,
             -theme      => 'core',
         );
-        my $refactor = Perl::Critic::Config->new( %pc_args );
+        my $refactor = Perl::Refactor::Config->new( %pc_args );
         my $enforcer_count = scalar $refactor->policies();
         my $test_name = "Count all policies, severity: $severity";
         cmp_ok($enforcer_count, '<', $last_enforcer_count, $test_name);
@@ -99,7 +99,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 
 {
     my $configuration =
-        Perl::Critic::Config->new(
+        Perl::Refactor::Config->new(
             -severity   => $SEVERITY_LOWEST,
             -theme      => 'core',
         );
@@ -141,9 +141,9 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 #        );
 #
 #        eval {
-#            Perl::Critic::Config->new( %pc_args )->policies();
+#            Perl::Refactor::Config->new( %pc_args )->policies();
 #        };
-#        my $exception = Perl::Critic::Exception::AggregateConfiguration->caught();
+#        my $exception = Perl::Refactor::Exception::AggregateConfiguration->caught();
 #        ok(
 #            defined $exception,
 #            "got exception when no policies were enabled at severity $severity_string.",
@@ -184,7 +184,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
             -severity   => $severity,
             -theme      => 'core',
         );
-        my $refactor = Perl::Critic::Config->new( %pc_args );
+        my $refactor = Perl::Refactor::Config->new( %pc_args );
         my $enforcer_count = scalar $refactor->policies();
         my $expected_count = ($SEVERITY_HIGHEST - $severity + 1) * 10;
         my $test_name = "user-defined severity level: $severity";
@@ -193,7 +193,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 
     # All remaining policies should be at the lowest severity
     my %pc_args = (-profile => \%profile, -severity => $SEVERITY_LOWEST);
-    my $refactor = Perl::Critic::Config->new( %pc_args );
+    my $refactor = Perl::Refactor::Config->new( %pc_args );
     my $enforcer_count = scalar $refactor->policies();
     my $expected_count = $SEVERITY_HIGHEST * 10;
     my $test_name = 'user-defined severity, all remaining policies';
@@ -206,7 +206,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 {
     my $examples_dir = 'examples';
     my $profile = File::Spec->catfile( $examples_dir, 'perlrefactorrc' );
-    my $c = Perl::Critic::Config->new( -profile => $profile );
+    my $c = Perl::Refactor::Config->new( -profile => $profile );
 
     is_deeply([$c->exclude()], [ qw(Documentation Naming) ],
               'user default exclude from file' );
@@ -261,7 +261,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
         -include    => \@include,
         -theme      => 'core',
     );
-    my @policies = Perl::Critic::Config->new( %pc_args )->policies();
+    my @policies = Perl::Refactor::Config->new( %pc_args )->policies();
     is(scalar @policies, $total_policies, 'include pattern matching');
 }
 
@@ -277,7 +277,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
         -severity   => 1,
         -exclude    => \@exclude,
     );
-    my @policies = Perl::Critic::Config->new( %pc_args )->policies();
+    my @policies = Perl::Refactor::Config->new( %pc_args )->policies();
     my $matches = grep { my $pol = ref $_; grep { $pol !~ /$_/ixms} @exclude } @policies;
     is(scalar @policies, $matches, 'exclude pattern matching');
 }
@@ -296,7 +296,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
         -include    => \@include,
         -exclude    => \@exclude,
     );
-    my @policies = Perl::Critic::Config->new( %pc_args )->policies();
+    my @policies = Perl::Refactor::Config->new( %pc_args )->policies();
     my @pol_names = map {ref $_} @policies;
     is_deeply(
         [grep {/block/ixms} @pol_names],
@@ -336,8 +336,8 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
     my $color = -t *STDOUT ? $TRUE : $FALSE; ## no refactor (ProhibitInteractiveTest)
 
     my %undef_args = map { $_ => undef } @switches;
-    my $c = Perl::Critic::Config->new( %undef_args );
-    $c = Perl::Critic::Config->new( %undef_args );
+    my $c = Perl::Refactor::Config->new( %undef_args );
+    $c = Perl::Refactor::Config->new( %undef_args );
     is( $c->force(),            0,      'Undefined -force');
     is( $c->only(),             0,      'Undefined -only');
     is( $c->severity(),         5,      'Undefined -severity');
@@ -372,7 +372,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
     my %zero_args = map { $_ => 0 }
         # Zero is an invalid Term::ANSIColor value.
         grep { $_ !~ m/ \A-color-severity- /smx } @switches;
-    $c = Perl::Critic::Config->new( %zero_args );
+    $c = Perl::Refactor::Config->new( %zero_args );
     is( $c->force(),     0,       'zero -force');
     is( $c->only(),      0,       'zero -only');
     is( $c->severity(),  1,       'zero -severity');
@@ -385,7 +385,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
     is( $c->criticism_fatal(), 0, 'zero -criticism-fatal');
 
     my %empty_args = map { $_ => q{} } @switches;
-    $c = Perl::Critic::Config->new( %empty_args );
+    $c = Perl::Refactor::Config->new( %empty_args );
     is( $c->force(),     0,       'empty -force');
     is( $c->only(),      0,       'empty -only');
     is( $c->severity(),  1,       'empty -severity');
@@ -413,12 +413,12 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
     );
 
     my %pc_config = (-severity => 1, -only => 1, -profile => \%profile);
-    my @policies = Perl::Critic::Config->new( %pc_config )->policies();
+    my @policies = Perl::Refactor::Config->new( %pc_config )->policies();
     is(scalar @policies, 2, '-only switch');
 
 #    %pc_config = ( -severity => 1, -only => 1, -profile => {} );
-#    eval { Perl::Critic::Config->new( %pc_config )->policies() };
-#    my $exception = Perl::Critic::Exception::AggregateConfiguration->caught();
+#    eval { Perl::Refactor::Config->new( %pc_config )->policies() };
+#    my $exception = Perl::Refactor::Exception::AggregateConfiguration->caught();
 #    ok(
 #        defined $exception,
 #        "got exception with -only switch, empty profile.",
@@ -435,7 +435,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 
 {
     my %pc_config = ('-single-enforcer' => 'ProhibitMagicNumbers');
-    my @policies = Perl::Critic::Config->new( %pc_config )->policies();
+    my @policies = Perl::Refactor::Config->new( %pc_config )->policies();
     is(scalar @policies, 1, '-single-enforcer switch');
 }
 
@@ -455,7 +455,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
         '-allow-unsafe' => 0,
         -profile        => \%profile,
     );
-    my $config = Perl::Critic::Config->new( %pc_config );
+    my $config = Perl::Refactor::Config->new( %pc_config );
     is( $config->force, 0, '-force: default is true, arg is false');
     is( $config->only,  0, '-only: default is true, arg is false');
     is( $config->top,   0, '-top: default is true, arg is false');
@@ -468,7 +468,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 {
     my %severity_levels = (gentle=>5, stern=>4, harsh=>3, cruel=>2, brutal=>1);
     while (my ($name, $number) = each %severity_levels) {
-        my $config = Perl::Critic::Config->new( -severity => $name );
+        my $config = Perl::Refactor::Config->new( -severity => $name );
         is( $config->severity(), $number, qq{Severity "$name" is "$number"});
     }
 }
@@ -478,7 +478,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 # Test exception handling
 
 {
-    my $config = Perl::Critic::Config->new( -profile => 'NONE' );
+    my $config = Perl::Refactor::Config->new( -profile => 'NONE' );
 
     # Try adding a bogus enforcer
     eval{ $config->add_enforcer( -enforcer => 'Bogus::Enforcer') };
@@ -497,7 +497,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
     );
 
     # Try using bogus named severity level
-    eval{ Perl::Critic::Config->new( -severity => 'bogus' ) };
+    eval{ Perl::Refactor::Config->new( -severity => 'bogus' ) };
     like(
         $EVAL_ERROR,
         qr/The value for the global "-severity" option [(]"bogus"[)] is not one of the valid severity names/ms, ## no refactor (RequireExtendedFormatting)
@@ -505,7 +505,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
     );
 
     # Try using vague -single-enforcer option
-    eval{ Perl::Critic::Config->new( '-single-enforcer' => q<.*> ) };
+    eval{ Perl::Refactor::Config->new( '-single-enforcer' => q<.*> ) };
     like(
         $EVAL_ERROR,
         qr/matched [ ] multiple [ ] policies/xms,
@@ -513,7 +513,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
     );
 
     # Try using invalid -single-enforcer option
-    eval{ Perl::Critic::Config->new( '-single-enforcer' => 'bogus' ) };
+    eval{ Perl::Refactor::Config->new( '-single-enforcer' => 'bogus' ) };
     like(
         $EVAL_ERROR,
         qr/did [ ] not [ ] match [ ] any [ ] policies/xms,
@@ -531,18 +531,18 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 
     # Pretend that ProhibitQuotedWordLists is actually unsafe
     no warnings qw(redefine once);  ## no refactor qw(ProhibitNoWarnings)
-    local *Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists::is_safe = sub {return 0};
+    local *Perl::Refactor::Enforcer::CodeLayout::ProhibitQuotedWordLists::is_safe = sub {return 0};
 
     my %safe_pc_config = (-severity => 1, -only => 1, -profile => \%profile);
-    my @p = Perl::Critic::Config->new( %safe_pc_config )->policies();
+    my @p = Perl::Refactor::Config->new( %safe_pc_config )->policies();
     is(scalar @p, 1, 'Only loaded safe policies without -unsafe switch');
 
     my %unsafe_pc_config = (%safe_pc_config, '-allow-unsafe' => 1);
-    @p = Perl::Critic::Config->new( %unsafe_pc_config )->policies();
+    @p = Perl::Refactor::Config->new( %unsafe_pc_config )->policies();
     is(scalar @p, 2, 'Also loaded unsafe policies with -allow-unsafe switch');
 
     my %singular_pc_config = ('-single-enforcer' => 'QuotedWordLists');
-    @p = Perl::Critic::Config->new( %singular_pc_config )->policies();
+    @p = Perl::Refactor::Config->new( %singular_pc_config )->policies();
     is(scalar @p, 1, '-single-enforcer always loads Enforcer, even if unsafe');
 }
 

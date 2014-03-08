@@ -4,9 +4,9 @@ use 5.006001;
 use strict;
 use warnings;
 
-use Perl::Critic::UserProfile;
-use Perl::Critic::EnforcerFactory (-test => 1);
-use Perl::Critic::TestUtils qw(bundled_enforcer_names);
+use Perl::Refactor::UserProfile;
+use Perl::Refactor::EnforcerFactory (-test => 1);
+use Perl::Refactor::TestUtils qw(bundled_enforcer_names);
 
 use Test::More tests => 1;
 
@@ -16,12 +16,12 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlrefactorrc();
+Perl::Refactor::TestUtils::block_perlrefactorrc();
 
 #-----------------------------------------------------------------------------
 
-my $profile = Perl::Critic::UserProfile->new();
-my $factory = Perl::Critic::EnforcerFactory->new( -profile => $profile );
+my $profile = Perl::Refactor::UserProfile->new();
+my $factory = Perl::Refactor::EnforcerFactory->new( -profile => $profile );
 my @found_policies = sort map { ref $_ } $factory->create_all_policies();
 my $test_label = 'successfully loaded policies matches MANIFEST';
 is_deeply( \@found_policies, [bundled_enforcer_names()], $test_label );

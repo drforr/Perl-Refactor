@@ -6,11 +6,11 @@
 
 =head1 NAME
 
-Perl::Critic::TODO - Things for Perl::Critic developers to do
+Perl::Refactor::TODO - Things for Perl::Refactor developers to do
 
 =head1 SEE ALSO
 
-Perl-Critic-More is a separate distribution for less-widely-accepted
+Perl-Refactor-More is a separate distribution for less-widely-accepted
 policies.  It contains its own TODO.pod.
 
 
@@ -158,7 +158,7 @@ e.g. "C<[+Example::Enforcer]>".
 
 =item * Threading
 
-Pretty obviously, Perl::Critic is readily parallelizable, just do a document per
+Pretty obviously, Perl::Refactor is readily parallelizable, just do a document per
 thread.  ("readily" being conceptual, not necessarily practical)  Although
 there's now C<Enforcer::prepare_to_scan_document()>, given perl's thread data
 sharing model, this shouldn't be an issue.
@@ -205,7 +205,7 @@ This is necessary to get P::C::Moose Policies correct.
 
 PBP recommends using the L<version|version> module.  I chose not to follow that
 recommendation because L<version|version> didn't work with the Perl v5.6.1 that I had
-at $work at that time (and I really wanted to use Perl::Critic at work).
+at $work at that time (and I really wanted to use Perl::Refactor at work).
 But now the L<version|version> has been updated and those bugs may have been fixed,
 or perhaps we just don't care about running on Perl v5.6.1 any more.  So
 maybe now we can go ahead and use L<version|version>.
@@ -346,7 +346,7 @@ Make the obnoxious pattern configurable
 
 Require the use of "not" instead of "!", except when this would contradict
 ProhibitMixedBooleanOperators.  This may be better suited for
-Perl::Critic::More.
+Perl::Refactor::More.
 
 
 =item * ValuesAndExpressions::ProhibitUnusedReadonlyConstants
@@ -567,7 +567,7 @@ I'm pretty sure that opening references to scalars is in 5.6, so IO::String
 isn't necessary.
 
 
-=item * Give L<Perl::Critic::Command> a proper API.
+=item * Give L<Perl::Refactor::Command> a proper API.
 
 Now that we've got the guts of L<perlrefactor> in there, we should make the
 it available to users.
@@ -612,7 +612,7 @@ until PPI incorporates its own version number in the cache.
 
 =item * Use hash-lookup instead of C<List::MoreUtils::any> function.
 
-In several places, Perl::Critic uses C<List::MoreUtils::any> to see if a
+In several places, Perl::Refactor uses C<List::MoreUtils::any> to see if a
 string is a member of a list.  Instead, I suggest using a named subroutine
 that does a hash-lookup like this:
 
@@ -659,7 +659,7 @@ would be good to check if those workarounds are still needed.
 
 Not strictly a bug -- the PPI Regexp classes have a dearth of accessor methods
 as of v1.118, meaning that we have to do messy digging into internals.  I
-wrote Perl::Critic:Utils::PPIRegexp to encapsulate this messiness, but it
+wrote Perl::Refactor:Utils::PPIRegexp to encapsulate this messiness, but it
 would be nicer to have an official interface in PPI.
 
 

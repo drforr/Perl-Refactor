@@ -6,9 +6,9 @@ use warnings;
 
 use English qw(-no_match_vars);
 
-use Perl::Critic::EnforcerFactory (-test => 1);
-use Perl::Critic::Statistics;
-use Perl::Critic::TestUtils;
+use Perl::Refactor::EnforcerFactory (-test => 1);
+use Perl::Refactor::Statistics;
+use Perl::Refactor::TestUtils;
 
 use Test::More tests => 24;
 
@@ -18,11 +18,11 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlrefactorrc();
+Perl::Refactor::TestUtils::block_perlrefactorrc();
 
 #-----------------------------------------------------------------------------
 
-my $package = 'Perl::Critic::Statistics';
+my $package = 'Perl::Refactor::Statistics';
 
 my @methods = qw(
     average_sub_mccabe
@@ -59,7 +59,7 @@ END_PERL
 # Just don't get involved with Perl::Tidy.
 my $profile = { '-CodeLayout::RequireTidyCode' => {} };
 my $refactor =
-    Perl::Critic->new(
+    Perl::Refactor->new(
         -severity => 1,
         -profile => $profile,
         -theme => 'core',

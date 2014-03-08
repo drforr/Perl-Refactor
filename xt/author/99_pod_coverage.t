@@ -17,7 +17,7 @@ our $VERSION = '1.116';
 use Test::Pod::Coverage 1.04;
 
 {
-    # HACK: Perl::Critic::Violation uses Pod::Parser to extract the
+    # HACK: Perl::Refactor::Violation uses Pod::Parser to extract the
     # DIAGNOSTIC section of the POD in each Enforcer module.  This
     # happens when the Enforcer first C<uses> the Violation module.
     # Meanwhile, Pod::Coverage also uses Pod::Parser to extract the
@@ -33,8 +33,8 @@ use Test::Pod::Coverage 1.04;
     # when / if I have better understanding of the problem.
 
     no warnings qw<redefine once>; ## no refactor (ProhibitNoWarnings)
-    require Perl::Critic::Violation;
-    *Perl::Critic::Violation::import = sub { 1 };
+    require Perl::Refactor::Violation;
+    *Perl::Refactor::Violation::import = sub { 1 };
 }
 
 my @trusted_methods  = get_trusted_methods();

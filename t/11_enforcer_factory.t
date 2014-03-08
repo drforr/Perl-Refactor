@@ -6,9 +6,9 @@ use warnings;
 
 use English qw(-no_match_vars);
 
-use Perl::Critic::UserProfile;
-use Perl::Critic::EnforcerFactory (-test => 1);
-use Perl::Critic::TestUtils qw();
+use Perl::Refactor::UserProfile;
+use Perl::Refactor::EnforcerFactory (-test => 1);
+use Perl::Refactor::TestUtils qw();
 
 use Test::More tests => 10;
 
@@ -18,16 +18,16 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlrefactorrc();
+Perl::Refactor::TestUtils::block_perlrefactorrc();
 
 #-----------------------------------------------------------------------------
 
 {
-    my $enforcer_name = 'Perl::Critic::Enforcer::Modules::ProhibitEvilModules';
+    my $enforcer_name = 'Perl::Refactor::Enforcer::Modules::ProhibitEvilModules';
     my $params = {severity => 2, set_themes => 'betty', add_themes => 'wilma'};
 
-    my $userprof = Perl::Critic::UserProfile->new( -profile => 'NONE' );
-    my $pf = Perl::Critic::EnforcerFactory->new( -profile  => $userprof );
+    my $userprof = Perl::Refactor::UserProfile->new( -profile => 'NONE' );
+    my $pf = Perl::Refactor::EnforcerFactory->new( -profile  => $userprof );
 
 
     # Now test...
@@ -47,13 +47,13 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     my $enforcer_name = 'Variables::ProhibitPunctuationVars';
     my $params = {set_themes => 'betty', add_themes => 'wilma'};
 
-    my $userprof = Perl::Critic::UserProfile->new( -profile => 'NONE' );
-    my $pf = Perl::Critic::EnforcerFactory->new( -profile  => $userprof );
+    my $userprof = Perl::Refactor::UserProfile->new( -profile => 'NONE' );
+    my $pf = Perl::Refactor::EnforcerFactory->new( -profile  => $userprof );
 
 
     # Now test...
     my $enforcer = $pf->create_enforcer( -name => $enforcer_name, -params => $params );
-    my $enforcer_name_long = 'Perl::Critic::Enforcer::' . $enforcer_name;
+    my $enforcer_name_long = 'Perl::Refactor::Enforcer::' . $enforcer_name;
     is( ref $enforcer, $enforcer_name_long, 'Created correct type of enforcer');
 
     my @themes = $enforcer->get_themes();
@@ -64,8 +64,8 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
 # Test exception handling
 
 {
-    my $userprof = Perl::Critic::UserProfile->new( -profile => 'NONE' );
-    my $pf = Perl::Critic::EnforcerFactory->new( -profile  => $userprof );
+    my $userprof = Perl::Refactor::UserProfile->new( -profile => 'NONE' );
+    my $pf = Perl::Refactor::EnforcerFactory->new( -profile  => $userprof );
 
     # Try missing arguments
     eval{ $pf->create_enforcer() };
@@ -76,7 +76,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     );
 
     # Try creating bogus enforcer
-    eval{ $pf->create_enforcer( -name => 'Perl::Critic::Foo' ) };
+    eval{ $pf->create_enforcer( -name => 'Perl::Refactor::Foo' ) };
     like(
         $EVAL_ERROR,
         qr/Can't [ ] locate [ ] object [ ] method/xms,
@@ -101,9 +101,9 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     my $last_warning = q{}; #Trap warning messages here
     local $SIG{__WARN__} = sub { $last_warning = shift };
 
-    my $profile = { 'Perl::Critic::Bogus' => {} };
-    my $userprof = Perl::Critic::UserProfile->new( -profile => $profile );
-    my $pf = Perl::Critic::EnforcerFactory->new( -profile  => $userprof );
+    my $profile = { 'Perl::Refactor::Bogus' => {} };
+    my $userprof = Perl::Refactor::UserProfile->new( -profile => $profile );
+    my $pf = Perl::Refactor::EnforcerFactory->new( -profile  => $userprof );
     like(
         $last_warning,
         qr/^Enforcer [ ] ".*Bogus" [ ] is [ ] not [ ] installed/xms,
@@ -111,9 +111,9 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     );
     $last_warning = q{};
 
-    $profile = { '-Perl::Critic::Shizzle' => {} };
-    $userprof = Perl::Critic::UserProfile->new( -profile => $profile );
-    $pf = Perl::Critic::EnforcerFactory->new( -profile  => $userprof );
+    $profile = { '-Perl::Refactor::Shizzle' => {} };
+    $userprof = Perl::Refactor::UserProfile->new( -profile => $profile );
+    $pf = Perl::Refactor::EnforcerFactory->new( -profile  => $userprof );
     like(
         $last_warning,
         qr/^Enforcer [ ] ".*Shizzle" [ ] is [ ] not [ ] installed/xms,

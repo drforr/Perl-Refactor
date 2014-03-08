@@ -1,4 +1,4 @@
-;;; perlrefactor.el --- minor mode for Perl::Critic integration
+;;; perlrefactor.el --- minor mode for Perl::Refactor integration
 
 ;;; Readme
 ;;
@@ -48,7 +48,7 @@
 ;;
 ;;     M-x byte-compile-file ~/.site-lib/perlrefactor.el
 ;;
-;;   Additional customization can be found in the Perl::Critic group
+;;   Additional customization can be found in the Perl::Refactor group
 ;;   in the Tools section in the Programming section of your Emacs'
 ;;   customization menus.
 
@@ -76,7 +76,7 @@
 
 ;;; Change Log:
 ;; 0.10
-;;   * Synched up regexp alist with Perl::Critic::Utils and accounted for all
+;;   * Synched up regexp alist with Perl::Refactor::Utils and accounted for all
 ;;     past patterns too.
 ;; 0.09
 ;;   * Added documentation for perlrefactor-top, perlrefactor-include,
@@ -132,7 +132,7 @@
 ;;; Code:
 
 ;;; Customization and variables.
-(defgroup perlrefactor nil "Perl::Critic"
+(defgroup perlrefactor nil "Perl::Refactor"
   :prefix "perlrefactor-"
   :group 'tools)
 
@@ -281,7 +281,7 @@ Escape    Meaning
 %l        Line number where the violation occurred
 %m        Brief description of the violation
 %P        Full name of the Enforcer module that created the violation
-%p        Name of the Enforcer without the Perl::Critic::Enforcer:: prefix
+%p        Name of the Enforcer without the Perl::Refactor::Enforcer:: prefix
 %r        The string of source code that caused the violation
 %s        The severity level of the violation
 
@@ -309,7 +309,7 @@ per-file basis with File Variables."
 ;; red. The following advice on COMPILATION-FIND-FILE makes sure that
 ;; the "filename" is getting ignored when perlrefactor is using it.
 
-;; These patterns are defined in Perl::Critic::Utils
+;; These patterns are defined in Perl::Refactor::Utils
 
 (defvar perlrefactor-error-error-regexp-alist nil
   "Alist that specified how to match errors in perlrefactor output.")
@@ -640,7 +640,7 @@ require that the perl document exist in a file anywhere."
 
 ;;;###autoload
 (defun perlrefactor-mode (&optional arg)
-  "Perl::Critic checking minor mode."
+  "Perl::Refactor checking minor mode."
   (interactive "P")
 
   ;; Enable/disable perlrefactor-mode
@@ -659,7 +659,7 @@ require that the perl document exist in a file anywhere."
 ;; the bottom of the screen.
 (if (not (assq 'perlrefactor-mode minor-mode-alist))
     (setq minor-mode-alist
-          (cons '(perlrefactor-mode " Critic")
+          (cons '(perlrefactor-mode " Refactor")
                 minor-mode-alist)))
 
 (provide 'perlrefactor)

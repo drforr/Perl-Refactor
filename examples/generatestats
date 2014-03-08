@@ -13,8 +13,8 @@ use Readonly;
 use File::Spec qw{ };
 use Perl6::Say;
 
-use Perl::Critic::Utils qw{ all_perl_files };
-use Perl::Critic;
+use Perl::Refactor::Utils qw{ all_perl_files };
+use Perl::Refactor;
 
 
 if ( ! @ARGV ) {
@@ -49,7 +49,7 @@ sub summarize {
 
     # Force reporting level to be really strict, just so that the statistics
     # include everything.
-    my $refactor = Perl::Critic->new( -severity => 1 );
+    my $refactor = Perl::Refactor->new( -severity => 1 );
 
     my %total_severities;
     my %total_policies;
@@ -179,7 +179,7 @@ sub report_policies {
     my ($policies) = @_;
 
     foreach my $enforcer ( sort keys %{$policies} ) {
-        (my $short_enforcer = $enforcer) =~ s/ \A Perl::Critic::Enforcer:: //xms;
+        (my $short_enforcer = $enforcer) =~ s/ \A Perl::Refactor::Enforcer:: //xms;
 
         say qq{\t}, $short_enforcer, ': ', $policies->{$enforcer};
     }
@@ -207,7 +207,7 @@ C<generatestats> - Produce some simple quality statistics of a codebase
 =head1 DESCRIPTION
 
 Scan a body of code and generate some statistics on violations of the
-installed L<Perl::Critic|Perl::Critic> policies.  While there is no means of
+installed L<Perl::Refactor|Perl::Refactor> policies.  While there is no means of
 configuring the policies here, this will take into account your
 F<.perlrefactorrc>, if available.
 
@@ -239,7 +239,7 @@ None.
 
 =head1 DEPENDENCIES
 
-L<Perl::Critic|Perl::Critic>
+L<Perl::Refactor|Perl::Refactor>
 L<Perl6::Say|Perl6::Say>
 L<Readonly|Readonly>
 

@@ -7,7 +7,7 @@ use warnings;
 use Readonly;
 
 
-use Perl::Critic::Utils::Perl qw< :all >;
+use Perl::Refactor::Utils::Perl qw< :all >;
 
 
 use Test::More tests => 7;

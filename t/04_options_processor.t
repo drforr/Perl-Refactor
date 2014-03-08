@@ -6,9 +6,9 @@ use warnings;
 
 use English qw(-no_match_vars);
 
-use Perl::Critic::OptionsProcessor;
-use Perl::Critic::Utils qw< :booleans >;
-use Perl::Critic::Utils::Constants qw< :color_severity >;
+use Perl::Refactor::OptionsProcessor;
+use Perl::Refactor::Utils qw< :booleans >;
+use Perl::Refactor::Utils::Constants qw< :color_severity >;
 
 use Test::More tests => 54;
 
@@ -22,7 +22,7 @@ our $VERSION = '1.121';
     # Can't use IO::Interactive here because we /don't/ want to check STDIN.
     my $color = -t *STDOUT ? $TRUE : $FALSE; ## no refactor (ProhibitInteractiveTest)
 
-    my $processor = Perl::Critic::OptionsProcessor->new();
+    my $processor = Perl::Refactor::OptionsProcessor->new();
     is($processor->force(),    0,           'native default force');
     is($processor->only(),     0,           'native default only');
     is($processor->severity(), 5,           'native default severity');
@@ -76,7 +76,7 @@ our $VERSION = '1.121';
          'program-extensions'  => '.PL .pl .t',
     );
 
-    my $processor = Perl::Critic::OptionsProcessor->new( %user_defaults );
+    my $processor = Perl::Refactor::OptionsProcessor->new( %user_defaults );
     is($processor->force(),    1,           'user default force');
     is($processor->only(),     1,           'user default only');
     is($processor->severity(), 4,           'user default severity');
@@ -105,13 +105,13 @@ our $VERSION = '1.121';
 #-----------------------------------------------------------------------------
 
 {
-    my $processor = Perl::Critic::OptionsProcessor->new( 'colour' => 1 );
+    my $processor = Perl::Refactor::OptionsProcessor->new( 'colour' => 1 );
     is($processor->color(), $TRUE, 'user default colour true');
 
-    $processor = Perl::Critic::OptionsProcessor->new( 'colour' => 0 );
+    $processor = Perl::Refactor::OptionsProcessor->new( 'colour' => 0 );
     is($processor->color(), $FALSE, 'user default colour false');
 
-    $processor = Perl::Critic::OptionsProcessor->new(
+    $processor = Perl::Refactor::OptionsProcessor->new(
          'colour-severity-highest'   => 'chartreuse',
          'colour-severity-high'      => 'fuschia',
          'colour-severity-medium'    => 'blue',
@@ -129,7 +129,7 @@ our $VERSION = '1.121';
     is( $processor->color_severity_lowest(),
         'scots tartan',     'user default colour-severity-lowest' );
 
-    $processor = Perl::Critic::OptionsProcessor->new(
+    $processor = Perl::Refactor::OptionsProcessor->new(
          'color-severity-5'    => 'chartreuse',
          'color-severity-4'    => 'fuschia',
          'color-severity-3'    => 'blue',
@@ -147,7 +147,7 @@ our $VERSION = '1.121';
     is( $processor->color_severity_lowest(),
         'scots tartan',     'user default color-severity-1' );
 
-    $processor = Perl::Critic::OptionsProcessor->new(
+    $processor = Perl::Refactor::OptionsProcessor->new(
          'colour-severity-5'    => 'chartreuse',
          'colour-severity-4'    => 'fuschia',
          'colour-severity-3'    => 'blue',
@@ -169,7 +169,7 @@ our $VERSION = '1.121';
 #-----------------------------------------------------------------------------
 
 {
-    my $processor = Perl::Critic::OptionsProcessor->new( pager => 'foo' );
+    my $processor = Perl::Refactor::OptionsProcessor->new( pager => 'foo' );
     is($processor->color(), $FALSE, 'pager set turns off color');
 }
 
@@ -182,7 +182,7 @@ our $VERSION = '1.121';
         bar => 2,
     );
 
-    eval { Perl::Critic::OptionsProcessor->new( %invalid_defaults ) };
+    eval { Perl::Refactor::OptionsProcessor->new( %invalid_defaults ) };
     like(
         $EVAL_ERROR,
         qr/"foo" [ ] is [ ] not [ ] a [ ] supported [ ] option/xms,

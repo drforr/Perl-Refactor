@@ -14,7 +14,7 @@ open FH, ">$output";
 open(FH, ">$output");
 open(FH, ">$output") or die;
 
-#This are tricky because the Critic can't
+#This are tricky because the Refactor can't
 #tell where the expression really ends
 open FH, ">$output" or die;
 open $fh, ">$output" or die;
@@ -38,7 +38,7 @@ open FH, '>', $output;
 open(FH, '>', $output);
 open(FH, '>', $output) or die;
 
-#This are tricky because the Critic can't
+#This are tricky because the Refactor can't
 #tell where the expression really ends
 open $fh, '>', $output or die;
 open my $fh, '>', $output or die;

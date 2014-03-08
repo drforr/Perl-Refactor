@@ -24,7 +24,7 @@ use PPI::Statement::Variable qw< >;
 use PPI::Statement qw< >;
 use PPI::Token::Word qw< >;
 
-use Perl::Critic::Utils::PPI qw< :all >;
+use Perl::Refactor::Utils::PPI qw< :all >;
 
 use Test::More tests => 64;
 

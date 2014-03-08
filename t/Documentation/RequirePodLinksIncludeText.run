@@ -19,7 +19,7 @@
 
 =pod
 
-The L<Perl::Critic|Perl::Critic> source may be found at
+The L<Perl::Refactor|Perl::Refactor> source may be found at
 L<http://perlrefactor.tigris.org/>.
 
 =cut
@@ -32,7 +32,7 @@ L<http://perlrefactor.tigris.org/>.
 
 =pod
 
-The L<Perl::Critic> configuration file is F<~/.perlrefactorrc>
+The L<Perl::Refactor> configuration file is F<~/.perlrefactorrc>
 
 =cut
 
@@ -44,8 +44,8 @@ The L<Perl::Critic> configuration file is F<~/.perlrefactorrc>
 
 =pod
 
-The L<< Perl::Critic->new()|Perl::Critic/new >> method creates an
-instance of the L<< Perl::Critic|Perl::Critic >> class.
+The L<< Perl::Refactor->new()|Perl::Refactor/new >> method creates an
+instance of the L<< Perl::Refactor|Perl::Refactor >> class.
 
 =cut
 
@@ -75,9 +75,9 @@ L<Foo> >> is still not seen as a link.
 
 =pod
 
-L<Perl::Critic/critique> critiques a file, returning any violations found.
+L<Perl::Refactor/critique> critiques a file, returning any violations found.
 
-L<< $refactor->critique()|Perl::Critic/critique >> critiques a file, returning
+L<< $refactor->critique()|Perl::Refactor/critique >> critiques a file, returning
 any violations found.
 
 =cut
@@ -91,9 +91,9 @@ any violations found.
 
 =pod
 
-L<Perl::Critic/critique> critiques a file, returning any violations found.
+L<Perl::Refactor/critique> critiques a file, returning any violations found.
 
-L<< $refactor->critique()|Perl::Critic/critique >> critiques a file, returning
+L<< $refactor->critique()|Perl::Refactor/critique >> critiques a file, returning
 any violations found.
 
 =cut

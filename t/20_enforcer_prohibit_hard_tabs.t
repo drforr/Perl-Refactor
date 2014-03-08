@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 # common P::C testing tools
-use Perl::Critic::TestUtils qw(pcritique fcritique);
+use Perl::Refactor::TestUtils qw(pcritique fcritique);
 
 use Test::More tests => 10;
 
@@ -15,7 +15,7 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlrefactorrc();
+Perl::Refactor::TestUtils::block_perlrefactorrc();
 
 # This specific enforcer is being tested without run.t because the .run file
 # would have to contain invisible characters.

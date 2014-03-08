@@ -8,7 +8,7 @@ use English qw(-no_match_vars);
 
 use PPI::Document;
 
-use Perl::Critic::TestUtils qw(bundled_enforcer_names);
+use Perl::Refactor::TestUtils qw(bundled_enforcer_names);
 
 use Test::More;
 
@@ -18,7 +18,7 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlrefactorrc();
+Perl::Refactor::TestUtils::block_perlrefactorrc();
 
 my @bundled_enforcer_names = bundled_enforcer_names();
 
@@ -45,222 +45,222 @@ plan tests =>
 my $version_string = __PACKAGE__->VERSION;
 
 #-----------------------------------------------------------------------------
-# Test Perl::Critic module interface
+# Test Perl::Refactor module interface
 
-use_ok('Perl::Critic') or BAIL_OUT(q<Can't continue.>);
-can_ok('Perl::Critic', 'new');
-can_ok('Perl::Critic', 'add_enforcer');
-can_ok('Perl::Critic', 'config');
-can_ok('Perl::Critic', 'critique');
-can_ok('Perl::Critic', 'policies');
-
-#Set -profile to avoid messing with .perlrefactorrc
-my $refactor = Perl::Critic->new( -profile => 'NONE' );
-isa_ok($refactor, 'Perl::Critic');
-is($refactor->VERSION(), $version_string, 'Perl::Critic version');
-
-#-----------------------------------------------------------------------------
-# Test Perl::Critic::Config module interface
-
-use_ok('Perl::Critic::Config') or BAIL_OUT(q<Can't continue.>);
-can_ok('Perl::Critic::Config', 'new');
-can_ok('Perl::Critic::Config', 'add_enforcer');
-can_ok('Perl::Critic::Config', 'policies');
-can_ok('Perl::Critic::Config', 'exclude');
-can_ok('Perl::Critic::Config', 'force');
-can_ok('Perl::Critic::Config', 'include');
-can_ok('Perl::Critic::Config', 'only');
-can_ok('Perl::Critic::Config', 'profile_strictness');
-can_ok('Perl::Critic::Config', 'severity');
-can_ok('Perl::Critic::Config', 'single_enforcer');
-can_ok('Perl::Critic::Config', 'theme');
-can_ok('Perl::Critic::Config', 'top');
-can_ok('Perl::Critic::Config', 'verbose');
-can_ok('Perl::Critic::Config', 'color');
-can_ok('Perl::Critic::Config', 'unsafe_allowed');
-can_ok('Perl::Critic::Config', 'criticism_fatal');
-can_ok('Perl::Critic::Config', 'site_enforcer_names');
-can_ok('Perl::Critic::Config', 'color_severity_highest');
-can_ok('Perl::Critic::Config', 'color_severity_high');
-can_ok('Perl::Critic::Config', 'color_severity_medium');
-can_ok('Perl::Critic::Config', 'color_severity_low');
-can_ok('Perl::Critic::Config', 'color_severity_lowest');
-can_ok('Perl::Critic::Config', 'program_extensions');
-can_ok('Perl::Critic::Config', 'program_extensions_as_regexes');
+use_ok('Perl::Refactor') or BAIL_OUT(q<Can't continue.>);
+can_ok('Perl::Refactor', 'new');
+can_ok('Perl::Refactor', 'add_enforcer');
+can_ok('Perl::Refactor', 'config');
+can_ok('Perl::Refactor', 'critique');
+can_ok('Perl::Refactor', 'policies');
 
 #Set -profile to avoid messing with .perlrefactorrc
-my $config = Perl::Critic::Config->new( -profile => 'NONE');
-isa_ok($config, 'Perl::Critic::Config');
-is($config->VERSION(), $version_string, 'Perl::Critic::Config version');
+my $refactor = Perl::Refactor->new( -profile => 'NONE' );
+isa_ok($refactor, 'Perl::Refactor');
+is($refactor->VERSION(), $version_string, 'Perl::Refactor version');
 
 #-----------------------------------------------------------------------------
-# Test Perl::Critic::Config::OptionsProcessor module interface
+# Test Perl::Refactor::Config module interface
 
-use_ok('Perl::Critic::OptionsProcessor') or BAIL_OUT(q<Can't continue.>);
-can_ok('Perl::Critic::OptionsProcessor', 'new');
-can_ok('Perl::Critic::OptionsProcessor', 'exclude');
-can_ok('Perl::Critic::OptionsProcessor', 'include');
-can_ok('Perl::Critic::OptionsProcessor', 'force');
-can_ok('Perl::Critic::OptionsProcessor', 'only');
-can_ok('Perl::Critic::OptionsProcessor', 'profile_strictness');
-can_ok('Perl::Critic::OptionsProcessor', 'single_enforcer');
-can_ok('Perl::Critic::OptionsProcessor', 'severity');
-can_ok('Perl::Critic::OptionsProcessor', 'theme');
-can_ok('Perl::Critic::OptionsProcessor', 'top');
-can_ok('Perl::Critic::OptionsProcessor', 'verbose');
-can_ok('Perl::Critic::OptionsProcessor', 'color');
-can_ok('Perl::Critic::OptionsProcessor', 'allow_unsafe');
-can_ok('Perl::Critic::OptionsProcessor', 'criticism_fatal');
-can_ok('Perl::Critic::OptionsProcessor', 'color_severity_highest');
-can_ok('Perl::Critic::OptionsProcessor', 'color_severity_high');
-can_ok('Perl::Critic::OptionsProcessor', 'color_severity_medium');
-can_ok('Perl::Critic::OptionsProcessor', 'color_severity_low');
-can_ok('Perl::Critic::OptionsProcessor', 'color_severity_lowest');
-can_ok('Perl::Critic::OptionsProcessor', 'program_extensions');
+use_ok('Perl::Refactor::Config') or BAIL_OUT(q<Can't continue.>);
+can_ok('Perl::Refactor::Config', 'new');
+can_ok('Perl::Refactor::Config', 'add_enforcer');
+can_ok('Perl::Refactor::Config', 'policies');
+can_ok('Perl::Refactor::Config', 'exclude');
+can_ok('Perl::Refactor::Config', 'force');
+can_ok('Perl::Refactor::Config', 'include');
+can_ok('Perl::Refactor::Config', 'only');
+can_ok('Perl::Refactor::Config', 'profile_strictness');
+can_ok('Perl::Refactor::Config', 'severity');
+can_ok('Perl::Refactor::Config', 'single_enforcer');
+can_ok('Perl::Refactor::Config', 'theme');
+can_ok('Perl::Refactor::Config', 'top');
+can_ok('Perl::Refactor::Config', 'verbose');
+can_ok('Perl::Refactor::Config', 'color');
+can_ok('Perl::Refactor::Config', 'unsafe_allowed');
+can_ok('Perl::Refactor::Config', 'criticism_fatal');
+can_ok('Perl::Refactor::Config', 'site_enforcer_names');
+can_ok('Perl::Refactor::Config', 'color_severity_highest');
+can_ok('Perl::Refactor::Config', 'color_severity_high');
+can_ok('Perl::Refactor::Config', 'color_severity_medium');
+can_ok('Perl::Refactor::Config', 'color_severity_low');
+can_ok('Perl::Refactor::Config', 'color_severity_lowest');
+can_ok('Perl::Refactor::Config', 'program_extensions');
+can_ok('Perl::Refactor::Config', 'program_extensions_as_regexes');
 
-my $processor = Perl::Critic::OptionsProcessor->new();
-isa_ok($processor, 'Perl::Critic::OptionsProcessor');
-is($processor->VERSION(), $version_string, 'Perl::Critic::OptionsProcessor version');
+#Set -profile to avoid messing with .perlrefactorrc
+my $config = Perl::Refactor::Config->new( -profile => 'NONE');
+isa_ok($config, 'Perl::Refactor::Config');
+is($config->VERSION(), $version_string, 'Perl::Refactor::Config version');
 
 #-----------------------------------------------------------------------------
-# Test Perl::Critic::Enforcer module interface
+# Test Perl::Refactor::Config::OptionsProcessor module interface
 
-use_ok('Perl::Critic::Enforcer') or BAIL_OUT(q<Can't continue.>);
-can_ok('Perl::Critic::Enforcer', 'add_themes');
-can_ok('Perl::Critic::Enforcer', 'applies_to');
-can_ok('Perl::Critic::Enforcer', 'default_maximum_violations_per_document');
-can_ok('Perl::Critic::Enforcer', 'default_severity');
-can_ok('Perl::Critic::Enforcer', 'default_themes');
-can_ok('Perl::Critic::Enforcer', 'get_abstract');
-can_ok('Perl::Critic::Enforcer', 'get_format');
-can_ok('Perl::Critic::Enforcer', 'get_long_name');
-can_ok('Perl::Critic::Enforcer', 'get_maximum_violations_per_document');
-can_ok('Perl::Critic::Enforcer', 'get_parameters');
-can_ok('Perl::Critic::Enforcer', 'get_raw_abstract');
-can_ok('Perl::Critic::Enforcer', 'get_severity');
-can_ok('Perl::Critic::Enforcer', 'get_short_name');
-can_ok('Perl::Critic::Enforcer', 'get_themes');
-can_ok('Perl::Critic::Enforcer', 'initialize_if_enabled');
-can_ok('Perl::Critic::Enforcer', 'is_enabled');
-can_ok('Perl::Critic::Enforcer', 'is_safe');
-can_ok('Perl::Critic::Enforcer', 'new');
-can_ok('Perl::Critic::Enforcer', 'new_parameter_value_exception');
-can_ok('Perl::Critic::Enforcer', 'parameter_metadata_available');
-can_ok('Perl::Critic::Enforcer', 'prepare_to_scan_document');
-can_ok('Perl::Critic::Enforcer', 'set_format');
-can_ok('Perl::Critic::Enforcer', 'set_maximum_violations_per_document');
-can_ok('Perl::Critic::Enforcer', 'set_severity');
-can_ok('Perl::Critic::Enforcer', 'set_themes');
-can_ok('Perl::Critic::Enforcer', 'throw_parameter_value_exception');
-can_ok('Perl::Critic::Enforcer', 'to_string');
-can_ok('Perl::Critic::Enforcer', 'violates');
-can_ok('Perl::Critic::Enforcer', 'violation');
-can_ok('Perl::Critic::Enforcer', 'is_safe');
+use_ok('Perl::Refactor::OptionsProcessor') or BAIL_OUT(q<Can't continue.>);
+can_ok('Perl::Refactor::OptionsProcessor', 'new');
+can_ok('Perl::Refactor::OptionsProcessor', 'exclude');
+can_ok('Perl::Refactor::OptionsProcessor', 'include');
+can_ok('Perl::Refactor::OptionsProcessor', 'force');
+can_ok('Perl::Refactor::OptionsProcessor', 'only');
+can_ok('Perl::Refactor::OptionsProcessor', 'profile_strictness');
+can_ok('Perl::Refactor::OptionsProcessor', 'single_enforcer');
+can_ok('Perl::Refactor::OptionsProcessor', 'severity');
+can_ok('Perl::Refactor::OptionsProcessor', 'theme');
+can_ok('Perl::Refactor::OptionsProcessor', 'top');
+can_ok('Perl::Refactor::OptionsProcessor', 'verbose');
+can_ok('Perl::Refactor::OptionsProcessor', 'color');
+can_ok('Perl::Refactor::OptionsProcessor', 'allow_unsafe');
+can_ok('Perl::Refactor::OptionsProcessor', 'criticism_fatal');
+can_ok('Perl::Refactor::OptionsProcessor', 'color_severity_highest');
+can_ok('Perl::Refactor::OptionsProcessor', 'color_severity_high');
+can_ok('Perl::Refactor::OptionsProcessor', 'color_severity_medium');
+can_ok('Perl::Refactor::OptionsProcessor', 'color_severity_low');
+can_ok('Perl::Refactor::OptionsProcessor', 'color_severity_lowest');
+can_ok('Perl::Refactor::OptionsProcessor', 'program_extensions');
+
+my $processor = Perl::Refactor::OptionsProcessor->new();
+isa_ok($processor, 'Perl::Refactor::OptionsProcessor');
+is($processor->VERSION(), $version_string, 'Perl::Refactor::OptionsProcessor version');
+
+#-----------------------------------------------------------------------------
+# Test Perl::Refactor::Enforcer module interface
+
+use_ok('Perl::Refactor::Enforcer') or BAIL_OUT(q<Can't continue.>);
+can_ok('Perl::Refactor::Enforcer', 'add_themes');
+can_ok('Perl::Refactor::Enforcer', 'applies_to');
+can_ok('Perl::Refactor::Enforcer', 'default_maximum_violations_per_document');
+can_ok('Perl::Refactor::Enforcer', 'default_severity');
+can_ok('Perl::Refactor::Enforcer', 'default_themes');
+can_ok('Perl::Refactor::Enforcer', 'get_abstract');
+can_ok('Perl::Refactor::Enforcer', 'get_format');
+can_ok('Perl::Refactor::Enforcer', 'get_long_name');
+can_ok('Perl::Refactor::Enforcer', 'get_maximum_violations_per_document');
+can_ok('Perl::Refactor::Enforcer', 'get_parameters');
+can_ok('Perl::Refactor::Enforcer', 'get_raw_abstract');
+can_ok('Perl::Refactor::Enforcer', 'get_severity');
+can_ok('Perl::Refactor::Enforcer', 'get_short_name');
+can_ok('Perl::Refactor::Enforcer', 'get_themes');
+can_ok('Perl::Refactor::Enforcer', 'initialize_if_enabled');
+can_ok('Perl::Refactor::Enforcer', 'is_enabled');
+can_ok('Perl::Refactor::Enforcer', 'is_safe');
+can_ok('Perl::Refactor::Enforcer', 'new');
+can_ok('Perl::Refactor::Enforcer', 'new_parameter_value_exception');
+can_ok('Perl::Refactor::Enforcer', 'parameter_metadata_available');
+can_ok('Perl::Refactor::Enforcer', 'prepare_to_scan_document');
+can_ok('Perl::Refactor::Enforcer', 'set_format');
+can_ok('Perl::Refactor::Enforcer', 'set_maximum_violations_per_document');
+can_ok('Perl::Refactor::Enforcer', 'set_severity');
+can_ok('Perl::Refactor::Enforcer', 'set_themes');
+can_ok('Perl::Refactor::Enforcer', 'throw_parameter_value_exception');
+can_ok('Perl::Refactor::Enforcer', 'to_string');
+can_ok('Perl::Refactor::Enforcer', 'violates');
+can_ok('Perl::Refactor::Enforcer', 'violation');
+can_ok('Perl::Refactor::Enforcer', 'is_safe');
 
 {
-    my $enforcer = Perl::Critic::Enforcer->new();
-    isa_ok($enforcer, 'Perl::Critic::Enforcer');
-    is($enforcer->VERSION(), $version_string, 'Perl::Critic::Enforcer version');
+    my $enforcer = Perl::Refactor::Enforcer->new();
+    isa_ok($enforcer, 'Perl::Refactor::Enforcer');
+    is($enforcer->VERSION(), $version_string, 'Perl::Refactor::Enforcer version');
 }
 
 #-----------------------------------------------------------------------------
-# Test Perl::Critic::Violation module interface
+# Test Perl::Refactor::Violation module interface
 
-use_ok('Perl::Critic::Violation') or BAIL_OUT(q<Can't continue.>);
-can_ok('Perl::Critic::Violation', 'description');
-can_ok('Perl::Critic::Violation', 'diagnostics');
-can_ok('Perl::Critic::Violation', 'explanation');
-can_ok('Perl::Critic::Violation', 'get_format');
-can_ok('Perl::Critic::Violation', 'location');
-can_ok('Perl::Critic::Violation', 'new');
-can_ok('Perl::Critic::Violation', 'enforcer');
-can_ok('Perl::Critic::Violation', 'set_format');
-can_ok('Perl::Critic::Violation', 'severity');
-can_ok('Perl::Critic::Violation', 'sort_by_location');
-can_ok('Perl::Critic::Violation', 'sort_by_severity');
-can_ok('Perl::Critic::Violation', 'source');
-can_ok('Perl::Critic::Violation', 'to_string');
+use_ok('Perl::Refactor::Violation') or BAIL_OUT(q<Can't continue.>);
+can_ok('Perl::Refactor::Violation', 'description');
+can_ok('Perl::Refactor::Violation', 'diagnostics');
+can_ok('Perl::Refactor::Violation', 'explanation');
+can_ok('Perl::Refactor::Violation', 'get_format');
+can_ok('Perl::Refactor::Violation', 'location');
+can_ok('Perl::Refactor::Violation', 'new');
+can_ok('Perl::Refactor::Violation', 'enforcer');
+can_ok('Perl::Refactor::Violation', 'set_format');
+can_ok('Perl::Refactor::Violation', 'severity');
+can_ok('Perl::Refactor::Violation', 'sort_by_location');
+can_ok('Perl::Refactor::Violation', 'sort_by_severity');
+can_ok('Perl::Refactor::Violation', 'source');
+can_ok('Perl::Refactor::Violation', 'to_string');
 
 my $code = q{print 'Hello World';};
 my $doc = PPI::Document->new(\$code);
-my $viol = Perl::Critic::Violation->new(undef, undef, $doc, undef);
-isa_ok($viol, 'Perl::Critic::Violation');
-is($viol->VERSION(), $version_string, 'Perl::Critic::Violation version');
+my $viol = Perl::Refactor::Violation->new(undef, undef, $doc, undef);
+isa_ok($viol, 'Perl::Refactor::Violation');
+is($viol->VERSION(), $version_string, 'Perl::Refactor::Violation version');
 
 #-----------------------------------------------------------------------------
-# Test Perl::Critic::UserProfile module interface
+# Test Perl::Refactor::UserProfile module interface
 
-use_ok('Perl::Critic::UserProfile') or BAIL_OUT(q<Can't continue.>);
-can_ok('Perl::Critic::UserProfile', 'options_processor');
-can_ok('Perl::Critic::UserProfile', 'new');
-can_ok('Perl::Critic::UserProfile', 'enforcer_is_disabled');
-can_ok('Perl::Critic::UserProfile', 'enforcer_is_enabled');
+use_ok('Perl::Refactor::UserProfile') or BAIL_OUT(q<Can't continue.>);
+can_ok('Perl::Refactor::UserProfile', 'options_processor');
+can_ok('Perl::Refactor::UserProfile', 'new');
+can_ok('Perl::Refactor::UserProfile', 'enforcer_is_disabled');
+can_ok('Perl::Refactor::UserProfile', 'enforcer_is_enabled');
 
-my $up = Perl::Critic::UserProfile->new();
-isa_ok($up, 'Perl::Critic::UserProfile');
-is($up->VERSION(), $version_string, 'Perl::Critic::UserProfile version');
-
-#-----------------------------------------------------------------------------
-# Test Perl::Critic::EnforcerFactory module interface
-
-use_ok('Perl::Critic::EnforcerFactory') or BAIL_OUT(q<Can't continue.>);
-can_ok('Perl::Critic::EnforcerFactory', 'create_enforcer');
-can_ok('Perl::Critic::EnforcerFactory', 'new');
-can_ok('Perl::Critic::EnforcerFactory', 'site_enforcer_names');
-
-
-my $profile = Perl::Critic::UserProfile->new();
-my $factory = Perl::Critic::EnforcerFactory->new( -profile => $profile );
-isa_ok($factory, 'Perl::Critic::EnforcerFactory');
-is($factory->VERSION(), $version_string, 'Perl::Critic::EnforcerFactory version');
+my $up = Perl::Refactor::UserProfile->new();
+isa_ok($up, 'Perl::Refactor::UserProfile');
+is($up->VERSION(), $version_string, 'Perl::Refactor::UserProfile version');
 
 #-----------------------------------------------------------------------------
-# Test Perl::Critic::Theme module interface
+# Test Perl::Refactor::EnforcerFactory module interface
 
-use_ok('Perl::Critic::Theme') or BAIL_OUT(q<Can't continue.>);
-can_ok('Perl::Critic::Theme', 'new');
-can_ok('Perl::Critic::Theme', 'rule');
-can_ok('Perl::Critic::Theme', 'enforcer_is_thematic');
+use_ok('Perl::Refactor::EnforcerFactory') or BAIL_OUT(q<Can't continue.>);
+can_ok('Perl::Refactor::EnforcerFactory', 'create_enforcer');
+can_ok('Perl::Refactor::EnforcerFactory', 'new');
+can_ok('Perl::Refactor::EnforcerFactory', 'site_enforcer_names');
 
 
-my $theme = Perl::Critic::Theme->new( -rule => 'foo' );
-isa_ok($theme, 'Perl::Critic::Theme');
-is($theme->VERSION(), $version_string, 'Perl::Critic::Theme version');
-
-#-----------------------------------------------------------------------------
-# Test Perl::Critic::EnforcerListing module interface
-
-use_ok('Perl::Critic::EnforcerListing') or BAIL_OUT(q<Can't continue.>);
-can_ok('Perl::Critic::EnforcerListing', 'new');
-can_ok('Perl::Critic::EnforcerListing', 'to_string');
-
-my $listing = Perl::Critic::EnforcerListing->new();
-isa_ok($listing, 'Perl::Critic::EnforcerListing');
-is($listing->VERSION(), $version_string, 'Perl::Critic::EnforcerListing version');
+my $profile = Perl::Refactor::UserProfile->new();
+my $factory = Perl::Refactor::EnforcerFactory->new( -profile => $profile );
+isa_ok($factory, 'Perl::Refactor::EnforcerFactory');
+is($factory->VERSION(), $version_string, 'Perl::Refactor::EnforcerFactory version');
 
 #-----------------------------------------------------------------------------
-# Test Perl::Critic::ProfilePrototype module interface
+# Test Perl::Refactor::Theme module interface
 
-use_ok('Perl::Critic::ProfilePrototype') or BAIL_OUT(q<Can't continue.>);
-can_ok('Perl::Critic::ProfilePrototype', 'new');
-can_ok('Perl::Critic::ProfilePrototype', 'to_string');
+use_ok('Perl::Refactor::Theme') or BAIL_OUT(q<Can't continue.>);
+can_ok('Perl::Refactor::Theme', 'new');
+can_ok('Perl::Refactor::Theme', 'rule');
+can_ok('Perl::Refactor::Theme', 'enforcer_is_thematic');
 
-my $prototype = Perl::Critic::ProfilePrototype->new();
-isa_ok($prototype, 'Perl::Critic::ProfilePrototype');
-is($prototype->VERSION(), $version_string, 'Perl::Critic::ProfilePrototype version');
+
+my $theme = Perl::Refactor::Theme->new( -rule => 'foo' );
+isa_ok($theme, 'Perl::Refactor::Theme');
+is($theme->VERSION(), $version_string, 'Perl::Refactor::Theme version');
 
 #-----------------------------------------------------------------------------
-# Test Perl::Critic::Command module interface
+# Test Perl::Refactor::EnforcerListing module interface
 
-use_ok('Perl::Critic::Command') or BAIL_OUT(q<Can't continue.>);
-can_ok('Perl::Critic::Command', 'run');
+use_ok('Perl::Refactor::EnforcerListing') or BAIL_OUT(q<Can't continue.>);
+can_ok('Perl::Refactor::EnforcerListing', 'new');
+can_ok('Perl::Refactor::EnforcerListing', 'to_string');
+
+my $listing = Perl::Refactor::EnforcerListing->new();
+isa_ok($listing, 'Perl::Refactor::EnforcerListing');
+is($listing->VERSION(), $version_string, 'Perl::Refactor::EnforcerListing version');
+
+#-----------------------------------------------------------------------------
+# Test Perl::Refactor::ProfilePrototype module interface
+
+use_ok('Perl::Refactor::ProfilePrototype') or BAIL_OUT(q<Can't continue.>);
+can_ok('Perl::Refactor::ProfilePrototype', 'new');
+can_ok('Perl::Refactor::ProfilePrototype', 'to_string');
+
+my $prototype = Perl::Refactor::ProfilePrototype->new();
+isa_ok($prototype, 'Perl::Refactor::ProfilePrototype');
+is($prototype->VERSION(), $version_string, 'Perl::Refactor::ProfilePrototype version');
+
+#-----------------------------------------------------------------------------
+# Test Perl::Refactor::Command module interface
+
+use_ok('Perl::Refactor::Command') or BAIL_OUT(q<Can't continue.>);
+can_ok('Perl::Refactor::Command', 'run');
 
 #-----------------------------------------------------------------------------
 # Test module interface for exceptions
 
 {
     foreach my $class (
-        map { "Perl::Critic::Exception::$_" } @concrete_exceptions
+        map { "Perl::Refactor::Exception::$_" } @concrete_exceptions
     ) {
         use_ok($class) or BAIL_OUT(q<Can't continue.>);
         can_ok($class, 'new');
@@ -298,16 +298,16 @@ can_ok('Perl::Critic::Command', 'run');
         can_ok($mod, 'is_safe');
 
         my $enforcer = $mod->new();
-        isa_ok($enforcer, 'Perl::Critic::Enforcer');
+        isa_ok($enforcer, 'Perl::Refactor::Enforcer');
         is($enforcer->VERSION(), $version_string, "Version of $mod");
         ok($enforcer->is_safe(), "CORE enforcer $mod is marked safe");
     }
 }
 
 #-----------------------------------------------------------------------------
-# Test functional interface to Perl::Critic
+# Test functional interface to Perl::Refactor
 
-Perl::Critic->import( qw(critique) );
+Perl::Refactor->import( qw(critique) );
 can_ok('main', 'critique');  #Export test
 
 # TODO: These tests are weak. They just verify that it doesn't

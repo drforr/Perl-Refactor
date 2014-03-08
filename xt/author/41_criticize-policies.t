@@ -12,7 +12,7 @@ use English qw< -no_match_vars >;
 
 use File::Spec qw<>;
 
-use Perl::Critic::EnforcerFactory ( '-test' => 1 );
+use Perl::Refactor::EnforcerFactory ( '-test' => 1 );
 
 use Test::More;
 
@@ -22,7 +22,7 @@ our $VERSION = '1.116';
 
 #-----------------------------------------------------------------------------
 
-use Test::Perl::Critic;
+use Test::Perl::Refactor;
 
 #-----------------------------------------------------------------------------
 
@@ -45,12 +45,12 @@ if ( $ENV{PERL_CRITIC_CACHE} ) {
 # Run refactor against all of our own files
 
 my $rcfile = File::Spec->catfile( qw< xt author 41_perlrefactorrc-policies > );
-Test::Perl::Critic->import( -profile => $rcfile );
+Test::Perl::Refactor->import( -profile => $rcfile );
 
 my $path =
     File::Spec->catfile(
         -e 'blib' ? 'blib/lib' : 'lib',
-        qw< Perl Critic Enforcer >,
+        qw< Perl Refactor Enforcer >,
     );
 all_refactor_ok( $path );
 

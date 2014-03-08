@@ -6,9 +6,9 @@ use warnings;
 
 use English qw<-no_match_vars>;
 
-use Perl::Critic::UserProfile;
-use Perl::Critic::EnforcerFactory (-test => 1);
-use Perl::Critic::ThemeListing;
+use Perl::Refactor::UserProfile;
+use Perl::Refactor::EnforcerFactory (-test => 1);
+use Perl::Refactor::ThemeListing;
 
 use Test::More tests => 1;
 
@@ -18,11 +18,11 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-my $profile = Perl::Critic::UserProfile->new( -profile => 'NONE' );
-my @enforcer_names = Perl::Critic::EnforcerFactory::site_enforcer_names();
-my $factory = Perl::Critic::EnforcerFactory->new( -profile => $profile );
+my $profile = Perl::Refactor::UserProfile->new( -profile => 'NONE' );
+my @enforcer_names = Perl::Refactor::EnforcerFactory::site_enforcer_names();
+my $factory = Perl::Refactor::EnforcerFactory->new( -profile => $profile );
 my @enforcers = map { $factory->create_enforcer( -name => $_ ) } @enforcer_names;
-my $listing = Perl::Critic::ThemeListing->new( -policies => \@enforcers );
+my $listing = Perl::Refactor::ThemeListing->new( -policies => \@enforcers );
 
 my $expected = <<'END_EXPECTED';
 bugs

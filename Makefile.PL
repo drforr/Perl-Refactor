@@ -7,7 +7,7 @@ use lib 'lib';
 
 use ExtUtils::MakeMaker;
 
-use Perl::Critic::BuildUtilities qw<
+use Perl::Refactor::BuildUtilities qw<
     required_module_versions
     build_required_module_versions
     test_wrappers_to_generate
@@ -25,10 +25,10 @@ emit_tar_warning_if_necessary();
 # in the ack distribution for an example.
 
 WriteMakefile(
-    NAME           => 'Perl::Critic',
+    NAME           => 'Perl::Refactor',
     AUTHOR         => 'Jeffrey Thalhammer <jeff@imaginative-software.com>',
-    ABSTRACT_FROM  => 'lib/Perl/Critic.pm',
-    VERSION_FROM   => 'lib/Perl/Critic.pm',
+    ABSTRACT_FROM  => 'lib/Perl/Refactor.pm',
+    VERSION_FROM   => 'lib/Perl/Refactor.pm',
     EXE_FILES      => ['bin/perlrefactor'],
     PL_FILES       => get_PL_files(),
     PREREQ_PM      => {
@@ -44,7 +44,7 @@ WriteMakefile(
     },
     META_MERGE     => {
         resources => {
-            repository => 'https://github.com/Perl-Critic/Perl-Critic',
+            repository => 'https://github.com/Perl-Refactor/Perl-Refactor',
         },
     },
 );

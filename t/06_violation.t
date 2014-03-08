@@ -11,8 +11,8 @@ use File::Spec::Functions qw< catdir catfile >;
 use PPI::Document q< >;
 use PPI::Document::File q< >;
 
-use Perl::Critic::Utils qw< :characters >;
-use Perl::Critic::Violation q< >;
+use Perl::Refactor::Utils qw< :characters >;
+use Perl::Refactor::Violation q< >;
 
 use Test::More tests => 69;
 
@@ -26,33 +26,33 @@ use lib catdir( qw< t 06_violation.d lib > );
 
 use ViolationTest;   # this is solely to test the import() method; has diagnostics
 use ViolationTest2;  # this is solely to test the import() method; no diagnostics
-use Perl::Critic::Enforcer::Test;    # this is to test violation formatting
+use Perl::Refactor::Enforcer::Test;    # this is to test violation formatting
 
 #-----------------------------------------------------------------------------
 #  method tests
 
 {
-    can_ok('Perl::Critic::Violation', 'sort_by_location');
-    can_ok('Perl::Critic::Violation', 'sort_by_severity');
-    can_ok('Perl::Critic::Violation', 'new');
-    can_ok('Perl::Critic::Violation', 'location');
-    can_ok('Perl::Critic::Violation', 'diagnostics');
-    can_ok('Perl::Critic::Violation', 'description');
-    can_ok('Perl::Critic::Violation', 'explanation');
-    can_ok('Perl::Critic::Violation', 'filename');
-    can_ok('Perl::Critic::Violation', 'source');
-    can_ok('Perl::Critic::Violation', 'enforcer');
-    can_ok('Perl::Critic::Violation', 'get_format');
-    can_ok('Perl::Critic::Violation', 'set_format');
-    can_ok('Perl::Critic::Violation', 'to_string');
+    can_ok('Perl::Refactor::Violation', 'sort_by_location');
+    can_ok('Perl::Refactor::Violation', 'sort_by_severity');
+    can_ok('Perl::Refactor::Violation', 'new');
+    can_ok('Perl::Refactor::Violation', 'location');
+    can_ok('Perl::Refactor::Violation', 'diagnostics');
+    can_ok('Perl::Refactor::Violation', 'description');
+    can_ok('Perl::Refactor::Violation', 'explanation');
+    can_ok('Perl::Refactor::Violation', 'filename');
+    can_ok('Perl::Refactor::Violation', 'source');
+    can_ok('Perl::Refactor::Violation', 'enforcer');
+    can_ok('Perl::Refactor::Violation', 'get_format');
+    can_ok('Perl::Refactor::Violation', 'set_format');
+    can_ok('Perl::Refactor::Violation', 'to_string');
 } # end scope block
 
 #-----------------------------------------------------------------------------
 # Constructor Failures:
 {
-    eval { Perl::Critic::Violation->new('desc', 'expl'); };
+    eval { Perl::Refactor::Violation->new('desc', 'expl'); };
     ok($EVAL_ERROR, 'new, wrong number of args');
-    eval { Perl::Critic::Violation->new('desc', 'expl', {}, 'severity'); };
+    eval { Perl::Refactor::Violation->new('desc', 'expl', {}, 'severity'); };
     ok($EVAL_ERROR, 'new, bad arg');
 } # end scope block
 
@@ -64,7 +64,7 @@ use Perl::Critic::Enforcer::Test;    # this is to test violation formatting
     my $code = 'Hello World;';
     my $document = PPI::Document->new(\$code);
     my $no_diagnostics_msg = qr/ \s* No [ ] diagnostics [ ] available \s* /xms;
-    my $viol = Perl::Critic::Violation->new( 'Foo', 'Bar', $document, 99, );
+    my $viol = Perl::Refactor::Violation->new( 'Foo', 'Bar', $document, 99, );
 
     is(   $viol->description(),          'Foo',           'description');
     is(   $viol->explanation(),          'Bar',           'explanation');
@@ -79,20 +79,20 @@ use Perl::Critic::Enforcer::Test;    # this is to test violation formatting
     like( $viol->diagnostics(), qr/ \A $no_diagnostics_msg \z /xms, 'diagnostics');
 
     {
-        my $old_format = Perl::Critic::Violation::get_format();
-        Perl::Critic::Violation::set_format('%l,%c,%m,%e,%p,%d,%r');
+        my $old_format = Perl::Refactor::Violation::get_format();
+        Perl::Refactor::Violation::set_format('%l,%c,%m,%e,%p,%d,%r');
         my $expect = qr/\A 1,1,Foo,Bar,$pkg,$no_diagnostics_msg,\Q$code\E \z/xms;
 
         like($viol->to_string(), $expect, 'to_string');
         like("$viol",            $expect, 'stringify');
 
-        Perl::Critic::Violation::set_format($old_format);
+        Perl::Refactor::Violation::set_format($old_format);
     }
 
-    $viol = Perl::Critic::Violation->new('Foo', [28], $document, 99);
+    $viol = Perl::Refactor::Violation->new('Foo', [28], $document, 99);
     is($viol->explanation(), 'See page 28 of PBP', 'explanation');
 
-    $viol = Perl::Critic::Violation->new('Foo', [28,30], $document, 99);
+    $viol = Perl::Refactor::Violation->new('Foo', [28,30], $document, 99);
     is($viol->explanation(), 'See pages 28,30 of PBP', 'explanation');
 } # end scope block
 
@@ -105,7 +105,7 @@ use Perl::Critic::Enforcer::Test;    # this is to test violation formatting
     my $word = $words->[0];
 
     my $no_diagnostics_msg = qr/ \s* No [ ] diagnostics [ ] available \s* /xms;
-    my $viol = Perl::Critic::Violation->new( 'Foo', 'Bar', $word, 99, );
+    my $viol = Perl::Refactor::Violation->new( 'Foo', 'Bar', $word, 99, );
 
     # Make bye-bye with the document.  This will end up stripping the guts out
     # of the PPI::Token::Word instance, so it is useless to us after the
@@ -155,16 +155,16 @@ END_PERL
     my $document = PPI::Document->new(\$code);
     my @children   = $document->schildren();
     my @violations =
-        map { Perl::Critic::Violation->new($EMPTY, $EMPTY, $_, 0) }
+        map { Perl::Refactor::Violation->new($EMPTY, $EMPTY, $_, 0) }
             $document, @children;
-    my @sorted = Perl::Critic::Violation->sort_by_location( reverse @violations);
+    my @sorted = Perl::Refactor::Violation->sort_by_location( reverse @violations);
     is_deeply(\@sorted, \@violations, 'sort_by_location');
 
     my @severities = (5, 3, 4, 0, 2, 1);
     @violations =
-        map { Perl::Critic::Violation->new($EMPTY, $EMPTY, $document, $_) }
+        map { Perl::Refactor::Violation->new($EMPTY, $EMPTY, $document, $_) }
         @severities;
-    @sorted = Perl::Critic::Violation->sort_by_severity( @violations );
+    @sorted = Perl::Refactor::Violation->sort_by_severity( @violations );
     is_deeply( [map {$_->severity()} @sorted], [sort @severities], 'sort_by_severity');
 }
 
@@ -178,16 +178,16 @@ END_PERL
        'desc', 'expl',
        1, # severity
        'print;', # source near token[0]
-       'Perl::Critic::Enforcer::Test', 'Test', # long, short
+       'Perl::Refactor::Enforcer::Test', 'Test', # long, short
        '    diagnostic',
     );
 
-    Perl::Critic::Violation::set_format($format);
-    is(Perl::Critic::Violation::get_format(), $format, 'set/get_format');
+    Perl::Refactor::Violation::set_format($format);
+    is(Perl::Refactor::Violation::get_format(), $format, 'set/get_format');
     my $code = "print;\n";
     my $document = PPI::Document->new(\$code);
     $document->index_locations();
-    my $p = Perl::Critic::Enforcer::Test->new();
+    my $p = Perl::Refactor::Enforcer::Test->new();
     my @t = $document->tokens();
     my $v = $p->violates($t[0]);
     ok($v, 'got a violation');
@@ -200,8 +200,8 @@ END_PERL
 
 {
     # Alias subroutines, because I'm lazy
-    my $get_format = *Perl::Critic::Violation::get_format;
-    my $set_format = *Perl::Critic::Violation::set_format;
+    my $get_format = *Perl::Refactor::Violation::get_format;
+    my $set_format = *Perl::Refactor::Violation::set_format;
 
     my $fmt_literal = 'Found %m in file %f on line %l\n';  ## no refactor (RequireInterpolationOfMetachars)
     my $fmt_interp  = "Found %m in file %f on line %l\n"; #Same, but double-quotes
@@ -225,7 +225,7 @@ END_PERL
 {
     my @given = ( qw(foo bar. .baz.. nuts!), [], {} );
     my @want  = ( qw(foo bar  .baz   nuts!), [], {} );
-    my @have  = Perl::Critic::Violation::_chomp_periods(@given);
+    my @have  = Perl::Refactor::Violation::_chomp_periods(@given);
 
     is_deeply(\@have, \@want, 'Chomping periods');
 } # end scope block
@@ -267,10 +267,10 @@ END_PERL
 sub _test_file_and_line_formats {
     my ($word, $expected) = @_;
 
-    my $violation = Perl::Critic::Violation->new($EMPTY, $EMPTY, $word, 0);
+    my $violation = Perl::Refactor::Violation->new($EMPTY, $EMPTY, $word, 0);
 
     foreach my $format ( sort keys %{$expected} ) {
-        Perl::Critic::Violation::set_format($format);
+        Perl::Refactor::Violation::set_format($format);
         is(
             $violation->to_string(),
             $expected->{$format},

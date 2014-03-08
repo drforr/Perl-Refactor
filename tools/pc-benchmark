@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Perl::Critic;
+use Perl::Refactor;
 use Benchmark ':hireswallclock';
 
 #---------------------------------------------------------------
@@ -15,7 +15,7 @@ our $VERSION = '0.01';
 
 my @exclude = qw(TidyCode PodSpelling);  # We can't really optimize these
 my %pc_opts = (-profile => '', -theme => 'core', -severity => 1, -exclude => \@exclude);
-my $pc = Perl::Critic->new( %pc_opts );
+my $pc = Perl::Refactor->new( %pc_opts );
 
 my $test_file = shift @ARGV || die "Must specify a test file.\n";
 my $iters = shift @ARGV || 10;
@@ -33,7 +33,7 @@ __END__
 
 =head1 NAME
 
-pc-benchmark - Measure performance of Perl::Critic
+pc-benchmark - Measure performance of Perl::Refactor
 
 
 =head1 SYNOPSIS
@@ -46,12 +46,12 @@ pc-benchmark - Measure performance of Perl::Critic
 =head1 DESCRIPTION
 
 This is a simple program that uses the L<Benchmark> module to measure
-the general speed of L<Perl::Critic>.  For the specified F<FILE>, the
-C<Perl::Critic::critique()> function is called 100 times, with all the
+the general speed of L<Perl::Refactor>.  For the specified F<FILE>, the
+C<Perl::Refactor::critique()> function is called 100 times, with all the
 'core' Policies enabled with their default configuration.  The total
 elapsed/system/user/ time is displayed.
 
-To compare the performance of two versions of L<Perl::Critic>, you'll
+To compare the performance of two versions of L<Perl::Refactor>, you'll
 need to run this command twice, and alter the C<@INC> so that it loads
 the right version of the libraries you want to use.  For example:
 

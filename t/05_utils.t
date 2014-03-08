@@ -14,9 +14,9 @@ use File::Temp qw< >;
 use PPI::Document qw< >;
 use PPI::Document::File qw< >;
 
-use Perl::Critic::EnforcerFactory;
-use Perl::Critic::TestUtils qw(bundled_enforcer_names);
-use Perl::Critic::Utils;
+use Perl::Refactor::EnforcerFactory;
+use Perl::Refactor::TestUtils qw(bundled_enforcer_names);
+use Perl::Refactor::Utils;
 
 use Test::More tests => 124;
 
@@ -69,7 +69,7 @@ sub test_export {
 
     is($SPACE, q< >, 'character constants');
     is($SEVERITY_LOWEST, 1, 'severity constants');
-    is($POLICY_NAMESPACE, 'Perl::Critic::Enforcer', 'Enforcer namespace');
+    is($POLICY_NAMESPACE, 'Perl::Refactor::Enforcer', 'Enforcer namespace');
 
     return;
 }
@@ -80,7 +80,7 @@ sub count_matches { my $val = shift; return defined $val ? scalar @{$val} : 0; }
 sub make_doc {
     my $code = shift;
     return
-        Perl::Critic::Document->new('-source' => ref $code ? $code : \$code);
+        Perl::Refactor::Document->new('-source' => ref $code ? $code : \$code);
 }
 
 sub test_find_keywords {
@@ -293,11 +293,11 @@ sub test_interpolate {
 
 sub test_is_perl_and_shebang_line {
     for ( qw(foo.t foo.pm foo.pl foo.PL) ) {
-        ok( Perl::Critic::Utils::_is_perl($_), qq{Is perl: '$_'} );
+        ok( Perl::Refactor::Utils::_is_perl($_), qq{Is perl: '$_'} );
     }
 
     for ( qw(foo.doc foo.txt foo.conf foo) ) {
-        ok( ! Perl::Critic::Utils::_is_perl($_), qq{Is not perl: '$_'} );
+        ok( ! Perl::Refactor::Utils::_is_perl($_), qq{Is not perl: '$_'} );
     }
 
     my @perl_shebangs = (
@@ -311,17 +311,17 @@ sub test_is_perl_and_shebang_line {
 
     for my $shebang (@perl_shebangs) {
         my $temp_file =
-            File::Temp->new( TEMPLATE => 'Perl-Critic.05_utils.t.XXXXX' );
+            File::Temp->new( TEMPLATE => 'Perl-Refactor.05_utils.t.XXXXX' );
         my $filename = $temp_file->filename();
         print {$temp_file} "$shebang\n";
         # Must close to flush buffer
         close $temp_file or confess "Couldn't close $temp_file: $OS_ERROR";
 
-        ok( Perl::Critic::Utils::_is_perl($filename), qq{Is perl: '$shebang'} );
+        ok( Perl::Refactor::Utils::_is_perl($filename), qq{Is perl: '$shebang'} );
 
         my $document = PPI::Document->new(\$shebang);
         is(
-            Perl::Critic::Utils::shebang_line($document),
+            Perl::Refactor::Utils::shebang_line($document),
             $shebang,
             qq<shebang_line($shebang)>,
         );
@@ -335,17 +335,17 @@ sub test_is_perl_and_shebang_line {
 
     for my $shebang (@not_perl_shebangs) {
         my $temp_file =
-            File::Temp->new( TEMPLATE => 'Perl-Critic.05_utils.t.XXXXX' );
+            File::Temp->new( TEMPLATE => 'Perl-Refactor.05_utils.t.XXXXX' );
         my $filename = $temp_file->filename();
         print {$temp_file} "$shebang\n";
         # Must close to flush buffer
         close $temp_file or confess "Couldn't close $temp_file: $OS_ERROR";
 
-        ok( ! Perl::Critic::Utils::_is_perl($filename), qq{Is not perl: '$shebang'} );
+        ok( ! Perl::Refactor::Utils::_is_perl($filename), qq{Is not perl: '$shebang'} );
 
         my $document = PPI::Document->new(\$shebang);
         is(
-            Perl::Critic::Utils::shebang_line($document),
+            Perl::Refactor::Utils::shebang_line($document),
             ($shebang eq 'shazbot' ? undef : $shebang),
             qq<shebang_line($shebang)>,
         );
@@ -358,11 +358,11 @@ sub test_is_perl_and_shebang_line {
 
 sub test_is_backup {
     for ( qw( foo.swp foo.bak foo~ ), '#foo#' ) {
-        ok( Perl::Critic::Utils::_is_backup($_), qq{Is backup: '$_'} );
+        ok( Perl::Refactor::Utils::_is_backup($_), qq{Is backup: '$_'} );
     }
 
     for ( qw( swp.pm Bak ~foo ) ) {
-        ok( ! Perl::Critic::Utils::_is_backup($_), qq{Is not backup: '$_'} );
+        ok( ! Perl::Refactor::Utils::_is_backup($_), qq{Is not backup: '$_'} );
     }
 
     return;
@@ -437,10 +437,10 @@ sub test_is_function_call {
 #-----------------------------------------------------------------------------
 
 sub test_find_bundled_policies {
-    Perl::Critic::TestUtils::block_perlrefactorrc();
+    Perl::Refactor::TestUtils::block_perlrefactorrc();
 
     my @native_policies = bundled_enforcer_names();
-    my $enforcer_dir = File::Spec->catfile( qw(lib Perl Critic Enforcer) );
+    my $enforcer_dir = File::Spec->catfile( qw(lib Perl Refactor Enforcer) );
     my @found_policies  = all_perl_files( $enforcer_dir );
     is( scalar @found_policies, scalar @native_policies, 'Find all perl code');
 

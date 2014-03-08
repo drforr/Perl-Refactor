@@ -8,10 +8,10 @@ use English qw(-no_match_vars);
 
 use List::MoreUtils qw(any all none);
 
-use Perl::Critic::TestUtils;
-use Perl::Critic::EnforcerFactory;
-use Perl::Critic::UserProfile;
-use Perl::Critic::Theme;
+use Perl::Refactor::TestUtils;
+use Perl::Refactor::EnforcerFactory;
+use Perl::Refactor::UserProfile;
+use Perl::Refactor::Theme;
 
 use Test::More tests => 66;
 
@@ -35,7 +35,7 @@ ILLEGAL_RULES: {
     );
 
     for my $invalid ( @invalid_rules ) {
-        eval { Perl::Critic::Theme::->new( -rule => $invalid ) };
+        eval { Perl::Refactor::Theme::->new( -rule => $invalid ) };
         like(
             $EVAL_ERROR,
             qr/invalid [ ] character/xms,
@@ -70,7 +70,7 @@ VALID_RULES: {
     );
 
     for my $valid ( @valid_rules ) {
-        my $theme = Perl::Critic::Theme->new( -rule => $valid );
+        my $theme = Perl::Refactor::Theme->new( -rule => $valid );
         ok( $theme, qq{Valid expression: "$valid"} );
     }
 }
@@ -99,7 +99,7 @@ TRANSLATIONS: {
     );
 
     while ( my ($raw, $expected) = each %expressions ) {
-        my $cooked = Perl::Critic::Theme::cook_rule( $raw );
+        my $cooked = Perl::Refactor::Theme::cook_rule( $raw );
         is( $cooked, $expected, qq{Theme cooking: '$raw' -> '$cooked'});
     }
 }
@@ -107,18 +107,18 @@ TRANSLATIONS: {
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlrefactorrc();
+Perl::Refactor::TestUtils::block_perlrefactorrc();
 
 {
-    my $profile = Perl::Critic::UserProfile->new( -profile => q{} );
-    my $factory = Perl::Critic::EnforcerFactory->new( -profile => $profile );
-    my @enforcer_names = Perl::Critic::EnforcerFactory::site_enforcer_names();
+    my $profile = Perl::Refactor::UserProfile->new( -profile => q{} );
+    my $factory = Perl::Refactor::EnforcerFactory->new( -profile => $profile );
+    my @enforcer_names = Perl::Refactor::EnforcerFactory::site_enforcer_names();
     my @pols = map { $factory->create_enforcer( -name => $_ ) } @enforcer_names;
 
     #--------------
 
     my $rule = 'cosmetic';
-    my $theme = Perl::Critic::Theme->new( -rule => $rule );
+    my $theme = Perl::Refactor::Theme->new( -rule => $rule );
     my @members = grep { $theme->enforcer_is_thematic( -enforcer => $_) }  @pols;
     ok(
         ( all { has_theme( $_, 'cosmetic' ) } @members ),
@@ -128,7 +128,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     #--------------
 
     $rule = 'cosmetic - pbp';
-    $theme = Perl::Critic::Theme->new( -rule => $rule );
+    $theme = Perl::Refactor::Theme->new( -rule => $rule );
     @members = grep { $theme->enforcer_is_thematic( -enforcer => $_) }  @pols;
     ok(
         ( all  { has_theme( $_, 'cosmetic' ) } @members ),
@@ -140,7 +140,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     );
 
     $rule = 'cosmetic and not pbp';
-    $theme = Perl::Critic::Theme->new( -rule => $rule );
+    $theme = Perl::Refactor::Theme->new( -rule => $rule );
     @members = grep { $theme->enforcer_is_thematic( -enforcer => $_) }  @pols;
     ok(
         ( all  { has_theme( $_, 'cosmetic' ) } @members ),
@@ -152,7 +152,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     );
 
     $rule = 'cosmetic && ! pbp';
-    $theme = Perl::Critic::Theme->new( -rule => $rule );
+    $theme = Perl::Refactor::Theme->new( -rule => $rule );
     @members = grep { $theme->enforcer_is_thematic( -enforcer => $_) }  @pols;
     ok(
         ( all  { has_theme( $_, 'cosmetic' ) } @members ),
@@ -166,7 +166,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     #--------------
 
     $rule = 'cosmetic + pbp';
-    $theme = Perl::Critic::Theme->new( -rule => $rule );
+    $theme = Perl::Refactor::Theme->new( -rule => $rule );
     @members = grep { $theme->enforcer_is_thematic( -enforcer => $_) } @pols;
     ok(
         ( all  { has_theme($_, 'cosmetic') || has_theme($_, 'pbp') } @members ),
@@ -174,7 +174,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     );
 
     $rule = 'cosmetic || pbp';
-    $theme = Perl::Critic::Theme->new( -rule => $rule );
+    $theme = Perl::Refactor::Theme->new( -rule => $rule );
     @members = grep { $theme->enforcer_is_thematic( -enforcer => $_) } @pols;
     ok(
         ( all  { has_theme($_, 'cosmetic') || has_theme($_, 'pbp') } @members ),
@@ -182,7 +182,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     );
 
     $rule = 'cosmetic or pbp';
-    $theme = Perl::Critic::Theme->new( -rule => $rule );
+    $theme = Perl::Refactor::Theme->new( -rule => $rule );
     @members = grep { $theme->enforcer_is_thematic( -enforcer => $_) } @pols;
     ok(
         ( all  { has_theme($_, 'cosmetic') || has_theme($_, 'pbp') } @members),
@@ -192,7 +192,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     #--------------
 
     $rule = 'bugs * pbp';
-    $theme = Perl::Critic::Theme->new( -rule => $rule );
+    $theme = Perl::Refactor::Theme->new( -rule => $rule );
     @members = grep { $theme->enforcer_is_thematic( -enforcer => $_) } @pols;
     ok(
         ( all  { has_theme($_, 'bugs')  } @members ),
@@ -204,7 +204,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     );
 
     $rule = 'bugs and pbp';
-    $theme = Perl::Critic::Theme->new( -rule => $rule );
+    $theme = Perl::Refactor::Theme->new( -rule => $rule );
     @members = grep { $theme->enforcer_is_thematic( -enforcer => $_) } @pols;
     ok(
         ( all  { has_theme($_, 'bugs')  } @members ),
@@ -216,7 +216,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     );
 
     $rule = 'bugs && pbp';
-    $theme = Perl::Critic::Theme->new( -rule => $rule );
+    $theme = Perl::Refactor::Theme->new( -rule => $rule );
     @members = grep { $theme->enforcer_is_thematic( -enforcer => $_) } @pols;
     ok(
         ( all  { has_theme($_, 'bugs')  } @members ),
@@ -230,7 +230,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     #-------------
 
     $rule = 'pbp - (danger * security)';
-    $theme = Perl::Critic::Theme->new( -rule => $rule );
+    $theme = Perl::Refactor::Theme->new( -rule => $rule );
     @members = grep { $theme->enforcer_is_thematic( -enforcer => $_) } @pols;
     ok(
         ( all  { has_theme($_, 'pbp') } @members ),
@@ -242,7 +242,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     );
 
     $rule = 'pbp and ! (danger and security)';
-    $theme = Perl::Critic::Theme->new( -rule => $rule );
+    $theme = Perl::Refactor::Theme->new( -rule => $rule );
     @members = grep { $theme->enforcer_is_thematic( -enforcer => $_) } @pols;
     ok(
         ( all  { has_theme($_, 'pbp') } @members ),
@@ -254,7 +254,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     );
 
     $rule = 'pbp && not (danger && security)';
-    $theme = Perl::Critic::Theme->new( -rule => $rule );
+    $theme = Perl::Refactor::Theme->new( -rule => $rule );
     @members = grep { $theme->enforcer_is_thematic( -enforcer => $_) } @pols;
     ok(
         ( all  { has_theme($_, 'pbp') } @members ),
@@ -268,22 +268,22 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     #--------------
 
     $rule = 'bogus';
-    $theme =  Perl::Critic::Theme->new( -rule => $rule );
+    $theme =  Perl::Refactor::Theme->new( -rule => $rule );
     @members = grep { $theme->enforcer_is_thematic( -enforcer => $_) } @pols;
     is( scalar @members, 0, 'bogus theme' );
 
     $rule = 'bogus - pbp';
-    $theme =  Perl::Critic::Theme->new( -rule => $rule );
+    $theme =  Perl::Refactor::Theme->new( -rule => $rule );
     @members = grep { $theme->enforcer_is_thematic( -enforcer => $_) } @pols;
     is( scalar @members, 0, 'bogus theme' );
 
     $rule = q{};
-    $theme =  Perl::Critic::Theme->new( -rule => $rule );
+    $theme =  Perl::Refactor::Theme->new( -rule => $rule );
     @members = grep { $theme->enforcer_is_thematic( -enforcer => $_) } @pols;
     is( scalar @members, scalar @pols, 'empty theme' );
 
     $rule = q{};
-    $theme =  Perl::Critic::Theme->new( -rule => $rule );
+    $theme =  Perl::Refactor::Theme->new( -rule => $rule );
     @members = grep { $theme->enforcer_is_thematic( -enforcer => $_) } @pols;
     is( scalar @members, scalar @pols, 'undef theme' );
 
@@ -291,7 +291,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     # Exceptions
 
     $rule = 'cosmetic *(';
-    $theme =  Perl::Critic::Theme->new( -rule => $rule );
+    $theme =  Perl::Refactor::Theme->new( -rule => $rule );
     eval{ $theme->enforcer_is_thematic( -enforcer => $pols[0] ) };
     like(
         $EVAL_ERROR,

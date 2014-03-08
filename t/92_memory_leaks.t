@@ -9,10 +9,10 @@ use Carp qw< confess >;
 
 use PPI::Document;
 
-use Perl::Critic::EnforcerFactory -test => 1;
-use Perl::Critic::Document;
-use Perl::Critic;
-use Perl::Critic::TestUtils qw();
+use Perl::Refactor::EnforcerFactory -test => 1;
+use Perl::Refactor::Document;
+use Perl::Refactor;
+use Perl::Refactor::TestUtils qw();
 
 use Test::More; #plan set below
 
@@ -22,7 +22,7 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlrefactorrc();
+Perl::Refactor::TestUtils::block_perlrefactorrc();
 
 eval 'use Test::Memory::Cycle; 1'
     or plan skip_all => 'Test::Memory::Cycle requried to test memory leaks';
@@ -30,8 +30,8 @@ eval 'use Test::Memory::Cycle; 1'
 #-----------------------------------------------------------------------------
 {
 
-    # We have to create and test Perl::Critic::Document for memory leaks
-    # separately because it is not a persistent attribute of the Perl::Critic
+    # We have to create and test Perl::Refactor::Document for memory leaks
+    # separately because it is not a persistent attribute of the Perl::Refactor
     # object.  The current API requires us to create the P::C::Document from
     # an instance of an existing PPI::Document.  In the future, I hope to make
     # that interface a little more opaque.  But this works for now.
@@ -44,12 +44,12 @@ eval 'use Test::Memory::Cycle; 1'
 
     my $code    = q<print foo(); split /this/, $that;>; ## no refactor (RequireInterpolationOfMetachars)
     my $ppi_doc    = PPI::Document->new( \$code );
-    my $pc_doc     = Perl::Critic::Document->new( '-source' => $ppi_doc );
-    my $refactor   = Perl::Critic->new( -severity => 1 );
+    my $pc_doc     = Perl::Refactor::Document->new( '-source' => $ppi_doc );
+    my $refactor   = Perl::Refactor->new( -severity => 1 );
     my @violations = $refactor->critique( $pc_doc );
     confess 'No violations were created' if not @violations;
 
-    # One test for each violation, plus one each for Critic and Document.
+    # One test for each violation, plus one each for Refactor and Document.
     plan( tests => scalar @violations + 2 );
 
     memory_cycle_ok( $pc_doc );

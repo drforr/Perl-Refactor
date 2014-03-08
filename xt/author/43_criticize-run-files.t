@@ -18,7 +18,7 @@ our $VERSION = '1.116';
 
 #-----------------------------------------------------------------------------
 
-use Test::Perl::Critic;
+use Test::Perl::Refactor;
 
 #-----------------------------------------------------------------------------
 
@@ -41,12 +41,12 @@ if ( $ENV{PERL_CRITIC_CACHE} ) {
 # Run refactor against all of our own files
 
 my $rcfile = File::Spec->catfile( qw< xt author 43_perlrefactorrc-run-files > );
-Test::Perl::Critic->import( -profile => $rcfile );
+Test::Perl::Refactor->import( -profile => $rcfile );
 
 {
     # About to commit evil, but it's against ourselves.
     no warnings qw< redefine >;
-    local *Perl::Critic::Utils::_is_perl = sub { 1 }; ## no refactor (Variables::ProtectPrivateVars)
+    local *Perl::Refactor::Utils::_is_perl = sub { 1 }; ## no refactor (Variables::ProtectPrivateVars)
 
     all_refactor_ok( glob 't/*/*.run' );
 }

@@ -14,8 +14,8 @@ use DBI qw{ :sql_types };
 use File::Spec qw{ };
 use Perl6::Say;
 
-use Perl::Critic::Utils qw{ all_perl_files enforcer_short_name $EMPTY };
-use Perl::Critic;
+use Perl::Refactor::Utils qw{ all_perl_files enforcer_short_name $EMPTY };
+use Perl::Refactor;
 
 
 if ( ! @ARGV ) {
@@ -66,7 +66,7 @@ sub load {
 
     # Force reporting level to be really strict, just so that the database
     # has everything.
-    my $refactor = Perl::Critic->new( -severity => 1 );
+    my $refactor = Perl::Refactor->new( -severity => 1 );
 
     foreach my $file ( @{$files} ) {
         my $relative_path;
@@ -228,14 +228,14 @@ Scan a body of code and, rather than emit the results in a textual
 format, put them into a database so that analyses can be made.
 
 This example doesn't put anything into the database that isn't
-available from L<Perl::Critic::Violation|Perl::Critic::Violation> in
+available from L<Perl::Refactor::Violation|Perl::Refactor::Violation> in
 order to keep the code easier to understand.  In a full application of
 the idea presented here, one might want to include the current date
 and a distribution name in the database so that progress on cleaning
 up a code corpus can be tracked.
 
 Note the explanation attribute of
-L<Perl::Critic::Violation|Perl::Critic::Violation> is constant for
+L<Perl::Refactor::Violation|Perl::Refactor::Violation> is constant for
 most policies, but some of them do provide more specific diagnostics
 of the code in question.
 
@@ -267,7 +267,7 @@ None.
 
 =head1 DEPENDENCIES
 
-L<Perl::Critic|Perl::Critic>
+L<Perl::Refactor|Perl::Refactor>
 L<DBD::SQLite|DBD::SQLite>
 L<Perl6::Say|Perl6::Say>
 L<Readonly|Readonly>

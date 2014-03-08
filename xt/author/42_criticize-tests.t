@@ -10,12 +10,12 @@ use English qw( -no_match_vars );
 
 use File::Spec qw();
 
-use Perl::Critic::Utils qw{ :characters };
-use Perl::Critic::TestUtils qw{ starting_points_including_examples };
+use Perl::Refactor::Utils qw{ :characters };
+use Perl::Refactor::TestUtils qw{ starting_points_including_examples };
 
 # Note: "use EnforcerFactory" *must* appear after "use TestUtils" for the
 # -extra-test-policies option to work.
-use Perl::Critic::EnforcerFactory (
+use Perl::Refactor::EnforcerFactory (
     '-test' => 1,
     '-extra-test-policies' => [ qw{ ErrorHandling::RequireUseOfExceptions
                                     Miscellanea::RequireRcsKeywords } ],
@@ -29,12 +29,12 @@ our $VERSION = '1.116';
 
 #-----------------------------------------------------------------------------
 
-use Test::Perl::Critic;
+use Test::Perl::Refactor;
 
 #-----------------------------------------------------------------------------
 
 # Fall over if P::C::More isn't installed.
-use Perl::Critic::Enforcer::ErrorHandling::RequireUseOfExceptions;
+use Perl::Refactor::Enforcer::ErrorHandling::RequireUseOfExceptions;
 
 #-----------------------------------------------------------------------------
 # Set up PPI caching for speed (used primarily during development)
@@ -56,7 +56,7 @@ if ( $ENV{PERL_CRITIC_CACHE} ) {
 # Run refactor against all of our own files
 
 my $rcfile = File::Spec->catfile( 'xt', 'author', '42_perlrefactorrc-tests' );
-Test::Perl::Critic->import( -profile => $rcfile );
+Test::Perl::Refactor->import( -profile => $rcfile );
 
 all_refactor_ok(
     glob ('t/*.t'),

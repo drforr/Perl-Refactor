@@ -1,4 +1,4 @@
-Revision history for Perl module Perl::Critic
+Revision history for Perl module Perl::Refactor
 
 1.121 2013-11-02
 
@@ -6,8 +6,8 @@ Revision history for Perl module Perl::Critic
     * Added new themes based on CERT guidelines. Thanks Kirk Kimmel.
 
     [Administrative Changes]
-    * The source code repository for Perl-Critic has been moved to GitHub
-      at http://github.com/Perl-Critc/Perl-Critic.  All ticekts from the
+    * The source code repository for Perl-Refactor has been moved to GitHub
+      at http://github.com/Perl-Refactor/Perl-Refactor.  All ticekts from the
       RT queue have also been moved there.  Please use GitHub for submitting
       any new bugs or corresponding about existing ones.  Huge thanks to
       Tim Bunce, Andreas Marienborg, fREW Schmidt, and Graham Knop for

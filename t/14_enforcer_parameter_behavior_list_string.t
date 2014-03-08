@@ -6,8 +6,8 @@ use warnings;
 
 use English qw(-no_match_vars);
 
-use Perl::Critic::Enforcer;
-use Perl::Critic::EnforcerParameter;
+use Perl::Refactor::Enforcer;
+use Perl::Refactor::EnforcerParameter;
 
 use Test::More tests => 28;
 
@@ -31,20 +31,20 @@ $specification =
     };
 
 
-$parameter = Perl::Critic::EnforcerParameter->new($specification);
-$enforcer = Perl::Critic::Enforcer->new();
+$parameter = Perl::Refactor::EnforcerParameter->new($specification);
+$enforcer = Perl::Refactor::Enforcer->new();
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 $values = $enforcer->{_test};
 is( scalar( keys %{$values} ), 0, q{no value, no default} );
 
-$enforcer = Perl::Critic::Enforcer->new();
+$enforcer = Perl::Refactor::Enforcer->new();
 $config{test} = 'koyaanisqatsi';
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 $values = $enforcer->{_test};
 is( scalar( keys %{$values} ), 1, q{'koyaanisqatsi', no default} );
 ok( $values->{koyaanisqatsi}, q{'koyaanisqatsi', no default} );
 
-$enforcer = Perl::Critic::Enforcer->new();
+$enforcer = Perl::Refactor::Enforcer->new();
 $config{test} = 'powaqqatsi naqoyqatsi';
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 $values = $enforcer->{_test};
@@ -56,22 +56,22 @@ ok( $values->{naqoyqatsi}, q{'powaqqatsi naqoyqatsi', no default} );
 $specification->{default_string} = 'baraka chronos';
 delete $config{test};
 
-$parameter = Perl::Critic::EnforcerParameter->new($specification);
-$enforcer = Perl::Critic::Enforcer->new();
+$parameter = Perl::Refactor::EnforcerParameter->new($specification);
+$enforcer = Perl::Refactor::Enforcer->new();
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 $values = $enforcer->{_test};
 is( scalar( keys %{$values} ), 2, q{no value, default 'baraka chronos'} );
 ok( $values->{baraka}, q{no value, default 'baraka chronos'} );
 ok( $values->{chronos}, q{no value, default 'baraka chronos'} );
 
-$enforcer = Perl::Critic::Enforcer->new();
+$enforcer = Perl::Refactor::Enforcer->new();
 $config{test} = 'akira';
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 $values = $enforcer->{_test};
 is( scalar( keys %{$values} ), 1, q{'akira', default 'baraka chronos'} );
 ok( $values->{akira}, q{'akira', default 'baraka chronos'} );
 
-$enforcer = Perl::Critic::Enforcer->new();
+$enforcer = Perl::Refactor::Enforcer->new();
 $config{test} = 'downfall murderball';
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 $values = $enforcer->{_test};
@@ -85,8 +85,8 @@ $specification->{list_always_present_values} =
     [ 'leaether strip', 'front line assembly' ];
 delete $config{test};
 
-$parameter = Perl::Critic::EnforcerParameter->new($specification);
-$enforcer = Perl::Critic::Enforcer->new();
+$parameter = Perl::Refactor::EnforcerParameter->new($specification);
+$enforcer = Perl::Refactor::Enforcer->new();
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 $values = $enforcer->{_test};
 is(
@@ -111,7 +111,7 @@ ok(
     q{no value, default 'chainsuck snog', always 'leaether strip' & 'front line assembly'}
 );
 
-$enforcer = Perl::Critic::Enforcer->new();
+$enforcer = Perl::Refactor::Enforcer->new();
 $config{test} = 'pig';
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 $values = $enforcer->{_test};
@@ -133,7 +133,7 @@ ok(
     q{'pig', default 'chainsuck snog', always 'leaether strip' & 'front line assembly'}
 );
 
-$enforcer = Perl::Critic::Enforcer->new();
+$enforcer = Perl::Refactor::Enforcer->new();
 $config{test} = 'microdisney foetus';
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 $values = $enforcer->{_test};

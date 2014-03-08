@@ -4,8 +4,8 @@ use 5.006001;
 use strict;
 use warnings;
 
-use Perl::Critic::Utils qw( :characters );
-use Perl::Critic::TestUtils qw( pcritique );
+use Perl::Refactor::Utils qw( :characters );
+use Perl::Refactor::TestUtils qw( pcritique );
 
 use Test::More tests => 3;
 
@@ -15,7 +15,7 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlrefactorrc();
+Perl::Refactor::TestUtils::block_perlrefactorrc();
 
 # This specific enforcer is being tested without 20_policies.t because the .run file
 # would have to contain invisible characters.

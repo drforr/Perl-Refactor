@@ -4,8 +4,8 @@ use 5.006001;
 use strict;
 use warnings;
 
-use Perl::Critic::TestUtils qw< pcritique >;
-use Perl::Critic::Utils     qw< $EMPTY >;
+use Perl::Refactor::TestUtils qw< pcritique >;
+use Perl::Refactor::Utils     qw< $EMPTY >;
 
 use Test::More tests => 1;
 
@@ -15,7 +15,7 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlrefactorrc();
+Perl::Refactor::TestUtils::block_perlrefactorrc();
 
 # This is in addition to the regular .run file.
 

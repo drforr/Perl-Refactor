@@ -6,7 +6,7 @@ use 5.006001;
 use strict;
 use warnings;
 
-use Perl::Critic::Command qw< run >;
+use Perl::Refactor::Command qw< run >;
 
 #-----------------------------------------------------------------------------
 
@@ -68,7 +68,7 @@ C<perlrefactor> - Command-line interface to critique Perl source.
 =head1 DESCRIPTION
 
 C<perlrefactor> is a Perl source code analyzer.  It is the executable
-front-end to the L<Perl::Critic|Perl::Critic> engine, which attempts
+front-end to the L<Perl::Refactor|Perl::Refactor> engine, which attempts
 to identify awkward, hard to read, error-prone, or unconventional
 constructs in your code.  Most of the rules are based on Damian
 Conway's book B<Perl Best Practices>.  However, C<perlrefactor> is
@@ -79,7 +79,7 @@ your liking.
 This documentation only covers how to drive this command.  For all
 other information, including how to persistently configure this
 command so that you don't have to say so much on the command-line, see
-the documentation for L<Perl::Critic|Perl::Critic> itself.
+the documentation for L<Perl::Refactor|Perl::Refactor> itself.
 
 
 =head1 USAGE EXAMPLES
@@ -142,7 +142,7 @@ Option names are also case-sensitive.
 
 Directs C<perlrefactor> to use a profile named by FILE rather than
 looking for the default F<.perlrefactorrc> file in the current directory
-or your home directory.  See L<Perl::Critic/"CONFIGURATION"> for more
+or your home directory.  See L<Perl::Refactor/"CONFIGURATION"> for more
 information.
 
 =item C<--noprofile>
@@ -205,7 +205,7 @@ would apply only Enforcers that have a 'bugs' AND 'pbp' theme:
 Unless the C<--severity> option is explicitly given, setting
 C<--theme> silently causes the C<--severity> to be set to 1.  You can
 set the default value for this option in your F<.perlrefactorrc> file.
-See L<Perl::Critic/"POLICY THEMES"> for more information about themes.
+See L<Perl::Refactor/"POLICY THEMES"> for more information about themes.
 
 =item C<--include PATTERN>
 
@@ -336,7 +336,7 @@ characters are:
     %l        Line number where the violation occurred
     %m        Brief description of the violation
     %P        Full name of the Enforcer module that created the violation
-    %p        Name of the Enforcer without the Perl::Critic::Enforcer:: prefix
+    %p        Name of the Enforcer without the Perl::Refactor::Enforcer:: prefix
     %r        The string of source code that caused the violation
     %C        The class of the PPI::Element that caused the violation
     %s        The severity level of the violation
@@ -348,7 +348,7 @@ input. See L<"EDITOR INTEGRATION"> for more information about that.
 =item C<--list>
 
 Displays a condensed listing of all the
-L<Perl::Critic::Enforcer|Perl::Critic::Enforcer> modules that are found on this
+L<Perl::Refactor::Enforcer|Perl::Refactor::Enforcer> modules that are found on this
 machine.  This option lists I<all> Enforcers, regardless of your
 F<.perlrefactorrc> or command line options.  For each Enforcer, the name, default
 severity and default themes are shown.
@@ -356,7 +356,7 @@ severity and default themes are shown.
 =item C<--list-enabled>
 
 Displays a condensed listing of all the
-L<Perl::Critic::Enforcer|Perl::Critic::Enforcer> modules that I<would> be
+L<Perl::Refactor::Enforcer|Perl::Refactor::Enforcer> modules that I<would> be
 enforced, if you were actually going to critique a file with this command.
 This is useful when you've constructed a complicated command or modified your
 F<.perlrefactorrc> file and you want to see exactly which Enforcers are going to
@@ -366,13 +366,13 @@ default severity and default themes are shown.
 =item C<--list-themes>
 
 Displays a list of all the themes of the
-L<Perl::Critic::Enforcer|Perl::Critic::Enforcer> modules that are found on
+L<Perl::Refactor::Enforcer|Perl::Refactor::Enforcer> modules that are found on
 this machine.
 
 =item C<--profile-proto>
 
 Displays an expanded listing of all the
-L<Perl::Critic::Enforcer|Perl::Critic::Enforcer> modules that are found on
+L<Perl::Refactor::Enforcer|Perl::Refactor::Enforcer> modules that are found on
 this machine.  For each Enforcer, the name, default severity and default
 themes are shown, as well as the name of any additional parameters
 that the Enforcer supports.  The format is suitable as a prototype for
@@ -498,10 +498,10 @@ Files whose name ends in '.PL' will always be considered programs.
 =item C<--doc PATTERN>
 
 Displays the perldoc for all
-L<Perl::Critic::Enforcer|Perl::Critic::Enforcer> modules that match
+L<Perl::Refactor::Enforcer|Perl::Refactor::Enforcer> modules that match
 C<m/PATTERN/ixms>.  Since Enforcer modules tend to have rather long
 names, this just provides a more convenient way to say something like:
-C<"perldoc Perl::Critic::Enforcer::ValuesAndExpressions::RequireUpperCaseHeredocTerminator">
+C<"perldoc Perl::Refactor::Enforcer::ValuesAndExpressions::RequireUpperCaseHeredocTerminator">
 at the command prompt.
 
 =item C<--allow-unsafe>
@@ -509,9 +509,9 @@ at the command prompt.
 This option directs C<perlrefactor> to allow the use of Enforcers that have been
 marked as "unsafe".  Unsafe Enforcers may result in risky operations by
 compiling and executing the code they analyze.  All the Enforcers that ship in
-the core L<Perl::Critic|Perl::Critic> distribution are safe.  However,
+the core L<Perl::Refactor|Perl::Refactor> distribution are safe.  However,
 third-party Enforcers, such as those in the
-L<Perl::Critic::Dynamic|Perl::Critic::Dynamic> distribution are not safe.
+L<Perl::Refactor::Dynamic|Perl::Refactor::Dynamic> distribution are not safe.
 Note that "safety" is honorary -- if a Enforcer author marks a Enforcer as safe,
 it is not a guarantee that it won't do nasty things.  B<If you don't trust
 your Enforcers and the code you are analyzing, then do not use this switch>.
@@ -547,7 +547,7 @@ Displays the version number of C<perlrefactor> and exits.
 
 =head1 CONFIGURATION
 
-Most of the settings for Perl::Critic and each of the Enforcer modules
+Most of the settings for Perl::Refactor and each of the Enforcer modules
 can be controlled by a configuration file.  The default configuration
 file is called F<.perlrefactorrc>.  C<perlrefactor> will look for this
 file in the current directory first, and then in your home directory.
@@ -578,18 +578,18 @@ corresponding command-line argument.
 
 The remainder of the configuration file is a series of blocks like this:
 
-    [Perl::Critic::Enforcer::Category::EnforcerName]
+    [Perl::Refactor::Enforcer::Category::EnforcerName]
     severity = 1
     set_themes = foo bar
     add_themes = baz
     arg1 = value1
     arg2 = value2
 
-C<Perl::Critic::Enforcer::Category::EnforcerName> is the full name of a
+C<Perl::Refactor::Enforcer::Category::EnforcerName> is the full name of a
 module that implements the enforcer.  The Enforcer modules distributed
-with Perl::Critic have been grouped into categories according to the
+with Perl::Refactor have been grouped into categories according to the
 table of contents in Damian Conway's book B<Perl Best Practices>. For
-brevity, you can omit the C<'Perl::Critic::Enforcer'> part of the module
+brevity, you can omit the C<'Perl::Refactor::Enforcer'> part of the module
 name.
 
 C<severity> is the level of importance you wish to assign to the
@@ -671,7 +671,7 @@ A simple configuration might look like this:
     # For all other Enforcers, I accept the default severity,
     # so no additional configuration is required for them.
 
-Note that all policies included with the Perl::Critic distribution
+Note that all policies included with the Perl::Refactor distribution
 that have integer parameters accept underscores ("_") in their values,
 as with Perl numeric literals.  For example,
 
@@ -681,22 +681,22 @@ as with Perl numeric literals.  For example,
 For additional configuration examples, see the F<perlrefactorrc> file
 that is included in this F<examples> directory of this distribution.
 
-Damian Conway's own Perl::Critic configuration is also included in
+Damian Conway's own Perl::Refactor configuration is also included in
 this distribution as F<examples/perlrefactorrc-conway>.
 
 
 =head1 THE POLICIES
 
-A large number of Enforcer modules are distributed with Perl::Critic.
+A large number of Enforcer modules are distributed with Perl::Refactor.
 They are described briefly in the companion document
-L<Perl::Critic::EnforcerSummary|Perl::Critic::EnforcerSummary> and in more
+L<Perl::Refactor::EnforcerSummary|Perl::Refactor::EnforcerSummary> and in more
 detail in the individual modules themselves.  Say C<"perlrefactor --doc
 PATTERN"> to see the perldoc for all Enforcer modules that match the
 regex C<m/PATTERN/ixms>
 
 There are a number of distributions of additional policies on CPAN.
-If L<Perl::Critic|Perl::Critic> doesn't contain a enforcer that you
-want, some one may have already written it.  See L<Perl::Critic/"SEE
+If L<Perl::Refactor|Perl::Refactor> doesn't contain a enforcer that you
+want, some one may have already written it.  See L<Perl::Refactor/"SEE
 ALSO"> for a list of some of these distributions.
 
 
@@ -709,14 +709,14 @@ For example, you may wish disable a certain set of Enforcers when
 analyzing test programs.  Conversely, you may wish to enable only a
 specific subset of Enforcers when analyzing modules.
 
-The Enforcers that ship with Perl::Critic are have been divided into
+The Enforcers that ship with Perl::Refactor are have been divided into
 the following themes.  This is just our attempt to provide some basic
 logical groupings.  You are free to invent new themes that suit your
 needs.
 
     THEME             DESCRIPTION
     ------------------------------------------------------------------------
-    core              All policies that ship with Perl::Critic
+    core              All policies that ship with Perl::Refactor
     pbp               Enforcers that come directly from "Perl Best Practices"
     bugs              Enforcers that that prevent or reveal bugs
     certrec           Enforcers that CERT recommends
@@ -749,13 +749,13 @@ empty string, then it evaluates as true all Enforcers.
 
 =head1 BENDING THE RULES
 
-Perl::Critic takes a hard-line approach to your code: either you
+Perl::Refactor takes a hard-line approach to your code: either you
 comply or you don't.  In the real world, it is not always practical
 (or even possible) to fully comply with coding standards.  In such
 cases, it is wise to show that you are knowingly violating the
 standards and that you have a Damn Good Reason (DGR) for doing so.
 
-To help with those situations, you can direct Perl::Critic to ignore
+To help with those situations, you can direct Perl::Refactor to ignore
 certain lines or blocks of code by using annotations:
 
   require 'LegacyLibaray1.pl';  ## no refactor
@@ -775,7 +775,7 @@ certain lines or blocks of code by using annotations:
       do_something($_);
   }
 
-The C<"## no refactor"> annotations direct Perl::Critic to ignore the remaining
+The C<"## no refactor"> annotations direct Perl::Refactor to ignore the remaining
 lines of code until a C<"## use refactor"> annotation is found. If the C<"## no
 refactor"> annotation is on the same line as a code statement, then only that
 line of code is overlooked.  To direct perlrefactor to ignore the C<"## no
@@ -838,7 +838,7 @@ of B<all> files.
 Use this feature wisely.  C<"## no refactor"> should be used in the
 smallest possible scope, or only on individual lines of code. And you
 should always be as specific as possible about which policies you want
-to disable (i.e. never use a bare C<"## no refactor">).  If Perl::Critic
+to disable (i.e. never use a bare C<"## no refactor">).  If Perl::Refactor
 complains about your code, try and find a compliant solution before
 resorting to this feature.
 
@@ -853,9 +853,9 @@ can run an arbitrary command and the editor will parse the output into
 an interactive buffer that you can click on and jump to the relevant
 line of code.
 
-The Perl::Critic team thanks everyone who has helped integrate Perl-Critic
+The Perl::Refactor team thanks everyone who has helped integrate Perl-Refactor
 with their favorite editor.  Your contributions in particular have made
-Perl-Critic a convenient and user-friendly tool for Perl developers of all
+Perl-Refactor a convenient and user-friendly tool for Perl developers of all
 stripes.  We sincerely appreciate your hard work.
 
 =head2 EMACS
@@ -875,47 +875,47 @@ source code, exits with status == 2.  If there were no errors and no
 violations were found, exits with status == 0.
 
 
-=head1 THE L<Perl::Critic|Perl::Critic> PHILOSOPHY
+=head1 THE L<Perl::Refactor|Perl::Refactor> PHILOSOPHY
 
 =over
 
 Coding standards are deeply personal and highly subjective.  The goal
-of Perl::Critic is to help you write code that conforms with a set of
+of Perl::Refactor is to help you write code that conforms with a set of
 best practices.  Our primary goal is not to dictate what those
 practices are, but rather, to implement the practices discovered by
-others.  Ultimately, you make the rules -- Perl::Critic is merely a
+others.  Ultimately, you make the rules -- Perl::Refactor is merely a
 tool for encouraging consistency.  If there is a enforcer that you think
 is important or that we have overlooked, we would be very grateful for
 contributions, or you can simply load your own private set of policies
-into Perl::Critic.
+into Perl::Refactor.
 
 =back
 
 
 =head1 EXTENDING THE CRITIC
 
-The modular design of Perl::Critic is intended to facilitate the
+The modular design of Perl::Refactor is intended to facilitate the
 addition of new Enforcers.  You'll need to have some understanding of
 L<PPI|PPI>, but most Enforcer modules are pretty straightforward and
 only require about 20 lines of code, and half of those lines are
 simple use statements and simple declarations..  Please see the
-L<Perl::Critic::DEVELOPER|Perl::Critic::DEVELOPER> file included in
+L<Perl::Refactor::DEVELOPER|Perl::Refactor::DEVELOPER> file included in
 this distribution for a step-by-step demonstration of how to create
 new Enforcer modules.
 
 If you develop any new Enforcer modules, feel free to send them to C<<
 <jeff@imaginative-software.com> >> and I'll be happy to put them into the
-Perl::Critic distribution.  Or if you would like to work on the
-Perl::Critic project directly, check out our repository at
+Perl::Refactor distribution.  Or if you would like to work on the
+Perl::Refactor project directly, check out our repository at
 L<http://perlrefactor.tigris.org>.  To subscribe to our mailing list,
 send a message to L<mailto:dev-subscribe@perlrefactor.tigris.org>.
 
-The Perl::Critic team is also available for hire.  If your
+The Perl::Refactor team is also available for hire.  If your
 organization has its own coding standards, we can create custom
 Enforcers to enforce your local guidelines.  Or if your code base is
 prone to a particular defect pattern, we can design Enforcers that will
 help you catch those costly defects B<before> they go into production.
-To discuss your needs with the Perl::Critic team, just contact C<<
+To discuss your needs with the Perl::Refactor team, just contact C<<
 <jeff@imaginative-software.com> >>.
 
 
@@ -929,7 +929,7 @@ You can also contact the author at C<< <jeff@imaginative-software.com> >>.
 At least one member of the development team has started hanging around
 in L<irc://irc.perl.org/#perlrefactor>.
 
-You can also follow Perl::Critic on Twitter, at
+You can also follow Perl::Refactor on Twitter, at
 L<https://twitter.com/perlrefactor>.
 
 
@@ -938,23 +938,23 @@ L<https://twitter.com/perlrefactor>.
 There are a number of distributions of additional Enforcers available.
 A few are listed here:
 
-L<Perl::Critic::More|Perl::Critic::More>
-L<Perl::Critic::Bangs|Perl::Critic::Bangs>
-L<Perl::Critic::Lax|Perl::Critic::Lax>
-L<Perl::Critic::StricterSubs|Perl::Critic::StricterSubs>
-L<Perl::Critic::Swift|Perl::Critic::Swift>
+L<Perl::Refactor::More|Perl::Refactor::More>
+L<Perl::Refactor::Bangs|Perl::Refactor::Bangs>
+L<Perl::Refactor::Lax|Perl::Refactor::Lax>
+L<Perl::Refactor::StricterSubs|Perl::Refactor::StricterSubs>
+L<Perl::Refactor::Swift|Perl::Refactor::Swift>
 
-These distributions enable you to use Perl::Critic in your unit tests:
+These distributions enable you to use Perl::Refactor in your unit tests:
 
-L<Test::Perl::Critic|Test::Perl::Critic>
-L<Test::Perl::Critic::Progressive|Test::Perl::Critic::Progressive>
+L<Test::Perl::Refactor|Test::Perl::Refactor>
+L<Test::Perl::Refactor::Progressive|Test::Perl::Refactor::Progressive>
 
-There is also a distribution that will install all the Perl::Critic related
+There is also a distribution that will install all the Perl::Refactor related
 modules known to the development team:
 
-L<Task::Perl::Critic|Task::Perl::Critic>
+L<Task::Perl::Refactor|Task::Perl::Refactor>
 
-Also, ActivePerl includes a very slick graphical interface to Perl-Critic
+Also, ActivePerl includes a very slick graphical interface to Perl-Refactor
 called C<perlrefactor-gui>.  You can get a free community edition of ActivePerl
 from L<http://www.activestate.com>.
 
@@ -962,8 +962,8 @@ from L<http://www.activestate.com>.
 
 Scrutinizing Perl code is hard for humans, let alone machines.  If you
 find any bugs, particularly false-positives or false-negatives from a
-Perl::Critic::Enforcer, please submit them to
-L<https://github.com/Perl-Critic/Perl-Critic/issues>.  Thanks.
+Perl::Refactor::Enforcer, please submit them to
+L<https://github.com/Perl-Refactor/Perl-Refactor/issues>.  Thanks.
 
 Most policies will produce false-negatives if they cannot understand a
 particular block of code.
@@ -972,7 +972,7 @@ particular block of code.
 =head1 CREDITS
 
 Adam Kennedy - For creating L<PPI|PPI>, the heart and soul of
-L<Perl::Critic|Perl::Critic>.
+L<Perl::Refactor|Perl::Refactor>.
 
 Damian Conway - For writing B<Perl Best Practices>, finally :)
 

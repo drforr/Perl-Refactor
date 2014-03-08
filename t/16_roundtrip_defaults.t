@@ -6,10 +6,10 @@ use warnings;
 
 use English qw(-no_match_vars);
 
-use Perl::Critic::EnforcerFactory (-test => 1);
-use Perl::Critic::Config;
-use Perl::Critic::ProfilePrototype;
-use Perl::Critic::Utils qw{ :characters :severities };
+use Perl::Refactor::EnforcerFactory (-test => 1);
+use Perl::Refactor::Config;
+use Perl::Refactor::ProfilePrototype;
+use Perl::Refactor::Utils qw{ :characters :severities };
 
 use Test::Deep;
 use Test::More;
@@ -21,7 +21,7 @@ our $VERSION = '1.121';
 #-----------------------------------------------------------------------------
 
 my $default_configuration =
-    Perl::Critic::Config->new(
+    Perl::Refactor::Config->new(
         -profile => $EMPTY,
         -severity => 1,
         -theme => 'core',
@@ -34,7 +34,7 @@ $enforcer_test_count = 4 * @default_policies;
 foreach my $enforcer (@default_policies) {
     if (
             $enforcer->parameter_metadata_available()
-        and not $enforcer->isa('Perl::Critic::Enforcer::CodeLayout::RequireTidyCode')
+        and not $enforcer->isa('Perl::Refactor::Enforcer::CodeLayout::RequireTidyCode')
     ) {
         $enforcer_test_count += scalar @{$enforcer->get_parameters()};
     }
@@ -45,7 +45,7 @@ plan tests => $test_count;
 #-----------------------------------------------------------------------------
 
 my $profile_generator =
-    Perl::Critic::ProfilePrototype->new(
+    Perl::Refactor::ProfilePrototype->new(
         -policies                   => \@default_policies,
         '-comment-out-parameters'   => 0,
         -config                     => $default_configuration,
@@ -53,7 +53,7 @@ my $profile_generator =
 my $profile = $profile_generator->to_string();
 
 my $derived_configuration =
-    Perl::Critic::Config->new( -profile => \$profile );
+    Perl::Refactor::Config->new( -profile => \$profile );
 
 #-----------------------------------------------------------------------------
 
@@ -246,7 +246,7 @@ SKIP: {
 
         if (
                 $default_enforcer->parameter_metadata_available()
-            and not $default_enforcer->isa('Perl::Critic::Enforcer::CodeLayout::RequireTidyCode')
+            and not $default_enforcer->isa('Perl::Refactor::Enforcer::CodeLayout::RequireTidyCode')
         ) {
             # Encapsulation violation alert!
             foreach my $parameter ( @{$default_enforcer->get_parameters()} ) {

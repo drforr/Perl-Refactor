@@ -8,8 +8,8 @@ use English qw(-no_match_vars);
 
 use PPI::Document;
 
-use Perl::Critic::Annotation;
-use Perl::Critic::TestUtils qw(bundled_enforcer_names);
+use Perl::Refactor::Annotation;
+use Perl::Refactor::TestUtils qw(bundled_enforcer_names);
 
 use Test::More;
 
@@ -19,23 +19,23 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlrefactorrc();
+Perl::Refactor::TestUtils::block_perlrefactorrc();
 
 my @bundled_enforcer_names = bundled_enforcer_names();
 
 plan( tests => 85 );
 
 #-----------------------------------------------------------------------------
-# Test Perl::Critic::Annotation module interface
+# Test Perl::Refactor::Annotation module interface
 
-can_ok('Perl::Critic::Annotation', 'new');
-can_ok('Perl::Critic::Annotation', 'create_annotations');
-can_ok('Perl::Critic::Annotation', 'element');
-can_ok('Perl::Critic::Annotation', 'effective_range');
-can_ok('Perl::Critic::Annotation', 'disabled_policies');
-can_ok('Perl::Critic::Annotation', 'disables_enforcer');
-can_ok('Perl::Critic::Annotation', 'disables_all_policies');
-can_ok('Perl::Critic::Annotation', 'disables_line');
+can_ok('Perl::Refactor::Annotation', 'new');
+can_ok('Perl::Refactor::Annotation', 'create_annotations');
+can_ok('Perl::Refactor::Annotation', 'element');
+can_ok('Perl::Refactor::Annotation', 'effective_range');
+can_ok('Perl::Refactor::Annotation', 'disabled_policies');
+can_ok('Perl::Refactor::Annotation', 'disables_enforcer');
+can_ok('Perl::Refactor::Annotation', 'disables_all_policies');
+can_ok('Perl::Refactor::Annotation', 'disables_line');
 
 annotate( <<"EOD", 0, 'Null case. Un-annotated document' );
 #!/usr/local/bin/perl
@@ -222,11 +222,11 @@ SKIP: {
             @_ = ( "Can not make PPI::Document for $title" );
             goto &fail;
         };
-        $doc = Perl::Critic::Document->new( -source => $doc ) or do {
-            @_ = ( "Can not make Perl::Critic::Document for $title" );
+        $doc = Perl::Refactor::Document->new( -source => $doc ) or do {
+            @_ = ( "Can not make Perl::Refactor::Document for $title" );
             goto &fail;
         };
-        @annotations = Perl::Critic::Annotation->create_annotations( $doc );
+        @annotations = Perl::Refactor::Annotation->create_annotations( $doc );
         @_ = ( scalar @annotations, $count, $title );
         goto &is;
     }

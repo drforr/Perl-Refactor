@@ -4,7 +4,7 @@ use 5.006001;
 use strict;
 use warnings;
 
-use Perl::Critic::TestUtils qw(pcritique);
+use Perl::Refactor::TestUtils qw(pcritique);
 
 use Test::More tests => 6;
 
@@ -14,7 +14,7 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlrefactorrc();
+Perl::Refactor::TestUtils::block_perlrefactorrc();
 
 my $code;
 my $enforcer = 'CodeLayout::RequireTidyCode';

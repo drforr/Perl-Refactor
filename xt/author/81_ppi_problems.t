@@ -73,7 +73,7 @@ our $VERSION = '1.116';
     # TWO => 2} as two words and a float followed by a block. We can remove
     # the test for 'PPI::Structure::Block' from
     # _constant_names_from_constant_pragma() in
-    # Perl::Critic::PPIx::Utilities::Statement once this is fixed.
+    # Perl::Refactor::PPIx::Utilities::Statement once this is fixed.
 
     my $code = 'use constant 1.16 { ONE => 1, TWO => 2 }';
     local $TODO = q<Clean up code in P::C::PPIx::Utilities::Statement::_constant_names_from_constant_pragma() once this test passes.>;

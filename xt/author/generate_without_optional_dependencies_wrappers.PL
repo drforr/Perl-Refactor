@@ -11,7 +11,7 @@ use Fatal qw{ open close };
 
 use lib 'inc';
 
-use Perl::Critic::BuildUtilities qw{ recommended_module_versions };
+use Perl::Refactor::BuildUtilities qw{ recommended_module_versions };
 
 #-----------------------------------------------------------------------------
 
@@ -105,7 +105,7 @@ generate_without_additional_dependencies_wrappers.PL - generate tests that are w
 
 =head1 DESCRIPTION
 
-Release 1.07 of Perl::Critic was an embarrassment because there were no tests
+Release 1.07 of Perl::Refactor was an embarrassment because there were no tests
 of core without the presence of optional modules.  This program generates
 wrappers for other tests that hide those optional modules.
 

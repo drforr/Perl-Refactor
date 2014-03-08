@@ -13,9 +13,9 @@ use Readonly;
 
 use Test::More;
 
-use Perl::Critic::EnforcerFactory (-test => 1);
-use Perl::Critic;
-use Perl::Critic::Utils::Constants qw< $_MODULE_VERSION_TERM_ANSICOLOR >;
+use Perl::Refactor::EnforcerFactory (-test => 1);
+use Perl::Refactor;
+use Perl::Refactor::Utils::Constants qw< $_MODULE_VERSION_TERM_ANSICOLOR >;
 
 #-----------------------------------------------------------------------------
 
@@ -56,7 +56,7 @@ Readonly::Scalar my $REQUIRE_POD_SECTIONS_SOURCE_MESSAGE_PREFIX =>
     q<The value for the Documentation::RequirePodSections "source" option ("Zen_and_the_Art_of_Motorcycle_Maintenance") is not one of the allowed values: >;
 
 eval {
-    Perl::Critic->new( '-profile' => $PROFILE );
+    Perl::Refactor->new( '-profile' => $PROFILE );
 };
 
 my $test_passed;
@@ -70,7 +70,7 @@ die "No point in continuing.\n" if not $test_passed;
 $test_passed =
     isa_ok(
         $eval_result,
-        'Perl::Critic::Exception::AggregateConfiguration',
+        'Perl::Refactor::Exception::AggregateConfiguration',
         '$EVAL_ERROR',  ## no refactor (RequireInterpolationOfMetachars)
     );
 

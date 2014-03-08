@@ -5,10 +5,10 @@ use strict;
 use warnings;
 
 use Test::More (tests => 32);
-use Perl::Critic::EnforcerFactory (-test => 1);
+use Perl::Refactor::EnforcerFactory (-test => 1);
 
 # common P::C testing tools
-use Perl::Critic::TestUtils qw(critique);
+use Perl::Refactor::TestUtils qw(critique);
 
 #-----------------------------------------------------------------------------
 
@@ -16,16 +16,16 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Perl::Critic::TestUtils::block_perlrefactorrc();
+Perl::Refactor::TestUtils::block_perlrefactorrc();
 
-# Configure Critic not to load certain policies.  This
+# Configure Refactor not to load certain policies.  This
 # just makes it a little easier to create test cases
 my $profile = {
     '-CodeLayout::RequireTidyCode'                               => {},
     '-Documentation::PodSpelling'                                => {},
     '-ErrorHandling::RequireCheckingReturnValueOfEval'           => {},
-    '-Miscellanea::ProhibitUnrestrictedNoCritic'                 => {},
-    '-Miscellanea::ProhibitUselessNoCritic'                      => {},
+    '-Miscellanea::ProhibitUnrestrictedNoRefactor'                 => {},
+    '-Miscellanea::ProhibitUselessNoRefactor'                      => {},
     '-ValuesAndExpressions::ProhibitMagicNumbers'                => {},
     '-Variables::ProhibitReusedNames'                            => {},
 };
@@ -646,7 +646,7 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-## no refactor (Critic::Enforcer)
+## no refactor (Refactor::Enforcer)
 my $noisy = '!';
 my $empty = '';
 eval $string;
