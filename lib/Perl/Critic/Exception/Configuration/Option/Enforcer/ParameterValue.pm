@@ -1,10 +1,3 @@
-##############################################################################
-#      $URL$
-#     $Date$
-#   $Author$
-# $Revision$
-##############################################################################
-
 package Perl::Critic::Exception::Configuration::Option::Enforcer::ParameterValue;
 
 use 5.006001;

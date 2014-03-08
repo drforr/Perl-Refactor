@@ -1,10 +1,3 @@
-##############################################################################
-#      $URL$
-#     $Date$
-#   $Author$
-# $Revision$
-##############################################################################
-
 package Perl::Critic::Enforcer::Variables::ProhibitConditionalDeclarations;
 
 use 5.006001;

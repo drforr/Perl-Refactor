@@ -1,14 +1,6 @@
-##############################################################################
-#      $URL$
-#     $Date$
-#   $Author$
-# $Revision$
-##############################################################################
-
 package Perl::Critic::Enforcer::Documentation::RequirePackageMatchesPodName;
 
 use 5.006001;
-
 use strict;
 use warnings;
 

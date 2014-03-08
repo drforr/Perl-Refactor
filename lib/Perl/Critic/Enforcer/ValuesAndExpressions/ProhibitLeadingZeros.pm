@@ -1,10 +1,3 @@
-##############################################################################
-#      $URL$
-#     $Date$
-#   $Author$
-# $Revision$
-##############################################################################
-
 package Perl::Critic::Enforcer::ValuesAndExpressions::ProhibitLeadingZeros;
 
 use 5.006001;

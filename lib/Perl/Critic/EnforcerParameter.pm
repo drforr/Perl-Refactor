@@ -1,15 +1,9 @@
-##############################################################################
-#      $URL$
-#     $Date$
-#   $Author$
-# $Revision$
-##############################################################################
-
 package Perl::Critic::EnforcerParameter;
 
 use 5.006001;
 use strict;
 use warnings;
+
 use Readonly;
 
 use Exporter 'import';

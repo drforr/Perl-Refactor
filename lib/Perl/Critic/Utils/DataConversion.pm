@@ -1,15 +1,9 @@
-##############################################################################
-#      $URL$
-#     $Date$
-#   $Author$
-# $Revision$
-##############################################################################
-
 package Perl::Critic::Utils::DataConversion;
 
 use 5.006001;
 use strict;
 use warnings;
+
 use Readonly;
 
 use Perl::Critic::Utils qw{ :characters :booleans };

@@ -1,10 +1,3 @@
-##############################################################################
-#      $URL$
-#     $Date$
-#   $Author$
-# $Revision$
-##############################################################################
-
 package Perl::Critic::Enforcer::ValuesAndExpressions::ProhibitMismatchedOperators;
 use 5.006001;
 use strict;

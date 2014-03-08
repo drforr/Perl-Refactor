@@ -1,14 +1,6 @@
-#######################################################################
-#      $URL: http://perlrefactor.tigris.org/svn/perlrefactor/trunk/distributions/common/inc/Perl/Critic/Module/Build/Standard.pm $
-#     $Date: 2011-01-30 14:13:17 -0800 (Sun, 30 Jan 2011) $
-#   $Author: clonezone $
-# $Revision: 4016 $
-########################################################################
-
 package Perl::Critic::Module::Build::Standard;
 
 use 5.006001;
-
 use strict;
 use warnings;
 
