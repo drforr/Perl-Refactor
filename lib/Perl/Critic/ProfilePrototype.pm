@@ -14,7 +14,7 @@ use warnings;
 use English qw(-no_match_vars);
 
 use Perl::Critic::Config qw{};
-use Perl::Critic::Policy qw{};
+use Perl::Critic::Enforcer qw{};
 use Perl::Critic::Utils qw{ :characters };
 use overload ( q{""} => 'to_string' );
 
@@ -166,7 +166,7 @@ sub to_string {
     $prototype .= q{program-extensions = };
     $prototype .= join $SPACE, $configuration->program_extensions();
 
-    Perl::Critic::Policy::set_format( $self->_proto_format() );
+    Perl::Critic::Enforcer::set_format( $self->_proto_format() );
 
     return $prototype . "\n\n" . join q{}, map { "$_" } @{ $self->_get_policies() };
 }
@@ -262,8 +262,8 @@ When a
 L<Perl::Critic::ProfilePrototype|Perl::Critic::ProfilePrototype> is
 evaluated in string context, it produces a multi-line summary of the
 enforcer name, default themes, and default severity for each
-L<Perl::Critic::Policy|Perl::Critic::Policy> object that was given to
-the constructor of this C<ProfilePrototype>.  If the Policy supports
+L<Perl::Critic::Enforcer|Perl::Critic::Enforcer> object that was given to
+the constructor of this C<ProfilePrototype>.  If the Enforcer supports
 an additional parameters, they will also be listed (but
 commented-out).  The format is suitable for use as a F<.perlrefactorrc>
 file.

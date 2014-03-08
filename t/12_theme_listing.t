@@ -14,7 +14,7 @@ use warnings;
 use English qw<-no_match_vars>;
 
 use Perl::Critic::UserProfile;
-use Perl::Critic::PolicyFactory (-test => 1);
+use Perl::Critic::EnforcerFactory (-test => 1);
 use Perl::Critic::ThemeListing;
 
 use Test::More tests => 1;
@@ -26,8 +26,8 @@ our $VERSION = '1.121';
 #-----------------------------------------------------------------------------
 
 my $profile = Perl::Critic::UserProfile->new( -profile => 'NONE' );
-my @enforcer_names = Perl::Critic::PolicyFactory::site_enforcer_names();
-my $factory = Perl::Critic::PolicyFactory->new( -profile => $profile );
+my @enforcer_names = Perl::Critic::EnforcerFactory::site_enforcer_names();
+my $factory = Perl::Critic::EnforcerFactory->new( -profile => $profile );
 my @enforcers = map { $factory->create_enforcer( -name => $_ ) } @enforcer_names;
 my $listing = Perl::Critic::ThemeListing->new( -policies => \@enforcers );
 

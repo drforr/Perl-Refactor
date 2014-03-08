@@ -154,21 +154,21 @@ Lexical regular expression modifier defaults via (e.g.)
 C<use re '/smx'>). This also interacts with
 C<use feature 'unicode_strings'>. 5.13.7.
 
-=item * Support a means of failing if a Policy isn't installed.
+=item * Support a means of failing if a Enforcer isn't installed.
 
-For example, the self compliance test now depends upon a Policy in the More
+For example, the self compliance test now depends upon a Enforcer in the More
 distribution.
 
-Something like using a "+" sign in front of the Policy name in its
+Something like using a "+" sign in front of the Enforcer name in its
 configuration block, analogous to the "-" sign used for disabling a enforcer,
-e.g. "C<[+Example::Policy]>".
+e.g. "C<[+Example::Enforcer]>".
 
 
 =item * Threading
 
 Pretty obviously, Perl::Critic is readily parallelizable, just do a document per
 thread.  ("readily" being conceptual, not necessarily practical)  Although
-there's now C<Policy::prepare_to_scan_document()>, given perl's thread data
+there's now C<Enforcer::prepare_to_scan_document()>, given perl's thread data
 sharing model, this shouldn't be an issue.
 
 
@@ -178,25 +178,25 @@ sharing model, this shouldn't be an issue.
 
 If I've got:
 
-    ## no critic (SomePolicy)
+    ## no critic (SomeEnforcer)
 
     ...
 
-    ## no critic (ADifferentPolicy)
+    ## no critic (ADifferentEnforcer)
 
     ...
 
-    ## no critic (YetAnotherPolicy)
+    ## no critic (YetAnotherEnforcer)
 
-If I want to turn C<YetAnotherPolicy> back on but neither C<SomePolicy> nor
-C<ADifferentPolicy>, I've got to do this:
+If I want to turn C<YetAnotherEnforcer> back on but neither C<SomeEnforcer> nor
+C<ADifferentEnforcer>, I've got to do this:
 
     ## use critic
-    ## no critic (SomePolicy, ADifferentPolicy)
+    ## no critic (SomeEnforcer, ADifferentEnforcer)
 
 Why can't I do this:
 
-    ## use critic (SomeOtherPolicy)
+    ## use critic (SomeOtherEnforcer)
 
 
 =item * Make color work on Windows.
@@ -262,9 +262,9 @@ Look for the C<:lvalue> subroutine attribute.
 =item * Subroutines::RequireArgumentValidation
 
 Enforce the use of Params::Validate or Params::Util or some other
-argument validation mechanism.  This could be one Policy that
+argument validation mechanism.  This could be one Enforcer that
 can be configured for different validation mechanisms, or we could
-have a separate Policy for each mechanism, and let the user choose
+have a separate Enforcer for each mechanism, and let the user choose
 which one they want to use (I think I prefer the later).
 
 

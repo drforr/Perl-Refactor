@@ -13,7 +13,7 @@ use warnings;
 
 use English qw(-no_match_vars);
 
-use Perl::Critic::PolicyFactory (-test => 1);
+use Perl::Critic::EnforcerFactory (-test => 1);
 use Perl::Critic::Config;
 use Perl::Critic::ProfilePrototype;
 use Perl::Critic::Utils qw{ :characters :severities };
@@ -41,7 +41,7 @@ $enforcer_test_count = 4 * @default_policies;
 foreach my $enforcer (@default_policies) {
     if (
             $enforcer->parameter_metadata_available()
-        and not $enforcer->isa('Perl::Critic::Policy::CodeLayout::RequireTidyCode')
+        and not $enforcer->isa('Perl::Critic::Enforcer::CodeLayout::RequireTidyCode')
     ) {
         $enforcer_test_count += scalar @{$enforcer->get_parameters()};
     }
@@ -253,7 +253,7 @@ SKIP: {
 
         if (
                 $default_enforcer->parameter_metadata_available()
-            and not $default_enforcer->isa('Perl::Critic::Policy::CodeLayout::RequireTidyCode')
+            and not $default_enforcer->isa('Perl::Critic::Enforcer::CodeLayout::RequireTidyCode')
         ) {
             # Encapsulation violation alert!
             foreach my $parameter ( @{$default_enforcer->get_parameters()} ) {

@@ -21,7 +21,7 @@ use Perl::Critic::Exception::AggregateConfiguration;
 use Perl::Critic::Exception::Configuration;
 use Perl::Critic::Exception::Configuration::Option::Global::ParameterValue;
 use Perl::Critic::Exception::Fatal::Internal qw{ throw_internal };
-use Perl::Critic::PolicyFactory;
+use Perl::Critic::EnforcerFactory;
 use Perl::Critic::Theme qw( $RULE_INVALID_CHARACTER_REGEX cook_rule );
 use Perl::Critic::UserProfile qw();
 use Perl::Critic::Utils qw{
@@ -135,7 +135,7 @@ sub _init {
 
     # Construct a Factory with the Profile
     my $factory =
-        Perl::Critic::PolicyFactory->new(
+        Perl::Critic::EnforcerFactory->new(
             -profile              => $profile,
             -errors               => $errors,
             '-profile-strictness' => $self->profile_strictness(),
@@ -195,7 +195,7 @@ sub _add_enforcer_if_enabled {
 
     my $config = $enforcer_object->__get_config()
         or throw_internal
-            q{Policy was not set up properly because it does not have }
+            q{Enforcer was not set up properly because it does not have }
                 . q{a value for its config attribute.};
 
     push @{ $self->{_all_policies_enabled_or_not} }, $enforcer_object;
@@ -896,7 +896,7 @@ sub criticism_fatal {
 #-----------------------------------------------------------------------------
 
 sub site_enforcer_names {
-    return Perl::Critic::PolicyFactory::site_enforcer_names();
+    return Perl::Critic::EnforcerFactory::site_enforcer_names();
 }
 
 #-----------------------------------------------------------------------------
@@ -977,7 +977,7 @@ Perl::Critic::Config - The final derived Perl::Critic configuration, combined fr
 
 Perl::Critic::Config takes care of finding and processing
 user-preferences for L<Perl::Critic|Perl::Critic>.  The Config object
-defines which Policy modules will be loaded into the Perl::Critic
+defines which Enforcer modules will be loaded into the Perl::Critic
 engine and how they should be configured.  You should never really
 need to instantiate Perl::Critic::Config directly because the
 Perl::Critic constructor will do it for you.
@@ -1006,24 +1006,24 @@ Not properly documented because you shouldn't be using this.
 
 =item C<< add_enforcer( -enforcer => $enforcer_name, -params => \%param_hash ) >>
 
-Creates a Policy object and loads it into this Config.  If the object
+Creates a Enforcer object and loads it into this Config.  If the object
 cannot be instantiated, it will throw a fatal exception.  Otherwise,
 it returns a reference to this Critic.
 
 B<-enforcer> is the name of a
-L<Perl::Critic::Policy|Perl::Critic::Policy> subclass module.  The
-C<'Perl::Critic::Policy'> portion of the name can be omitted for
+L<Perl::Critic::Enforcer|Perl::Critic::Enforcer> subclass module.  The
+C<'Perl::Critic::Enforcer'> portion of the name can be omitted for
 brevity.  This argument is required.
 
-B<-params> is an optional reference to a hash of Policy parameters.
+B<-params> is an optional reference to a hash of Enforcer parameters.
 The contents of this hash reference will be passed into to the
-constructor of the Policy module.  See the documentation in the
-relevant Policy module for a description of the arguments it supports.
+constructor of the Enforcer module.  See the documentation in the
+relevant Enforcer module for a description of the arguments it supports.
 
 
 =item C< all_policies_enabled_or_not() >
 
-Returns a list containing references to all the Policy objects that
+Returns a list containing references to all the Enforcer objects that
 have been seen.  Note that the state of these objects is not
 trustworthy.  In particular, it is likely that some of them are not
 prepared to examine any documents.
@@ -1031,7 +1031,7 @@ prepared to examine any documents.
 
 =item C< policies() >
 
-Returns a list containing references to all the Policy objects that
+Returns a list containing references to all the Enforcer objects that
 have been enabled and loaded into this Config.
 
 
@@ -1160,8 +1160,8 @@ internally, but may be useful to you in some way.
 
 =item C<site_enforcer_names()>
 
-Returns a list of all the Policy modules that are currently installed
-in the Perl::Critic:Policy namespace.  These will include modules that
+Returns a list of all the Enforcer modules that are currently installed
+in the Perl::Critic:Enforcer namespace.  These will include modules that
 are distributed with Perl::Critic plus any third-party modules that
 have been installed.
 
@@ -1171,7 +1171,7 @@ have been installed.
 
 =head1 CONFIGURATION
 
-Most of the settings for Perl::Critic and each of the Policy modules
+Most of the settings for Perl::Critic and each of the Enforcer modules
 can be controlled by a configuration file.  The default configuration
 file is called F<.perlrefactorrc>.
 L<Perl::Critic::Config|Perl::Critic::Config> will look for this file
@@ -1212,35 +1212,35 @@ corresponding Perl::Critic constructor argument.
 The remainder of the configuration file is a series of blocks like
 this:
 
-    [Perl::Critic::Policy::Category::PolicyName]
+    [Perl::Critic::Enforcer::Category::EnforcerName]
     severity = 1
     set_themes = foo bar
     add_themes = baz
     arg1 = value1
     arg2 = value2
 
-C<Perl::Critic::Policy::Category::PolicyName> is the full name of a
-module that implements the enforcer.  The Policy modules distributed
+C<Perl::Critic::Enforcer::Category::EnforcerName> is the full name of a
+module that implements the enforcer.  The Enforcer modules distributed
 with Perl::Critic have been grouped into categories according to the
 table of contents in Damian Conway's book B<Perl Best Practices>. For
-brevity, you can omit the C<'Perl::Critic::Policy'> part of the module
+brevity, you can omit the C<'Perl::Critic::Enforcer'> part of the module
 name.
 
 C<severity> is the level of importance you wish to assign to the
-Policy.  All Policy modules are defined with a default severity value
+Enforcer.  All Enforcer modules are defined with a default severity value
 ranging from 1 (least severe) to 5 (most severe).  However, you may
 disagree with the default severity and choose to give it a higher or
 lower severity, based on your own coding philosophy.
 
 The remaining key-value pairs are configuration parameters that will
-be passed into the constructor of that Policy.  The constructors for
-most Policy modules do not support arguments, and those that do should
+be passed into the constructor of that Enforcer.  The constructors for
+most Enforcer modules do not support arguments, and those that do should
 have reasonable defaults.  See the documentation on the appropriate
-Policy module for more details.
+Enforcer module for more details.
 
-Instead of redefining the severity for a given Policy, you can
-completely disable a Policy by prepending a '-' to the name of the
-module in your configuration file.  In this manner, the Policy will
+Instead of redefining the severity for a given Enforcer, you can
+completely disable a Enforcer by prepending a '-' to the name of the
+module in your configuration file.  In this manner, the Enforcer will
 never be loaded, regardless of the C<-severity> given to the
 Perl::Critic::Config constructor.
 
@@ -1292,15 +1292,15 @@ that is included in this F<t/examples> directory of this distribution.
 
 =head1 THE POLICIES
 
-A large number of Policy modules are distributed with Perl::Critic.
+A large number of Enforcer modules are distributed with Perl::Critic.
 They are described briefly in the companion document
-L<Perl::Critic::PolicySummary|Perl::Critic::PolicySummary> and in more
+L<Perl::Critic::EnforcerSummary|Perl::Critic::EnforcerSummary> and in more
 detail in the individual modules themselves.
 
 
 =head1 POLICY THEMES
 
-Each Policy is defined with one or more "themes".  Themes can be used
+Each Enforcer is defined with one or more "themes".  Themes can be used
 to create arbitrary groups of Policies.  They are intended to provide
 an alternative mechanism for selecting your preferred set of Policies.
 For example, you may wish disable a certain subset of Policies when
@@ -1325,7 +1325,7 @@ needs.
 
 Say C<`perlcritic -list`> to get a listing of all available policies
 and the themes that are associated with each one.  You can also change
-the theme for any Policy in your F<.perlrefactorrc> file.  See the
+the theme for any Enforcer in your F<.perlrefactorrc> file.  See the
 L<"CONFIGURATION"> section for more information about that.
 
 Using the C<-theme> option, you can combine theme names with

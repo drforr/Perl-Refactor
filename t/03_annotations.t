@@ -99,7 +99,7 @@ SKIP: {
 SKIP: {
     foreach ( @bundled_enforcer_names ) {
         m/ FroBozzBazzle /smxi or next;
-        skip( 'Policy FroBozzBazzle actually implemented', 6 );
+        skip( 'Enforcer FroBozzBazzle actually implemented', 6 );
         last;   # probably not necessary.
     }
 

@@ -21,7 +21,7 @@ use Perl::Critic::OptionsProcessor qw();
 use Perl::Critic::Utils qw{ :characters enforcer_long_name enforcer_short_name };
 use Perl::Critic::Exception::Fatal::Internal qw{ throw_internal };
 use Perl::Critic::Exception::Configuration::Generic qw{ throw_generic };
-use Perl::Critic::PolicyConfig;
+use Perl::Critic::EnforcerConfig;
 
 our $VERSION = '1.121';
 
@@ -63,7 +63,7 @@ sub enforcer_params {
 
     my $short_name = enforcer_short_name($enforcer);
 
-    return Perl::Critic::PolicyConfig->new(
+    return Perl::Critic::EnforcerConfig->new(
         $short_name,
         $self->raw_enforcer_params($enforcer),
     );
@@ -360,29 +360,29 @@ object for this UserProfile.
 
 =item C< enforcer_is_disabled( $enforcer ) >
 
-Given a reference to a L<Perl::Critic::Policy|Perl::Critic::Policy>
+Given a reference to a L<Perl::Critic::Enforcer|Perl::Critic::Enforcer>
 object or the name of one, returns true if the user has disabled that
 enforcer in their profile.
 
 
 =item C< enforcer_is_enabled( $enforcer ) >
 
-Given a reference to a L<Perl::Critic::Policy|Perl::Critic::Policy>
+Given a reference to a L<Perl::Critic::Enforcer|Perl::Critic::Enforcer>
 object or the name of one, returns true if the user has explicitly
 enabled that enforcer in their user profile.
 
 
 =item C< enforcer_params( $enforcer ) >
 
-Given a reference to a L<Perl::Critic::Policy|Perl::Critic::Policy>
+Given a reference to a L<Perl::Critic::Enforcer|Perl::Critic::Enforcer>
 object or the name of one, returns a
-L<Perl::Critic::PolicyConfig|Perl::Critic::PolicyConfig> for the
+L<Perl::Critic::EnforcerConfig|Perl::Critic::EnforcerConfig> for the
 user's configuration parameters for that enforcer.
 
 
 =item C< raw_enforcer_params( $enforcer ) >
 
-Given a reference to a L<Perl::Critic::Policy|Perl::Critic::Policy>
+Given a reference to a L<Perl::Critic::Enforcer|Perl::Critic::Enforcer>
 object or the name of one, returns a reference to a hash of the user's
 configuration parameters for that enforcer.
 
@@ -390,7 +390,7 @@ configuration parameters for that enforcer.
 =item C< listed_policies() >
 
 Returns a list of the names of all the Policies that are mentioned in
-the profile.  The Policy names will be fully qualified (e.g.
+the profile.  The Enforcer names will be fully qualified (e.g.
 Perl::Critic::Foo).
 
 

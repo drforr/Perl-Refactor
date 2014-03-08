@@ -14,7 +14,7 @@ use warnings;
 use English qw(-no_match_vars);
 
 use Perl::Critic::UserProfile;
-use Perl::Critic::PolicyFactory (-test => 1);
+use Perl::Critic::EnforcerFactory (-test => 1);
 use Perl::Critic::TestUtils qw();
 
 use Test::More tests => 10;
@@ -30,11 +30,11 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
 #-----------------------------------------------------------------------------
 
 {
-    my $enforcer_name = 'Perl::Critic::Policy::Modules::ProhibitEvilModules';
+    my $enforcer_name = 'Perl::Critic::Enforcer::Modules::ProhibitEvilModules';
     my $params = {severity => 2, set_themes => 'betty', add_themes => 'wilma'};
 
     my $userprof = Perl::Critic::UserProfile->new( -profile => 'NONE' );
-    my $pf = Perl::Critic::PolicyFactory->new( -profile  => $userprof );
+    my $pf = Perl::Critic::EnforcerFactory->new( -profile  => $userprof );
 
 
     # Now test...
@@ -55,12 +55,12 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     my $params = {set_themes => 'betty', add_themes => 'wilma'};
 
     my $userprof = Perl::Critic::UserProfile->new( -profile => 'NONE' );
-    my $pf = Perl::Critic::PolicyFactory->new( -profile  => $userprof );
+    my $pf = Perl::Critic::EnforcerFactory->new( -profile  => $userprof );
 
 
     # Now test...
     my $enforcer = $pf->create_enforcer( -name => $enforcer_name, -params => $params );
-    my $enforcer_name_long = 'Perl::Critic::Policy::' . $enforcer_name;
+    my $enforcer_name_long = 'Perl::Critic::Enforcer::' . $enforcer_name;
     is( ref $enforcer, $enforcer_name_long, 'Created correct type of enforcer');
 
     my @themes = $enforcer->get_themes();
@@ -72,7 +72,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
 
 {
     my $userprof = Perl::Critic::UserProfile->new( -profile => 'NONE' );
-    my $pf = Perl::Critic::PolicyFactory->new( -profile  => $userprof );
+    my $pf = Perl::Critic::EnforcerFactory->new( -profile  => $userprof );
 
     # Try missing arguments
     eval{ $pf->create_enforcer() };
@@ -110,21 +110,21 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
 
     my $profile = { 'Perl::Critic::Bogus' => {} };
     my $userprof = Perl::Critic::UserProfile->new( -profile => $profile );
-    my $pf = Perl::Critic::PolicyFactory->new( -profile  => $userprof );
+    my $pf = Perl::Critic::EnforcerFactory->new( -profile  => $userprof );
     like(
         $last_warning,
-        qr/^Policy [ ] ".*Bogus" [ ] is [ ] not [ ] installed/xms,
-        'Got expected warning for positive configuration of Policy.',
+        qr/^Enforcer [ ] ".*Bogus" [ ] is [ ] not [ ] installed/xms,
+        'Got expected warning for positive configuration of Enforcer.',
     );
     $last_warning = q{};
 
     $profile = { '-Perl::Critic::Shizzle' => {} };
     $userprof = Perl::Critic::UserProfile->new( -profile => $profile );
-    $pf = Perl::Critic::PolicyFactory->new( -profile  => $userprof );
+    $pf = Perl::Critic::EnforcerFactory->new( -profile  => $userprof );
     like(
         $last_warning,
-        qr/^Policy [ ] ".*Shizzle" [ ] is [ ] not [ ] installed/xms,
-        'Got expected warning for negative configuration of Policy.',
+        qr/^Enforcer [ ] ".*Shizzle" [ ] is [ ] not [ ] installed/xms,
+        'Got expected warning for negative configuration of Enforcer.',
     );
     $last_warning = q{};
 }

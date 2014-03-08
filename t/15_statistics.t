@@ -13,7 +13,7 @@ use warnings;
 
 use English qw(-no_match_vars);
 
-use Perl::Critic::PolicyFactory (-test => 1);
+use Perl::Critic::EnforcerFactory (-test => 1);
 use Perl::Critic::Statistics;
 use Perl::Critic::TestUtils;
 

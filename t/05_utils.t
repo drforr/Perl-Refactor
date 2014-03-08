@@ -21,7 +21,7 @@ use File::Temp qw< >;
 use PPI::Document qw< >;
 use PPI::Document::File qw< >;
 
-use Perl::Critic::PolicyFactory;
+use Perl::Critic::EnforcerFactory;
 use Perl::Critic::TestUtils qw(bundled_enforcer_names);
 use Perl::Critic::Utils;
 
@@ -76,7 +76,7 @@ sub test_export {
 
     is($SPACE, q< >, 'character constants');
     is($SEVERITY_LOWEST, 1, 'severity constants');
-    is($POLICY_NAMESPACE, 'Perl::Critic::Policy', 'Policy namespace');
+    is($POLICY_NAMESPACE, 'Perl::Critic::Enforcer', 'Enforcer namespace');
 
     return;
 }
@@ -447,7 +447,7 @@ sub test_find_bundled_policies {
     Perl::Critic::TestUtils::block_perlrefactorrc();
 
     my @native_policies = bundled_enforcer_names();
-    my $enforcer_dir = File::Spec->catfile( qw(lib Perl Critic Policy) );
+    my $enforcer_dir = File::Spec->catfile( qw(lib Perl Critic Enforcer) );
     my @found_policies  = all_perl_files( $enforcer_dir );
     is( scalar @found_policies, scalar @native_policies, 'Find all perl code');
 

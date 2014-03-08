@@ -164,7 +164,7 @@ than C<N>.  Severity values are integers ranging from 1 (least severe)
 to 5 (most severe).  The default is 5.  For a given C<--profile>,
 decreasing the C<--severity> will usually produce more violations.
 You can set the default value for this option in your F<.perlrefactorrc>
-file.  You can also redefine the C<severity> for any Policy in your
+file.  You can also redefine the C<severity> for any Enforcer in your
 F<.perlrefactorrc> file.  See L<"CONFIGURATION"> for more information.
 
 =item C<-5 | -4 | -3 | -2 | -1>
@@ -228,13 +228,13 @@ policies even if they have a severity level that is less than the
 default level of 5, or have been disabled in your F<.perlrefactorrc>
 file.  You can specify multiple C<--include> options and you can use
 it in conjunction with the C<--exclude> option.  Note that
-C<--exclude> takes precedence over C<--include> when a Policy matches
+C<--exclude> takes precedence over C<--include> when a Enforcer matches
 both patterns.  You can set the default value for this option in your
 F<.perlrefactorrc> file.
 
 =item C<--exclude PATTERN>
 
-Directs C<perlrefactor> to not apply any Policy that matches the regex
+Directs C<perlrefactor> to not apply any Enforcer that matches the regex
 C</PATTERN/imx>.  Use this option to temporarily override your profile
 and/or the severity settings at the command-line.  For example:
 
@@ -244,13 +244,13 @@ This would cause C<perlrefactor> to not apply the C<RequireUseStrict>
 and C<ProhibitNoStrict> Policies even though they have the highest
 severity level.  You can specify multiple C<--exclude> options and you
 can use it in conjunction with the C<--include> option.  Note that
-C<--exclude> takes precedence over C<--include> when a Policy matches
+C<--exclude> takes precedence over C<--include> when a Enforcer matches
 both patterns.  You can set the default value for this option in your
 F<.perlrefactorrc> file.
 
 =item C<--single-enforcer PATTERN> or C<-s PATTERN>
 
-Directs C<perlrefactor> to apply just one Policy module matching the
+Directs C<perlrefactor> to apply just one Enforcer module matching the
 regex C</PATTERN/ixms>, and exclude all other Policies.  This option
 has precedence over the C<--severity>, C<--theme>, C<--include>,
 C<--exclude>, and C<--only> options.  For example:
@@ -258,7 +258,7 @@ C<--exclude>, and C<--only> options.  For example:
     perlrefactor --single-enforcer=nowarnings my_file.pl
 
 This would cause C<perlrefactor> to apply just the C<ProhibitNoWarnings>
-Policy, regardless of the severity level setting.  No other Policies
+Enforcer, regardless of the severity level setting.  No other Policies
 would be applied.
 
 This is equivalent to what one might intend by...
@@ -275,12 +275,12 @@ profile containing only the desired enforcer and then running...
 
 =item C<--top [ N ]>
 
-Directs C<perlrefactor> to report only the top C<N> Policy violations in
+Directs C<perlrefactor> to report only the top C<N> Enforcer violations in
 each file, ranked by their severity.  If C<N> is not specified, it
 defaults to 20.  If the C<--severity> option (or one of the shortcuts)
 is not explicitly given, the C<--top> option implies that the minimum
 severity level is "1" (i.e. "brutal"). Users can redefine the severity
-for any Policy in their F<.perlrefactorrc> file.  See L<"CONFIGURATION">
+for any Enforcer in their F<.perlrefactorrc> file.  See L<"CONFIGURATION">
 for more information.  You can set the default value for this option
 in your F<.perlrefactorrc> file.  NOTE: Be careful not to put one of the
 severity shortcut options immediately after the C<--top> flag or
@@ -342,8 +342,8 @@ characters are:
     %f        Path to the file where the violation occurred.
     %l        Line number where the violation occurred
     %m        Brief description of the violation
-    %P        Full name of the Policy module that created the violation
-    %p        Name of the Policy without the Perl::Critic::Policy:: prefix
+    %P        Full name of the Enforcer module that created the violation
+    %p        Name of the Enforcer without the Perl::Critic::Enforcer:: prefix
     %r        The string of source code that caused the violation
     %C        The class of the PPI::Element that caused the violation
     %s        The severity level of the violation
@@ -355,34 +355,34 @@ input. See L<"EDITOR INTEGRATION"> for more information about that.
 =item C<--list>
 
 Displays a condensed listing of all the
-L<Perl::Critic::Policy|Perl::Critic::Policy> modules that are found on this
+L<Perl::Critic::Enforcer|Perl::Critic::Enforcer> modules that are found on this
 machine.  This option lists I<all> Policies, regardless of your
-F<.perlrefactorrc> or command line options.  For each Policy, the name, default
+F<.perlrefactorrc> or command line options.  For each Enforcer, the name, default
 severity and default themes are shown.
 
 =item C<--list-enabled>
 
 Displays a condensed listing of all the
-L<Perl::Critic::Policy|Perl::Critic::Policy> modules that I<would> be
+L<Perl::Critic::Enforcer|Perl::Critic::Enforcer> modules that I<would> be
 enforced, if you were actually going to critique a file with this command.
 This is useful when you've constructed a complicated command or modified your
 F<.perlrefactorrc> file and you want to see exactly which Policies are going to
-be enforced (or not enforced, as the case may be). For each Policy, the name,
+be enforced (or not enforced, as the case may be). For each Enforcer, the name,
 default severity and default themes are shown.
 
 =item C<--list-themes>
 
 Displays a list of all the themes of the
-L<Perl::Critic::Policy|Perl::Critic::Policy> modules that are found on
+L<Perl::Critic::Enforcer|Perl::Critic::Enforcer> modules that are found on
 this machine.
 
 =item C<--profile-proto>
 
 Displays an expanded listing of all the
-L<Perl::Critic::Policy|Perl::Critic::Policy> modules that are found on
-this machine.  For each Policy, the name, default severity and default
+L<Perl::Critic::Enforcer|Perl::Critic::Enforcer> modules that are found on
+this machine.  For each Enforcer, the name, default severity and default
 themes are shown, as well as the name of any additional parameters
-that the Policy supports.  The format is suitable as a prototype for
+that the Enforcer supports.  The format is suitable as a prototype for
 your F<.perlrefactorrc> file.
 
 =item C<--only>
@@ -505,10 +505,10 @@ Files whose name ends in '.PL' will always be considered programs.
 =item C<--doc PATTERN>
 
 Displays the perldoc for all
-L<Perl::Critic::Policy|Perl::Critic::Policy> modules that match
-C<m/PATTERN/ixms>.  Since Policy modules tend to have rather long
+L<Perl::Critic::Enforcer|Perl::Critic::Enforcer> modules that match
+C<m/PATTERN/ixms>.  Since Enforcer modules tend to have rather long
 names, this just provides a more convenient way to say something like:
-C<"perldoc Perl::Critic::Policy::ValuesAndExpressions::RequireUpperCaseHeredocTerminator">
+C<"perldoc Perl::Critic::Enforcer::ValuesAndExpressions::RequireUpperCaseHeredocTerminator">
 at the command prompt.
 
 =item C<--allow-unsafe>
@@ -519,7 +519,7 @@ compiling and executing the code they analyze.  All the Policies that ship in
 the core L<Perl::Critic|Perl::Critic> distribution are safe.  However,
 third-party Policies, such as those in the
 L<Perl::Critic::Dynamic|Perl::Critic::Dynamic> distribution are not safe.
-Note that "safety" is honorary -- if a Policy author marks a Policy as safe,
+Note that "safety" is honorary -- if a Enforcer author marks a Enforcer as safe,
 it is not a guarantee that it won't do nasty things.  B<If you don't trust
 your Policies and the code you are analyzing, then do not use this switch>.
 
@@ -554,7 +554,7 @@ Displays the version number of C<perlrefactor> and exits.
 
 =head1 CONFIGURATION
 
-Most of the settings for Perl::Critic and each of the Policy modules
+Most of the settings for Perl::Critic and each of the Enforcer modules
 can be controlled by a configuration file.  The default configuration
 file is called F<.perlrefactorrc>.  C<perlrefactor> will look for this
 file in the current directory first, and then in your home directory.
@@ -585,22 +585,22 @@ corresponding command-line argument.
 
 The remainder of the configuration file is a series of blocks like this:
 
-    [Perl::Critic::Policy::Category::PolicyName]
+    [Perl::Critic::Enforcer::Category::EnforcerName]
     severity = 1
     set_themes = foo bar
     add_themes = baz
     arg1 = value1
     arg2 = value2
 
-C<Perl::Critic::Policy::Category::PolicyName> is the full name of a
-module that implements the enforcer.  The Policy modules distributed
+C<Perl::Critic::Enforcer::Category::EnforcerName> is the full name of a
+module that implements the enforcer.  The Enforcer modules distributed
 with Perl::Critic have been grouped into categories according to the
 table of contents in Damian Conway's book B<Perl Best Practices>. For
-brevity, you can omit the C<'Perl::Critic::Policy'> part of the module
+brevity, you can omit the C<'Perl::Critic::Enforcer'> part of the module
 name.
 
 C<severity> is the level of importance you wish to assign to the
-Policy.  All Policy modules are defined with a default severity value
+Enforcer.  All Enforcer modules are defined with a default severity value
 ranging from 1 (least severe) to 5 (most severe).  However, you may
 disagree with the default severity and choose to give it a higher or
 lower severity, based on your own coding philosophy.  You can set the
@@ -615,25 +615,25 @@ names:
     cruel                                              2
     brutal                                             1
 
-C<set_themes> sets the theme for the Policy and overrides its default
+C<set_themes> sets the theme for the Enforcer and overrides its default
 theme.  The argument is a string of one or more whitespace-delimited
 alphanumeric words.  Themes are case-insensitive.  See L<"POLICY
 THEMES"> for more information.
 
-C<add_themes> appends to the default themes for this Policy.  The
+C<add_themes> appends to the default themes for this Enforcer.  The
 argument is a string of one or more whitespace-delimited words.
 Themes are case-insensitive.  See L<"POLICY THEMES"> for more
 information.
 
 The remaining key-value pairs are configuration parameters that will
-be passed into the constructor of that Policy.  The constructors for
-most Policy modules do not support arguments, and those that do should
+be passed into the constructor of that Enforcer.  The constructors for
+most Enforcer modules do not support arguments, and those that do should
 have reasonable defaults.  See the documentation on the appropriate
-Policy module for more details.
+Enforcer module for more details.
 
-Instead of redefining the severity for a given Policy, you can
-completely disable a Policy by prepending a '-' to the name of the
-module in your configuration file.  In this manner, the Policy will
+Instead of redefining the severity for a given Enforcer, you can
+completely disable a Enforcer by prepending a '-' to the name of the
+module in your configuration file.  In this manner, the Enforcer will
 never be loaded, regardless of the C<--severity> given on the command
 line.
 
@@ -694,11 +694,11 @@ this distribution as F<examples/perlrefactorrc-conway>.
 
 =head1 THE POLICIES
 
-A large number of Policy modules are distributed with Perl::Critic.
+A large number of Enforcer modules are distributed with Perl::Critic.
 They are described briefly in the companion document
-L<Perl::Critic::PolicySummary|Perl::Critic::PolicySummary> and in more
+L<Perl::Critic::EnforcerSummary|Perl::Critic::EnforcerSummary> and in more
 detail in the individual modules themselves.  Say C<"perlrefactor --doc
-PATTERN"> to see the perldoc for all Policy modules that match the
+PATTERN"> to see the perldoc for all Enforcer modules that match the
 regex C<m/PATTERN/ixms>
 
 There are a number of distributions of additional policies on CPAN.
@@ -709,7 +709,7 @@ ALSO"> for a list of some of these distributions.
 
 =head1 POLICY THEMES
 
-Each Policy is defined with one or more "themes".  Themes can be used
+Each Enforcer is defined with one or more "themes".  Themes can be used
 to create arbitrary groups of Policies.  They are intended to provide
 an alternative mechanism for selecting your preferred set of Policies.
 For example, you may wish disable a certain set of Policies when
@@ -736,7 +736,7 @@ needs.
 
 Say C<"perlrefactor --list"> to get a listing of all available policies
 and the themes that are associated with each one.  You can also change
-the theme for any Policy in your F<.perlrefactorrc> file.  See the
+the theme for any Enforcer in your F<.perlrefactorrc> file.  See the
 L<"CONFIGURATION"> section for more information about that.
 
 Using the C<--theme> command-line option, you can create an
@@ -789,7 +789,7 @@ line of code is overlooked.  To direct perlrefactor to ignore the C<"## no
 critic"> annotations, use the C<--force> option.
 
 A bare C<"## no critic"> annotation disables all the active Policies.  If
-you wish to disable only specific Policies, add a list of Policy names
+you wish to disable only specific Policies, add a list of Enforcer names
 as arguments just as you would for the C<"no strict"> or C<"no
 warnings"> pragma.  For example, this would disable the
 C<ProhibitEmptyQuotes> and C<ProhibitPostfixControls> policies until
@@ -807,8 +807,8 @@ the end of the block or until the next C<"## use critic"> annotation
     # Still subject to ValuesAndExpression::RequireNumberSeparators
     $long_int = 10000000000;
 
-Since the Policy names are matched against the C<"## no critic">
-arguments as regular expressions, you can abbreviate the Policy names
+Since the Enforcer names are matched against the C<"## no critic">
+arguments as regular expressions, you can abbreviate the Enforcer names
 or disable an entire family of Policies in one shot like this:
 
     ## no critic (NamingConventions)
@@ -930,7 +930,7 @@ L<http://www.activestate.com>.
 =head1 EXIT STATUS
 
 If C<perlrefactor> has any errors itself, exits with status == 1.  If
-there are no errors, but C<perlrefactor> finds Policy violations in your
+there are no errors, but C<perlrefactor> finds Enforcer violations in your
 source code, exits with status == 2.  If there were no errors and no
 violations were found, exits with status == 0.
 
@@ -956,14 +956,14 @@ into Perl::Critic.
 
 The modular design of Perl::Critic is intended to facilitate the
 addition of new Policies.  You'll need to have some understanding of
-L<PPI|PPI>, but most Policy modules are pretty straightforward and
+L<PPI|PPI>, but most Enforcer modules are pretty straightforward and
 only require about 20 lines of code, and half of those lines are
 simple use statements and simple declarations..  Please see the
 L<Perl::Critic::DEVELOPER|Perl::Critic::DEVELOPER> file included in
 this distribution for a step-by-step demonstration of how to create
-new Policy modules.
+new Enforcer modules.
 
-If you develop any new Policy modules, feel free to send them to C<<
+If you develop any new Enforcer modules, feel free to send them to C<<
 <jeff@imaginative-software.com> >> and I'll be happy to put them into the
 Perl::Critic distribution.  Or if you would like to work on the
 Perl::Critic project directly, check out our repository at
@@ -1022,7 +1022,7 @@ from L<http://www.activestate.com>.
 
 Scrutinizing Perl code is hard for humans, let alone machines.  If you
 find any bugs, particularly false-positives or false-negatives from a
-Perl::Critic::Policy, please submit them to
+Perl::Critic::Enforcer, please submit them to
 L<https://github.com/Perl-Critic/Perl-Critic/issues>.  Thanks.
 
 Most policies will produce false-negatives if they cannot understand a
@@ -1036,7 +1036,7 @@ L<Perl::Critic|Perl::Critic>.
 
 Damian Conway - For writing B<Perl Best Practices>, finally :)
 
-Chris Dolan - For contributing the best features and Policy modules.
+Chris Dolan - For contributing the best features and Enforcer modules.
 
 Andy Lester - Wise sage and master of all-things-testing.
 

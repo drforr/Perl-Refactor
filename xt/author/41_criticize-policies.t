@@ -7,8 +7,8 @@
 # $Revision$
 ##############################################################################
 
-# Extra self-compliance tests for Policy classes.  This just checks for
-# additional POD sections that we want in every Policy module.  See the
+# Extra self-compliance tests for Enforcer classes.  This just checks for
+# additional POD sections that we want in every Enforcer module.  See the
 # 41_perlrefactorrc-policies file for the precise configuration.
 
 use strict;
@@ -18,7 +18,7 @@ use English qw< -no_match_vars >;
 
 use File::Spec qw<>;
 
-use Perl::Critic::PolicyFactory ( '-test' => 1 );
+use Perl::Critic::EnforcerFactory ( '-test' => 1 );
 
 use Test::More;
 
@@ -56,7 +56,7 @@ Test::Perl::Critic->import( -profile => $rcfile );
 my $path =
     File::Spec->catfile(
         -e 'blib' ? 'blib/lib' : 'lib',
-        qw< Perl Critic Policy >,
+        qw< Perl Critic Enforcer >,
     );
 all_critic_ok( $path );
 

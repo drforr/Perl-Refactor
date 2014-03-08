@@ -51,36 +51,36 @@ our $VERSION = '1.121';
 
     # Now using long enforcer names
     is(
-        $up->enforcer_is_enabled('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
+        $up->enforcer_is_enabled('Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists'),
         1,
-        'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists is enabled.',
+        'Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists is enabled.',
     );
     is(
-        $up->enforcer_is_disabled('Perl::Critic::Policy::NamingConventions::Capitalization'),
+        $up->enforcer_is_disabled('Perl::Critic::Enforcer::NamingConventions::Capitalization'),
         1,
-        'Perl::Critic::Policy::NamingConventions::Capitalization is disabled.',
+        'Perl::Critic::Enforcer::NamingConventions::Capitalization is disabled.',
     );
     is_deeply(
-        $up->raw_enforcer_params('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
+        $up->raw_enforcer_params('Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists'),
         \%enforcer_params,
-        'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
+        'Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
     # Using bogus enforcer names
     is(
-        $up->enforcer_is_enabled('Perl::Critic::Policy::Bogus'),
+        $up->enforcer_is_enabled('Perl::Critic::Enforcer::Bogus'),
         q{},
-        q<Bogus Policy isn't enabled>,
+        q<Bogus Enforcer isn't enabled>,
     );
     is(
-        $up->enforcer_is_disabled('Perl::Critic::Policy::Bogus'),
+        $up->enforcer_is_disabled('Perl::Critic::Enforcer::Bogus'),
         q{},
-        q<Bogus Policy isn't disabled>,
+        q<Bogus Enforcer isn't disabled>,
     );
     is_deeply(
-        $up->raw_enforcer_params('Perl::Critic::Policy::Bogus'),
+        $up->raw_enforcer_params('Perl::Critic::Enforcer::Bogus'),
         {},
-        q<Bogus Policy doesn't have any configuration.>,
+        q<Bogus Enforcer doesn't have any configuration.>,
     );
 }
 
@@ -116,36 +116,36 @@ our $VERSION = '1.121';
 
     # Now using long enforcer names
     is(
-        $up->enforcer_is_enabled('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
+        $up->enforcer_is_enabled('Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists'),
         1,
-        'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists is enabled.',
+        'Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists is enabled.',
     );
     is(
-        $up->enforcer_is_disabled('Perl::Critic::Policy::NamingConventions::Capitalization'),
+        $up->enforcer_is_disabled('Perl::Critic::Enforcer::NamingConventions::Capitalization'),
         1,
-        'Perl::Critic::Policy::NamingConventions::Capitalization is disabled.',
+        'Perl::Critic::Enforcer::NamingConventions::Capitalization is disabled.',
     );
     is_deeply(
-        $up->raw_enforcer_params('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
+        $up->raw_enforcer_params('Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists'),
         \%enforcer_params,
-        'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
+        'Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
     # Using bogus enforcer names
     is(
-        $up->enforcer_is_enabled('Perl::Critic::Policy::Bogus'),
+        $up->enforcer_is_enabled('Perl::Critic::Enforcer::Bogus'),
         q{},
-        q<Bogus Policy isn't enabled>,
+        q<Bogus Enforcer isn't enabled>,
     );
     is(
-        $up->enforcer_is_disabled('Perl::Critic::Policy::Bogus'),
+        $up->enforcer_is_disabled('Perl::Critic::Enforcer::Bogus'),
         q{},
-        q<Bogus Policy isn't disabled>,
+        q<Bogus Enforcer isn't disabled>,
     );
     is_deeply(
-        $up->raw_enforcer_params('Perl::Critic::Policy::Bogus'),
+        $up->raw_enforcer_params('Perl::Critic::Enforcer::Bogus'),
         {},
-        q<Bogus Policy doesn't have any configuration.>,
+        q<Bogus Enforcer doesn't have any configuration.>,
     );
 }
 
@@ -181,36 +181,36 @@ END_PROFILE
 
     # Now using long enforcer names
     is(
-        $up->enforcer_is_enabled('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
+        $up->enforcer_is_enabled('Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists'),
         1,
-        'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists is enabled.',
+        'Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists is enabled.',
     );
     is(
-        $up->enforcer_is_disabled('Perl::Critic::Policy::NamingConventions::Capitalization'),
+        $up->enforcer_is_disabled('Perl::Critic::Enforcer::NamingConventions::Capitalization'),
         1,
-        'Perl::Critic::Policy::NamingConventions::Capitalization is disabled.',
+        'Perl::Critic::Enforcer::NamingConventions::Capitalization is disabled.',
     );
     is_deeply(
-        $up->raw_enforcer_params('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
+        $up->raw_enforcer_params('Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists'),
         \%enforcer_params,
-        'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
+        'Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
     # Using bogus enforcer names
     is(
-        $up->enforcer_is_enabled('Perl::Critic::Policy::Bogus'),
+        $up->enforcer_is_enabled('Perl::Critic::Enforcer::Bogus'),
         q{},
-        q<Bogus Policy isn't enabled>,
+        q<Bogus Enforcer isn't enabled>,
     );
     is(
-        $up->enforcer_is_disabled('Perl::Critic::Policy::Bogus'),
+        $up->enforcer_is_disabled('Perl::Critic::Enforcer::Bogus'),
         q{},
-        q<Bogus Policy isn't disabled>,
+        q<Bogus Enforcer isn't disabled>,
     );
     is_deeply(
-        $up->raw_enforcer_params('Perl::Critic::Policy::Bogus'),
+        $up->raw_enforcer_params('Perl::Critic::Enforcer::Bogus'),
         {},
-        q<Bogus Policy doesn't have any configuration.>,
+        q<Bogus Enforcer doesn't have any configuration.>,
     );
 }
 
@@ -220,8 +220,8 @@ END_PROFILE
 {
     my %enforcer_params = (min_elements => 4);
     my $long_profile_string = <<'END_PROFILE';
-[-Perl::Critic::Policy::NamingConventions::Capitalization]
-[Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists]
+[-Perl::Critic::Enforcer::NamingConventions::Capitalization]
+[Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists]
 min_elements = 4
 END_PROFILE
 
@@ -246,36 +246,36 @@ END_PROFILE
 
     # Now using long enforcer names
     is(
-        $up->enforcer_is_enabled('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
+        $up->enforcer_is_enabled('Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists'),
         1,
-        'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists is enabled.',
+        'Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists is enabled.',
     );
     is(
-        $up->enforcer_is_disabled('Perl::Critic::Policy::NamingConventions::Capitalization'),
+        $up->enforcer_is_disabled('Perl::Critic::Enforcer::NamingConventions::Capitalization'),
         1,
-        'Perl::Critic::Policy::NamingConventions::Capitalization is disabled.',
+        'Perl::Critic::Enforcer::NamingConventions::Capitalization is disabled.',
     );
     is_deeply(
-        $up->raw_enforcer_params('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
+        $up->raw_enforcer_params('Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists'),
         \%enforcer_params,
-        'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
+        'Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
     # Using bogus enforcer names
     is(
-        $up->enforcer_is_enabled('Perl::Critic::Policy::Bogus'),
+        $up->enforcer_is_enabled('Perl::Critic::Enforcer::Bogus'),
         q{},
-        q<Bogus Policy isn't enabled>,
+        q<Bogus Enforcer isn't enabled>,
     );
     is(
-        $up->enforcer_is_disabled('Perl::Critic::Policy::Bogus'),
+        $up->enforcer_is_disabled('Perl::Critic::Enforcer::Bogus'),
         q{},
-        q<Bogus Policy isn't disabled>,
+        q<Bogus Enforcer isn't disabled>,
     );
     is_deeply(
-        $up->raw_enforcer_params('Perl::Critic::Policy::Bogus'),
+        $up->raw_enforcer_params('Perl::Critic::Enforcer::Bogus'),
         {},
-        q<Bogus Policy doesn't have any configuration.>,
+        q<Bogus Enforcer doesn't have any configuration.>,
     );
 }
 

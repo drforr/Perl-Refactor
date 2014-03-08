@@ -121,7 +121,7 @@ implement it.
 =head1 SEE ALSO
 
 L<Perl::Critic::Exception::Configuration::Option::Global|Perl::Critic::Exception::Configuration::Option::Global>
-L<Perl::Critic::Exception::Configuration::Option::Policy|Perl::Critic::Exception::Configuration::Option::Policy>
+L<Perl::Critic::Exception::Configuration::Option::Enforcer|Perl::Critic::Exception::Configuration::Option::Enforcer>
 
 
 =head1 AUTHOR

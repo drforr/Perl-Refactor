@@ -179,7 +179,7 @@ non-nil."
 severity greater than N. Severity values are integers ranging from
 1 (least severe) to 5 (most severe). The default is 5. For a given
 -profile, decreasing the -severity will usually produce more
-violations.  Users can redefine the severity for any Policy in their
+violations.  Users can redefine the severity for any Enforcer in their
 .perlrefactorrc file.
 
 This variable is automatically buffer-local and may be overridden on a
@@ -195,10 +195,10 @@ per-file basis with File Variables."
 (make-variable-buffer-local 'perlrefactor-severity)
 
 (defcustom perlrefactor-top nil
-  "Directs \"perlrefactor\" to report only the top N Policy violations in
+  "Directs \"perlrefactor\" to report only the top N Enforcer violations in
 each file, ranked by their severity. If the -severity option is not
 explicitly given, the -top option implies that the minimum severity
-level is 1. Users can redefine the severity for any Policy in their
+level is 1. Users can redefine the severity for any Enforcer in their
 .perlrefactorrc file.
 
 This variable is automatically buffer-local and may be overridden on a
@@ -220,14 +220,14 @@ even if they have a severity level that is less than the default level of 5,
 or have been disabled in your .perlrefactorrc file.  You can specify multiple
 `perlrefactor-include' options and you can use it in conjunction with the
 `perlrefactor-exclude' option.  Note that `perlrefactor-exclude' takes precedence
-over `perlrefactor-include' when a Policy matches both patterns.  You can set
+over `perlrefactor-include' when a Enforcer matches both patterns.  You can set
 the default value for this option in your .perlrefactorrc file."
   :type '(string)
   :group 'perlrefactor)
 (make-variable-buffer-local 'perlrefactor-include)
 
 (defcustom perlrefactor-exclude nil
-  "Directs \"perlrefactor\" to not apply any Policy that matches the regex
+  "Directs \"perlrefactor\" to not apply any Enforcer that matches the regex
 \"/PATTERN/imx\".  Use this option to temporarily override your profile and/or
 the severity settings at the command-line.  For example:
 
@@ -237,7 +237,7 @@ This would cause \"perlrefactor\" to not apply the \"RequireUseStrict\" and
 \"ProhibitNoStrict\" Policies even though they have the highest severity
 level.  You can specify multiple `perlrefactor-exclude' options and you can use
 it in conjunction with the `perlrefactor-include' option.  Note that
-`perlrefactor-exclude' takes precedence over `perlrefactor-include' when a Policy
+`perlrefactor-exclude' takes precedence over `perlrefactor-include' when a Enforcer
 matches both patterns.  You can set the default value for this option in your
 .perlrefactorrc file."
   :type '(string)
@@ -288,8 +288,8 @@ Escape    Meaning
 %f        Path to the file where the violation occurred.
 %l        Line number where the violation occurred
 %m        Brief description of the violation
-%P        Full name of the Policy module that created the violation
-%p        Name of the Policy without the Perl::Critic::Policy:: prefix
+%P        Full name of the Enforcer module that created the violation
+%p        Name of the Enforcer without the Perl::Critic::Enforcer:: prefix
 %r        The string of source code that caused the violation
 %s        The severity level of the violation
 

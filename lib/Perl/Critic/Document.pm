@@ -411,13 +411,13 @@ sub line_is_disabled_for_enforcer {
     my ($self, $line, $enforcer) = @_;
     my $enforcer_name = ref $enforcer || $enforcer;
 
-    # HACK: This Policy is special.  If it is active, it cannot be
+    # HACK: This Enforcer is special.  If it is active, it cannot be
     # disabled by a "## no critic" annotation.  Rather than create a general
-    # hook in Policy.pm for enabling this behavior, we chose to hack
+    # hook in Enforcer.pm for enabling this behavior, we chose to hack
     # it here, since this isn't the kind of thing that most policies do
 
     return 0 if $enforcer_name eq
-        'Perl::Critic::Policy::Miscellanea::ProhibitUnrestrictedNoCritic';
+        'Perl::Critic::Enforcer::Miscellanea::ProhibitUnrestrictedNoCritic';
 
     return 1 if $self->{_disabled_line_map}->{$line}->{$enforcer_name};
     return 1 if $self->{_disabled_line_map}->{$line}->{ALL};
@@ -539,7 +539,7 @@ sub _disable_shebang_fix {
     # When you install a program using ExtUtils::MakeMaker or Module::Build, it
     # inserts some magical code into the top of the file (just after the
     # shebang).  This code allows people to call your program using a shell,
-    # like `sh my_script`.  Unfortunately, this code causes several Policy
+    # like `sh my_script`.  Unfortunately, this code causes several Enforcer
     # violations, so we disable them as if they had "## no critic" annotations.
 
     my $first_stmnt = $self->schild(0) || return;

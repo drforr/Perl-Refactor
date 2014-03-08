@@ -102,7 +102,7 @@ L<"OVERLOADS"> for more information.
 When a L<Perl::Critic::ThemeListing|Perl::Critic::ThemeListing> is
 evaluated in string context, it produces a one-line summary of the
 default severity, enforcer name, and default themes for each
-L<Perl::Critic::Policy|Perl::Critic::Policy> object that was given to
+L<Perl::Critic::Enforcer|Perl::Critic::Enforcer> object that was given to
 the constructor of this C<ThemeListing>.
 
 

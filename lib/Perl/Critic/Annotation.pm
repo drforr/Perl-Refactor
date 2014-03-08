@@ -14,7 +14,7 @@ use warnings;
 use Carp qw(confess);
 use English qw(-no_match_vars);
 
-use Perl::Critic::PolicyFactory;
+use Perl::Critic::EnforcerFactory;
 use Perl::Critic::Utils qw(:characters hashify);
 use Readonly;
 
@@ -225,7 +225,7 @@ sub _parse_annotation {
     my ($annotation_element) = @_;
 
     #############################################################################
-    # This regex captures the list of Policy name patterns that are to be
+    # This regex captures the list of Enforcer name patterns that are to be
     # disabled.  It is generally assumed that the element has already been
     # verified as a no-critic annotation.  So if this regex does not match,
     # then it implies that all Policies are to be disabled.
@@ -235,11 +235,11 @@ sub _parse_annotation {
     #                                 |              |      |        |
     #   "## no critic" with optional spaces          |      |        |
     #                                                |      |        |
-    #             Policy list may be prefixed with "qw"     |        |
+    #             Enforcer list may be prefixed with "qw"     |        |
     #                                                       |        |
-    #         Optional Policy list must begin with one of these      |
+    #         Optional Enforcer list must begin with one of these      |
     #                                                                |
-    #                 Capture entire Policy list (with delimiters) here
+    #                 Capture entire Enforcer list (with delimiters) here
     #
     #############################################################################
 
@@ -252,15 +252,15 @@ sub _parse_annotation {
         my @enforcer_name_patterns = grep { $_ ne $EMPTY }
             split m{\s *[,\s] \s*}xms, $patterns_string;
         my $re = join $PIPE, map {"(?:$_)"} @enforcer_name_patterns;
-        my @site_enforcer_names = Perl::Critic::PolicyFactory::site_enforcer_names();
+        my @site_enforcer_names = Perl::Critic::EnforcerFactory::site_enforcer_names();
         @disabled_enforcer_names = grep {m/$re/ixms} @site_enforcer_names;
 
-        # It is possible that the Policy patterns listed in the annotation do not
+        # It is possible that the Enforcer patterns listed in the annotation do not
         # match any of the site enforcer names.  This could happen when running
         # on a machine that does not have the same set of Policies as the author.
         # So we must return something here, otherwise all Policies will be
         # disabled.  We probably need to add a mechanism to (optionally) warn
-        # about this, just to help the author avoid writing invalid Policy names.
+        # about this, just to help the author avoid writing invalid Enforcer names.
 
         if (not @disabled_enforcer_names) {
             @disabled_enforcer_names = @enforcer_name_patterns;
@@ -302,7 +302,7 @@ C<Perl::Critic::Annotation> represents a single C<"## no critic">
 annotation in a L<PPI:Document>.  The Annotation takes care of parsing
 the annotation and keeps track of which lines and Policies it affects.
 It is intended to encapsulate the details of the no-critic
-annotations, and to provide a way for Policy objects to interact with
+annotations, and to provide a way for Enforcer objects to interact with
 the annotations (via a L<Perl::Critic::Document|Perl::Critic::Document>).
 
 

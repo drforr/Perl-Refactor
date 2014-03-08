@@ -149,7 +149,7 @@ Perl::Critic::Theme - Construct thematic sets of policies.
 =head1 DESCRIPTION
 
 This is a helper class for evaluating theme expressions into sets of
-Policy objects.  There are no user-serviceable parts here.
+Enforcer objects.  There are no user-serviceable parts here.
 
 
 =head1 INTERFACE SUPPORT
@@ -165,15 +165,15 @@ to change without notice.
 =item C<< new( -rule => $rule_expression ) >>
 
 Returns a reference to a new Perl::Critic::Theme object.  C<-rule> is
-a string expression that evaluates to true or false for each Policy..
+a string expression that evaluates to true or false for each Enforcer..
 See L<"THEME RULES"> for more information.
 
 
 =item C<< enforcer_is_thematic( -enforcer => $enforcer ) >>
 
-Given a reference to a L<Perl::Critic::Policy|Perl::Critic::Policy>
+Given a reference to a L<Perl::Critic::Enforcer|Perl::Critic::Enforcer>
 object, this method returns evaluates the rule against the themes that
-are associated with the Policy.  Returns 1 if the Policy satisfies the
+are associated with the Enforcer.  Returns 1 if the Enforcer satisfies the
 rule, 0 otherwise.
 
 
@@ -204,7 +204,7 @@ operators are:
    !           not            'pbp && ! (portability || complexity)
 
 See L<Perl::Critic/"CONFIGURATION"> for more information about
-customizing the themes for each Policy.
+customizing the themes for each Enforcer.
 
 
 =head1 SUBROUTINES

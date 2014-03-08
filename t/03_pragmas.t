@@ -12,7 +12,7 @@ use strict;
 use warnings;
 
 use Test::More (tests => 32);
-use Perl::Critic::PolicyFactory (-test => 1);
+use Perl::Critic::EnforcerFactory (-test => 1);
 
 # common P::C testing tools
 use Perl::Critic::TestUtils qw(critique);
@@ -653,7 +653,7 @@ use strict;
 use warnings;
 our $VERSION = 1.0;
 
-## no critic (Critic::Policy)
+## no critic (Critic::Enforcer)
 my $noisy = '!';
 my $empty = '';
 eval $string;

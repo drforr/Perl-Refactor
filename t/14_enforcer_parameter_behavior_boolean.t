@@ -13,8 +13,8 @@ use warnings;
 
 use English qw(-no_match_vars);
 
-use Perl::Critic::Policy;
-use Perl::Critic::PolicyParameter;
+use Perl::Critic::Enforcer;
+use Perl::Critic::EnforcerParameter;
 use Perl::Critic::Utils qw{ :booleans };
 
 use Test::More tests => 9;
@@ -38,22 +38,22 @@ $specification =
     };
 
 
-$parameter = Perl::Critic::PolicyParameter->new($specification);
+$parameter = Perl::Critic::EnforcerParameter->new($specification);
 TODO: {
     local $TODO =
         'Need to restore tri-state functionality to Behavior::Boolean.';
 
-    $enforcer = Perl::Critic::Policy->new();
+    $enforcer = Perl::Critic::Enforcer->new();
     $parameter->parse_and_validate_config_value($enforcer, \%config);
     is($enforcer->{_test}, undef, q{no value, no default});
 }
 
-$enforcer = Perl::Critic::Policy->new();
+$enforcer = Perl::Critic::Enforcer->new();
 $config{test} = '1';
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 is($enforcer->{_test}, $TRUE, q{'1', no default});
 
-$enforcer = Perl::Critic::Policy->new();
+$enforcer = Perl::Critic::Enforcer->new();
 $config{test} = '0';
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 is($enforcer->{_test}, $FALSE, q{'0', no default});
@@ -62,17 +62,17 @@ is($enforcer->{_test}, $FALSE, q{'0', no default});
 $specification->{default_string} = '1';
 delete $config{test};
 
-$parameter = Perl::Critic::PolicyParameter->new($specification);
-$enforcer = Perl::Critic::Policy->new();
+$parameter = Perl::Critic::EnforcerParameter->new($specification);
+$enforcer = Perl::Critic::Enforcer->new();
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 is($enforcer->{_test}, $TRUE, q{no value, default '1'});
 
-$enforcer = Perl::Critic::Policy->new();
+$enforcer = Perl::Critic::Enforcer->new();
 $config{test} = '1';
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 is($enforcer->{_test}, $TRUE, q{'1', default '1'});
 
-$enforcer = Perl::Critic::Policy->new();
+$enforcer = Perl::Critic::Enforcer->new();
 $config{test} = '0';
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 is($enforcer->{_test}, $FALSE, q{'0', default '1'});
@@ -81,17 +81,17 @@ is($enforcer->{_test}, $FALSE, q{'0', default '1'});
 $specification->{default_string} = '0';
 delete $config{test};
 
-$parameter = Perl::Critic::PolicyParameter->new($specification);
-$enforcer = Perl::Critic::Policy->new();
+$parameter = Perl::Critic::EnforcerParameter->new($specification);
+$enforcer = Perl::Critic::Enforcer->new();
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 is($enforcer->{_test}, $FALSE, q{no value, default '0'});
 
-$enforcer = Perl::Critic::Policy->new();
+$enforcer = Perl::Critic::Enforcer->new();
 $config{test} = '1';
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 is($enforcer->{_test}, $TRUE, q{'1', default '0'});
 
-$enforcer = Perl::Critic::Policy->new();
+$enforcer = Perl::Critic::Enforcer->new();
 $config{test} = '0';
 $parameter->parse_and_validate_config_value($enforcer, \%config);
 is($enforcer->{_test}, $FALSE, q{'0', default '0'});

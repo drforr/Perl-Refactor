@@ -18,7 +18,7 @@ use List::MoreUtils qw(all any);
 
 use Perl::Critic::Exception::AggregateConfiguration;
 use Perl::Critic::Config qw<>;
-use Perl::Critic::PolicyFactory (-test => 1);
+use Perl::Critic::EnforcerFactory (-test => 1);
 use Perl::Critic::TestUtils qw<
     bundled_enforcer_names
     names_of_policies_willing_to_work
@@ -165,7 +165,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 
 #-----------------------------------------------------------------------------
 # Test config w/ multiple severity levels.  In this profile, we
-# define an arbitrary severity for each Policy so that severity
+# define an arbitrary severity for each Enforcer so that severity
 # levels 5 through 2 each have 10 Policies.  All remaining Policies
 # are in the 1st severity level.
 
@@ -488,7 +488,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
     my $config = Perl::Critic::Config->new( -profile => 'NONE' );
 
     # Try adding a bogus enforcer
-    eval{ $config->add_enforcer( -enforcer => 'Bogus::Policy') };
+    eval{ $config->add_enforcer( -enforcer => 'Bogus::Enforcer') };
     like(
         $EVAL_ERROR,
         qr/Unable [ ] to [ ] create [ ] enforcer/xms,
@@ -538,7 +538,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 
     # Pretend that ProhibitQuotedWordLists is actually unsafe
     no warnings qw(redefine once);  ## no critic qw(ProhibitNoWarnings)
-    local *Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists::is_safe = sub {return 0};
+    local *Perl::Critic::Enforcer::CodeLayout::ProhibitQuotedWordLists::is_safe = sub {return 0};
 
     my %safe_pc_config = (-severity => 1, -only => 1, -profile => \%profile);
     my @p = Perl::Critic::Config->new( %safe_pc_config )->policies();
@@ -550,7 +550,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 
     my %singular_pc_config = ('-single-enforcer' => 'QuotedWordLists');
     @p = Perl::Critic::Config->new( %singular_pc_config )->policies();
-    is(scalar @p, 1, '-single-enforcer always loads Policy, even if unsafe');
+    is(scalar @p, 1, '-single-enforcer always loads Enforcer, even if unsafe');
 }
 
 #-----------------------------------------------------------------------------

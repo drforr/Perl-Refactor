@@ -327,7 +327,7 @@ contains no information for individual Policies.
 
 Returns a reference to a list of the default exclusion patterns.  If
 onto by
-L<Perl::Critic::PolicyParameter|Perl::Critic::PolicyParameter>.  there
+L<Perl::Critic::EnforcerParameter|Perl::Critic::EnforcerParameter>.  there
 are no default exclusion patterns, then the list will be empty.
 
 

@@ -33,7 +33,7 @@ use lib catdir( qw< t 06_violation.d lib > );
 
 use ViolationTest;   # this is solely to test the import() method; has diagnostics
 use ViolationTest2;  # this is solely to test the import() method; no diagnostics
-use Perl::Critic::Policy::Test;    # this is to test violation formatting
+use Perl::Critic::Enforcer::Test;    # this is to test violation formatting
 
 #-----------------------------------------------------------------------------
 #  method tests
@@ -185,7 +185,7 @@ END_PERL
        'desc', 'expl',
        1, # severity
        'print;', # source near token[0]
-       'Perl::Critic::Policy::Test', 'Test', # long, short
+       'Perl::Critic::Enforcer::Test', 'Test', # long, short
        '    diagnostic',
     );
 
@@ -194,7 +194,7 @@ END_PERL
     my $code = "print;\n";
     my $document = PPI::Document->new(\$code);
     $document->index_locations();
-    my $p = Perl::Critic::Policy::Test->new();
+    my $p = Perl::Critic::Enforcer::Test->new();
     my @t = $document->tokens();
     my $v = $p->violates($t[0]);
     ok($v, 'got a violation');

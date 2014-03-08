@@ -32,14 +32,14 @@ my @bundled_enforcer_names = bundled_enforcer_names();
 my @concrete_exceptions = qw{
     AggregateConfiguration
     Configuration::Generic
-    Configuration::NonExistentPolicy
+    Configuration::NonExistentEnforcer
     Configuration::Option::Global::ExtraParameter
     Configuration::Option::Global::ParameterValue
-    Configuration::Option::Policy::ExtraParameter
-    Configuration::Option::Policy::ParameterValue
+    Configuration::Option::Enforcer::ExtraParameter
+    Configuration::Option::Enforcer::ParameterValue
     Fatal::Generic
     Fatal::Internal
-    Fatal::PolicyDefinition
+    Fatal::EnforcerDefinition
     IO
 };
 
@@ -130,44 +130,44 @@ isa_ok($processor, 'Perl::Critic::OptionsProcessor');
 is($processor->VERSION(), $version_string, 'Perl::Critic::OptionsProcessor version');
 
 #-----------------------------------------------------------------------------
-# Test Perl::Critic::Policy module interface
+# Test Perl::Critic::Enforcer module interface
 
-use_ok('Perl::Critic::Policy') or BAIL_OUT(q<Can't continue.>);
-can_ok('Perl::Critic::Policy', 'add_themes');
-can_ok('Perl::Critic::Policy', 'applies_to');
-can_ok('Perl::Critic::Policy', 'default_maximum_violations_per_document');
-can_ok('Perl::Critic::Policy', 'default_severity');
-can_ok('Perl::Critic::Policy', 'default_themes');
-can_ok('Perl::Critic::Policy', 'get_abstract');
-can_ok('Perl::Critic::Policy', 'get_format');
-can_ok('Perl::Critic::Policy', 'get_long_name');
-can_ok('Perl::Critic::Policy', 'get_maximum_violations_per_document');
-can_ok('Perl::Critic::Policy', 'get_parameters');
-can_ok('Perl::Critic::Policy', 'get_raw_abstract');
-can_ok('Perl::Critic::Policy', 'get_severity');
-can_ok('Perl::Critic::Policy', 'get_short_name');
-can_ok('Perl::Critic::Policy', 'get_themes');
-can_ok('Perl::Critic::Policy', 'initialize_if_enabled');
-can_ok('Perl::Critic::Policy', 'is_enabled');
-can_ok('Perl::Critic::Policy', 'is_safe');
-can_ok('Perl::Critic::Policy', 'new');
-can_ok('Perl::Critic::Policy', 'new_parameter_value_exception');
-can_ok('Perl::Critic::Policy', 'parameter_metadata_available');
-can_ok('Perl::Critic::Policy', 'prepare_to_scan_document');
-can_ok('Perl::Critic::Policy', 'set_format');
-can_ok('Perl::Critic::Policy', 'set_maximum_violations_per_document');
-can_ok('Perl::Critic::Policy', 'set_severity');
-can_ok('Perl::Critic::Policy', 'set_themes');
-can_ok('Perl::Critic::Policy', 'throw_parameter_value_exception');
-can_ok('Perl::Critic::Policy', 'to_string');
-can_ok('Perl::Critic::Policy', 'violates');
-can_ok('Perl::Critic::Policy', 'violation');
-can_ok('Perl::Critic::Policy', 'is_safe');
+use_ok('Perl::Critic::Enforcer') or BAIL_OUT(q<Can't continue.>);
+can_ok('Perl::Critic::Enforcer', 'add_themes');
+can_ok('Perl::Critic::Enforcer', 'applies_to');
+can_ok('Perl::Critic::Enforcer', 'default_maximum_violations_per_document');
+can_ok('Perl::Critic::Enforcer', 'default_severity');
+can_ok('Perl::Critic::Enforcer', 'default_themes');
+can_ok('Perl::Critic::Enforcer', 'get_abstract');
+can_ok('Perl::Critic::Enforcer', 'get_format');
+can_ok('Perl::Critic::Enforcer', 'get_long_name');
+can_ok('Perl::Critic::Enforcer', 'get_maximum_violations_per_document');
+can_ok('Perl::Critic::Enforcer', 'get_parameters');
+can_ok('Perl::Critic::Enforcer', 'get_raw_abstract');
+can_ok('Perl::Critic::Enforcer', 'get_severity');
+can_ok('Perl::Critic::Enforcer', 'get_short_name');
+can_ok('Perl::Critic::Enforcer', 'get_themes');
+can_ok('Perl::Critic::Enforcer', 'initialize_if_enabled');
+can_ok('Perl::Critic::Enforcer', 'is_enabled');
+can_ok('Perl::Critic::Enforcer', 'is_safe');
+can_ok('Perl::Critic::Enforcer', 'new');
+can_ok('Perl::Critic::Enforcer', 'new_parameter_value_exception');
+can_ok('Perl::Critic::Enforcer', 'parameter_metadata_available');
+can_ok('Perl::Critic::Enforcer', 'prepare_to_scan_document');
+can_ok('Perl::Critic::Enforcer', 'set_format');
+can_ok('Perl::Critic::Enforcer', 'set_maximum_violations_per_document');
+can_ok('Perl::Critic::Enforcer', 'set_severity');
+can_ok('Perl::Critic::Enforcer', 'set_themes');
+can_ok('Perl::Critic::Enforcer', 'throw_parameter_value_exception');
+can_ok('Perl::Critic::Enforcer', 'to_string');
+can_ok('Perl::Critic::Enforcer', 'violates');
+can_ok('Perl::Critic::Enforcer', 'violation');
+can_ok('Perl::Critic::Enforcer', 'is_safe');
 
 {
-    my $enforcer = Perl::Critic::Policy->new();
-    isa_ok($enforcer, 'Perl::Critic::Policy');
-    is($enforcer->VERSION(), $version_string, 'Perl::Critic::Policy version');
+    my $enforcer = Perl::Critic::Enforcer->new();
+    isa_ok($enforcer, 'Perl::Critic::Enforcer');
+    is($enforcer->VERSION(), $version_string, 'Perl::Critic::Enforcer version');
 }
 
 #-----------------------------------------------------------------------------
@@ -208,18 +208,18 @@ isa_ok($up, 'Perl::Critic::UserProfile');
 is($up->VERSION(), $version_string, 'Perl::Critic::UserProfile version');
 
 #-----------------------------------------------------------------------------
-# Test Perl::Critic::PolicyFactory module interface
+# Test Perl::Critic::EnforcerFactory module interface
 
-use_ok('Perl::Critic::PolicyFactory') or BAIL_OUT(q<Can't continue.>);
-can_ok('Perl::Critic::PolicyFactory', 'create_enforcer');
-can_ok('Perl::Critic::PolicyFactory', 'new');
-can_ok('Perl::Critic::PolicyFactory', 'site_enforcer_names');
+use_ok('Perl::Critic::EnforcerFactory') or BAIL_OUT(q<Can't continue.>);
+can_ok('Perl::Critic::EnforcerFactory', 'create_enforcer');
+can_ok('Perl::Critic::EnforcerFactory', 'new');
+can_ok('Perl::Critic::EnforcerFactory', 'site_enforcer_names');
 
 
 my $profile = Perl::Critic::UserProfile->new();
-my $factory = Perl::Critic::PolicyFactory->new( -profile => $profile );
-isa_ok($factory, 'Perl::Critic::PolicyFactory');
-is($factory->VERSION(), $version_string, 'Perl::Critic::PolicyFactory version');
+my $factory = Perl::Critic::EnforcerFactory->new( -profile => $profile );
+isa_ok($factory, 'Perl::Critic::EnforcerFactory');
+is($factory->VERSION(), $version_string, 'Perl::Critic::EnforcerFactory version');
 
 #-----------------------------------------------------------------------------
 # Test Perl::Critic::Theme module interface
@@ -235,15 +235,15 @@ isa_ok($theme, 'Perl::Critic::Theme');
 is($theme->VERSION(), $version_string, 'Perl::Critic::Theme version');
 
 #-----------------------------------------------------------------------------
-# Test Perl::Critic::PolicyListing module interface
+# Test Perl::Critic::EnforcerListing module interface
 
-use_ok('Perl::Critic::PolicyListing') or BAIL_OUT(q<Can't continue.>);
-can_ok('Perl::Critic::PolicyListing', 'new');
-can_ok('Perl::Critic::PolicyListing', 'to_string');
+use_ok('Perl::Critic::EnforcerListing') or BAIL_OUT(q<Can't continue.>);
+can_ok('Perl::Critic::EnforcerListing', 'new');
+can_ok('Perl::Critic::EnforcerListing', 'to_string');
 
-my $listing = Perl::Critic::PolicyListing->new();
-isa_ok($listing, 'Perl::Critic::PolicyListing');
-is($listing->VERSION(), $version_string, 'Perl::Critic::PolicyListing version');
+my $listing = Perl::Critic::EnforcerListing->new();
+isa_ok($listing, 'Perl::Critic::EnforcerListing');
+is($listing->VERSION(), $version_string, 'Perl::Critic::EnforcerListing version');
 
 #-----------------------------------------------------------------------------
 # Test Perl::Critic::ProfilePrototype module interface
@@ -284,7 +284,7 @@ can_ok('Perl::Critic::Command', 'run');
 }
 
 #-----------------------------------------------------------------------------
-# Test module interface for each Policy subclass
+# Test module interface for each Enforcer subclass
 
 {
     for my $mod ( @bundled_enforcer_names ) {
@@ -305,7 +305,7 @@ can_ok('Perl::Critic::Command', 'run');
         can_ok($mod, 'is_safe');
 
         my $enforcer = $mod->new();
-        isa_ok($enforcer, 'Perl::Critic::Policy');
+        isa_ok($enforcer, 'Perl::Critic::Enforcer');
         is($enforcer->VERSION(), $version_string, "Version of $mod");
         ok($enforcer->is_safe(), "CORE enforcer $mod is marked safe");
     }

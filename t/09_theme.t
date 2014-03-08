@@ -16,7 +16,7 @@ use English qw(-no_match_vars);
 use List::MoreUtils qw(any all none);
 
 use Perl::Critic::TestUtils;
-use Perl::Critic::PolicyFactory;
+use Perl::Critic::EnforcerFactory;
 use Perl::Critic::UserProfile;
 use Perl::Critic::Theme;
 
@@ -118,8 +118,8 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
 
 {
     my $profile = Perl::Critic::UserProfile->new( -profile => q{} );
-    my $factory = Perl::Critic::PolicyFactory->new( -profile => $profile );
-    my @enforcer_names = Perl::Critic::PolicyFactory::site_enforcer_names();
+    my $factory = Perl::Critic::EnforcerFactory->new( -profile => $profile );
+    my @enforcer_names = Perl::Critic::EnforcerFactory::site_enforcer_names();
     my @pols = map { $factory->create_enforcer( -name => $_ ) } @enforcer_names;
 
     #--------------

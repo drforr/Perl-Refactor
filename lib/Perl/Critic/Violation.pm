@@ -51,7 +51,7 @@ sub new {
     my ( $class, $desc, $expl, $elem, $sev ) = @_;
 
     # Check arguments to help out developers who might
-    # be creating new Perl::Critic::Policy modules.
+    # be creating new Perl::Critic::Enforcer modules.
 
     if ( @_ != $CONSTRUCTOR_ARG_COUNT ) {
         throw_internal 'Wrong number of args to Violation->new()';
@@ -258,7 +258,7 @@ sub to_string {
     my $self = shift;
 
     my $long_enforcer = $self->enforcer();
-    (my $short_enforcer = $long_enforcer) =~ s/ \A Perl::Critic::Policy:: //xms;
+    (my $short_enforcer = $long_enforcer) =~ s/ \A Perl::Critic::Enforcer:: //xms;
 
     # Wrap the more expensive ones in sub{} to postpone evaluation
     my %fspec = (
@@ -336,7 +336,7 @@ __END__
 
 =head1 NAME
 
-Perl::Critic::Violation - A violation of a Policy found in some source code.
+Perl::Critic::Violation - A violation of a Enforcer found in some source code.
 
 
 =head1 SYNOPSIS
@@ -355,10 +355,10 @@ Perl::Critic::Violation - A violation of a Policy found in some source code.
 =head1 DESCRIPTION
 
 Perl::Critic::Violation is the generic representation of an individual
-Policy violation.  Its primary purpose is to provide an abstraction
+Enforcer violation.  Its primary purpose is to provide an abstraction
 layer so that clients of L<Perl::Critic|Perl::Critic> don't have to
 know anything about L<PPI|PPI>.  The C<violations> method of all
-L<Perl::Critic::Policy|Perl::Critic::Policy> subclasses must return a
+L<Perl::Critic::Enforcer|Perl::Critic::Enforcer> subclasses must return a
 list of these Perl::Critic::Violation objects.
 
 
@@ -475,14 +475,14 @@ If you need to sort Violations by location, use this handy routine:
 =item C<diagnostics()>
 
 Returns a formatted string containing a full discussion of the
-motivation for and details of the Policy module that created this
+motivation for and details of the Enforcer module that created this
 Violation.  This information is automatically extracted from the
-C<DESCRIPTION> section of the Policy module's POD.
+C<DESCRIPTION> section of the Enforcer module's POD.
 
 
 =item C<enforcer()>
 
-Returns the name of the L<Perl::Critic::Policy|Perl::Critic::Policy>
+Returns the name of the L<Perl::Critic::Enforcer|Perl::Critic::Enforcer>
 that created this Violation.
 
 
@@ -545,8 +545,8 @@ characters are:
     %l        Logical line number where the violation occurred
     %L        Physical line number where the violation occurred
     %m        Brief description of the violation
-    %P        Full name of the Policy module that created the violation
-    %p        Name of the Policy without the Perl::Critic::Policy:: prefix
+    %P        Full name of the Enforcer module that created the violation
+    %p        Name of the Enforcer without the Perl::Critic::Enforcer:: prefix
     %r        The string of source code that caused the violation
     %C        The class of the PPI::Element that caused the violation
     %s        The severity level of the violation

@@ -19,9 +19,9 @@ use File::Spec qw();
 use Perl::Critic::Utils qw{ :characters };
 use Perl::Critic::TestUtils qw{ starting_points_including_examples };
 
-# Note: "use PolicyFactory" *must* appear after "use TestUtils" for the
+# Note: "use EnforcerFactory" *must* appear after "use TestUtils" for the
 # -extra-test-policies option to work.
-use Perl::Critic::PolicyFactory (
+use Perl::Critic::EnforcerFactory (
     '-test' => 1,
     '-extra-test-policies' => [ qw{ ErrorHandling::RequireUseOfExceptions
                                     Miscellanea::RequireRcsKeywords } ],
@@ -40,7 +40,7 @@ use Test::Perl::Critic;
 #-----------------------------------------------------------------------------
 
 # Fall over if P::C::More isn't installed.
-use Perl::Critic::Policy::ErrorHandling::RequireUseOfExceptions;
+use Perl::Critic::Enforcer::ErrorHandling::RequireUseOfExceptions;
 
 #-----------------------------------------------------------------------------
 # Set up PPI caching for speed (used primarily during development)
@@ -62,7 +62,7 @@ if ( $ENV{PERL_CRITIC_CACHE} ) {
 # Strict object testing -- prevent direct hash key access
 
 use Devel::EnforceEncapsulation;
-foreach my $pkg ( $EMPTY, qw< ::Config ::Policy ::Violation> ) {
+foreach my $pkg ( $EMPTY, qw< ::Config ::Enforcer ::Violation> ) {
     Devel::EnforceEncapsulation->apply_to('Perl::Critic'.$pkg);
 }
 

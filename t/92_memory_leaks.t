@@ -16,7 +16,7 @@ use Carp qw< confess >;
 
 use PPI::Document;
 
-use Perl::Critic::PolicyFactory -test => 1;
+use Perl::Critic::EnforcerFactory -test => 1;
 use Perl::Critic::Document;
 use Perl::Critic;
 use Perl::Critic::TestUtils qw();

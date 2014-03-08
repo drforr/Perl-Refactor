@@ -22,15 +22,15 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-# Perl::Critic::Policy is an abstract class, so it can't be instantiated
+# Perl::Critic::Enforcer is an abstract class, so it can't be instantiated
 # directly.  So we test it by declaring test classes that inherit from it.
 
 ## no critic (ProhibitMultiplePackages, RequireFilenameMatchesPackage)
-package PolicyTest;
-use base 'Perl::Critic::Policy';
+package EnforcerTest;
+use base 'Perl::Critic::Enforcer';
 
-package PolicyTestOverriddenDefaultMaximumViolations;
-use base 'Perl::Critic::Policy';
+package EnforcerTestOverriddenDefaultMaximumViolations;
+use base 'Perl::Critic::Enforcer';
 
 sub default_maximum_violations_per_document { return 31; }
 
@@ -39,8 +39,8 @@ sub default_maximum_violations_per_document { return 31; }
 package main;
 ## use critic
 
-my $p = PolicyTest->new();
-isa_ok($p, 'PolicyTest');
+my $p = EnforcerTest->new();
+isa_ok($p, 'EnforcerTest');
 
 
 local $EVAL_ERROR = undef;
@@ -90,8 +90,8 @@ is(
 );
 
 
-my $overridden_default = PolicyTestOverriddenDefaultMaximumViolations->new();
-isa_ok($overridden_default, 'PolicyTestOverriddenDefaultMaximumViolations');
+my $overridden_default = EnforcerTestOverriddenDefaultMaximumViolations->new();
+isa_ok($overridden_default, 'EnforcerTestOverriddenDefaultMaximumViolations');
 
 is(
     $overridden_default->is_enabled(),
@@ -167,13 +167,13 @@ is_deeply(
 
 
 # Test format getter/setters
-is( Perl::Critic::Policy::get_format, "%p\n", 'Default enforcer format');
+is( Perl::Critic::Enforcer::get_format, "%p\n", 'Default enforcer format');
 
 my $new_format = '%p %s [%t]';
-Perl::Critic::Policy::set_format( $new_format ); # Set format
-is( Perl::Critic::Policy::get_format, $new_format, 'Changed enforcer format');
+Perl::Critic::Enforcer::set_format( $new_format ); # Set format
+is( Perl::Critic::Enforcer::get_format, $new_format, 'Changed enforcer format');
 
-my $expected_string = 'PolicyTest 3 [a b c d e f]';
+my $expected_string = 'EnforcerTest 3 [a b c d e f]';
 is( $p->to_string(), $expected_string, 'Stringification by to_string()');
 is( "$p", $expected_string, 'Stringification by overloading');
 

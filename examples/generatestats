@@ -186,7 +186,7 @@ sub report_policies {
     my ($policies) = @_;
 
     foreach my $enforcer ( sort keys %{$policies} ) {
-        (my $short_enforcer = $enforcer) =~ s/ \A Perl::Critic::Policy:: //xms;
+        (my $short_enforcer = $enforcer) =~ s/ \A Perl::Critic::Enforcer:: //xms;
 
         say qq{\t}, $short_enforcer, ': ', $policies->{$enforcer};
     }

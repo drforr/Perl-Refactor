@@ -13,7 +13,7 @@ use warnings;
 
 use Carp qw< confess >;
 
-use Perl::Critic::PolicyConfig;
+use Perl::Critic::EnforcerConfig;
 
 use Test::More tests => 28;
 
@@ -26,12 +26,12 @@ our $VERSION = '1.121';
 
 {
     my $config =
-        Perl::Critic::PolicyConfig->new('Some::Policy');
+        Perl::Critic::EnforcerConfig->new('Some::Enforcer');
 
     is(
         $config->get_enforcer_short_name(),
-        'Some::Policy',
-        'Policy short name gets saved.',
+        'Some::Enforcer',
+        'Enforcer short name gets saved.',
     );
     is(
         $config->get_set_themes(),
@@ -70,8 +70,8 @@ our $VERSION = '1.121';
 
 {
     my $config =
-        Perl::Critic::PolicyConfig->new(
-            'Some::Other::Policy',
+        Perl::Critic::EnforcerConfig->new(
+            'Some::Other::Enforcer',
             {
                 custom_parameter   => 'blargh',
 
@@ -85,8 +85,8 @@ our $VERSION = '1.121';
 
     is(
         $config->get_enforcer_short_name(),
-        'Some::Other::Policy',
-        'Policy short name gets saved.',
+        'Some::Other::Enforcer',
+        'Enforcer short name gets saved.',
     );
     is(
         $config->get_set_themes(),

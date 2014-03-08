@@ -14,8 +14,8 @@ use warnings;
 use English qw(-no_match_vars);
 
 use Perl::Critic::UserProfile qw();
-use Perl::Critic::PolicyFactory (-test => 1);
-use Perl::Critic::PolicyParameter qw{ $NO_DESCRIPTION_AVAILABLE };
+use Perl::Critic::EnforcerFactory (-test => 1);
+use Perl::Critic::EnforcerParameter qw{ $NO_DESCRIPTION_AVAILABLE };
 use Perl::Critic::Utils qw( enforcer_short_name );
 use Perl::Critic::TestUtils qw(bundled_enforcer_names);
 
@@ -34,7 +34,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
 # the supported_parameters() method and, assuming that the enforcer is
 # configurable, that each parameter can parse its own default_string.
 #
-# This program also verifies that Perl::Critic::PolicyFactory throws an
+# This program also verifies that Perl::Critic::EnforcerFactory throws an
 # exception when we try to create a enforcer with bogus parameters.  However, it
 # is your responsibility to verify that valid parameters actually work as
 # expected.  You can do this by using the #parms directive in the *.run files.
@@ -63,7 +63,7 @@ sub test_supported_parameters {
 
     for my $param_specification ( @supported_params ) {
         my $parameter =
-            Perl::Critic::PolicyParameter->new($param_specification);
+            Perl::Critic::EnforcerParameter->new($param_specification);
         my $param_name = $parameter->get_name();
         my $description = $parameter->get_description();
 
@@ -95,7 +95,7 @@ sub test_invalid_parameters {
     my $enforcer = shift;
     my $bogus_params  = { bogus => 'shizzle' };
     my $profile = Perl::Critic::UserProfile->new( -profile => 'NONE' );
-    my $factory = Perl::Critic::PolicyFactory->new(
+    my $factory = Perl::Critic::EnforcerFactory->new(
         -profile => $profile, '-profile-strictness' => 'fatal' );
 
     my $enforcer_name = enforcer_short_name($enforcer);

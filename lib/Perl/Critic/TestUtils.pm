@@ -27,7 +27,7 @@ use Perl::Critic::Config;
 use Perl::Critic::Exception::Fatal::Generic qw{ &throw_generic };
 use Perl::Critic::Exception::Fatal::Internal qw{ &throw_internal };
 use Perl::Critic::Utils qw{ :severities :data_conversion enforcer_long_name };
-use Perl::Critic::PolicyFactory (-test => 1);
+use Perl::Critic::EnforcerFactory (-test => 1);
 
 our $VERSION = '1.121';
 
@@ -207,7 +207,7 @@ sub _globals_from_file {
 
     my %valid_keys = hashify qw< prerequisites >;
 
-    return if -z $test_file;  # Skip if the Policy has a regular .t file.
+    return if -z $test_file;  # Skip if the Enforcer has a regular .t file.
 
     my %globals;
 
@@ -245,7 +245,7 @@ sub _subtests_from_file {
 
     my %valid_keys = hashify qw( name failures parms TODO error filename optional_modules );
 
-    return if -z $test_file;  # Skip if the Policy has a regular .t file.
+    return if -z $test_file;  # Skip if the Enforcer has a regular .t file.
 
     open my $fh, '<', $test_file   ## no critic (RequireBriefOpen)
         or throw_internal "Couldn't open $test_file: $OS_ERROR";
@@ -354,7 +354,7 @@ sub _finalize_subtest {
 sub bundled_enforcer_names {
     require ExtUtils::Manifest;
     my $manifest = ExtUtils::Manifest::maniread();
-    my @enforcer_paths = map {m{\A lib/(Perl/Critic/Policy/.*).pm \z}xms} keys %{$manifest};
+    my @enforcer_paths = map {m{\A lib/(Perl/Critic/Enforcer/.*).pm \z}xms} keys %{$manifest};
     my @enforcers = map { join q{::}, split m{/}xms, $_} @enforcer_paths;
     my @sorted_policies = sort @enforcers;
     return @sorted_policies;
@@ -420,7 +420,7 @@ interface will go through a deprecation cycle.
 
 This module is used by L<Perl::Critic|Perl::Critic> only for
 self-testing. It provides a few handy subroutines for testing new
-Perl::Critic::Policy modules.  Look at the test programs that ship with
+Perl::Critic::Enforcer modules.  Look at the test programs that ship with
 Perl::Critic for more examples of how to use these subroutines.
 
 
@@ -517,9 +517,9 @@ when it is desired that the examples be included.
 
 =item bundled_enforcer_names()
 
-Returns a list of Policy packages that come bundled with this package.
+Returns a list of Enforcer packages that come bundled with this package.
 This functions by searching F<MANIFEST> for
-F<lib/Perl/Critic/Policy/*.pm> and converts the results to package
+F<lib/Perl/Critic/Enforcer/*.pm> and converts the results to package
 names.
 
 
@@ -536,7 +536,7 @@ function on the current system using the specified configuration.
 
 Testing a enforcer follows a very simple pattern:
 
-    * Policy name
+    * Enforcer name
         * Subtest name
         * Optional parameters
         * Number of failures expected

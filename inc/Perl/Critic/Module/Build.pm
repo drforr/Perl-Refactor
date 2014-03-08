@@ -24,8 +24,8 @@ use base 'Perl::Critic::Module::Build::Standard';
 sub ACTION_enforcersummary {
     my ($self) = @_;
 
-    require Perl::Critic::PolicySummaryGenerator;
-    Perl::Critic::PolicySummaryGenerator->import(
+    require Perl::Critic::EnforcerSummaryGenerator;
+    Perl::Critic::EnforcerSummaryGenerator->import(
         qw< generate_enforcer_summary >
     );
 
@@ -123,9 +123,9 @@ The following actions have been added or redefined:
 
 =item enforcersummary
 
-Generates the F<PolicySummary.pod> file.  This should only be used by
+Generates the F<EnforcerSummary.pod> file.  This should only be used by
 C<Perl::Critic> developers.  This action is also invoked by the C<authortest>
-action, so the F<PolicySummary.pod> file will be generated whenever you create
+action, so the F<EnforcerSummary.pod> file will be generated whenever you create
 a distribution with the C<dist> or C<distdir> targets.
 
 

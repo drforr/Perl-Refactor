@@ -16,7 +16,7 @@ use Carp qw< confess >;
 use File::Spec;
 use List::MoreUtils qw(any);
 
-use Perl::Critic::PolicyFactory ( -test => 1 );
+use Perl::Critic::EnforcerFactory ( -test => 1 );
 use Perl::Critic::TestUtils qw{ bundled_enforcer_names };
 
 use Test::More;
@@ -28,7 +28,7 @@ our $VERSION = '1.116';
 #-----------------------------------------------------------------------------
 
 my $summary_file =
-    File::Spec->catfile( qw< lib Perl Critic PolicySummary.pod > );
+    File::Spec->catfile( qw< lib Perl Critic EnforcerSummary.pod > );
 if (open my ($fh), '<', $summary_file) {
 
     my $content = do {local $INPUT_RECORD_SEPARATOR=undef; <$fh> };
@@ -50,7 +50,7 @@ if (open my ($fh), '<', $summary_file) {
     }
 
     my $profile = Perl::Critic::UserProfile->new();
-    my $factory = Perl::Critic::PolicyFactory->new( -profile => $profile );
+    my $factory = Perl::Critic::EnforcerFactory->new( -profile => $profile );
     my %found_policies = map { ref $_ => $_ } $factory->create_all_policies();
 
     my %descriptions = $content =~ m/^=head2 [ ]+ L<[\w:]+[|]([\w:]+)>\n\n([^\n]+)/gxms;
@@ -72,7 +72,7 @@ if (open my ($fh), '<', $summary_file) {
     }
 
     for my $enforcer_name ( @enforcer_names ) {
-        my $label = qq{PolicySummary.pod has "$enforcer_name"};
+        my $label = qq{EnforcerSummary.pod has "$enforcer_name"};
         my $has_summary = delete $num_summaries{$enforcer_name};
         is( $has_summary, 1, $label );
 

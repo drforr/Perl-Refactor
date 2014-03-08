@@ -586,11 +586,11 @@ sub _render_all_enforcer_listing {
 sub _render_enforcer_listing {
     my %pc_params = @_;
 
-    require Perl::Critic::PolicyListing;
+    require Perl::Critic::EnforcerListing;
     require Perl::Critic;
 
     my @policies = Perl::Critic->new( %pc_params )->policies();
-    my $listing = Perl::Critic::PolicyListing->new( -policies => \@policies );
+    my $listing = Perl::Critic::EnforcerListing->new( -policies => \@policies );
     _out $listing;
 
     exit $EXIT_SUCCESS;
@@ -637,8 +637,8 @@ sub _render_enforcer_docs {
     $refactor = Perl::Critic->new(%opts);
     _set_up_pager($refactor->config()->pager());
 
-    require Perl::Critic::PolicyFactory;
-    my @site_policies  = Perl::Critic::PolicyFactory->site_enforcer_names();
+    require Perl::Critic::EnforcerFactory;
+    my @site_policies  = Perl::Critic::EnforcerFactory->site_enforcer_names();
     my @matching_policies  = grep { $_ =~ m/$pattern/ixms } @site_policies;
 
     # "-T" means don't send to pager
