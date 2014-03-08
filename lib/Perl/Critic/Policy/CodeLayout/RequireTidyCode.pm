@@ -67,7 +67,7 @@ sub violates {
     # Perl::Tidy will truncate any extra trailing newlines, and if the
     # input has no trailing newline, then it adds one.  But when you
     # re-run it through Perl::Tidy here, that final newline gets lost,
-    # which causes the policy to insist that the code is not tidy.
+    # which causes the enforcer to insist that the code is not tidy.
     # This only occurs when Perl::Tidy is writing the output to a
     # scalar, but does not occur when writing to a file.  I may
     # investigate further, but for now, this seems to do the trick.
@@ -158,13 +158,13 @@ distribution.
 Conway does make specific recommendations for whitespace and
 curly-braces in your code, but the most important thing is to adopt a
 consistent layout, regardless of the specifics.  And the easiest way
-to do that is to use L<Perl::Tidy|Perl::Tidy>.  This policy will
+to do that is to use L<Perl::Tidy|Perl::Tidy>.  This enforcer will
 complain if you're code hasn't been run through Perl::Tidy.
 
 
 =head1 CONFIGURATION
 
-This policy can be configured to tell Perl::Tidy to use a particular
+This enforcer can be configured to tell Perl::Tidy to use a particular
 F<perltidyrc> file or no configuration at all.  By default, Perl::Tidy
 is told to look in its default location for configuration.
 Perl::Critic can be told to tell Perl::Tidy to use a specific

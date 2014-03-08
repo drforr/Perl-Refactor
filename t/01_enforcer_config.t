@@ -29,7 +29,7 @@ our $VERSION = '1.121';
         Perl::Critic::PolicyConfig->new('Some::Policy');
 
     is(
-        $config->get_policy_short_name(),
+        $config->get_enforcer_short_name(),
         'Some::Policy',
         'Policy short name gets saved.',
     );
@@ -84,7 +84,7 @@ our $VERSION = '1.121';
         );
 
     is(
-        $config->get_policy_short_name(),
+        $config->get_enforcer_short_name(),
         'Some::Other::Policy',
         'Policy short name gets saved.',
     );
@@ -149,7 +149,7 @@ our $VERSION = '1.121';
 
 sub test_standard_parameters_undef_via_get {
     my ($config) = @_;
-    my $enforcer_short_name = $config->get_policy_short_name();
+    my $enforcer_short_name = $config->get_enforcer_short_name();
 
     foreach my $parameter (
         qw<
@@ -173,7 +173,7 @@ sub test_standard_parameters_undef_via_get {
 #-----------------------------------------------------------------------------
 
 # ensure we return true if this test is loaded by
-# t/01_policy_config.t_without_optional_dependencies.t
+# t/01_enforcer_config.t_without_optional_dependencies.t
 1;
 
 # Local Variables:

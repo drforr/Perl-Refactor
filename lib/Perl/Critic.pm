@@ -53,10 +53,10 @@ sub config {
 
 #-----------------------------------------------------------------------------
 
-sub add_policy {
+sub add_enforcer {
     my ( $self, @args ) = @_;
     #Delegate to Perl::Critic::Config
-    return $self->config()->add_policy( @args );
+    return $self->config()->add_enforcer( @args );
 }
 
 #-----------------------------------------------------------------------------
@@ -129,9 +129,9 @@ sub _gather_violations {
         $doc->process_annotations();
     }
 
-    # Evaluate each policy
+    # Evaluate each enforcer
     my @policies = $self->config->policies();
-    my @ordered_policies = _futz_with_policy_order(@policies);
+    my @ordered_policies = _futz_with_enforcer_order(@policies);
     my @violations = map { _critique($_, $doc) } @ordered_policies;
 
     # Accumulate statistics
@@ -174,7 +174,7 @@ sub _critique {
       ELEMENT:
         for my $element (@elements) {
 
-            # Evaluate the policy on this $element.  A policy may
+            # Evaluate the enforcer on this $element.  A enforcer may
             # return zero or more violations.  We only want the
             # violations that occur on lines that have not been
             # disabled.
@@ -183,7 +183,7 @@ sub _critique {
             for my $violation ( $enforcer->violates( $element, $doc ) ) {
 
                 my $line = $violation->location()->[0];
-                if ( $doc->line_is_disabled_for_policy($line, $enforcer) ) {
+                if ( $doc->line_is_disabled_for_enforcer($line, $enforcer) ) {
                     $doc->add_suppressed_violation($violation);
                     next VIOLATION;
                 }
@@ -199,15 +199,15 @@ sub _critique {
 
 #-----------------------------------------------------------------------------
 
-sub _futz_with_policy_order {
-    # The ProhibitUselessNoCritic policy is another special policy.  It
+sub _futz_with_enforcer_order {
+    # The ProhibitUselessNoCritic enforcer is another special enforcer.  It
     # deals with the violations that *other* Policies produce.  Therefore
     # it needs to be run *after* all the other Policies.  TODO: find
     # a way for Policies to express an ordering preference somehow.
 
     my @enforcer_objects = @_;
-    my $magical_policy_name = 'Perl::Critic::Policy::Miscellanea::ProhibitUselessNoCritic';
-    my $idx = firstidx {ref $_ eq $magical_policy_name} @enforcer_objects;
+    my $magical_enforcer_name = 'Perl::Critic::Policy::Miscellanea::ProhibitUselessNoCritic';
+    my $idx = firstidx {ref $_ eq $magical_enforcer_name} @enforcer_objects;
     push @enforcer_objects, splice @enforcer_objects, $idx, 1;
     return @enforcer_objects;
 }
@@ -378,7 +378,7 @@ option in your F<.perlrefactorrc> file.  You can also use C<-exclude> in
 conjunction with the C<-include> option.  Note that C<-exclude> takes
 precedence over C<-include> when a Policy matches both patterns.
 
-B<-single-policy> is a string C<PATTERN>.  Only one policy that
+B<-single-enforcer> is a string C<PATTERN>.  Only one enforcer that
 matches C<m/$PATTERN/ixms> will be used.  Policies that do not match
 will be excluded.  This option has precedence over the C<-severity>,
 C<-theme>, C<-include>, C<-exclude>, and C<-only> options.  You can
@@ -468,13 +468,13 @@ violation of the loaded Policies.  The list is sorted in the order
 that the Violations appear in the code.  If there are no violations,
 this method returns an empty list.
 
-=item C<< add_policy( -policy => $enforcer_name, -params => \%param_hash ) >>
+=item C<< add_enforcer( -enforcer => $enforcer_name, -params => \%param_hash ) >>
 
 Creates a Policy object and loads it into this Critic.  If the object
 cannot be instantiated, it will throw a fatal exception.  Otherwise,
 it returns a reference to this Critic.
 
-B<-policy> is the name of a
+B<-enforcer> is the name of a
 L<Perl::Critic::Policy|Perl::Critic::Policy> subclass module.  The
 C<'Perl::Critic::Policy'> portion of the name can be omitted for
 brevity.  This argument is required.
@@ -576,7 +576,7 @@ this:
     arg2 = value2
 
 C<Perl::Critic::Policy::Category::PolicyName> is the full name of a
-module that implements the policy.  The Policy modules distributed
+module that implements the enforcer.  The Policy modules distributed
 with Perl::Critic have been grouped into categories according to the
 table of contents in Damian Conway's book B<Perl Best Practices>. For
 brevity, you can omit the C<'Perl::Critic::Policy'> part of the module
@@ -688,7 +688,7 @@ PATTERN"> to see the perldoc for all Policy modules that match the
 regex C<m/PATTERN/ixms>
 
 There are a number of distributions of additional policies on CPAN.
-If L<Perl::Critic|Perl::Critic> doesn't contain a policy that you
+If L<Perl::Critic|Perl::Critic> doesn't contain a enforcer that you
 want, some one may have already written it.  See the L</"SEE ALSO">
 section below for a list of some of these distributions.
 
@@ -839,7 +839,7 @@ of Perl::Critic is to help you write code that conforms with a set of
 best practices.  Our primary goal is not to dictate what those
 practices are, but rather, to implement the practices discovered by
 others.  Ultimately, you make the rules -- Perl::Critic is merely a
-tool for encouraging consistency.  If there is a policy that you think
+tool for encouraging consistency.  If there is a enforcer that you think
 is important or that we have overlooked, we would be very grateful for
 contributions, or you can simply load your own private set of policies
 into Perl::Critic.

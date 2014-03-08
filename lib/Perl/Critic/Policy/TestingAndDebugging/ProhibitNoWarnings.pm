@@ -155,7 +155,7 @@ distribution.
 There are good reasons for disabling certain kinds of warnings.  But
 if you were wise enough to C<use warnings> in the first place, then it
 doesn't make sense to disable them completely.  By default, any
-C<no warnings> statement will violate this policy.  However, you can
+C<no warnings> statement will violate this enforcer.  However, you can
 configure this Policy to allow certain types of warnings to be
 disabled (See L<"CONFIGURATION">).  A bare C<no warnings>
 statement will always raise a violation.

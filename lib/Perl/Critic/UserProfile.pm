@@ -18,7 +18,7 @@ use Config::Tiny qw();
 use File::Spec qw();
 
 use Perl::Critic::OptionsProcessor qw();
-use Perl::Critic::Utils qw{ :characters policy_long_name policy_short_name };
+use Perl::Critic::Utils qw{ :characters enforcer_long_name enforcer_short_name };
 use Perl::Critic::Exception::Fatal::Internal qw{ throw_internal };
 use Perl::Critic::Exception::Configuration::Generic qw{ throw_generic };
 use Perl::Critic::PolicyConfig;
@@ -57,26 +57,26 @@ sub options_processor {
 
 #-----------------------------------------------------------------------------
 
-sub policy_params {
+sub enforcer_params {
 
     my ( $self, $enforcer ) = @_;
 
-    my $short_name = policy_short_name($enforcer);
+    my $short_name = enforcer_short_name($enforcer);
 
     return Perl::Critic::PolicyConfig->new(
         $short_name,
-        $self->raw_policy_params($enforcer),
+        $self->raw_enforcer_params($enforcer),
     );
 }
 
 #-----------------------------------------------------------------------------
 
-sub raw_policy_params {
+sub raw_enforcer_params {
 
     my ( $self, $enforcer ) = @_;
     my $profile = $self->{_profile};
-    my $long_name  = ref $enforcer || policy_long_name( $enforcer );
-    my $short_name = policy_short_name( $long_name );
+    my $long_name  = ref $enforcer || enforcer_long_name( $enforcer );
+    my $short_name = enforcer_short_name( $long_name );
 
     return
             $profile->{$short_name}
@@ -88,12 +88,12 @@ sub raw_policy_params {
 
 #-----------------------------------------------------------------------------
 
-sub policy_is_disabled {
+sub enforcer_is_disabled {
 
     my ( $self, $enforcer ) = @_;
     my $profile = $self->{_profile};
-    my $long_name  = ref $enforcer || policy_long_name( $enforcer );
-    my $short_name = policy_short_name( $long_name );
+    my $long_name  = ref $enforcer || enforcer_long_name( $enforcer );
+    my $short_name = enforcer_short_name( $long_name );
 
     return exists $profile->{"-$short_name"}
         || exists $profile->{"-$long_name"};
@@ -101,12 +101,12 @@ sub policy_is_disabled {
 
 #-----------------------------------------------------------------------------
 
-sub policy_is_enabled {
+sub enforcer_is_enabled {
 
     my ( $self, $enforcer ) = @_;
     my $profile = $self->{_profile};
-    my $long_name  = ref $enforcer || policy_long_name( $enforcer );
-    my $short_name = policy_short_name( $long_name );
+    my $long_name  = ref $enforcer || enforcer_long_name( $enforcer );
+    my $short_name = enforcer_short_name( $long_name );
 
     return exists $profile->{$short_name}
         || exists $profile->{$long_name};
@@ -117,15 +117,15 @@ sub policy_is_enabled {
 sub listed_policies {
 
     my ( $self, $enforcer ) = @_;
-    my @normalized_policy_names = ();
+    my @normalized_enforcer_names = ();
 
     for my $enforcer_name ( sort keys %{$self->{_profile}} ) {
         $enforcer_name =~ s/\A - //xmso; #Chomp leading "-"
-        my $enforcer_long_name = policy_long_name( $enforcer_name );
-        push @normalized_policy_names, $enforcer_long_name;
+        my $enforcer_long_name = enforcer_long_name( $enforcer_name );
+        push @normalized_enforcer_names, $enforcer_long_name;
     }
 
-    return @normalized_policy_names;
+    return @normalized_enforcer_names;
 }
 
 #-----------------------------------------------------------------------------
@@ -358,33 +358,33 @@ L<Perl::Critic::OptionsProcessor|Perl::Critic::OptionsProcessor>
 object for this UserProfile.
 
 
-=item C< policy_is_disabled( $enforcer ) >
+=item C< enforcer_is_disabled( $enforcer ) >
 
 Given a reference to a L<Perl::Critic::Policy|Perl::Critic::Policy>
 object or the name of one, returns true if the user has disabled that
-policy in their profile.
+enforcer in their profile.
 
 
-=item C< policy_is_enabled( $enforcer ) >
+=item C< enforcer_is_enabled( $enforcer ) >
 
 Given a reference to a L<Perl::Critic::Policy|Perl::Critic::Policy>
 object or the name of one, returns true if the user has explicitly
-enabled that policy in their user profile.
+enabled that enforcer in their user profile.
 
 
-=item C< policy_params( $enforcer ) >
+=item C< enforcer_params( $enforcer ) >
 
 Given a reference to a L<Perl::Critic::Policy|Perl::Critic::Policy>
 object or the name of one, returns a
 L<Perl::Critic::PolicyConfig|Perl::Critic::PolicyConfig> for the
-user's configuration parameters for that policy.
+user's configuration parameters for that enforcer.
 
 
-=item C< raw_policy_params( $enforcer ) >
+=item C< raw_enforcer_params( $enforcer ) >
 
 Given a reference to a L<Perl::Critic::Policy|Perl::Critic::Policy>
 object or the name of one, returns a reference to a hash of the user's
-configuration parameters for that policy.
+configuration parameters for that enforcer.
 
 
 =item C< listed_policies() >

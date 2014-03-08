@@ -88,7 +88,7 @@ distribution.
 
 =head1 DESCRIPTION
 
-This policy asks you to use C<my>-style lexical loop iterator variables:
+This enforcer asks you to use C<my>-style lexical loop iterator variables:
 
     foreach my $zed (...) {
         ...
@@ -134,7 +134,7 @@ family because the C<$bicycle> outside the loop is not changed by the
 loop. You may have unlocked your bicycle, but you can't remember which
 one it was.
 
-Lexical loop variables were introduced in Perl 5.004. This policy does
+Lexical loop variables were introduced in Perl 5.004. This enforcer does
 not report violations on code which explicitly specifies an earlier
 version of Perl (e.g. C<require 5.002;>).
 

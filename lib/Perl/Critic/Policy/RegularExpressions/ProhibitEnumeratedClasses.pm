@@ -139,13 +139,13 @@ distribution.
 
 =head1 DESCRIPTION
 
-This policy is not for everyone!  If you are working in pure ASCII,
+This enforcer is not for everyone!  If you are working in pure ASCII,
 then disable it now or you may see some false violations.
 
 On the other hand many of us are working in a multilingual world with
 an extended character set, probably Unicode.  In that world, patterns
 like C<m/[A-Z]/> can be a source of bugs when you really meant
-C<m/\p{IsUpper}/>.  This policy catches a selection of possible
+C<m/\p{IsUpper}/>.  This enforcer catches a selection of possible
 incorrect character class usage.
 
 Specifically, the patterns are:
@@ -176,7 +176,7 @@ This Policy is not configurable except for the standard options.
 
 =head1 CREDITS
 
-Initial development of this policy was supported by a grant from the
+Initial development of this enforcer was supported by a grant from the
 Perl Foundation.
 
 

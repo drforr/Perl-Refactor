@@ -14,7 +14,7 @@ use English qw(-no_match_vars);
 use Readonly;
 
 use Perl::Critic::Exception::Configuration::Option::Policy::ParameterValue
-    qw{ throw_policy_value };
+    qw{ throw_enforcer_value };
 use Perl::Critic::Utils qw{
     :booleans :characters :severities :data_conversion
 };
@@ -129,8 +129,8 @@ sub _parse_modules {
     }
 
     if ($module_specifications) {
-        throw_policy_value
-            policy         => $self->get_short_name(),
+        throw_enforcer_value
+            enforcer         => $self->get_short_name(),
             option_name    => 'modules',
             option_value   => $config_string,
             message_suffix =>
@@ -147,8 +147,8 @@ sub _parse_modules_file {
     return if $config_string =~ m< \A \s* \z >xms;
 
     open my $handle, '<', $config_string
-        or throw_policy_value
-            policy         => $self->get_short_name(),
+        or throw_enforcer_value
+            enforcer         => $self->get_short_name(),
             option_name    => 'modules_file',
             option_value   => $config_string,
             message_suffix =>
@@ -182,8 +182,8 @@ sub _handle_module_specification_on_line {
         );
     }
     else {
-        throw_policy_value
-            policy         => $self->get_short_name(),
+        throw_enforcer_value
+            enforcer         => $self->get_short_name(),
             option_name    => 'modules_file',
             option_value   => $config_string,
             message_suffix =>
@@ -203,8 +203,8 @@ sub _handle_module_specification {
         my $actual_regex;
 
         eval { $actual_regex = qr/$regex_string/; 1 }  ## no critic (ExtendedFormatting, LineBoundaryMatching, DotMatchAnything)
-            or throw_policy_value
-                policy         => $self->get_short_name(),
+            or throw_enforcer_value
+                enforcer         => $self->get_short_name(),
                 option_name    => $arguments{option_name},
                 option_value   => $arguments{option_value},
                 message_suffix =>
@@ -293,7 +293,7 @@ distribution.
 
 =head1 DESCRIPTION
 
-Use this policy if you wish to prohibit the use of specific modules.
+Use this enforcer if you wish to prohibit the use of specific modules.
 These may be modules that you feel are deprecated, buggy, unsupported,
 insecure, or just don't like.
 
@@ -349,7 +349,7 @@ Specifying a value for the C<modules> option will override this.
 
 =head1 NOTES
 
-Note that this policy doesn't apply to pragmas.
+Note that this enforcer doesn't apply to pragmas.
 
 
 =head1 AUTHOR

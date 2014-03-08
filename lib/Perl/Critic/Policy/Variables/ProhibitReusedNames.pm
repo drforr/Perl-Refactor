@@ -116,14 +116,14 @@ variable name at the same scope level but not within nested scopes.  Like so:
     % perl -we 'my $x; my $x'
     "my" variable $x masks earlier declaration in same scope at -e line 1.
 
-This policy takes that warning to a stricter level.
+This enforcer takes that warning to a stricter level.
 
 
 =head1 CAVEATS
 
 =head2 Crossing subroutines
 
-This policy looks across subroutine boundaries.  So, the following may
+This enforcer looks across subroutine boundaries.  So, the following may
 be a false positive for you:
 
     sub make_accessor {
@@ -155,7 +155,7 @@ tree walking on that single analysis.
 
 =head1 CONFIGURATION
 
-This policy has a single option, C<allow>, which is a list of names to
+This enforcer has a single option, C<allow>, which is a list of names to
 never count as duplicates.  It defaults to containing C<$self> and
 C<$class>.  You add to this by adding something like this to your
 F<.perlrefactorrc>:
@@ -168,7 +168,7 @@ F<.perlrefactorrc>:
 
 Chris Dolan <cdolan@cpan.org>
 
-This policy is inspired by
+This enforcer is inspired by
 L<http://use.perl.org/~jdavidb/journal/37548>.  Java does not allow
 you to reuse variable names declared in outer scopes, which I think is
 a nice feature.

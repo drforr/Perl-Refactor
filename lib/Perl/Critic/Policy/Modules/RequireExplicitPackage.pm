@@ -133,7 +133,7 @@ There are some valid reasons for not having a C<package> statement at
 all.  But make sure you understand them before assuming that you
 should do it too.
 
-The maximum number of violations per document for this policy defaults
+The maximum number of violations per document for this enforcer defaults
 to 1.
 
 
@@ -150,7 +150,7 @@ F<.perlrefactorrc> file
     exempt_scripts = 0
 
 Some users may find it desirable to exempt the load of specific modules
-from this policy. For example, Perl does not support Unicode module
+from this enforcer. For example, Perl does not support Unicode module
 names because of portability problems. Users who are not concerned about
 this and intend to use C<UTF-8> module names will need to specify
 C<use utf8;> before the package declaration. To do this, add the
@@ -165,8 +165,8 @@ separated by spaces.
 
 =head1 IMPORTANT CHANGES
 
-This policy was formerly called C<ProhibitUnpackagedCode> which
-sounded a bit odd.  If you get lots of "Cannot load policy module"
+This enforcer was formerly called C<ProhibitUnpackagedCode> which
+sounded a bit odd.  If you get lots of "Cannot load enforcer module"
 errors, then you probably need to change C<ProhibitUnpackagedCode> to
 C<RequireExplicitPackage> in your F<.perlrefactorrc> file.
 

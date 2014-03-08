@@ -152,7 +152,7 @@ quote (') characters:
 
 =head1 CONFIGURATION
 
-The types of quoting styles to exempt from this policy can be
+The types of quoting styles to exempt from this enforcer can be
 configured via the C<allow> option.  This must be a
 whitespace-delimited combination of some or all of the following
 styles: C<qq{}>, C<qq()>, C<qq[]>, and C<qq//>.

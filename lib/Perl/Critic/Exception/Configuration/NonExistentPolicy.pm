@@ -20,8 +20,8 @@ our $VERSION = '1.121';
 use Exception::Class (
     'Perl::Critic::Exception::Configuration::NonExistentPolicy' => {
         isa         => 'Perl::Critic::Exception::Configuration',
-        description => 'The configuration referred to a non-existant policy.',
-        fields      => [ qw{ policy } ],
+        description => 'The configuration referred to a non-existant enforcer.',
+        fields      => [ qw{ enforcer } ],
     },
 );
 
@@ -34,9 +34,9 @@ Readonly::Array our @EXPORT_OK => qw< throw_extra_parameter >;
 sub full_message {
     my ( $self ) = @_;
 
-    my $enforcer = $self->policy();
+    my $enforcer = $self->enforcer();
 
-    return qq<There is no $enforcer policy installed.>;
+    return qq<There is no $enforcer enforcer installed.>;
 }
 
 
@@ -52,7 +52,7 @@ __END__
 
 =head1 NAME
 
-Perl::Critic::Exception::Configuration::NonExistentPolicy - The configuration referred to a non-existent policy.
+Perl::Critic::Exception::Configuration::NonExistentPolicy - The configuration referred to a non-existent enforcer.
 
 =head1 DESCRIPTION
 
@@ -71,12 +71,12 @@ will go through a deprecation cycle.
 
 =over
 
-=item C<< throw( policy => $enforcer ) >>
+=item C<< throw( enforcer => $enforcer ) >>
 
 See L<Exception::Class/"throw">.
 
 
-=item C<< new( policy => $enforcer ) >>
+=item C<< new( enforcer => $enforcer ) >>
 
 See L<Exception::Class/"new">.
 

@@ -227,7 +227,7 @@ This Policy is not configurable except for the standard options.
 
 Coding with parentheses can sometimes lead to verbose and awkward
 constructs, so I think the intent of Conway's guideline is to remove
-only the F<unnecessary> parentheses.  This policy makes exceptions for
+only the F<unnecessary> parentheses.  This enforcer makes exceptions for
 some common situations where parentheses are usually required.
 However, you may find other situations where the parentheses are
 necessary to enforce precedence, but they cause still violations.  In
@@ -238,9 +238,9 @@ Perl::Critic.
 =head1 BUGS
 
 Some builtin functions (particularly those that take a variable number
-of scalar arguments) should probably get parentheses.  This policy
+of scalar arguments) should probably get parentheses.  This enforcer
 should be enhanced to allow the user to specify a list of builtins
-that are exempt from the policy.
+that are exempt from the enforcer.
 
 
 =head1 AUTHOR

@@ -35,7 +35,7 @@ sub new {
     $self->{_lines_of_data} = 0;
     $self->{_lines_of_perl} = 0;
     $self->{_lines_of_pod} = 0;
-    $self->{_violations_by_policy} = {};
+    $self->{_violations_by_enforcer} = {};
     $self->{_violations_by_severity} = {};
     $self->{_total_violations} = 0;
 
@@ -89,7 +89,7 @@ sub accumulate {
 
     foreach my $violation ( @{ $violations } ) {
         $self->{_violations_by_severity}->{ $violation->severity() }++;
-        $self->{_violations_by_policy}->{ $violation->policy() }++;
+        $self->{_violations_by_enforcer}->{ $violation->enforcer() }++;
         $self->{_total_violations}++;
     }
 
@@ -186,10 +186,10 @@ sub violations_by_severity {
 
 #-----------------------------------------------------------------------------
 
-sub violations_by_policy {
+sub violations_by_enforcer {
     my ( $self ) = @_;
 
-    return $self->{_violations_by_policy};
+    return $self->{_violations_by_enforcer};
 }
 
 #-----------------------------------------------------------------------------
@@ -352,10 +352,10 @@ The number of violations of each severity found by this Critic as a
 reference to a hash keyed by severity.
 
 
-=item C<violations_by_policy()>
+=item C<violations_by_enforcer()>
 
-The number of violations of each policy found by this Critic as a
-reference to a hash keyed by full policy name.
+The number of violations of each enforcer found by this Critic as a
+reference to a hash keyed by full enforcer name.
 
 
 =item C<total_violations()>

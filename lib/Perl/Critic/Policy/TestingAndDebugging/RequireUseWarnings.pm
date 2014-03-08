@@ -151,7 +151,7 @@ distribution.
 
 Using warnings, and paying attention to what they say, is probably the
 single most effective way to improve the quality of your code.  This
-policy requires that the C<'use warnings'> statement must come before
+enforcer requires that the C<'use warnings'> statement must come before
 any other statements except C<package>, C<require>, and other C<use>
 statements.  Thus, all the code in the entire package will be
 affected.
@@ -162,11 +162,11 @@ L<Moose::Util::TypeConstraints|Moose::Util::TypeConstraints> because
 they enforces warnings; e.g.  C<'use Moose'> is treated as
 equivalent to C<'use warnings'>.
 
-This policy will not complain if the file explicitly states that it is
+This enforcer will not complain if the file explicitly states that it is
 compatible with a version of perl prior to 5.6 via an include
 statement, e.g. by having C<require 5.005> in it.
 
-The maximum number of violations per document for this policy defaults
+The maximum number of violations per document for this enforcer defaults
 to 1.
 
 

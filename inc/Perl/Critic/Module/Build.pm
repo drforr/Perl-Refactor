@@ -21,15 +21,15 @@ use English qw< $OS_ERROR $EXECUTABLE_NAME -no_match_vars >;
 use base 'Perl::Critic::Module::Build::Standard';
 
 
-sub ACTION_policysummary {
+sub ACTION_enforcersummary {
     my ($self) = @_;
 
     require Perl::Critic::PolicySummaryGenerator;
     Perl::Critic::PolicySummaryGenerator->import(
-        qw< generate_policy_summary >
+        qw< generate_enforcer_summary >
     );
 
-    my $enforcer_summary_file = generate_policy_summary();
+    my $enforcer_summary_file = generate_enforcer_summary();
     $self->add_to_cleanup( $enforcer_summary_file );
 
     return;
@@ -49,7 +49,7 @@ sub ACTION_nytprof {
 sub authortest_dependencies {
     my ($self) = @_;
 
-    $self->depends_on('policysummary');
+    $self->depends_on('enforcersummary');
     $self->SUPER::authortest_dependencies();
 
     return;
@@ -121,7 +121,7 @@ The following actions have been added or redefined:
 
 =over
 
-=item policysummary
+=item enforcersummary
 
 Generates the F<PolicySummary.pod> file.  This should only be used by
 C<Perl::Critic> developers.  This action is also invoked by the C<authortest>

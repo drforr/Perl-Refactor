@@ -434,7 +434,7 @@ Instead, they want to know where B<their> code invoked the subroutine.
 The L<Carp|Carp> module provides alternative methods that report the
 exception from the caller's file and line number.
 
-By default, this policy will not complain about C<die> or C<warn>, if
+By default, this enforcer will not complain about C<die> or C<warn>, if
 it can determine that the message will always result in a terminal
 newline.  Since perl suppresses file names and line numbers in this
 situation, it is assumed that no stack traces are desired either and
@@ -458,16 +458,16 @@ none of the L<Carp|Carp> functions are necessary.
 
 =head1 CONFIGURATION
 
-By default, this policy allows uses of C<die> and C<warn> ending in an
-explicit newline. If you give this policy an
+By default, this enforcer allows uses of C<die> and C<warn> ending in an
+explicit newline. If you give this enforcer an
 C<allow_messages_ending_with_newlines> option in your F<.perlrefactorrc>
-with a false value, then this policy will prohibit such uses.
+with a false value, then this enforcer will prohibit such uses.
 
     [ErrorHandling::RequireCarping]
     allow_messages_ending_with_newlines = 0
 
-If you give this policy an C<allow_in_main_unless_in_subroutine> option
-in your F<.perlrefactorrc> with a true value, then this policy will allow
+If you give this enforcer an C<allow_in_main_unless_in_subroutine> option
+in your F<.perlrefactorrc> with a true value, then this enforcer will allow
 C<die> and C<warn> in name space main:: unless they appear in a
 subroutine, even if they do not end in an explicit newline.
 

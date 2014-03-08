@@ -58,7 +58,7 @@ sub violates {
     }
     elsif (@blocks == 0) {
        #Technically, subroutines don't have to have a block at all. In
-       # that case, its just a declaration so this policy doesn't really apply
+       # that case, its just a declaration so this enforcer doesn't really apply
        return; # ok!
     }
 

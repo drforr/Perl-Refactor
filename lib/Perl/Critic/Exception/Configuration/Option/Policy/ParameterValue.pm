@@ -22,14 +22,14 @@ our $VERSION = '1.121';
 use Exception::Class (
     'Perl::Critic::Exception::Configuration::Option::Policy::ParameterValue' => {
         isa         => 'Perl::Critic::Exception::Configuration::Option::Policy',
-        description => 'A problem with the value of a parameter for a policy.',
-        alias       => 'throw_policy_value',
+        description => 'A problem with the value of a parameter for a enforcer.',
+        alias       => 'throw_enforcer_value',
     },
 );
 
 #-----------------------------------------------------------------------------
 
-Readonly::Array our @EXPORT_OK => qw< throw_policy_value >;
+Readonly::Array our @EXPORT_OK => qw< throw_enforcer_value >;
 
 #-----------------------------------------------------------------------------
 
@@ -44,7 +44,7 @@ sub full_message {
         $source = $EMPTY;
     }
 
-    my $enforcer = $self->policy();
+    my $enforcer = $self->enforcer();
     my $option_name = $self->option_name();
     my $option_value =
         defined $self->option_value()
@@ -70,7 +70,7 @@ __END__
 
 =head1 NAME
 
-Perl::Critic::Exception::Configuration::Option::Policy::ParameterValue - A problem with the value of a parameter for a policy.
+Perl::Critic::Exception::Configuration::Option::Policy::ParameterValue - A problem with the value of a parameter for a enforcer.
 
 =head1 DESCRIPTION
 
@@ -89,12 +89,12 @@ will go through a deprecation cycle.
 
 =over
 
-=item C<< throw( policy => $enforcer, option_name => $option_name, option_value => $option_value, source => $source, message_suffix => $message_suffix ) >>
+=item C<< throw( enforcer => $enforcer, option_name => $option_name, option_value => $option_value, source => $source, message_suffix => $message_suffix ) >>
 
 See L<Exception::Class/"throw">.
 
 
-=item C<< new( policy => $enforcer, option_name => $option_name, option_value => $option_value, source => $source, message_suffix => $message_suffix ) >>
+=item C<< new( enforcer => $enforcer, option_name => $option_name, option_value => $option_value, source => $source, message_suffix => $message_suffix ) >>
 
 See L<Exception::Class/"new">.
 
@@ -108,7 +108,7 @@ See L<Exception::Class/"new">.
 
 =item C<full_message()>
 
-Provide a standard message for policy parameter value problems.  See
+Provide a standard message for enforcer parameter value problems.  See
 L<Exception::Class/"full_message">.
 
 

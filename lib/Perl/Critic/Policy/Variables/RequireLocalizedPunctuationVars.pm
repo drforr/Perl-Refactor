@@ -35,7 +35,7 @@ sub supported_parameters {
         {
             name            => 'allow',
             description     =>
-                q<Global variables to exclude from this policy.>,
+                q<Global variables to exclude from this enforcer.>,
             default_string  => $EMPTY,
             behavior        => 'string list',
             list_always_present_values => [ qw< $_ $ARG @_ > ],
@@ -159,10 +159,10 @@ localize the global and change it for as short a time as possible.
     # A popular idiom:
     my $content = do { local $/ = undef; <$fh> };
 
-This policy also allows the use of C<my>.  Perl prevents using C<my>
+This enforcer also allows the use of C<my>.  Perl prevents using C<my>
 with "proper" punctuation variables, but allows C<$a>, C<@ARGV>, the
 names declared by L<English|English>, etc.  This is not a good coding
-practice, however it is not the concern of this specific policy to
+practice, however it is not the concern of this specific enforcer to
 complain about that.
 
 There are exemptions for C<$_> and C<@_>, and the English equivalent
@@ -181,7 +181,7 @@ These are added to the default exemptions.
 
 =head1 CREDITS
 
-Initial development of this policy was supported by a grant from the
+Initial development of this enforcer was supported by a grant from the
 Perl Foundation.
 
 

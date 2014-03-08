@@ -84,12 +84,12 @@ cmp_deeply(
 
 #-----------------------------------------------------------------------------
 
-my @derived_single_policy = $derived_configuration->single_policy();
-my @default_single_policy = $default_configuration->single_policy();
+my @derived_single_enforcer = $derived_configuration->single_enforcer();
+my @default_single_enforcer = $default_configuration->single_enforcer();
 cmp_deeply(
-    \@derived_single_policy,
-    \@default_single_policy,
-    'single_policy',
+    \@derived_single_enforcer,
+    \@default_single_enforcer,
+    'single_enforcer',
 );
 
 #-----------------------------------------------------------------------------
@@ -217,7 +217,7 @@ my $enforcer_counts_match =
     is(
         scalar @derived_policies,
         scalar @default_policies,
-        'same policy count'
+        'same enforcer count'
     );
 
 SKIP: {
@@ -227,43 +227,43 @@ SKIP: {
         if not $enforcer_counts_match;
 
     for (my $x = 0; $x < @default_policies; $x++) { ## no critic (ProhibitCStyleForLoops)
-        my $derived_policy = $derived_policies[$x];
-        my $default_policy = $default_policies[$x];
+        my $derived_enforcer = $derived_policies[$x];
+        my $default_enforcer = $default_policies[$x];
 
         is(
-            $derived_policy->get_short_name(),
-            $default_policy->get_short_name(),
-            'policy names match',
+            $derived_enforcer->get_short_name(),
+            $default_enforcer->get_short_name(),
+            'enforcer names match',
         );
         is(
-            $derived_policy->get_maximum_violations_per_document(),
-            $default_policy->get_maximum_violations_per_document(),
-            $default_policy->get_short_name() . ' maximum violations per document match',
+            $derived_enforcer->get_maximum_violations_per_document(),
+            $default_enforcer->get_maximum_violations_per_document(),
+            $default_enforcer->get_short_name() . ' maximum violations per document match',
         );
         is(
-            $derived_policy->get_severity(),
-            $default_policy->get_severity(),
-            $default_policy->get_short_name() . ' severities match',
+            $derived_enforcer->get_severity(),
+            $default_enforcer->get_severity(),
+            $default_enforcer->get_short_name() . ' severities match',
         );
         is(
-            $derived_policy->get_themes(),
-            $default_policy->get_themes(),
-            $default_policy->get_short_name() . ' themes match',
+            $derived_enforcer->get_themes(),
+            $default_enforcer->get_themes(),
+            $default_enforcer->get_short_name() . ' themes match',
         );
 
         if (
-                $default_policy->parameter_metadata_available()
-            and not $default_policy->isa('Perl::Critic::Policy::CodeLayout::RequireTidyCode')
+                $default_enforcer->parameter_metadata_available()
+            and not $default_enforcer->isa('Perl::Critic::Policy::CodeLayout::RequireTidyCode')
         ) {
             # Encapsulation violation alert!
-            foreach my $parameter ( @{$default_policy->get_parameters()} ) {
+            foreach my $parameter ( @{$default_enforcer->get_parameters()} ) {
                 my $parameter_name =
-                    $default_policy->__get_parameter_name( $parameter );
+                    $default_enforcer->__get_parameter_name( $parameter );
 
                 cmp_deeply(
-                    $derived_policy->{$parameter_name},
-                    $default_policy->{$parameter_name},
-                    $default_policy->get_short_name()
+                    $derived_enforcer->{$parameter_name},
+                    $default_enforcer->{$parameter_name},
+                    $default_enforcer->get_short_name()
                         . $SPACE
                         . $parameter_name
                         . ' match',

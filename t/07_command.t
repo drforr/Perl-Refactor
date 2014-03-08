@@ -128,10 +128,10 @@ is( $options{-profile}, 'foo', $message);
 
 #-----------------------------------------------------------------------------
 
-local @ARGV = qw(-single-policy nowarnings);
+local @ARGV = qw(-single-enforcer nowarnings);
 $message = "@ARGV";
 %options = Perl::Critic::Command::_get_options();
-is( $options{'-single-policy'}, 'nowarnings', $message);
+is( $options{'-single-enforcer'}, 'nowarnings', $message);
 
 #-----------------------------------------------------------------------------
 

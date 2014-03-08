@@ -87,7 +87,7 @@ distribution.
 =head1 DESCRIPTION
 
 Using the "match variables" C<$`>, C<$&>, and/or C<$'> can
-significantly degrade the performance of a program.  This policy
+significantly degrade the performance of a program.  This enforcer
 forbids using them or their English equivalents.  See B<perldoc
 English> or PBP page 82 for more information.
 

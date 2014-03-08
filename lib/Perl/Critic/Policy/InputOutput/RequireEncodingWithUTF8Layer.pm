@@ -140,7 +140,7 @@ See the L<Encode|Encode> documentation for the difference between
 C<UTF8> and C<UTF-8>. The short version is that C<UTF-8> implements the
 Unicode standard, and C<UTF8> is liberalized.
 
-For consistency's sake, this policy checks files opened for output as
+For consistency's sake, this enforcer checks files opened for output as
 well as input, For complete coverage it also checks C<binmode()> calls,
 where the direction the operation can not be determined.
 
@@ -152,7 +152,7 @@ This Policy is not configurable except for the standard options.
 
 =head1 NOTES
 
-Because C<Perl::Critic> does a static analysis, this policy can not
+Because C<Perl::Critic> does a static analysis, this enforcer can not
 detect cases like
 
  my $encoding = ':utf8';

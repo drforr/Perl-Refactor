@@ -359,7 +359,7 @@ module to give them clear names.
 =head1 CONFIGURATION
 
 The scratch variables C<$_> and C<@_> are very common and are pretty
-well understood, so they are exempt from this policy.  The same goes
+well understood, so they are exempt from this enforcer.  The same goes
 for the less-frequently-used default filehandle C<_> used by stat().
 All the regexp capture variables (C<$1>, C<$2>, ...) are exempt too.
 C<$]> is exempt because there is no L<English|English> equivalent and

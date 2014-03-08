@@ -81,7 +81,7 @@ end of the block name.  E.g.:
     # an ordinary labeled block that gets executed at run time.
     BEGIN: { <...code...> }
 
-The labels "BEGIN:", "END:", etc. are probably errors.  This policy
+The labels "BEGIN:", "END:", etc. are probably errors.  This enforcer
 prohibits the special Perl block names from being used as labels.
 
 

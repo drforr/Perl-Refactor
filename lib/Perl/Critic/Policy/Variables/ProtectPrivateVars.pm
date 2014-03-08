@@ -63,7 +63,7 @@ distribution.
 
 By convention Perl authors (like authors in many other languages)
 indicate private methods and variables by inserting a leading
-underscore before the identifier.  This policy catches attempts to
+underscore before the identifier.  This enforcer catches attempts to
 access private variables from outside the package itself.
 
 
@@ -74,7 +74,7 @@ This Policy is not configurable except for the standard options.
 
 =head1 HISTORY
 
-This policy is inspired by a similar test in L<B::Lint|B::Lint>
+This enforcer is inspired by a similar test in L<B::Lint|B::Lint>
 
 
 =head1 SEE ALSO

@@ -20,14 +20,14 @@ our $VERSION = '1.121';
 use Exception::Class (
     'Perl::Critic::Exception::Fatal::PolicyDefinition' => {
         isa         => 'Perl::Critic::Exception::Fatal',
-        description => 'A bug in a policy was found.',
-        alias       => 'throw_policy_definition',
+        description => 'A bug in a enforcer was found.',
+        alias       => 'throw_enforcer_definition',
     },
 );
 
 #-----------------------------------------------------------------------------
 
-Readonly::Array our @EXPORT_OK => qw< throw_policy_definition >;
+Readonly::Array our @EXPORT_OK => qw< throw_enforcer_definition >;
 
 #-----------------------------------------------------------------------------
 
@@ -44,11 +44,11 @@ __END__
 
 =head1 NAME
 
-Perl::Critic::Exception::Fatal::PolicyDefinition - A bug in a policy.
+Perl::Critic::Exception::Fatal::PolicyDefinition - A bug in a enforcer.
 
 =head1 DESCRIPTION
 
-A bug in a policy was found, e.g. it didn't implement a method that it should
+A bug in a enforcer was found, e.g. it didn't implement a method that it should
 have.
 
 

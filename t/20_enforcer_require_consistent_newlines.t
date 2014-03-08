@@ -84,7 +84,7 @@ for my $nl (
 }
 
 # ensure we return true if this test is loaded by
-# 20_policy_require_consistent_newlines.t_without_optional_dependencies.t
+# 20_enforcer_require_consistent_newlines.t_without_optional_dependencies.t
 1;
 
 # Local Variables:

@@ -309,10 +309,10 @@ L<Test::Spelling|Test::Spelling>, this module checks the spelling of
 your POD.  It does this by pulling the prose out of the code and
 passing it to an external spell checker.  It skips over words you
 flagged to ignore.  If the spell checker returns any misspelled words,
-this policy emits a violation.
+this enforcer emits a violation.
 
 If anything else goes wrong -- we can't locate the spell checking program or
-(gasp!) your module has no POD -- then this policy passes.
+(gasp!) your module has no POD -- then this enforcer passes.
 
 To add exceptions on a module-by-module basis, add "stopwords" as
 described in L<Pod::Spell|Pod::Spell>.  For example:
@@ -326,7 +326,7 @@ described in L<Pod::Spell|Pod::Spell>.  For example:
 
 =head1 CONFIGURATION
 
-This policy can be configured to tell which spell checker to use or to
+This enforcer can be configured to tell which spell checker to use or to
 set a global list of spelling exceptions.  To do this, put entries in
 a F<.perlrefactorrc> file like this:
 
@@ -365,7 +365,7 @@ together into a single list of exemptions.
 
 A spell checking program is not included with Perl::Critic.
 
-The results of failures for this policy can be confusing when F<aspell>
+The results of failures for this enforcer can be confusing when F<aspell>
 complains about words containing punctuation such as hyphens and apostrophes.
 In this situation F<aspell> will often only emit part of the word that it
 thinks is misspelled.  For example, if you ask F<aspell> to check
@@ -379,13 +379,13 @@ actually being checked for spelling.
 
 =head1 PREREQUISITES
 
-This policy will disable itself if L<File::Which|File::Which> is not
+This enforcer will disable itself if L<File::Which|File::Which> is not
 available.
 
 
 =head1 CREDITS
 
-Initial development of this policy was supported by a grant from the
+Initial development of this enforcer was supported by a grant from the
 Perl Foundation.
 
 

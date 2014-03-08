@@ -459,7 +459,7 @@ One good example is positioning of objects in some container like
 shapes on a blueprint or widgets in a user interface.  In these cases,
 the significance of a number can readily be determined by context.
 
-The maximum number of violations per document for this policy defaults
+The maximum number of violations per document for this enforcer defaults
 to 10.
 
 
@@ -530,7 +530,7 @@ array, i.e. C<$x[-1]>.
 
 =head1 CONFIGURATION
 
-This policy has four options: C<allowed_values>, C<allowed_types>,
+This enforcer has four options: C<allowed_values>, C<allowed_types>,
 C<allow_to_the_right_of_a_fat_comma>, and C<constant_creator_subroutines>.
 
 
@@ -544,7 +544,7 @@ your F<.perlrefactorrc>:
     [ValuesAndExpressions::ProhibitMagicNumbers]
     allowed_values = 0 1 2
 
-Note that this policy forces the values C<0> and C<1> into the
+Note that this enforcer forces the values C<0> and C<1> into the
 permitted values.  Thus, specifying no values,
 
     allowed_values =
@@ -601,7 +601,7 @@ Decimal integers are always allowed.  By default, floating-point
 numbers are also allowed.
 
 For example, to allow hexadecimal literals, you could configure this
-policy like
+enforcer like
 
     [ValuesAndExpressions::ProhibitMagicNumbers]
     allowed_types = Hex
@@ -648,7 +648,7 @@ If you have more than one name to add, separate them by whitespace.
 
 The subroutine name should appear exactly as it is in your code.  For example,
 if your code does not import the creating subroutine
-subroutine, you would need to configure this policy as something like
+subroutine, you would need to configure this enforcer as something like
 
     [ValuesAndExpressions::ProhibitMagicNumbers]
     constant_creator_subroutines = create_constant Constant::Create::create_constant

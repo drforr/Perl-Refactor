@@ -20,7 +20,7 @@ use Pod::Usage qw< pod2usage >;
 
 use Perl::Critic::Exception::Parse ();
 use Perl::Critic::Utils qw<
-    :characters :severities policy_short_name
+    :characters :severities enforcer_short_name
     $DEFAULT_VERBOSITY $DEFAULT_VERBOSITY_WITH_FILE_NAME
 >;
 use Perl::Critic::Utils::Constants qw< $_MODULE_VERSION_TERM_ANSICOLOR >;
@@ -134,11 +134,11 @@ sub _dispatch_special_requests {
     if ( $opts{-options}         ) { pod2usage( -verbose => 1 )    }  # Exits
     if ( $opts{-man}             ) { pod2usage( -verbose => 2 )    }  # Exits
     if ( $opts{-version}         ) { _display_version()            }  # Exits
-    if ( $opts{-list}            ) { _render_all_policy_listing()  }  # Exits
-    if ( $opts{'-list-enabled'}  ) { _render_policy_listing(%opts) }  # Exits
+    if ( $opts{-list}            ) { _render_all_enforcer_listing()  }  # Exits
+    if ( $opts{'-list-enabled'}  ) { _render_enforcer_listing(%opts) }  # Exits
     if ( $opts{'-list-themes'}   ) { _render_theme_listing()       }  # Exits
     if ( $opts{'-profile-proto'} ) { _render_profile_prototype()   }  # Exits
-    if ( $opts{-doc}             ) { _render_policy_docs( %opts )  }  # Exits
+    if ( $opts{-doc}             ) { _render_enforcer_docs( %opts )  }  # Exits
     return 1;
 }
 
@@ -438,7 +438,7 @@ sub _report_statistics {
 
         _out "\n";
 
-        my %enforcer_violations = %{ $statistics->violations_by_policy() };
+        my %enforcer_violations = %{ $statistics->violations_by_enforcer() };
         my @policies = sort keys %enforcer_violations;
         $width =
             max
@@ -450,7 +450,7 @@ sub _report_statistics {
                     "%*s violations of %s.\n",
                     $width,
                     _commaify($enforcer_violations{$enforcer}),
-                    policy_short_name($enforcer);
+                    enforcer_short_name($enforcer);
         }
     }
 
@@ -501,7 +501,7 @@ sub _get_option_specification {
         profile-proto
         quiet
         severity=i
-        single-policy|s=s
+        single-enforcer|s=s
         stern
         statistics!
         statistics-only!
@@ -575,15 +575,15 @@ sub _at_tty {
 
 #-----------------------------------------------------------------------------
 
-sub _render_all_policy_listing {
+sub _render_all_enforcer_listing {
     # Force P-C parameters, to catch all Policies on this site
     my %pc_params = (-profile => $EMPTY, -severity => $SEVERITY_LOWEST);
-    return _render_policy_listing( %pc_params );
+    return _render_enforcer_listing( %pc_params );
 }
 
 #-----------------------------------------------------------------------------
 
-sub _render_policy_listing {
+sub _render_enforcer_listing {
     my %pc_params = @_;
 
     require Perl::Critic::PolicyListing;
@@ -628,7 +628,7 @@ sub _render_profile_prototype {
 
 #-----------------------------------------------------------------------------
 
-sub _render_policy_docs {
+sub _render_enforcer_docs {
 
     my (%opts) = @_;
     my $pattern = delete $opts{-doc};
@@ -638,7 +638,7 @@ sub _render_policy_docs {
     _set_up_pager($refactor->config()->pager());
 
     require Perl::Critic::PolicyFactory;
-    my @site_policies  = Perl::Critic::PolicyFactory->site_policy_names();
+    my @site_policies  = Perl::Critic::PolicyFactory->site_enforcer_names();
     my @matching_policies  = grep { $_ =~ m/$pattern/ixms } @site_policies;
 
     # "-T" means don't send to pager

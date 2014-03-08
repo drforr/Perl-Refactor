@@ -15,7 +15,7 @@ use English qw(-no_match_vars);
 
 use PPI::Document;
 
-use Perl::Critic::TestUtils qw(bundled_policy_names);
+use Perl::Critic::TestUtils qw(bundled_enforcer_names);
 
 use Test::More;
 
@@ -27,7 +27,7 @@ our $VERSION = '1.121';
 
 Perl::Critic::TestUtils::block_perlrefactorrc();
 
-my @bundled_policy_names = bundled_policy_names();
+my @bundled_enforcer_names = bundled_enforcer_names();
 
 my @concrete_exceptions = qw{
     AggregateConfiguration
@@ -46,7 +46,7 @@ my @concrete_exceptions = qw{
 plan tests =>
         144
     +   (  9 * scalar @concrete_exceptions  )
-    +   ( 17 * scalar @bundled_policy_names );
+    +   ( 17 * scalar @bundled_enforcer_names );
 
 # pre-compute for version comparisons
 my $version_string = __PACKAGE__->VERSION;
@@ -56,7 +56,7 @@ my $version_string = __PACKAGE__->VERSION;
 
 use_ok('Perl::Critic') or BAIL_OUT(q<Can't continue.>);
 can_ok('Perl::Critic', 'new');
-can_ok('Perl::Critic', 'add_policy');
+can_ok('Perl::Critic', 'add_enforcer');
 can_ok('Perl::Critic', 'config');
 can_ok('Perl::Critic', 'critique');
 can_ok('Perl::Critic', 'policies');
@@ -71,7 +71,7 @@ is($refactor->VERSION(), $version_string, 'Perl::Critic version');
 
 use_ok('Perl::Critic::Config') or BAIL_OUT(q<Can't continue.>);
 can_ok('Perl::Critic::Config', 'new');
-can_ok('Perl::Critic::Config', 'add_policy');
+can_ok('Perl::Critic::Config', 'add_enforcer');
 can_ok('Perl::Critic::Config', 'policies');
 can_ok('Perl::Critic::Config', 'exclude');
 can_ok('Perl::Critic::Config', 'force');
@@ -79,14 +79,14 @@ can_ok('Perl::Critic::Config', 'include');
 can_ok('Perl::Critic::Config', 'only');
 can_ok('Perl::Critic::Config', 'profile_strictness');
 can_ok('Perl::Critic::Config', 'severity');
-can_ok('Perl::Critic::Config', 'single_policy');
+can_ok('Perl::Critic::Config', 'single_enforcer');
 can_ok('Perl::Critic::Config', 'theme');
 can_ok('Perl::Critic::Config', 'top');
 can_ok('Perl::Critic::Config', 'verbose');
 can_ok('Perl::Critic::Config', 'color');
 can_ok('Perl::Critic::Config', 'unsafe_allowed');
 can_ok('Perl::Critic::Config', 'criticism_fatal');
-can_ok('Perl::Critic::Config', 'site_policy_names');
+can_ok('Perl::Critic::Config', 'site_enforcer_names');
 can_ok('Perl::Critic::Config', 'color_severity_highest');
 can_ok('Perl::Critic::Config', 'color_severity_high');
 can_ok('Perl::Critic::Config', 'color_severity_medium');
@@ -110,7 +110,7 @@ can_ok('Perl::Critic::OptionsProcessor', 'include');
 can_ok('Perl::Critic::OptionsProcessor', 'force');
 can_ok('Perl::Critic::OptionsProcessor', 'only');
 can_ok('Perl::Critic::OptionsProcessor', 'profile_strictness');
-can_ok('Perl::Critic::OptionsProcessor', 'single_policy');
+can_ok('Perl::Critic::OptionsProcessor', 'single_enforcer');
 can_ok('Perl::Critic::OptionsProcessor', 'severity');
 can_ok('Perl::Critic::OptionsProcessor', 'theme');
 can_ok('Perl::Critic::OptionsProcessor', 'top');
@@ -180,7 +180,7 @@ can_ok('Perl::Critic::Violation', 'explanation');
 can_ok('Perl::Critic::Violation', 'get_format');
 can_ok('Perl::Critic::Violation', 'location');
 can_ok('Perl::Critic::Violation', 'new');
-can_ok('Perl::Critic::Violation', 'policy');
+can_ok('Perl::Critic::Violation', 'enforcer');
 can_ok('Perl::Critic::Violation', 'set_format');
 can_ok('Perl::Critic::Violation', 'severity');
 can_ok('Perl::Critic::Violation', 'sort_by_location');
@@ -200,8 +200,8 @@ is($viol->VERSION(), $version_string, 'Perl::Critic::Violation version');
 use_ok('Perl::Critic::UserProfile') or BAIL_OUT(q<Can't continue.>);
 can_ok('Perl::Critic::UserProfile', 'options_processor');
 can_ok('Perl::Critic::UserProfile', 'new');
-can_ok('Perl::Critic::UserProfile', 'policy_is_disabled');
-can_ok('Perl::Critic::UserProfile', 'policy_is_enabled');
+can_ok('Perl::Critic::UserProfile', 'enforcer_is_disabled');
+can_ok('Perl::Critic::UserProfile', 'enforcer_is_enabled');
 
 my $up = Perl::Critic::UserProfile->new();
 isa_ok($up, 'Perl::Critic::UserProfile');
@@ -211,9 +211,9 @@ is($up->VERSION(), $version_string, 'Perl::Critic::UserProfile version');
 # Test Perl::Critic::PolicyFactory module interface
 
 use_ok('Perl::Critic::PolicyFactory') or BAIL_OUT(q<Can't continue.>);
-can_ok('Perl::Critic::PolicyFactory', 'create_policy');
+can_ok('Perl::Critic::PolicyFactory', 'create_enforcer');
 can_ok('Perl::Critic::PolicyFactory', 'new');
-can_ok('Perl::Critic::PolicyFactory', 'site_policy_names');
+can_ok('Perl::Critic::PolicyFactory', 'site_enforcer_names');
 
 
 my $profile = Perl::Critic::UserProfile->new();
@@ -227,7 +227,7 @@ is($factory->VERSION(), $version_string, 'Perl::Critic::PolicyFactory version');
 use_ok('Perl::Critic::Theme') or BAIL_OUT(q<Can't continue.>);
 can_ok('Perl::Critic::Theme', 'new');
 can_ok('Perl::Critic::Theme', 'rule');
-can_ok('Perl::Critic::Theme', 'policy_is_thematic');
+can_ok('Perl::Critic::Theme', 'enforcer_is_thematic');
 
 
 my $theme = Perl::Critic::Theme->new( -rule => 'foo' );
@@ -287,7 +287,7 @@ can_ok('Perl::Critic::Command', 'run');
 # Test module interface for each Policy subclass
 
 {
-    for my $mod ( @bundled_policy_names ) {
+    for my $mod ( @bundled_enforcer_names ) {
 
         use_ok($mod) or BAIL_OUT(q<Can't continue.>);
         can_ok($mod, 'applies_to');
@@ -307,7 +307,7 @@ can_ok('Perl::Critic::Command', 'run');
         my $enforcer = $mod->new();
         isa_ok($enforcer, 'Perl::Critic::Policy');
         is($enforcer->VERSION(), $version_string, "Version of $mod");
-        ok($enforcer->is_safe(), "CORE policy $mod is marked safe");
+        ok($enforcer->is_safe(), "CORE enforcer $mod is marked safe");
     }
 }
 

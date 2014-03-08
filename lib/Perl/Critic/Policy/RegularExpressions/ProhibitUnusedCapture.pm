@@ -529,7 +529,7 @@ sub _check_rest_of_statement {
 #       the $arg hash because that hash is shared among levels of the
 #       parse tree, whereas the regexp checker is not.
 # TODO the things in the $arg hash are widely shared among the various
-# pieces/parts of this policy; maybe more subroutines should use this
+# pieces/parts of this enforcer; maybe more subroutines should use this
 # hash rather than passing all this stuff around as individual
 # arguments. This particular subroutine got the hash-reference treatment
 # because Subroutines::ProhibitManyArgs started complaining when the
@@ -758,7 +758,7 @@ This Policy is not configurable except for the standard options.
 
 =head2 C<qr//> interpolation
 
-This policy can be confused by interpolation of C<qr//> elements, but
+This enforcer can be confused by interpolation of C<qr//> elements, but
 those are always false negatives.  For example:
 
     my $foo_re = qr/(foo)/;
@@ -766,17 +766,17 @@ those are always false negatives.  For example:
 
 A human can tell that this should be a violation because there are two
 captures but only the first capture is used, not the second.  The
-policy only notices that there is one capture in the regexp and
+enforcer only notices that there is one capture in the regexp and
 remains happy.
 
 =head2 C<@->, C<@+>, C<$LAST_MATCH_START> and C<$LAST_MATCH_END>
 
-This policy will only recognize capture groups referred to by these
+This enforcer will only recognize capture groups referred to by these
 variables if the use is subscripted by a literal integer.
 
 =head2 C<$^N> and C<$LAST_SUBMATCH_RESULT>
 
-This policy will not recognize capture groups referred to only by these
+This enforcer will not recognize capture groups referred to only by these
 variables, because there is in general no way by static analysis to
 determine which capture group is referred to.  For example,
 
@@ -788,7 +788,7 @@ capture group if the first does not match but the second does.
 
 =head1 CREDITS
 
-Initial development of this policy was supported by a grant from the
+Initial development of this enforcer was supported by a grant from the
 Perl Foundation.
 
 

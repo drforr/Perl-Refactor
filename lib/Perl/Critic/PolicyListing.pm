@@ -98,7 +98,7 @@ L<"OVERLOADS"> for more information.
 
 When a L<Perl::Critic::PolicyListing|Perl::Critic::PolicyListing> is
 evaluated in string context, it produces a one-line summary of the
-default severity, policy name, and default themes for each
+default severity, enforcer name, and default themes for each
 L<Perl::Critic::Policy|Perl::Critic::Policy> object that was given to
 the constructor of this C<PolicyListing>.
 

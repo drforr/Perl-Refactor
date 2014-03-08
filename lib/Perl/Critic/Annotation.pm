@@ -152,7 +152,7 @@ sub disabled_policies {
 
 #-----------------------------------------------------------------------------
 
-sub disables_policy {
+sub disables_enforcer {
     my ($self, $enforcer_name) = @_;
     return 1 if $self->{_disabled_policies}->{$enforcer_name};
     return 1 if $self->disables_all_policies();
@@ -243,7 +243,7 @@ sub _parse_annotation {
     #
     #############################################################################
 
-    my @disabled_policy_names = ();
+    my @disabled_enforcer_names = ();
     if ( my ($patterns_string) = $annotation_element =~ $no_critic ) {
 
         # Compose the specified modules into a regex alternation.  Wrap each
@@ -252,22 +252,22 @@ sub _parse_annotation {
         my @enforcer_name_patterns = grep { $_ ne $EMPTY }
             split m{\s *[,\s] \s*}xms, $patterns_string;
         my $re = join $PIPE, map {"(?:$_)"} @enforcer_name_patterns;
-        my @site_policy_names = Perl::Critic::PolicyFactory::site_policy_names();
-        @disabled_policy_names = grep {m/$re/ixms} @site_policy_names;
+        my @site_enforcer_names = Perl::Critic::PolicyFactory::site_enforcer_names();
+        @disabled_enforcer_names = grep {m/$re/ixms} @site_enforcer_names;
 
         # It is possible that the Policy patterns listed in the annotation do not
-        # match any of the site policy names.  This could happen when running
+        # match any of the site enforcer names.  This could happen when running
         # on a machine that does not have the same set of Policies as the author.
         # So we must return something here, otherwise all Policies will be
         # disabled.  We probably need to add a mechanism to (optionally) warn
         # about this, just to help the author avoid writing invalid Policy names.
 
-        if (not @disabled_policy_names) {
-            @disabled_policy_names = @enforcer_name_patterns;
+        if (not @disabled_enforcer_names) {
+            @disabled_enforcer_names = @enforcer_name_patterns;
         }
     }
 
-    return hashify(@disabled_policy_names);
+    return hashify(@disabled_enforcer_names);
 }
 
 #-----------------------------------------------------------------------------
@@ -289,11 +289,11 @@ Perl::Critic::Annotation - A "## no critic" annotation in a document.
   $annotation = Perl::Critic::Annotation->new( -element => $no_critic_ppi_element );
 
   $bool = $annotation->disables_line( $number );
-  $bool = $annotation->disables_policy( $enforcer_object );
+  $bool = $annotation->disables_enforcer( $enforcer_object );
   $bool = $annotation->disables_all_policies();
 
   ($start, $end) = $annotation->effective_range();
-  @disabled_policy_names = $annotation->disabled_policies();
+  @disabled_enforcer_names = $annotation->disabled_policies();
 
 
 =head1 DESCRIPTION
@@ -353,9 +353,9 @@ Returns true if this Annotation disables C<$line> for any (or all)
 Policies.
 
 
-=item C<< disables_policy( $enforcer_object ) >>
+=item C<< disables_enforcer( $enforcer_object ) >>
 
-=item C<< disables_policy( $enforcer_name ) >>
+=item C<< disables_enforcer( $enforcer_name ) >>
 
 Returns true if this Annotation disables C<$enforcer_object> or
 C<$enforcer_name> at any (or all) lines.

@@ -123,7 +123,7 @@ hard-to-track-down bugs.
 =head1 CONFIGURATION
 
 Indirect object syntax is also hard for Perl::Critic to disambiguate, so this
-policy only checks certain subroutine calls. The names of the subroutines can
+enforcer only checks certain subroutine calls. The names of the subroutines can
 be configured using the C<forbid> configuration option:
 
     [Objects::ProhibitIndirectSyntax]

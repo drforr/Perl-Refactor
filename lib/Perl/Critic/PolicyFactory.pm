@@ -20,8 +20,8 @@ use Perl::Critic::Utils qw{
     :characters
     $POLICY_NAMESPACE
     :data_conversion
-    policy_long_name
-    policy_short_name
+    enforcer_long_name
+    enforcer_short_name
     :internal_lookup
 };
 use Perl::Critic::PolicyConfig;
@@ -30,7 +30,7 @@ use Perl::Critic::Exception::Configuration;
 use Perl::Critic::Exception::Fatal::Generic qw{ throw_generic };
 use Perl::Critic::Exception::Fatal::Internal qw{ throw_internal };
 use Perl::Critic::Exception::Fatal::PolicyDefinition
-    qw{ throw_policy_definition };
+    qw{ throw_enforcer_definition };
 use Perl::Critic::Exception::Configuration::NonExistentPolicy qw< >;
 use Perl::Critic::Utils::Constants qw{ :profile_strictness };
 
@@ -41,7 +41,7 @@ our $VERSION = '1.121';
 #-----------------------------------------------------------------------------
 
 # Globals.  Ick!
-my @site_policy_names = ();
+my @site_enforcer_names = ();
 
 #-----------------------------------------------------------------------------
 
@@ -53,12 +53,12 @@ sub import {
     my $test_mode = $args{-test};
     my $extra_test_policies = $args{'-extra-test-policies'};
 
-    if ( not @site_policy_names ) {
+    if ( not @site_enforcer_names ) {
         my $eval_worked = eval {
             require Module::Pluggable;
             Module::Pluggable->import(search_path => $POLICY_NAMESPACE,
                                       require => 1, inner => 0);
-            @site_policy_names = plugins(); #Exported by Module::Pluggable
+            @site_enforcer_names = plugins(); #Exported by Module::Pluggable
             1;
         };
 
@@ -72,26 +72,26 @@ sub import {
                 qq<Can't load Policies from namespace "$POLICY_NAMESPACE" for an unknown reason.>;
         }
 
-        if ( not @site_policy_names ) {
+        if ( not @site_enforcer_names ) {
             throw_generic
                 qq<No Policies found in namespace "$POLICY_NAMESPACE".>;
         }
     }
 
     # In test mode, only load native policies, not third-party ones.  So this
-    # filters out any policy that was loaded from within a directory called
+    # filters out any enforcer that was loaded from within a directory called
     # "blib".  During the usual "./Build test" process this works fine,
     # but it doesn't work if you are using prove to test against the code
     # directly in the lib/ directory.
 
     if ( $test_mode && any {m/\b blib \b/xms} @INC ) {
-        @site_policy_names = _modules_from_blib( @site_policy_names );
+        @site_enforcer_names = _modules_from_blib( @site_enforcer_names );
 
         if ($extra_test_policies) {
-            my @extra_policy_full_names =
+            my @extra_enforcer_full_names =
                 map { "${POLICY_NAMESPACE}::$_" } @{$extra_test_policies};
 
-            push @site_policy_names, @extra_policy_full_names;
+            push @site_enforcer_names, @extra_enforcer_full_names;
         }
     }
 
@@ -172,19 +172,19 @@ sub _init {
 
 #-----------------------------------------------------------------------------
 
-sub create_policy {
+sub create_enforcer {
 
     my ($self, %args ) = @_;
 
     my $enforcer_name = $args{-name}
         or throw_internal q{The -name argument is required};
 
-    # Normalize policy name to a fully-qualified package name
-    $enforcer_name = policy_long_name( $enforcer_name );
-    my $enforcer_short_name = policy_short_name( $enforcer_name );
+    # Normalize enforcer name to a fully-qualified package name
+    $enforcer_name = enforcer_long_name( $enforcer_name );
+    my $enforcer_short_name = enforcer_short_name( $enforcer_name );
 
 
-    # Get the policy parameters from the user profile if they were
+    # Get the enforcer parameters from the user profile if they were
     # not given to us directly.  If none exist, use an empty hash.
     my $profile = $self->_profile();
     my $enforcer_config;
@@ -195,13 +195,13 @@ sub create_policy {
             );
     }
     else {
-        $enforcer_config = $profile->policy_params($enforcer_name);
+        $enforcer_config = $profile->enforcer_params($enforcer_name);
         $enforcer_config ||=
             Perl::Critic::PolicyConfig->new( $enforcer_short_name );
     }
 
     # Pull out base parameters.
-    return $self->_instantiate_policy( $enforcer_name, $enforcer_config );
+    return $self->_instantiate_enforcer( $enforcer_name, $enforcer_config );
 }
 
 #-----------------------------------------------------------------------------
@@ -216,8 +216,8 @@ sub create_all_policies {
             : Perl::Critic::Exception::AggregateConfiguration->new();
     my @policies;
 
-    foreach my $name ( site_policy_names() ) {
-        my $enforcer = eval { $self->create_policy( -name => $name ) };
+    foreach my $name ( site_enforcer_names() ) {
+        my $enforcer = eval { $self->create_enforcer( -name => $name ) };
 
         $errors->add_exception_or_rethrow( $EVAL_ERROR );
 
@@ -235,9 +235,9 @@ sub create_all_policies {
 
 #-----------------------------------------------------------------------------
 
-sub site_policy_names {
-    my @sorted_policy_names = sort @site_policy_names;
-    return @sorted_policy_names;
+sub site_enforcer_names {
+    my @sorted_enforcer_names = sort @site_enforcer_names;
+    return @sorted_enforcer_names;
 }
 
 #-----------------------------------------------------------------------------
@@ -252,13 +252,13 @@ sub _profile {
 
 # This two-phase initialization is caused by the historical lack of a
 # requirement for Policies to invoke their super-constructor.
-sub _instantiate_policy {
+sub _instantiate_enforcer {
     my ($self, $enforcer_name, $enforcer_config) = @_;
 
     $enforcer_config->set_profile_strictness( $self->{_profile_strictness} );
 
     my $enforcer = eval { $enforcer_name->new( %{$enforcer_config} ) };
-    _handle_policy_instantiation_exception(
+    _handle_enforcer_instantiation_exception(
         $enforcer_name,
         $enforcer,        # Note: being used as a boolean here.
         $EVAL_ERROR,
@@ -267,14 +267,14 @@ sub _instantiate_policy {
     $enforcer->__set_config( $enforcer_config );
 
     my $eval_worked = eval { $enforcer->__set_base_parameters(); 1; };
-    _handle_policy_instantiation_exception(
+    _handle_enforcer_instantiation_exception(
         $enforcer_name, $eval_worked, $EVAL_ERROR,
     );
 
     return $enforcer;
 }
 
-sub _handle_policy_instantiation_exception {
+sub _handle_enforcer_instantiation_exception {
     my ($enforcer_name, $eval_worked, $eval_error) = @_;
 
     if (not $eval_worked) {
@@ -285,12 +285,12 @@ sub _handle_policy_instantiation_exception {
                 $exception->rethrow();
             }
 
-            throw_policy_definition
-                qq<Unable to create policy "$enforcer_name": $eval_error>;
+            throw_enforcer_definition
+                qq<Unable to create enforcer "$enforcer_name": $eval_error>;
         }
 
-        throw_policy_definition
-            qq<Unable to create policy "$enforcer_name" for an unknown reason.>;
+        throw_enforcer_definition
+            qq<Unable to create enforcer "$enforcer_name" for an unknown reason.>;
     }
 
     return;
@@ -302,7 +302,7 @@ sub _validate_policies_in_profile {
     my ($self, $errors) = @_;
 
     my $profile = $self->_profile();
-    my %known_policies = hashify( $self->site_policy_names() );
+    my %known_policies = hashify( $self->site_enforcer_names() );
 
     for my $enforcer_name ( $profile->listed_policies() ) {
         if ( not exists $known_policies{$enforcer_name} ) {
@@ -311,7 +311,7 @@ sub _validate_policies_in_profile {
             if ( $errors ) {
                 $errors->add_exception(
                     Perl::Critic::Exception::Configuration::NonExistentPolicy->new(
-                        policy  => $enforcer_name,
+                        enforcer  => $enforcer_name,
                     )
                 );
             }
@@ -378,7 +378,7 @@ added to the object.
 
 =over
 
-=item C<< create_policy( -name => $enforcer_name, -params => \%param_hash ) >>
+=item C<< create_enforcer( -name => $enforcer_name, -params => \%param_hash ) >>
 
 Creates one Policy object.  If the object cannot be instantiated, it
 will throw a fatal exception.  Otherwise, it returns a reference to
@@ -420,7 +420,7 @@ internally, but may be useful to you in some way.
 
 =over
 
-=item C<site_policy_names()>
+=item C<site_enforcer_names()>
 
 Returns a list of all the Policy modules that are currently installed
 in the Perl::Critic:Policy namespace.  These will include modules that

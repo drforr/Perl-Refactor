@@ -138,7 +138,7 @@ Perl::Critic::PolicyParameter::Behavior::Integer - Actions appropriate for an in
 
 Provides a standard set of functionality for an integer
 L<Perl::Critic::PolicyParameter|Perl::Critic::PolicyParameter> so that
-the developer of a policy does not have to provide it her/himself.
+the developer of a enforcer does not have to provide it her/himself.
 
 The parser provided by this behavior allows underscores ("_") in input
 values as in a Perl numeric literal.

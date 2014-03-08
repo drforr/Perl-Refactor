@@ -159,10 +159,10 @@ distribution.
 
 =head1 DESCRIPTION
 
-This policy warns you if you use single-quotes or C<q//> with a string
+This enforcer warns you if you use single-quotes or C<q//> with a string
 that has unescaped metacharacters that may need interpolation. Its
 hard to know for sure if a string really should be interpolated
-without looking into the symbol table.  This policy just makes an
+without looking into the symbol table.  This enforcer just makes an
 educated guess by looking for metacharacters and sigils which usually
 indicate that the string should be interpolated.
 
@@ -192,7 +192,7 @@ Things that look like e-mail addresses:
 
 =head1 CONFIGURATION
 
-The C<rcs_keywords> option allows you to stop this policy from complaining
+The C<rcs_keywords> option allows you to stop this enforcer from complaining
 about things that look like RCS variables, for example, in deriving values for
 C<$VERSION> variables.
 

@@ -20,7 +20,7 @@ use Perl::Critic::Exception::AggregateConfiguration;
 use Perl::Critic::Config qw<>;
 use Perl::Critic::PolicyFactory (-test => 1);
 use Perl::Critic::TestUtils qw<
-    bundled_policy_names
+    bundled_enforcer_names
     names_of_policies_willing_to_work
 >;
 use Perl::Critic::Utils qw< :booleans :characters :severities >;
@@ -43,13 +43,13 @@ my @names_of_policies_willing_to_work =
         -severity   => $SEVERITY_LOWEST,
         -theme      => 'core',
     );
-my @native_policy_names  = bundled_policy_names();
+my @native_enforcer_names  = bundled_enforcer_names();
 my $total_policies   = scalar @names_of_policies_willing_to_work;
 
 #-----------------------------------------------------------------------------
 
 {
-    my $all_policy_count =
+    my $all_enforcer_count =
         scalar
             Perl::Critic::Config
                 ->new(
@@ -58,7 +58,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
                 )
                 ->all_policies_enabled_or_not();
 
-    plan tests => 93 + $all_policy_count;
+    plan tests => 93 + $all_enforcer_count;
 }
 
 #-----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 # as we introduce new polices and/or change their severity.
 
 {
-    my $last_policy_count = $total_policies + 1;
+    my $last_enforcer_count = $total_policies + 1;
     for my $severity ($SEVERITY_LOWEST .. $SEVERITY_HIGHEST) {
         my $configuration =
             Perl::Critic::Config->new(
@@ -76,8 +76,8 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
             );
         my $enforcer_count = scalar $configuration->policies();
         my $test_name = "Count native policies, severity: $severity";
-        cmp_ok($enforcer_count, '<', $last_policy_count, $test_name);
-        $last_policy_count = $enforcer_count;
+        cmp_ok($enforcer_count, '<', $last_enforcer_count, $test_name);
+        $last_enforcer_count = $enforcer_count;
     }
 }
 
@@ -86,8 +86,8 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 # Same tests as above, but using a generated config
 
 {
-    my %profile = map { $_ => {} } @native_policy_names;
-    my $last_policy_count = $total_policies + 1;
+    my %profile = map { $_ => {} } @native_enforcer_names;
+    my $last_enforcer_count = $total_policies + 1;
     for my $severity ($SEVERITY_LOWEST .. $SEVERITY_HIGHEST) {
         my %pc_args = (
             -profile    => \%profile,
@@ -97,8 +97,8 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
         my $refactor = Perl::Critic::Config->new( %pc_args );
         my $enforcer_count = scalar $refactor->policies();
         my $test_name = "Count all policies, severity: $severity";
-        cmp_ok($enforcer_count, '<', $last_policy_count, $test_name);
-        $last_policy_count = $enforcer_count;
+        cmp_ok($enforcer_count, '<', $last_enforcer_count, $test_name);
+        $last_enforcer_count = $enforcer_count;
     }
 }
 
@@ -138,7 +138,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 # turned them all off in the profile.
 
 #{
-#    my %profile = map { '-' . $_ => {} } @native_policy_names;
+#    my %profile = map { '-' . $_ => {} } @native_enforcer_names;
 #    for my $severity (undef, $SEVERITY_LOWEST .. $SEVERITY_HIGHEST) {
 #        my $severity_string = $severity ? $severity : '<undef>';
 #        my %pc_args = (
@@ -438,12 +438,12 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 }
 
 #-----------------------------------------------------------------------------
-# Test the -single-policy switch
+# Test the -single-enforcer switch
 
 {
-    my %pc_config = ('-single-policy' => 'ProhibitMagicNumbers');
+    my %pc_config = ('-single-enforcer' => 'ProhibitMagicNumbers');
     my @policies = Perl::Critic::Config->new( %pc_config )->policies();
-    is(scalar @policies, 1, '-single-policy switch');
+    is(scalar @policies, 1, '-single-enforcer switch');
 }
 
 #-----------------------------------------------------------------------------
@@ -487,20 +487,20 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 {
     my $config = Perl::Critic::Config->new( -profile => 'NONE' );
 
-    # Try adding a bogus policy
-    eval{ $config->add_policy( -policy => 'Bogus::Policy') };
+    # Try adding a bogus enforcer
+    eval{ $config->add_enforcer( -enforcer => 'Bogus::Policy') };
     like(
         $EVAL_ERROR,
-        qr/Unable [ ] to [ ] create [ ] policy/xms,
-        'add_policy w/ bad args',
+        qr/Unable [ ] to [ ] create [ ] enforcer/xms,
+        'add_enforcer w/ bad args',
     );
 
-    # Try adding w/o policy
-    eval { $config->add_policy() };
+    # Try adding w/o enforcer
+    eval { $config->add_enforcer() };
     like(
         $EVAL_ERROR,
-        qr/The [ ] -policy [ ] argument [ ] is [ ] required/xms,
-        'add_policy w/o args',
+        qr/The [ ] -enforcer [ ] argument [ ] is [ ] required/xms,
+        'add_enforcer w/o args',
     );
 
     # Try using bogus named severity level
@@ -511,20 +511,20 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
         'invalid severity'
     );
 
-    # Try using vague -single-policy option
-    eval{ Perl::Critic::Config->new( '-single-policy' => q<.*> ) };
+    # Try using vague -single-enforcer option
+    eval{ Perl::Critic::Config->new( '-single-enforcer' => q<.*> ) };
     like(
         $EVAL_ERROR,
         qr/matched [ ] multiple [ ] policies/xms,
-        'vague -single-policy',
+        'vague -single-enforcer',
     );
 
-    # Try using invalid -single-policy option
-    eval{ Perl::Critic::Config->new( '-single-policy' => 'bogus' ) };
+    # Try using invalid -single-enforcer option
+    eval{ Perl::Critic::Config->new( '-single-enforcer' => 'bogus' ) };
     like(
         $EVAL_ERROR,
         qr/did [ ] not [ ] match [ ] any [ ] policies/xms,
-        'invalid -single-policy',
+        'invalid -single-enforcer',
     );
 }
 
@@ -548,9 +548,9 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
     @p = Perl::Critic::Config->new( %unsafe_pc_config )->policies();
     is(scalar @p, 2, 'Also loaded unsafe policies with -allow-unsafe switch');
 
-    my %singular_pc_config = ('-single-policy' => 'QuotedWordLists');
+    my %singular_pc_config = ('-single-enforcer' => 'QuotedWordLists');
     @p = Perl::Critic::Config->new( %singular_pc_config )->policies();
-    is(scalar @p, 1, '-single-policy always loads Policy, even if unsafe');
+    is(scalar @p, 1, '-single-enforcer always loads Policy, even if unsafe');
 }
 
 #-----------------------------------------------------------------------------

@@ -77,7 +77,7 @@ distribution.
 
 Long numbers can be difficult to read.  To improve legibility, Perl
 allows numbers to be split into groups of digits separated by
-underscores.  This policy requires number sequences of more than three
+underscores.  This enforcer requires number sequences of more than three
 digits to be separated.
 
     $long_int = 123456789;   #not ok
@@ -98,7 +98,7 @@ example:
 
 =head1 NOTES
 
-As it is currently written, this policy only works properly with
+As it is currently written, this enforcer only works properly with
 decimal (base 10) numbers.  And it is obviously biased toward Western
 notation.  I'll try and address those issues in the future.
 

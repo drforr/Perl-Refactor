@@ -89,7 +89,7 @@ Chris Dolan <cdolan@cpan.org>
 
 =head1 CREDITS
 
-Initial development of this policy was supported by a grant from the
+Initial development of this enforcer was supported by a grant from the
 Perl Foundation.
 
 

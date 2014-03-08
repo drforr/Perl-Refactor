@@ -217,7 +217,7 @@ put, the preferred form is more likely to do what you actually want.
 As Conway points out, the preferred forms also perform better, are more
 readable, and are easier to maintain.
 
-This policy notices all of the simple forms of the above problem, but
+This enforcer notices all of the simple forms of the above problem, but
 does not recognize any of these more complex examples:
 
     $some->[$data_structure]->[$#{$some->[$data_structure]} -1];

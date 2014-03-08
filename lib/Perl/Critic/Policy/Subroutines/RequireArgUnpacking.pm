@@ -82,7 +82,7 @@ sub violates {
     # empty sub?
     return if not @statements;
 
-    # Don't apply policy to short subroutines
+    # Don't apply enforcer to short subroutines
 
     # Should we instead be doing a find() for PPI::Statement
     # instances?  That is, should we count all statements instead of
@@ -389,7 +389,7 @@ delegate must consist only of C<< ( @_ ) >>.
 
 =head1 CONFIGURATION
 
-This policy is lenient for subroutines which have C<N> or fewer
+This enforcer is lenient for subroutines which have C<N> or fewer
 top-level statements, where C<N> defaults to ZERO.  You can override
 this to set it to a higher number with the
 C<short_subroutine_statements> setting.  This is very much not
@@ -399,7 +399,7 @@ put entries in a F<.perlrefactorrc> file like this:
   [Subroutines::RequireArgUnpacking]
   short_subroutine_statements = 2
 
-By default this policy does not allow you to specify array subscripts
+By default this enforcer does not allow you to specify array subscripts
 when you unpack arguments (i.e. by an array slice or by referencing
 individual elements).  Should you wish to permit this, you can do so
 using the C<allow_subscripts> setting. This defaults to false.  You can
@@ -430,7 +430,7 @@ deprecated anyway.
 
 =head1 CREDITS
 
-Initial development of this policy was supported by a grant from the
+Initial development of this enforcer was supported by a grant from the
 Perl Foundation.
 
 =head1 AUTHOR

@@ -155,7 +155,7 @@ when a lexical variable will suffice.  If your package needs to keep
 some dynamic state, consider using an object or closures to keep the
 state private.
 
-This policy assumes that you're using C<strict vars> so that naked
+This enforcer assumes that you're using C<strict vars> so that naked
 variable declarations are not package variables by default.  Thus, it
 complains you declare a variable with C<our> or C<use vars>, or if you
 make reference to variable with a fully-qualified package name.
@@ -182,7 +182,7 @@ There is room for exceptions.  Some modules, like the core File::Find
 module, use package variables as their only interface, and others like
 Data::Dumper use package variables as their most common interface.
 These module can be specified from your F<.perlrefactorrc> file, and the
-policy will ignore them.
+enforcer will ignore them.
 
     [Variables::ProhibitPackageVars]
     packages = Data::Dumper File::Find FindBin Log::Log4perl

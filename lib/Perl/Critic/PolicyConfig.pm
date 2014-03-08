@@ -34,7 +34,7 @@ sub new {
     my %self = $specification ? %{ $specification } : ();
     my %non_public_data;
 
-    $non_public_data{_policy_short_name} = $enforcer_short_name;
+    $non_public_data{_enforcer_short_name} = $enforcer_short_name;
     $non_public_data{_profile_strictness} =
         $self{$NON_PUBLIC_DATA}{_profile_strictness};
 
@@ -63,10 +63,10 @@ sub _get_non_public_data {
 
 #-----------------------------------------------------------------------------
 
-sub get_policy_short_name {
+sub get_enforcer_short_name {
     my $self = shift;
 
-    return $self->_get_non_public_data()->{_policy_short_name};
+    return $self->_get_non_public_data()->{_enforcer_short_name};
 }
 
 #-----------------------------------------------------------------------------
@@ -173,7 +173,7 @@ sub handle_extra_parameters {
     foreach my $offered_param ( $self->get_parameter_names() ) {
         $parameter_errors->add_exception(
             Perl::Critic::Exception::Configuration::Option::Policy::ExtraParameter->new(
-                policy => $enforcer->get_short_name(),
+                enforcer => $enforcer->get_short_name(),
                 option_name => $offered_param,
                 source  => undef,
             )
@@ -230,9 +230,9 @@ to change without notice.
 
 =over
 
-=item C<get_policy_short_name()>
+=item C<get_enforcer_short_name()>
 
-The name of the policy this configuration is for.  Primarily here for
+The name of the enforcer this configuration is for.  Primarily here for
 the sake of debugging.
 
 
@@ -296,13 +296,13 @@ Deals with any extra parameters according to the profile_strictness
 setting.  To be called by Perl::Critic::Policy->new() once all valid
 policies have been processed and removed from the configuration.
 
-If profile_strictness is $PROFILE_STRICTNESS_QUIET, extra policy
+If profile_strictness is $PROFILE_STRICTNESS_QUIET, extra enforcer
 parameters are ignored.
 
-If profile_strictness is $PROFILE_STRICTNESS_WARN, extra policy
+If profile_strictness is $PROFILE_STRICTNESS_WARN, extra enforcer
 parameters generate a warning.
 
-If profile_strictness is $PROFILE_STRICTNESS_FATAL, extra policy
+If profile_strictness is $PROFILE_STRICTNESS_FATAL, extra enforcer
 parameters generate a fatal error.
 
 If no profile_strictness was set, the behavior is that specified by

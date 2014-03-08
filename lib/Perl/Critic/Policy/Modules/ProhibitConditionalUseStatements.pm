@@ -133,7 +133,7 @@ original intent.
 If you need to conditionally load a module you should be using "require"
 instead.
 
-This policy will catch the following forms of conditional "use" statements:
+This enforcer will catch the following forms of conditional "use" statements:
 
     # if-elsif-else
     if ($a == 1) { use Module; }

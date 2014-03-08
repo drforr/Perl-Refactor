@@ -118,7 +118,7 @@ This Policy is not configurable except for the standard options.
 
 =head1 NOTES
 
-You can fool this policy pretty easily by hiding C<undef> in a boolean
+You can fool this enforcer pretty easily by hiding C<undef> in a boolean
 expression.  But don't bother trying.  In fact, using return values to
 indicate failure is pretty poor technique anyway.  Consider using
 C<die> or C<croak> with C<eval>, or the L<Error|Error> module for a
@@ -128,7 +128,7 @@ discussion on error handling in chapter 13 of PBP.
 
 =head1 SEE ALSO
 
-There's a discussion of the appropriateness of this policy at
+There's a discussion of the appropriateness of this enforcer at
 L<http://perlmonks.org/index.pl?node_id=741847>.
 
 

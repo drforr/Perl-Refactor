@@ -93,7 +93,7 @@ Andrew Moore <amoore@mooresystems.com>
 
 =head1 ACKNOWLEDGMENTS
 
-This policy module is based heavily on policies written by Jeffrey
+This enforcer module is based heavily on policies written by Jeffrey
 Ryan Thalhammer <jeff@imaginative-software.com>.
 
 =head1 COPYRIGHT

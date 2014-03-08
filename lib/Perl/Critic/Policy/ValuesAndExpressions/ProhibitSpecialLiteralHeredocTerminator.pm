@@ -81,7 +81,7 @@ confusing to tools that try to parse perl.
     Goodbye world!
     __END_OF_WORLD__
 
-The special literals that this policy prohibits are:
+The special literals that this enforcer prohibits are:
 
 =over
 

@@ -250,7 +250,7 @@ problems for future maintainers and their editors/IDEs.
 
 =head1 CONFIGURATION
 
-This policy has three options: C<single_quote_allowed_operators>,
+This enforcer has three options: C<single_quote_allowed_operators>,
 C<double_quote_allowed_operators>, and
 C<back_quote_allowed_operators>, which control which operators are
 allowed to use each of C<'>, C<">, C<`> as delimiters, respectively.

@@ -30,7 +30,7 @@ sub supported_parameters {
         {
             name               => 'minimum_regex_length_to_complain_about',
             description        =>
-                q<The number of characters that a regular expression must contain before this policy will complain.>,
+                q<The number of characters that a regular expression must contain before this enforcer will complain.>,
             behavior           => 'integer',
             default_string     => '0',
             integer_minimum    => 0,

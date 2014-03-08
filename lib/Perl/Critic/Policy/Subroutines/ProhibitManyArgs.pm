@@ -150,7 +150,7 @@ passed to the routine.
 
 =head1 CONFIGURATION
 
-By default, this policy allows up to 5 arguments without warning.  To
+By default, this enforcer allows up to 5 arguments without warning.  To
 change this threshold, put entries in a F<.perlrefactorrc> file like
 this:
 
@@ -174,7 +174,7 @@ Don't include C<$self> and C<$class> in the count.
 
 =head1 CREDITS
 
-Initial development of this policy was supported by a grant from the
+Initial development of this enforcer was supported by a grant from the
 Perl Foundation.
 
 

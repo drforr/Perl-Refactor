@@ -235,7 +235,7 @@ die ( ( q{Don't } , ( $die , ( " a horrible death\n" , ) , ) , ) , ) ,
 ## failures 10
 ## cut
 
-# all these tests are necessary: make sure that the policy knows when to
+# all these tests are necessary: make sure that the enforcer knows when to
 # stop looking.
 
 # one element in a sub list

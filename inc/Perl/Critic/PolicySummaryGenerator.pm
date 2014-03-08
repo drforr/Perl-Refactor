@@ -31,11 +31,11 @@ our $VERSION = '1.116';
 
 #-----------------------------------------------------------------------------
 
-our @EXPORT_OK = qw< generate_policy_summary >;
+our @EXPORT_OK = qw< generate_enforcer_summary >;
 
 #-----------------------------------------------------------------------------
 
-sub generate_policy_summary {
+sub generate_enforcer_summary {
 
     print "\n\nGenerating Perl::Critic::PolicySummary.\n";
 
@@ -173,14 +173,14 @@ Policy module.
 
 This library should be used at author-time to generate the
 F<PolicySummary.pod> file B<before> releasing a new distribution.  See
-also the C<policysummary> action in L<Perl::Critic::Module::Build>.
+also the C<enforcersummary> action in L<Perl::Critic::Module::Build>.
 
 
 =head1 IMPORTABLE SUBROUTINES
 
 =over
 
-=item C<generate_policy_summary()>
+=item C<generate_enforcer_summary()>
 
 Generates the F<PolicySummary.pod> file which contains a brief summary of all
 the Policies in this distro.  Returns the relative path this file.  Unlike

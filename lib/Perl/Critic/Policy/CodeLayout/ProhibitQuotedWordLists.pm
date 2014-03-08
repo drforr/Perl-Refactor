@@ -127,7 +127,7 @@ easy to add to the list in the future.
 
 =head1 CONFIGURATION
 
-This policy can be configured to only pay attention to word lists with
+This enforcer can be configured to only pay attention to word lists with
 at least a particular number of elements.  By default, this value is
 2, which means that lists containing zero or one elements are ignored.
 The minimum list size to be looked at can be specified by giving a
@@ -136,10 +136,10 @@ value for C<min_elements> in F<.perlrefactorrc> like this:
     [CodeLayout::ProhibitQuotedWordLists]
     min_elements = 4
 
-This would cause this policy to only complain about lists containing
+This would cause this enforcer to only complain about lists containing
 four or more words.
 
-By default, this policy won't complain if any of the values in the list
+By default, this enforcer won't complain if any of the values in the list
 contain non-word characters.  If you want it to, set the C<strict>
 option to a true value.
 
@@ -157,8 +157,8 @@ edge cases that I haven't covered.  If you find one, send me a note.
 
 =head1 IMPORTANT CHANGES
 
-This policy was formerly called C<RequireQuotedWords> which seemed a
-little counter-intuitive.  If you get lots of "Cannot load policy
+This enforcer was formerly called C<RequireQuotedWords> which seemed a
+little counter-intuitive.  If you get lots of "Cannot load enforcer
 module" errors, then you probably need to change C<RequireQuotedWords>
 to C<ProhibitQuotedWordLists> in your F<.perlrefactorrc> file.
 

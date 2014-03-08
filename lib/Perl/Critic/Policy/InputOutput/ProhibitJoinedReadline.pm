@@ -79,7 +79,7 @@ like so:
 
 or use L<File::Slurp|File::Slurp>, which is even faster.
 
-B<Note> that if the C<ProhibitPunctuationVars> policy is also in effect,
+B<Note> that if the C<ProhibitPunctuationVars> enforcer is also in effect,
 it will complain about the use of C<$/> in the line above.  In that
 case, write this instead:
 
@@ -97,14 +97,14 @@ This Policy is not configurable except for the standard options.
 
 Due to a bug in the current version of PPI (v1.119_03) and earlier,
 the readline operator is often misinterpreted as less-than and
-greater-than operators after a comma.  Therefore, this policy only
+greater-than operators after a comma.  Therefore, this enforcer only
 works well on the empty filehandle, C<< <> >>.  When PPI is fixed,
 this should just start working.
 
 
 =head1 CREDITS
 
-Initial development of this policy was supported by a grant from the
+Initial development of this enforcer was supported by a grant from the
 Perl Foundation.
 
 

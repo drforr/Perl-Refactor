@@ -38,8 +38,8 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
 
 
     # Now test...
-    my $enforcer = $pf->create_policy( -name => $enforcer_name, -params => $params );
-    is( ref $enforcer, $enforcer_name, 'Created correct type of policy');
+    my $enforcer = $pf->create_enforcer( -name => $enforcer_name, -params => $params );
+    is( ref $enforcer, $enforcer_name, 'Created correct type of enforcer');
 
     my $severity = $enforcer->get_severity();
     is( $severity, 2, 'Set the severity');
@@ -59,9 +59,9 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
 
 
     # Now test...
-    my $enforcer = $pf->create_policy( -name => $enforcer_name, -params => $params );
+    my $enforcer = $pf->create_enforcer( -name => $enforcer_name, -params => $params );
     my $enforcer_name_long = 'Perl::Critic::Policy::' . $enforcer_name;
-    is( ref $enforcer, $enforcer_name_long, 'Created correct type of policy');
+    is( ref $enforcer, $enforcer_name_long, 'Created correct type of enforcer');
 
     my @themes = $enforcer->get_themes();
     is_deeply( \@themes, [ qw(betty wilma) ], 'Set the theme');
@@ -75,29 +75,29 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
     my $pf = Perl::Critic::PolicyFactory->new( -profile  => $userprof );
 
     # Try missing arguments
-    eval{ $pf->create_policy() };
+    eval{ $pf->create_enforcer() };
     like(
         $EVAL_ERROR,
         qr/The [ ] -name [ ] argument/xms,
         'create without -name arg',
     );
 
-    # Try creating bogus policy
-    eval{ $pf->create_policy( -name => 'Perl::Critic::Foo' ) };
+    # Try creating bogus enforcer
+    eval{ $pf->create_enforcer( -name => 'Perl::Critic::Foo' ) };
     like(
         $EVAL_ERROR,
         qr/Can't [ ] locate [ ] object [ ] method/xms,
-        'create bogus policy',
+        'create bogus enforcer',
     );
 
     # Try using a bogus severity level
     my $enforcer_name = 'Modules::RequireVersionVar';
     my $enforcer_params = {severity => 'bogus'};
-    eval{ $pf->create_policy( -name => $enforcer_name, -params => $enforcer_params)};
+    eval{ $pf->create_enforcer( -name => $enforcer_name, -params => $enforcer_params)};
     like(
         $EVAL_ERROR,
         qr/Invalid [ ] severity: [ ] "bogus"/xms,
-        'create policy w/ bogus severity',
+        'create enforcer w/ bogus severity',
     );
 }
 
@@ -132,7 +132,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
 #-----------------------------------------------------------------------------
 
 # ensure we return true if this test is loaded by
-# t/11_policyfactory.t_without_optional_dependencies.t
+# t/11_enforcerfactory.t_without_optional_dependencies.t
 1;
 
 ##############################################################################

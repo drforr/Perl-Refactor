@@ -20,7 +20,7 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 # Notice that you can pass arguments to this test, which limit the testing to
-# specific policies.  The arguments must be shortened policy names. When using
+# specific policies.  The arguments must be shortened enforcer names. When using
 # prove(1), any arguments that follow '::' will be passed to the test script.
 
 my %args = @ARGV ? ( -policies => [ @ARGV ] ) : ();

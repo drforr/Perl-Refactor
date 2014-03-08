@@ -12,7 +12,7 @@ use strict;
 use warnings;
 
 use Perl::Critic::Exception::Fatal::PolicyDefinition
-    qw{ &throw_policy_definition };
+    qw{ &throw_enforcer_definition };
 use Perl::Critic::Utils qw{ :characters &words_from_string &hashify };
 
 use base qw{ Perl::Critic::PolicyParameter::Behavior };
@@ -25,17 +25,17 @@ sub initialize_parameter {
     my ($self, $parameter, $specification) = @_;
 
     my $valid_values = $specification->{enumeration_values}
-        or throw_policy_definition
+        or throw_enforcer_definition
             'No enumeration_values given for '
                 . $parameter->get_name()
                 . $PERIOD;
     ref $valid_values eq 'ARRAY'
-        or throw_policy_definition
+        or throw_enforcer_definition
             'The value given for enumeration_values for '
                 . $parameter->get_name()
                 . ' is not an array reference.';
     scalar @{$valid_values} > 1
-        or throw_policy_definition
+        or throw_enforcer_definition
             'There were not at least two valid values given for'
                 . ' enumeration_values for '
                 . $parameter->get_name()
@@ -170,7 +170,7 @@ Perl::Critic::PolicyParameter::Behavior::Enumeration - Actions appropriate for a
 
 Provides a standard set of functionality for an enumerated
 L<Perl::Critic::PolicyParameter|Perl::Critic::PolicyParameter> so that
-the developer of a policy does not have to provide it her/himself.
+the developer of a enforcer does not have to provide it her/himself.
 
 NOTE: Do not instantiate this class.  Use the singleton instance held
 onto by

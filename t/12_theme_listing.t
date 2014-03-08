@@ -26,9 +26,9 @@ our $VERSION = '1.121';
 #-----------------------------------------------------------------------------
 
 my $profile = Perl::Critic::UserProfile->new( -profile => 'NONE' );
-my @enforcer_names = Perl::Critic::PolicyFactory::site_policy_names();
+my @enforcer_names = Perl::Critic::PolicyFactory::site_enforcer_names();
 my $factory = Perl::Critic::PolicyFactory->new( -profile => $profile );
-my @enforcers = map { $factory->create_policy( -name => $_ ) } @enforcer_names;
+my @enforcers = map { $factory->create_enforcer( -name => $_ ) } @enforcer_names;
 my $listing = Perl::Critic::ThemeListing->new( -policies => \@enforcers );
 
 my $expected = <<'END_EXPECTED';

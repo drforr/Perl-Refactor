@@ -123,13 +123,13 @@ distribution.
 
 Big regexps are hard to read, perhaps even the hardest part of Perl.
 A good practice to write digestible chunks of regexp and put them
-together.  This policy flags any regexp that is longer than C<N>
+together.  This enforcer flags any regexp that is longer than C<N>
 characters, where C<N> is a configurable value that defaults to 60.
 If the regexp uses the C<x> flag, then the length is computed after
 parsing out any comments or whitespace.
 
 Unfortunately the use of descriptive (and therefore longish) variable
-names can cause regexps to be in violation of this policy, so
+names can cause regexps to be in violation of this enforcer, so
 interpolated variables are counted as 4 characters no matter how long
 their names actually are.
 
@@ -188,7 +188,7 @@ implementation is sound even before running tests.
 
 =head1 CONFIGURATION
 
-This policy allows regexps up to C<N> characters long, where C<N>
+This enforcer allows regexps up to C<N> characters long, where C<N>
 defaults to 60.  You can override this to set it to a different number
 with the C<max_characters> setting.  To do this, put entries in a
 F<.perlrefactorrc> file like this:
@@ -199,7 +199,7 @@ F<.perlrefactorrc> file like this:
 
 =head1 CREDITS
 
-Initial development of this policy was supported by a grant from the
+Initial development of this enforcer was supported by a grant from the
 Perl Foundation.
 
 

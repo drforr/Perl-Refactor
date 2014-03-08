@@ -94,7 +94,7 @@ instead.
     substr($something, 1, 2, $newvalue);      # ok
 
 The four-argument form of C<substr()> was introduced in Perl 5.005.
-This policy does not report violations on code which explicitly
+This enforcer does not report violations on code which explicitly
 specifies an earlier version of Perl (e.g. C<use 5.004;>).
 
 =head1 CONFIGURATION

@@ -87,7 +87,7 @@ forward slashes looks like:
 
     m/\/\/\/\//;
 
-Well, this policy doesn't solve that problem (write it as C<m{////}>
+Well, this enforcer doesn't solve that problem (write it as C<m{////}>
 instead!) but solves a related one.  As seen above, the escapes make
 the expression hard to parse visually.  One solution is to use
 character classes.  You see, inside of character classes, the only
@@ -105,7 +105,7 @@ which is certainly more readable, if less recognizable prior the
 publication of Perl Best Practices.  (Of course, you should really use
 L<Regexp::Common::net|Regexp::Common::net> to match IPv4 addresses!)
 
-Specifically, this policy forbids backslashes immediately prior to the
+Specifically, this enforcer forbids backslashes immediately prior to the
 following characters:
 
     { } ( ) . * + ? | #
@@ -116,7 +116,7 @@ because it has special meaning (negation) in a character class.
 Finally, C<[> and C<]> are exempt, of course, because they are awkward
 to represent in character classes.
 
-Note that this policy does not forbid unnecessary escaping.  So go
+Note that this enforcer does not forbid unnecessary escaping.  So go
 ahead and (pointlessly) escape C<!> characters.
 
 
@@ -148,7 +148,7 @@ Neither does this:
 
 =head1 CREDITS
 
-Initial development of this policy was supported by a grant from the
+Initial development of this enforcer was supported by a grant from the
 Perl Foundation.
 
 

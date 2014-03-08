@@ -139,7 +139,7 @@ CONSTRUCTOR
         "-exclude" takes precedence over "-include" when a Policy matches
         both patterns.
 
-        -single-policy is a string "PATTERN". Only one policy that matches
+        -single-enforcer is a string "PATTERN". Only one enforcer that matches
         "m/$PATTERN/ixms" will be used. Policies that do not match will be
         excluded. This option has precedence over the "-severity", "-theme",
         "-include", "-exclude", and "-only" options. You can set the default
@@ -219,12 +219,12 @@ METHODS
         Violations appear in the code. If there are no violations, this
         method returns an empty list.
 
-    "add_policy( -policy => $enforcer_name, -params => \%param_hash )"
+    "add_enforcer( -enforcer => $enforcer_name, -params => \%param_hash )"
         Creates a Policy object and loads it into this Critic. If the object
         cannot be instantiated, it will throw a fatal exception. Otherwise,
         it returns a reference to this Critic.
 
-        -policy is the name of a Perl::Critic::Policy subclass module. The
+        -enforcer is the name of a Perl::Critic::Policy subclass module. The
         'Perl::Critic::Policy' portion of the name can be omitted for
         brevity. This argument is required.
 
@@ -315,7 +315,7 @@ CONFIGURATION
         arg2 = value2
 
     "Perl::Critic::Policy::Category::PolicyName" is the full name of a
-    module that implements the policy. The Policy modules distributed with
+    module that implements the enforcer. The Policy modules distributed with
     Perl::Critic have been grouped into categories according to the table of
     contents in Damian Conway's book Perl Best Practices. For brevity, you
     can omit the 'Perl::Critic::Policy' part of the module name.
@@ -421,7 +421,7 @@ THE POLICIES
     Policy modules that match the regex "m/PATTERN/ixms"
 
     There are a number of distributions of additional policies on CPAN. If
-    Perl::Critic doesn't contain a policy that you want, some one may have
+    Perl::Critic doesn't contain a enforcer that you want, some one may have
     already written it. See the "SEE ALSO" section below for a list of some
     of these distributions.
 
@@ -563,7 +563,7 @@ THE Perl::Critic PHILOSOPHY
     practices. Our primary goal is not to dictate what those practices are,
     but rather, to implement the practices discovered by others. Ultimately,
     you make the rules -- Perl::Critic is merely a tool for encouraging
-    consistency. If there is a policy that you think is important or that we
+    consistency. If there is a enforcer that you think is important or that we
     have overlooked, we would be very grateful for contributions, or you can
     simply load your own private set of policies into Perl::Critic.
 

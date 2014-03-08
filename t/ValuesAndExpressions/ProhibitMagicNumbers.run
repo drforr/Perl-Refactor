@@ -338,7 +338,7 @@ Readonly $Totoro => [ 1, 2, 3, 4 ];
 
 $Evil_Iggy = [ 1, 2, 3, 4 ];
 
-## name Array references containing only good numbers are allowed (by this policy).
+## name Array references containing only good numbers are allowed (by this enforcer).
 ## failures 0
 ## cut
 
@@ -378,7 +378,7 @@ $gnome_lord = { a => 6, b => 4 };
 
 $gnome_lord = { a => 6, b => 4 };
 
-## name Hash references containing only good numbers are allowed (by this policy).
+## name Hash references containing only good numbers are allowed (by this enforcer).
 ## failures 0
 ## cut
 
@@ -408,7 +408,7 @@ Readonly @elf_mummy => ( 1, 2, 3, 4 );
 
 @kitten = ( 1, 2, 3, 4 );
 
-## name Lists containing only good numbers are allowed (by this policy).
+## name Lists containing only good numbers are allowed (by this enforcer).
 ## failures 0
 ## cut
 

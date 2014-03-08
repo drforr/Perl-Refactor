@@ -80,13 +80,13 @@ sub rule {
 
 #-----------------------------------------------------------------------------
 
-sub policy_is_thematic {
+sub enforcer_is_thematic {
 
     my ($self, %args) = @_;
-    my $enforcer = $args{-policy}
-        || throw_internal 'The -policy argument is required';
+    my $enforcer = $args{-enforcer}
+        || throw_internal 'The -enforcer argument is required';
     ref $enforcer
-        || throw_internal 'The -policy must be an object';
+        || throw_internal 'The -enforcer must be an object';
 
     my $rule = $self->{_rule} or return 1;
     my %themes = hashify( $enforcer->get_themes() );
@@ -169,7 +169,7 @@ a string expression that evaluates to true or false for each Policy..
 See L<"THEME RULES"> for more information.
 
 
-=item C<< policy_is_thematic( -policy => $enforcer ) >>
+=item C<< enforcer_is_thematic( -enforcer => $enforcer ) >>
 
 Given a reference to a L<Perl::Critic::Policy|Perl::Critic::Policy>
 object, this method returns evaluates the rule against the themes that

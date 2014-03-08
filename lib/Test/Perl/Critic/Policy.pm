@@ -57,7 +57,7 @@ sub all_policies_ok {
     my $subtests_with_extras =  subtests_in_tree( $test_dir, 'include extras' );
 
     if ($wanted_policies) {
-        _validate_wanted_policy_names($wanted_policies, $subtests_with_extras);
+        _validate_wanted_enforcer_names($wanted_policies, $subtests_with_extras);
         _filter_unwanted_subtests($wanted_policies, $subtests_with_extras);
     }
 
@@ -67,9 +67,9 @@ sub all_policies_ok {
 
     for my $enforcer ( sort keys %{$subtests_with_extras} ) {
 
-        my ($full_policy_name, $method) = ("Perl::Critic::Policy::$enforcer", 'violates');
-        my $can_ok_label = qq{Class '$full_policy_name' has method '$method'};
-        $TEST->ok( $full_policy_name->can($method), $can_ok_label );
+        my ($full_enforcer_name, $method) = ("Perl::Critic::Policy::$enforcer", 'violates');
+        my $can_ok_label = qq{Class '$full_enforcer_name' has method '$method'};
+        $TEST->ok( $full_enforcer_name->can($method), $can_ok_label );
 
         for my $subtest ( @{ $subtests_with_extras->{$enforcer}{subtests} } ) {
             my $todo = $subtest->{TODO};
@@ -89,7 +89,7 @@ sub all_policies_ok {
 
 #-----------------------------------------------------------------------------
 
-sub _validate_wanted_policy_names {
+sub _validate_wanted_enforcer_names {
     my ($wanted_policies, $subtests_with_extras) = @_;
     return 1 if not $wanted_policies;
     my @all_testable_policies = keys %{ $subtests_with_extras };
@@ -213,7 +213,7 @@ sub _evaluate_error_case {
 sub _compute_test_count {
     my ($subtests_with_extras) = @_;
 
-    # one can_ok() for each policy
+    # one can_ok() for each enforcer
     my $npolicies = scalar keys %{ $subtests_with_extras };
 
     my $nsubtests = 0;
@@ -281,8 +281,8 @@ Test::Perl::Critic::Policy - A framework for testing your custom Policies
     # If you want your test program to accept short Policy names as
     # command-line parameters...
     #
-    # You can then test a single policy by running
-    # "perl -Ilib t/policy-test.t My::Policy".
+    # You can then test a single enforcer by running
+    # "perl -Ilib t/enforcer-test.t My::Policy".
     my %args = @ARGV ? ( -policies => [ @ARGV ] ) : ();
     all_policies_ok(%args);
 
@@ -319,7 +319,7 @@ C<m/$POLICY_NAME/imx> will be run.
 
 =head1 CREATING THE *.run FILES
 
-Testing a policy follows a very simple pattern:
+Testing a enforcer follows a very simple pattern:
 
     * Policy name
         * Subtest name
@@ -328,10 +328,10 @@ Testing a policy follows a very simple pattern:
         * Optional exception expected
         * Optional filename for code
 
-Each of the subtests for a policy is collected in a single F<.run>
+Each of the subtests for a enforcer is collected in a single F<.run>
 file, with test properties as comments in front of each code block
 that describes how we expect Perl::Critic to react to the code.  For
-example, say you have a policy called Variables::ProhibitVowels:
+example, say you have a enforcer called Variables::ProhibitVowels:
 
     (In file t/Variables/ProhibitVowels.run)
 
@@ -370,7 +370,7 @@ make a C<##TODO> entry.
 
     ## TODO Should pass when PPI 1.xxx comes out
 
-If the code is expected to trigger an exception in the policy,
+If the code is expected to trigger an exception in the enforcer,
 indicate that like so:
 
     ## error 1
@@ -380,7 +380,7 @@ indicate a C<like()> test:
 
     ## error /Can't load Foo::Bar/
 
-If the policy you are testing cares about the filename of the code,
+If the enforcer you are testing cares about the filename of the code,
 you can indicate that C<fcritique> should be used like so (see
 C<fcritique> for more details):
 
@@ -398,12 +398,12 @@ keywords in the file footer from producing false positives or negatives in the
 last test.
 
 Note that nowhere within the F<.run> file itself do you specify the
-policy that you're testing.  That's implicit within the filename.
+enforcer that you're testing.  That's implicit within the filename.
 
 
 =head1 BUGS AND CAVEATS AND TODO ITEMS
 
-Add policy_ok() method for running subtests in just a single TODO file.
+Add enforcer_ok() method for running subtests in just a single TODO file.
 
 Can users mark this entire test as TODO or SKIP, using the normal mechanisms?
 

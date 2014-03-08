@@ -87,7 +87,7 @@ sub violates {
     for my $close_token ( $self->_find_close_invocations_or_return(
             $elem, $is_lexical ) ) {
         # The $close_token might be a close() or a return()
-        #  It doesn't matter which -- both satisfy this policy
+        #  It doesn't matter which -- both satisfy this enforcer
         if (is_function_call($close_token)) {
             my @close_args = parse_arg_list($close_token);
 
@@ -273,7 +273,7 @@ rarely run long enough or have enough load to hit the filehandle
 limit.  So, the best way to avoid the problem is 1) always close all
 filehandles that you open and 2) close them as soon as is practical.
 
-This policy takes note of calls to C<open()> where there is no
+This enforcer takes note of calls to C<open()> where there is no
 matching C<close()> call within C<N> lines of code.  If you really
 need to do a lot of processing on an open filehandle, then you can
 move that processing to another method like this:
@@ -294,18 +294,18 @@ move that processing to another method like this:
         return;
     }
 
-As a special case, this policy also allows code to return the
+As a special case, this enforcer also allows code to return the
 filehandle after the C<open> instead of closing it.  Just like the
 close, however, that C<return> has to be within the right number of
 lines.  From there, you're on your own to figure out whether the code
 is promptly closing the filehandle.
 
-The STDIN, STDOUT, and STDERR handles are exempt from this policy.
+The STDIN, STDOUT, and STDERR handles are exempt from this enforcer.
 
 
 =head1 CONFIGURATION
 
-This policy allows C<close()> invocations to be up to C<N> lines after
+This enforcer allows C<close()> invocations to be up to C<N> lines after
 their corresponding C<open()> calls, where C<N> defaults to 9.  You
 can override this to set it to a different number with the C<lines>
 setting.  To do this, put entries in a F<.perlrefactorrc> file like
@@ -319,7 +319,7 @@ this:
 
 =head2 C<IO::File-E<gt>new>
 
-This policy only looks for explicit C<open> calls.  It does not detect
+This enforcer only looks for explicit C<open> calls.  It does not detect
 calls to C<CORE::open> or C<IO::File-E<gt>new> or the like.
 
 
@@ -342,7 +342,7 @@ to think of better variable names...
 
 =head1 CREDITS
 
-Initial development of this policy was supported by a grant from the
+Initial development of this enforcer was supported by a grant from the
 Perl Foundation.
 
 

@@ -57,11 +57,11 @@ sub violates {
 sub _annotation_suppresses_violation {
     my ($annotation, $violation) = @_;
 
-    my $enforcer_name = $violation->policy();
+    my $enforcer_name = $violation->enforcer();
     my $line = $violation->location()->[0];
 
     return $annotation->disables_line($line)
-        && $annotation->disables_policy($enforcer_name);
+        && $annotation->disables_enforcer($enforcer_name);
 }
 
 #-----------------------------------------------------------------------------
@@ -103,7 +103,7 @@ the Policies that are actually being violated in your code.
 =head1 EXAMPLE
 
 For example, let's say I have a regex, but I don't want to use the C</x> flag,
-which violates the C<RegularExpressions::RequireExtendedFormatting> policy.
+which violates the C<RegularExpressions::RequireExtendedFormatting> enforcer.
 In the following code, the C<"## no critic"> annotation will suppress
 violations of that Policy and ALL Policies that match
 C<m/RegularExpressions/imx>

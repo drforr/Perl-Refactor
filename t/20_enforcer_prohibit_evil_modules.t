@@ -26,7 +26,7 @@ Perl::Critic::TestUtils::block_perlrefactorrc();
 
 # This is in addition to the regular .run file.
 
-my $policy = 'Modules::ProhibitEvilModules';
+my $enforcer = 'Modules::ProhibitEvilModules';
 
 my $code = <<'END_PERL';
 
@@ -35,10 +35,10 @@ use Super::Evil::Module;
 
 END_PERL
 
-my $result = eval { pcritique( $policy, \$code, {modules => $EMPTY} ); 1; };
+my $result = eval { pcritique( $enforcer, \$code, {modules => $EMPTY} ); 1; };
 ok(
     ! $result,
-    "$policy does not run if there are no evil modules configured.",
+    "$enforcer does not run if there are no evil modules configured.",
 );
 
 

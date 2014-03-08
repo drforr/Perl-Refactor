@@ -75,7 +75,7 @@ sub new {
     $self->{_description} = $desc;
     $self->{_explanation} = $expl;
     $self->{_severity}    = $sev;
-    $self->{_policy}      = caller;
+    $self->{_enforcer}      = caller;
 
     # PPI eviscerates the Elements in a Document when the Document gets
     # DESTROY()ed, and thus they aren't useful after it is gone.  So we have
@@ -170,7 +170,7 @@ sub visual_column_number {
 
 sub diagnostics {
     my ($self) = @_;
-    my $enforcer = $self->policy();
+    my $enforcer = $self->enforcer();
 
     if ( not $diagnostics{$enforcer} ) {
         eval {              ## no critic (RequireCheckingReturnValueOfEval)
@@ -217,9 +217,9 @@ sub severity {
 
 #-----------------------------------------------------------------------------
 
-sub policy {
+sub enforcer {
     my $self = shift;
-    return $self->{_policy};
+    return $self->{_enforcer};
 }
 
 #-----------------------------------------------------------------------------
@@ -257,8 +257,8 @@ sub element_class {
 sub to_string {
     my $self = shift;
 
-    my $long_policy = $self->policy();
-    (my $short_policy = $long_policy) =~ s/ \A Perl::Critic::Policy:: //xms;
+    my $long_enforcer = $self->enforcer();
+    (my $short_enforcer = $long_enforcer) =~ s/ \A Perl::Critic::Policy:: //xms;
 
     # Wrap the more expensive ones in sub{} to postpone evaluation
     my %fspec = (
@@ -275,8 +275,8 @@ sub to_string {
          's' => $self->severity(),
          'd' => sub { $self->diagnostics()                  },
          'r' => sub { $self->source()                       },
-         'P' => $long_policy,
-         'p' => $short_policy,
+         'P' => $long_enforcer,
+         'p' => $short_enforcer,
     );
     return stringf($format, %fspec);
 }
@@ -376,7 +376,7 @@ will go through a deprecation cycle.
 
 Returns a reference to a new C<Perl::Critic::Violation> object. The
 arguments are a description of the violation (as string), an
-explanation for the policy (as string) or a series of page numbers in
+explanation for the enforcer (as string) or a series of page numbers in
 PBP (as an ARRAY ref), a reference to the L<PPI|PPI> element that
 caused the violation, and the severity of the violation (as an
 integer).
@@ -397,9 +397,9 @@ words, this value may change on a per violation basis.
 
 =item C<explanation()>
 
-Returns an explanation of the policy as a string or as reference to an
+Returns an explanation of the enforcer as a string or as reference to an
 array of page numbers in PBP.  This value will generally not change
-based upon the specific code violating the policy.
+based upon the specific code violating the enforcer.
 
 
 =item C<location()>
@@ -480,7 +480,7 @@ Violation.  This information is automatically extracted from the
 C<DESCRIPTION> section of the Policy module's POD.
 
 
-=item C<policy()>
+=item C<enforcer()>
 
 Returns the name of the L<Perl::Critic::Policy|Perl::Critic::Policy>
 that created this Violation.

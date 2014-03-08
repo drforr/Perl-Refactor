@@ -155,7 +155,7 @@ Perl's version system does not recognize lexical variables such as
 
     my $VERSION = 1.0611;
 
-so they are not accepted by this policy.
+so they are not accepted by this enforcer.
 
 A common practice is to use the C<$Revision$> keyword to
 automatically define the C<$VERSION> variable like this:

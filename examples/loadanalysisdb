@@ -22,7 +22,7 @@ use DBI qw{ :sql_types };
 use File::Spec qw{ };
 use Perl6::Say;
 
-use Perl::Critic::Utils qw{ all_perl_files policy_short_name $EMPTY };
+use Perl::Critic::Utils qw{ all_perl_files enforcer_short_name $EMPTY };
 use Perl::Critic;
 
 
@@ -98,7 +98,7 @@ sub load {
                 $line,
                 $column,
                 $violation->severity(),
-                policy_short_name( $violation->policy() ),
+                enforcer_short_name( $violation->enforcer() ),
                 $violation->explanation(),
                 $violation->source(),
             );
@@ -142,7 +142,7 @@ sub prepare_insert_statement {
                 line_number,
                 column_number,
                 severity,
-                policy,
+                enforcer,
                 explanation,
                 source_code
             )
@@ -288,7 +288,7 @@ following schema:
       line_number   INTEGER,
       column_number INTEGER,
       severity      INTEGER,
-      policy        VARCHAR(512),
+      enforcer      VARCHAR(512),
       explanation   TEXT,
       source_code   TEXT
   )

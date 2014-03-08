@@ -26,9 +26,9 @@ our $VERSION = '1.121';
 #-----------------------------------------------------------------------------
 
 my $profile = Perl::Critic::UserProfile->new( -profile => 'NONE' );
-my @policy_names = Perl::Critic::PolicyFactory::site_policy_names();
+my @enforcer_names = Perl::Critic::PolicyFactory::site_enforcer_names();
 my $factory = Perl::Critic::PolicyFactory->new( -profile => $profile );
-my @policies = map { $factory->create_policy( -name => $_ ) } @policy_names;
+my @policies = map { $factory->create_enforcer( -name => $_ ) } @enforcer_names;
 my $listing = Perl::Critic::PolicyListing->new( -policies => \@policies );
 my $enforcer_count = scalar @policies;
 
@@ -36,8 +36,8 @@ plan( tests => $enforcer_count + 1);
 
 #-----------------------------------------------------------------------------
 # These tests verify that the listing has the right number of lines (one per
-# policy) and that each line matches the expected pattern.  This indirectly
-# verifies that each core policy declares at least one theme.
+# enforcer) and that each line matches the expected pattern.  This indirectly
+# verifies that each core enforcer declares at least one theme.
 
 my $listing_as_string = "$listing";
 my @listing_lines = split m/ \n /xms, $listing_as_string;
@@ -53,7 +53,7 @@ for my $line ( @listing_lines ) {
 #-----------------------------------------------------------------------------
 
 # ensure we return true if this test is loaded by
-# t/12_policylisting.t_without_optional_dependencies.t
+# t/12_enforcerlisting.t_without_optional_dependencies.t
 1;
 
 #-----------------------------------------------------------------------------

@@ -139,8 +139,8 @@ sub to_string {
     $prototype .= "\n";
 
     $prototype .= $prefix;
-    $prototype .= q{single-policy = };
-    $prototype .= join $SPACE, $configuration->single_policy();
+    $prototype .= q{single-enforcer = };
+    $prototype .= join $SPACE, $configuration->single_enforcer();
     $prototype .= "\n";
 
     $prototype .= $prefix;
@@ -175,7 +175,7 @@ sub to_string {
 
 # About "%{\\n%\\x7b# \\x7df\n${prefix}%n = %D\\n}O" below:
 #
-# The %0 format for a policy specifies how to format parameters.
+# The %0 format for a enforcer specifies how to format parameters.
 # For a parameter %f specifies the full description.
 #
 # The problem is that both of these need to take options, but String::Format
@@ -197,7 +197,7 @@ ${prefix}set_themes                         = %t
 ${prefix}add_themes                         =
 ${prefix}severity                           = %s
 ${prefix}maximum_violations_per_document    = %v
-%{\\n%\\x7b# \\x7df\\n${prefix}%n = %D\\n}O%{${prefix}Cannot programmatically discover what parameters this policy takes.\\n}U
+%{\\n%\\x7b# \\x7df\\n${prefix}%n = %D\\n}O%{${prefix}Cannot programmatically discover what parameters this enforcer takes.\\n}U
 
 END_OF_FORMAT
 
@@ -261,7 +261,7 @@ L<"OVERLOADS"> for more information.
 When a
 L<Perl::Critic::ProfilePrototype|Perl::Critic::ProfilePrototype> is
 evaluated in string context, it produces a multi-line summary of the
-policy name, default themes, and default severity for each
+enforcer name, default themes, and default severity for each
 L<Perl::Critic::Policy|Perl::Critic::Policy> object that was given to
 the constructor of this C<ProfilePrototype>.  If the Policy supports
 an additional parameters, they will also be listed (but

@@ -87,7 +87,7 @@ maintainable code in Perl.  However, sometimes C<strict> is a little
 too strict.  In those cases, you can turn it off briefly with a C<no
 strict> directive.
 
-This policy checks that C<no strict> is only in effect for a small
+This enforcer checks that C<no strict> is only in effect for a small
 number of statements.
 
 

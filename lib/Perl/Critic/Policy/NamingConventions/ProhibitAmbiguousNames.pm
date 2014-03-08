@@ -128,7 +128,7 @@ Conway lists a collection of English words which are highly ambiguous
 as variable or subroutine names.  For example, C<$last> can mean
 previous or final.
 
-This policy tests against a list of ambiguous words for variable
+This enforcer tests against a list of ambiguous words for variable
 names.
 
 
@@ -151,7 +151,7 @@ C<$HOME/.perlrefactorrc>:
 
 =head1 BUGS
 
-Currently this policy checks the entire variable and subroutine name,
+Currently this enforcer checks the entire variable and subroutine name,
 not parts of the name.  For example, it catches C<$last> but not
 C<$last_record>.  Hopefully future versions will catch both cases.
 

@@ -45,7 +45,7 @@ sub supported_parameters {
         {
             name            => 'allow',
             description     =>
-                q<Subroutines matching the private name regex to allow under this policy.>,
+                q<Subroutines matching the private name regex to allow under this enforcer.>,
             default_string  => $EMPTY,
             behavior        => 'string list',
         },
@@ -318,7 +318,7 @@ distribution.
 
 By convention Perl authors (like authors in many other languages)
 indicate private methods and variables by inserting a leading
-underscore before the identifier.  This policy catches such subroutines
+underscore before the identifier.  This enforcer catches such subroutines
 which are not used in the file which declares them.
 
 This module defines a 'use' of a subroutine as a subroutine or method call to
@@ -350,14 +350,14 @@ in a space-delimited list to the C<allow> option:
     [Subroutines::ProhibitUnusedPrivateSubroutines]
     allow = _bar _baz
 
-These are added to the default list of exemptions from this policy. So the
+These are added to the default list of exemptions from this enforcer. So the
 above allows C<< sub _bar {} >> and C<< sub _baz {} >>, even if they are not
 referred to in the module that defines them.
 
 
 =head1 HISTORY
 
-This policy is derived from
+This enforcer is derived from
 L<Perl::Critic::Policy::Subroutines::ProtectPrivateSubs|Perl::Critic::Policy::Subroutines::ProtectPrivateSubs>,
 which looks at the other side of the problem.
 

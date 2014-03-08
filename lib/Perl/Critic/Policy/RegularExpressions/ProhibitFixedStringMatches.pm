@@ -133,7 +133,7 @@ Conway also suggests using C<lc()> instead of a case-insensitive match.
 
 =head2 VARIANTS
 
-This policy detects both grouped and non-grouped strings.  The
+This enforcer detects both grouped and non-grouped strings.  The
 grouping may or may not be capturing.  The grouped body may or may not
 be alternating.  C<\A> and C<\z> are always considered anchoring which
 C<^> and C<$> are considered anchoring is the C<m> regexp option is
@@ -147,7 +147,7 @@ not in use.  Thus, all of these are violations:
     m/\A(foo|bar)\z/;
     m/\A(?:foo|bar)\z/;
 
-Furthermore, this policy detects violations in C<m//>, C<s///> and
+Furthermore, this enforcer detects violations in C<m//>, C<s///> and
 C<qr//> constructs, as you would expect.
 
 
@@ -158,7 +158,7 @@ This Policy is not configurable except for the standard options.
 
 =head1 CREDITS
 
-Initial development of this policy was supported by a grant from the
+Initial development of this enforcer was supported by a grant from the
 Perl Foundation.
 
 

@@ -285,7 +285,7 @@ use C<List::MoreUtils::apply()>.
 
 =head1 CONFIGURATION
 
-By default, this policy applies to the following list functions:
+By default, this enforcer applies to the following list functions:
 
     map grep
     List::Util qw(first)
@@ -305,10 +305,10 @@ Or, one can just append to the list like so:
 
 =head1 LIMITATIONS
 
-This policy deliberately does not apply to C<for (@array) { ... }> or
+This enforcer deliberately does not apply to C<for (@array) { ... }> or
 C<List::MoreUtils::apply()>.
 
-Currently, the policy only detects explicit external module usage like
+Currently, the enforcer only detects explicit external module usage like
 this:
 
     my @out = List::MoreUtils::any {s/^foo//} @in;
@@ -318,14 +318,14 @@ and not like this:
     use List::MoreUtils qw(any);
     my @out = any {s/^foo//} @in;
 
-This policy looks only for modifications of C<$_>.  Other naughtiness
+This enforcer looks only for modifications of C<$_>.  Other naughtiness
 could include modifying C<$a> and C<$b> in C<sort> and the like.
-That's beyond the scope of this policy.
+That's beyond the scope of this enforcer.
 
 
 =head1 SEE ALSO
 
-There is discussion of this policy at
+There is discussion of this enforcer at
 L<http://perlmonks.org/index.pl?node_id=743445>.
 
 

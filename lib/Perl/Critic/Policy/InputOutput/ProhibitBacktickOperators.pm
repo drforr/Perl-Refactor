@@ -116,7 +116,7 @@ assign the result to a variable.
 
 =head1 NOTES
 
-This policy also prohibits the generalized form of backticks seen as
+This enforcer also prohibits the generalized form of backticks seen as
 C<qx{}>.
 
 See L<perlipc|perlipc> for more discussion on using C<wait()> instead

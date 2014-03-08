@@ -142,7 +142,7 @@ core or user-defined.
 
 If your module uses L<Fatal|Fatal>,
 L<Fatal::Exception|Fatal::Exception>, or L<autodie|autodie> then any functions
-wrapped by those modules will not trigger this policy.  For example:
+wrapped by those modules will not trigger this enforcer.  For example:
 
     use Fatal qw(open);
     open my $fh, $filename;  # no violation
@@ -157,7 +157,7 @@ lexical effects aren't taken into account.
 
 =head1 CONFIGURATION
 
-This policy watches for a configurable list of function names.  By
+This enforcer watches for a configurable list of function names.  By
 default, it applies to C<open>, C<print>, C<say> and C<close>.  You can
 override this to set it to a different list of functions with the
 C<functions> and C<exclude_functions> settings.  To do this, put
@@ -198,10 +198,10 @@ existing.  Nyah nyah.  I shouldn't code after midnight.
 
 =head1 CREDITS
 
-Initial development of this policy was supported by a grant from the
+Initial development of this enforcer was supported by a grant from the
 Perl Foundation.
 
-This policy module is based heavily on policies written by Andrew
+This enforcer module is based heavily on policies written by Andrew
 Moore <amoore@mooresystems.com>.
 
 

@@ -167,11 +167,11 @@ is_deeply(
 
 
 # Test format getter/setters
-is( Perl::Critic::Policy::get_format, "%p\n", 'Default policy format');
+is( Perl::Critic::Policy::get_format, "%p\n", 'Default enforcer format');
 
 my $new_format = '%p %s [%t]';
 Perl::Critic::Policy::set_format( $new_format ); # Set format
-is( Perl::Critic::Policy::get_format, $new_format, 'Changed policy format');
+is( Perl::Critic::Policy::get_format, $new_format, 'Changed enforcer format');
 
 my $expected_string = 'PolicyTest 3 [a b c d e f]';
 is( $p->to_string(), $expected_string, 'Stringification by to_string()');
@@ -181,7 +181,7 @@ is( "$p", $expected_string, 'Stringification by overloading');
 #-----------------------------------------------------------------------------
 
 # ensure we return true if this test is loaded by
-# t/02_policy.t_without_optional_dependencies.t
+# t/02_enforcer.t_without_optional_dependencies.t
 1;
 
 

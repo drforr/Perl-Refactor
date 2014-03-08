@@ -212,7 +212,7 @@ will not, because it is equivalent to
 
 =head1 CONFIGURATION
 
-This policy can be configured to allow the last statement in a C<map>
+This enforcer can be configured to allow the last statement in a C<map>
 or C<grep> block to be comma separated.  This is done via the
 C<allow_last_statement_to_be_comma_separated_in_map_and_grep> option
 like so:
@@ -221,7 +221,7 @@ like so:
     allow_last_statement_to_be_comma_separated_in_map_and_grep = 1
 
 With this option off (the default), the following code violates this
-policy.
+enforcer.
 
     %hash = map {$_, 1} @list;
 

@@ -26,7 +26,7 @@ $sql = qq{select foo from bar};
 $sql = qq[select foo from bar];
 $sql = qq/select foo from bar/;
 
-is( pcritique($policy, \$code, \%config), 0, $policy);
+is( pcritique($enforcer, \$code, \%config), 0, $enforcer);
 
 #-----------------------------------------------------------------------------
 

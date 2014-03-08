@@ -50,7 +50,7 @@ C<perlrefactor> - Command-line interface to critique Perl source.
   perlrefactor [-12345 | --brutal | --cruel | --harsh | --stern | --gentle]
                [--severity number | name] [{-p | --profile} file | --noprofile]
                [--top [ number ]] [--theme expression] [--include pattern]
-               [--exclude pattern] [{-s | --single-policy} pattern]
+               [--exclude pattern] [{-s | --single-enforcer} pattern]
                [--only | --noonly] [--profile-strictness {warn|fatal|quiet}]
                [--force | --noforce] [--statistics] [--statistics-only]
                [--count | -C] [--verbose {number | format}] [--allow-unsafe]
@@ -248,14 +248,14 @@ C<--exclude> takes precedence over C<--include> when a Policy matches
 both patterns.  You can set the default value for this option in your
 F<.perlrefactorrc> file.
 
-=item C<--single-policy PATTERN> or C<-s PATTERN>
+=item C<--single-enforcer PATTERN> or C<-s PATTERN>
 
 Directs C<perlrefactor> to apply just one Policy module matching the
 regex C</PATTERN/ixms>, and exclude all other Policies.  This option
 has precedence over the C<--severity>, C<--theme>, C<--include>,
 C<--exclude>, and C<--only> options.  For example:
 
-    perlrefactor --single-policy=nowarnings my_file.pl
+    perlrefactor --single-enforcer=nowarnings my_file.pl
 
 This would cause C<perlrefactor> to apply just the C<ProhibitNoWarnings>
 Policy, regardless of the severity level setting.  No other Policies
@@ -269,7 +269,7 @@ This is equivalent to what one might intend by...
 C<--include> option.
 
 The equivalent of this option can be accomplished by creating a custom
-profile containing only the desired policy and then running...
+profile containing only the desired enforcer and then running...
 
     perlrefactor --profile=customprofile --only my_file.pl
 
@@ -474,14 +474,14 @@ C<--colour-severity-1>.
 =item C<--files-with-violations>
 
 Display only the names of files with violations.  Use this feature
-with --single-policy to find files that contain violations of a given
-policy. Can also be specified as C<--l>.
+with --single-enforcer to find files that contain violations of a given
+enforcer. Can also be specified as C<--l>.
 
 =item C<--files-without-violations>
 
 Display only the names of files without violations.  Use this feature
-with --single-policy to find files that do not contain violations of a
-given policy. Can also be specified as C<--L>.
+with --single-enforcer to find files that do not contain violations of a
+given enforcer. Can also be specified as C<--L>.
 
 =item C<--program-extensions file_name_extension>
 
@@ -593,7 +593,7 @@ The remainder of the configuration file is a series of blocks like this:
     arg2 = value2
 
 C<Perl::Critic::Policy::Category::PolicyName> is the full name of a
-module that implements the policy.  The Policy modules distributed
+module that implements the enforcer.  The Policy modules distributed
 with Perl::Critic have been grouped into categories according to the
 table of contents in Damian Conway's book B<Perl Best Practices>. For
 brevity, you can omit the C<'Perl::Critic::Policy'> part of the module
@@ -702,7 +702,7 @@ PATTERN"> to see the perldoc for all Policy modules that match the
 regex C<m/PATTERN/ixms>
 
 There are a number of distributions of additional policies on CPAN.
-If L<Perl::Critic|Perl::Critic> doesn't contain a policy that you
+If L<Perl::Critic|Perl::Critic> doesn't contain a enforcer that you
 want, some one may have already written it.  See L<Perl::Critic/"SEE
 ALSO"> for a list of some of these distributions.
 
@@ -944,7 +944,7 @@ of Perl::Critic is to help you write code that conforms with a set of
 best practices.  Our primary goal is not to dictate what those
 practices are, but rather, to implement the practices discovered by
 others.  Ultimately, you make the rules -- Perl::Critic is merely a
-tool for encouraging consistency.  If there is a policy that you think
+tool for encouraging consistency.  If there is a enforcer that you think
 is important or that we have overlooked, we would be very grateful for
 contributions, or you can simply load your own private set of policies
 into Perl::Critic.

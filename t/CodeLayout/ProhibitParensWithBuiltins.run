@@ -41,7 +41,7 @@ $obj->close();
 $obj->prototype();
 $obj->delete();
 
-is( pcritique($policy, \$code), 0, $policy);
+is( pcritique($enforcer, \$code), 0, $enforcer);
 
 #-----------------------------------------------------------------------------
 

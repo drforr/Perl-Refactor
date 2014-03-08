@@ -14,7 +14,7 @@ use English qw(-no_match_vars);
 use Readonly;
 
 use Perl::Critic::Exception::Configuration::Option::Policy::ParameterValue
-    qw{ throw_policy_value };
+    qw{ throw_enforcer_value };
 use Perl::Critic::Utils qw{
     :characters :severities :data_conversion
 };
@@ -125,8 +125,8 @@ sub _parse_variables {
     }
 
     if ($variable_specifications) {
-        throw_policy_value
-            policy         => $self->get_short_name(),
+        throw_enforcer_value
+            enforcer         => $self->get_short_name(),
             option_name    => 'variables',
             option_value   => $config_string,
             message_suffix =>
@@ -143,8 +143,8 @@ sub _parse_variables_file {
     return if $config_string =~ m< \A \s* \z >xms;
 
     open my $handle, '<', $config_string
-        or throw_policy_value
-            policy         => $self->get_short_name(),
+        or throw_enforcer_value
+            enforcer         => $self->get_short_name(),
             option_name    => 'variables_file',
             option_value   => $config_string,
             message_suffix =>
@@ -178,8 +178,8 @@ sub _handle_variable_specification_on_line {
         );
     }
     else {
-        throw_policy_value
-            policy         => $self->get_short_name(),
+        throw_enforcer_value
+            enforcer         => $self->get_short_name(),
             option_name    => 'variables_file',
             option_value   => $config_string,
             message_suffix =>
@@ -200,8 +200,8 @@ sub _handle_variable_specification {
 
         eval { $actual_regex = qr/$regex_string/sm; ## no critic (ExtendedFormatting)
             1 }
-            or throw_policy_value
-                policy         => $self->get_short_name(),
+            or throw_enforcer_value
+                enforcer         => $self->get_short_name(),
                 option_name    => $arguments{option_name},
                 option_value   => $arguments{option_value},
                 message_suffix =>
@@ -332,7 +332,7 @@ distribution.
 
 =head1 DESCRIPTION
 
-Use this policy if you wish to prohibit the use of specific variables. These
+Use this enforcer if you wish to prohibit the use of specific variables. These
 may be global variables warned against in C<perlvar>, or just variables whose
 names you do not like.
 
@@ -405,7 +405,7 @@ few that should be.  See C<perldoc perlvar> for a few suggestions.
 =head1 RESTRICTIONS
 
 Variables of the form C<${^foo}> are not recognized by PPI as of version
-1.206. When PPI recognizes these, this policy will Just Work for them too.
+1.206. When PPI recognizes these, this enforcer will Just Work for them too.
 
 Only direct references to prohibited variables and literal subscripts will be
 recognized. For example, if you prohibit $[, the first line in
@@ -414,7 +414,7 @@ recognized. For example, if you prohibit $[, the first line in
  $$foo = 1;
 
 will be flagged as a violation, but not the second, even though the second, in
-fact, assigns to $[. Similarly, if you prohibit $SIG{__DIE__}, this policy
+fact, assigns to $[. Similarly, if you prohibit $SIG{__DIE__}, this enforcer
 will not recognize
 
  my $foo = '__DIE__';
@@ -425,7 +425,7 @@ as an assignment to $SIG{__DIE__}.
 
 =head1 NOTES
 
-This policy leans heavily on
+This enforcer leans heavily on
 L<Perl::Critic::Policy::Modules::ProhibitEvilModules|Perl::Critic::Policy::Modules::ProhibitEvilModules>
 by Jeffrey Ryan Thalhammer.
 

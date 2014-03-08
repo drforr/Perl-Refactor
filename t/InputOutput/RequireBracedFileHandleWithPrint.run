@@ -97,7 +97,7 @@ print( $foo, $bar )
 print if 1;
 print or die if 1;
 
-print 1 2; # syntax error, but not a policy violation
+print 1 2; # syntax error, but not a enforcer violation
 $foo{print}; # not a function call
 {print}; # no siblings
 
@@ -170,7 +170,7 @@ printf( $foo, $bar )
 printf if 1;
 printf or die if 1;
 
-printf 1 2; # syntax error, but not a policy violation
+printf 1 2; # syntax error, but not a enforcer violation
 $foo{printf}; # not a function call
 {printf}; # no siblings
 

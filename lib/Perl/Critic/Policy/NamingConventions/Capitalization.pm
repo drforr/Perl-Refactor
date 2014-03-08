@@ -269,7 +269,7 @@ sub _derive_capitalization_test_regex_and_message {
     elsif ($capitalization =~ m< \A : >xms) {
         $configuration_exceptions->add_exception(
             Perl::Critic::Exception::Configuration::Option::Policy::ParameterValue->new(
-                policy          => $self,
+                enforcer          => $self,
                 option_name     => $capitalization_option,
                 option_value    => $capitalization,
                 message_suffix  =>
@@ -286,7 +286,7 @@ sub _derive_capitalization_test_regex_and_message {
         or do {
             $configuration_exceptions->add_exception(
                 Perl::Critic::Exception::Configuration::Option::Policy::ParameterValue->new(
-                    policy          => $self,
+                    enforcer          => $self,
                     option_name     => $capitalization_option,
                     option_value    => $capitalization,
                     message_suffix  =>
@@ -314,7 +314,7 @@ sub _derive_capitalization_exemption_test_regexes {
             or do {
                 $configuration_exceptions->add_exception(
                     Perl::Critic::Exception::Configuration::Option::Policy::ParameterValue->new(
-                        policy          => $self,
+                        enforcer          => $self,
                         option_name     => $exemptions_option,
                         option_value    => $pattern,
                         message_suffix  =>
@@ -669,7 +669,7 @@ Constants are in all-caps.
 
 There are other opinions on the specifics, for example, in
 L<perlstyle|perlstyle>.  This
-policy can be configured to match almost any style that you can think of.
+enforcer can be configured to match almost any style that you can think of.
 
 
 =head1 CONFIGURATION
@@ -759,7 +759,7 @@ L<Readonly|Readonly> constants in scopes.
 
 =head1 BUGS
 
-This policy won't catch problems with the declaration of C<$y> below:
+This enforcer won't catch problems with the declaration of C<$y> below:
 
     for (my $x = 3, my $y = 5; $x < 57; $x += 3) {
         ...

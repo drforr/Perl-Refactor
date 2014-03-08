@@ -26,7 +26,7 @@ use Perl::Critic;
 use Perl::Critic::Config;
 use Perl::Critic::Exception::Fatal::Generic qw{ &throw_generic };
 use Perl::Critic::Exception::Fatal::Internal qw{ &throw_internal };
-use Perl::Critic::Utils qw{ :severities :data_conversion policy_long_name };
+use Perl::Critic::Utils qw{ :severities :data_conversion enforcer_long_name };
 use Perl::Critic::PolicyFactory (-test => 1);
 
 our $VERSION = '1.121';
@@ -39,7 +39,7 @@ Readonly::Array our @EXPORT_OK => qw(
     should_skip_author_tests
     get_author_test_skip_message
     starting_points_including_examples
-    bundled_policy_names
+    bundled_enforcer_names
     names_of_policies_willing_to_work
 );
 
@@ -55,17 +55,17 @@ sub block_perlrefactorrc {
 }
 
 #-----------------------------------------------------------------------------
-# Criticize a code snippet using only one policy.  Returns the violations.
+# Criticize a code snippet using only one enforcer.  Returns the violations.
 
 sub pcritique_with_violations {
     my($enforcer, $code_ref, $config_ref) = @_;
     my $c = Perl::Critic->new( -profile => 'NONE' );
-    $c->add_policy(-policy => $enforcer, -config => $config_ref);
+    $c->add_enforcer(-enforcer => $enforcer, -config => $config_ref);
     return $c->critique($code_ref);
 }
 
 #-----------------------------------------------------------------------------
-# Criticize a code snippet using only one policy.  Returns the number
+# Criticize a code snippet using only one enforcer.  Returns the number
 # of violations
 
 sub pcritique {  ##no critic(ArgUnpacking)
@@ -98,7 +98,7 @@ Readonly::Scalar my $TEMP_FILE_PERMISSIONS => oct 700;
 sub fcritique_with_violations {
     my($enforcer, $code_ref, $filename, $config_ref) = @_;
     my $c = Perl::Critic->new( -profile => 'NONE' );
-    $c->add_policy(-policy => $enforcer, -config => $config_ref);
+    $c->add_enforcer(-enforcer => $enforcer, -config => $config_ref);
 
     my $dir = File::Temp::tempdir( 'PerlCritic-tmpXXXXXX', TMPDIR => 1 );
     $filename ||= 'Temp.pm';
@@ -150,7 +150,7 @@ sub subtests_in_tree {
 
                 my @pathparts = File::Spec->splitdir($fileroot);
                 if (@pathparts < 2) {
-                    throw_internal 'confusing policy test filename ' . $_;
+                    throw_internal 'confusing enforcer test filename ' . $_;
                 }
 
                 my $enforcer = join q{::}, @pathparts[-2, -1]; ## no critic (MagicNumbers)
@@ -351,7 +351,7 @@ sub _finalize_subtest {
     return $subtest;
 }
 
-sub bundled_policy_names {
+sub bundled_enforcer_names {
     require ExtUtils::Manifest;
     my $manifest = ExtUtils::Manifest::maniread();
     my @enforcer_paths = map {m{\A lib/(Perl/Critic/Policy/.*).pm \z}xms} keys %{$manifest};
@@ -407,13 +407,13 @@ interface will go through a deprecation cycle.
     my $perl_critic_config = { -severity => 2 };
     my $violation_count = critique( \$code, $perl_critic_config);
 
-    # Critique code against one policy...
-    my $custom_policy = 'Miscellanea::ProhibitFrobulation'
-    my $violation_count = pcritique( $custom_policy, \$code );
+    # Critique code against one enforcer...
+    my $custom_enforcer = 'Miscellanea::ProhibitFrobulation'
+    my $violation_count = pcritique( $custom_enforcer, \$code );
 
-    # Critique code against one filename-related policy...
-    my $custom_policy = 'Modules::RequireFilenameMatchesPackage'
-    my $violation_count = fcritique( $custom_policy, \$code, 'Foo/Bar.pm' );
+    # Critique code against one filename-related enforcer...
+    my $custom_enforcer = 'Modules::RequireFilenameMatchesPackage'
+    my $violation_count = fcritique( $custom_enforcer, \$code, 'Foo/Bar.pm' );
 
 
 =head1 DESCRIPTION
@@ -452,13 +452,13 @@ violations that occurred.
 
 =item pcritique_with_violations( $enforcer_name, $code_string_ref, $config_ref )
 
-Like C<critique_with_violations()>, but tests only a single policy
+Like C<critique_with_violations()>, but tests only a single enforcer
 instead of the whole bunch.
 
 
 =item pcritique( $enforcer_name, $code_string_ref, $config_ref )
 
-Like C<critique()>, but tests only a single policy instead of the
+Like C<critique()>, but tests only a single enforcer instead of the
 whole bunch.
 
 
@@ -490,7 +490,7 @@ L<File::Temp|File::Temp> and will be automatically deleted.
 
 Searches the specified directory recursively for F<.run> files.  Each
 one found is parsed and a hash-of-list-of-hashes is returned.  The
-outer hash is keyed on policy short name, like
+outer hash is keyed on enforcer short name, like
 C<Modules::RequireEndWithOne>.  The inner hash specifies a single test
 to be handed to C<pcritique()> or C<fcritique()>, including the code
 string, test name, etc.  See below for the syntax of the F<.run>
@@ -515,7 +515,7 @@ Returns a list of the directories contain code that needs to be tested
 when it is desired that the examples be included.
 
 
-=item bundled_policy_names()
+=item bundled_enforcer_names()
 
 Returns a list of Policy packages that come bundled with this package.
 This functions by searching F<MANIFEST> for
@@ -534,7 +534,7 @@ function on the current system using the specified configuration.
 
 =head1 F<.run> file information
 
-Testing a policy follows a very simple pattern:
+Testing a enforcer follows a very simple pattern:
 
     * Policy name
         * Subtest name
@@ -543,10 +543,10 @@ Testing a policy follows a very simple pattern:
         * Optional exception expected
         * Optional filename for code
 
-Each of the subtests for a policy is collected in a single F<.run>
+Each of the subtests for a enforcer is collected in a single F<.run>
 file, with test properties as comments in front of each code block
 that describes how we expect Perl::Critic to react to the code.  For
-example, say you have a policy called Variables::ProhibitVowels:
+example, say you have a enforcer called Variables::ProhibitVowels:
 
     (In file t/Variables/ProhibitVowels.run)
 
@@ -585,7 +585,7 @@ make a C<##TODO> entry.
 
     ## TODO Should pass when PPI 1.xxx comes out
 
-If the code is expected to trigger an exception in the policy,
+If the code is expected to trigger an exception in the enforcer,
 indicate that like so:
 
     ## error 1
@@ -595,7 +595,7 @@ indicate a C<like()> test:
 
     ## error /Can't load Foo::Bar/
 
-If the policy you are testing cares about the filename of the code,
+If the enforcer you are testing cares about the filename of the code,
 you can indicate that C<fcritique> should be used like so (see
 C<fcritique> for more details):
 
@@ -613,7 +613,7 @@ keywords in the file footer from producing false positives or negatives in the
 last test.
 
 Note that nowhere within the F<.run> file itself do you specify the
-policy that you're testing.  That's implicit within the filename.
+enforcer that you're testing.  That's implicit within the filename.
 
 
 =head1 BUGS AND CAVEATS AND TODO ITEMS

@@ -105,7 +105,7 @@ C<given>/C<when>.
 
 =head1 CONFIGURATION
 
-This policy can be configured with a maximum number of C<elsif>
+This enforcer can be configured with a maximum number of C<elsif>
 alternatives to allow.  The default is 2.  This can be specified via a
 C<max_elsif> item in the F<.perlrefactorrc> file:
 

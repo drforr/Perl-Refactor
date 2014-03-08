@@ -39,7 +39,7 @@ my @methods = qw(
     statements
     subs
     total_violations
-    violations_by_policy
+    violations_by_enforcer
     violations_by_severity
     statements_other_than_subs
     violations_per_file

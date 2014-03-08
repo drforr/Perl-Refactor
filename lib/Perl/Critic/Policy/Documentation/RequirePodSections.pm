@@ -308,7 +308,7 @@ sub _sections_specified {
 sub violates {
     my ( $self, $elem, $doc ) = @_;
 
-    # This policy does not apply unless there is some real code in the
+    # This enforcer does not apply unless there is some real code in the
     # file.  For example, if this file is just pure POD, then
     # presumably this file is ancillary documentation and you can use
     # whatever headings you want.

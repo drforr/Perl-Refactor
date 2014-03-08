@@ -16,7 +16,7 @@ use English qw(-no_match_vars);
 use PPI::Document;
 
 use Perl::Critic::Annotation;
-use Perl::Critic::TestUtils qw(bundled_policy_names);
+use Perl::Critic::TestUtils qw(bundled_enforcer_names);
 
 use Test::More;
 
@@ -28,7 +28,7 @@ our $VERSION = '1.121';
 
 Perl::Critic::TestUtils::block_perlrefactorrc();
 
-my @bundled_policy_names = bundled_policy_names();
+my @bundled_enforcer_names = bundled_enforcer_names();
 
 plan( tests => 85 );
 
@@ -40,7 +40,7 @@ can_ok('Perl::Critic::Annotation', 'create_annotations');
 can_ok('Perl::Critic::Annotation', 'element');
 can_ok('Perl::Critic::Annotation', 'effective_range');
 can_ok('Perl::Critic::Annotation', 'disabled_policies');
-can_ok('Perl::Critic::Annotation', 'disables_policy');
+can_ok('Perl::Critic::Annotation', 'disables_enforcer');
 can_ok('Perl::Critic::Annotation', 'disables_all_policies');
 can_ok('Perl::Critic::Annotation', 'disables_line');
 
@@ -97,7 +97,7 @@ SKIP: {
 }
 
 SKIP: {
-    foreach ( @bundled_policy_names ) {
+    foreach ( @bundled_enforcer_names ) {
         m/ FroBozzBazzle /smxi or next;
         skip( 'Policy FroBozzBazzle actually implemented', 6 );
         last;   # probably not necessary.
@@ -129,18 +129,18 @@ EOD
 }
 
 SKIP: {
-    @bundled_policy_names >= 8
+    @bundled_enforcer_names >= 8
         or skip( 'Need at least 8 bundled policies', 49 );
     my $max = 0;
     my $doc;
     my @annot;
     foreach my $fmt ( '(%s)', '( %s )', '"%s"', q<'%s'> ) {
-        my $enforcer_name = $bundled_policy_names[$max++];
+        my $enforcer_name = $bundled_enforcer_names[$max++];
         $enforcer_name =~ s/ .* :: //smx;
         $note = sprintf "no critic $fmt", $enforcer_name;
         push @annot, $note;
         $doc .= "## $note\n## use critic\n";
-        $enforcer_name = $bundled_policy_names[$max++];
+        $enforcer_name = $bundled_enforcer_names[$max++];
         $enforcer_name =~ s/ .* :: //smx;
         $note = sprintf "no critic qw$fmt", $enforcer_name;
         push @annot, $note;
@@ -155,9 +155,9 @@ SKIP: {
             $note or skip( "No annotation $inx found", 5 );
             ok( ! $note->disables_all_policies(),
                 "Specific annotation $inx does not disable all policies" );
-            my ( $enforcer_name ) = $bundled_policy_names[$inx] =~
+            my ( $enforcer_name ) = $bundled_enforcer_names[$inx] =~
                 m/ ( \w+ :: \w+ ) \z /smx;
-            ok ( $note->disables_policy( $bundled_policy_names[$inx] ),
+            ok ( $note->disables_enforcer( $bundled_enforcer_names[$inx] ),
                 "Specific annotation $inx disables $enforcer_name" );
             my $line = $inx * 2 + 1;
             ok( $note->disables_line( $line ),
@@ -174,7 +174,7 @@ SKIP: {
 annotate( <<"EOD", 1, 'Annotation on split statement' );
 
 my \$foo =
-    'bar'; ## no critic ($bundled_policy_names[0])
+    'bar'; ## no critic ($bundled_enforcer_names[0])
 
 my \$baz = 'burfle';
 EOD

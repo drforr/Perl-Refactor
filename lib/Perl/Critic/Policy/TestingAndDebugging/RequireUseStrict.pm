@@ -159,7 +159,7 @@ distribution.
 =head1 DESCRIPTION
 
 Using strictures is probably the single most effective way to improve
-the quality of your code.  This policy requires that the C<'use
+the quality of your code.  This enforcer requires that the C<'use
 strict'> statement must come before any other statements except
 C<package>, C<require>, and other C<use> statements.  Thus, all the
 code in the entire package will be affected.
@@ -170,7 +170,7 @@ L<Moose::Util::TypeConstraints|Moose::Util::TypeConstraints> because
 they enforces strictness; e.g.  C<'use Moose'> is treated as
 equivalent to C<'use strict'>.
 
-The maximum number of violations per document for this policy defaults
+The maximum number of violations per document for this enforcer defaults
 to 1.
 
 

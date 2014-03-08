@@ -22,7 +22,7 @@ use PPI::Document qw< >;
 use PPI::Document::File qw< >;
 
 use Perl::Critic::PolicyFactory;
-use Perl::Critic::TestUtils qw(bundled_policy_names);
+use Perl::Critic::TestUtils qw(bundled_enforcer_names);
 use Perl::Critic::Utils;
 
 use Test::More tests => 124;
@@ -42,7 +42,7 @@ test_is_perl_builtin();
 test_is_perl_global();
 test_precedence_of();
 test_is_subroutine_name();
-test_policy_long_name_and_policy_short_name();
+test_enforcer_long_name_and_enforcer_short_name();
 test_interpolate();
 test_is_perl_and_shebang_line();
 test_is_backup();
@@ -66,8 +66,8 @@ sub test_export {
     can_ok('main', 'is_subroutine_name');
     can_ok('main', 'first_arg');
     can_ok('main', 'parse_arg_list');
-    can_ok('main', 'policy_long_name');
-    can_ok('main', 'policy_short_name');
+    can_ok('main', 'enforcer_long_name');
+    can_ok('main', 'enforcer_short_name');
     can_ok('main', 'precedence_of');
     can_ok('main', 'severity_to_number');
     can_ok('main', 'shebang_line');
@@ -276,13 +276,13 @@ sub test_is_subroutine_name {
 
 #-----------------------------------------------------------------------------
 
-sub test_policy_long_name_and_policy_short_name {
+sub test_enforcer_long_name_and_enforcer_short_name {
     my $short_name = 'Baz::Nuts';
     my $long_name  = "${POLICY_NAMESPACE}::$short_name";
-    is( policy_long_name(  $short_name ), $long_name,  'policy_long_name'  );
-    is( policy_long_name(  $long_name  ), $long_name,  'policy_long_name'  );
-    is( policy_short_name( $short_name ), $short_name, 'policy_short_name' );
-    is( policy_short_name( $long_name  ), $short_name, 'policy_short_name' );
+    is( enforcer_long_name(  $short_name ), $long_name,  'enforcer_long_name'  );
+    is( enforcer_long_name(  $long_name  ), $long_name,  'enforcer_long_name'  );
+    is( enforcer_short_name( $short_name ), $short_name, 'enforcer_short_name' );
+    is( enforcer_short_name( $long_name  ), $short_name, 'enforcer_short_name' );
 
     return;
 }
@@ -446,7 +446,7 @@ sub test_is_function_call {
 sub test_find_bundled_policies {
     Perl::Critic::TestUtils::block_perlrefactorrc();
 
-    my @native_policies = bundled_policy_names();
+    my @native_policies = bundled_enforcer_names();
     my $enforcer_dir = File::Spec->catfile( qw(lib Perl Critic Policy) );
     my @found_policies  = all_perl_files( $enforcer_dir );
     is( scalar @found_policies, scalar @native_policies, 'Find all perl code');

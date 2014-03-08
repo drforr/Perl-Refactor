@@ -40,7 +40,7 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 
-Readonly::Scalar my $SINGLE_POLICY_CONFIG_KEY => 'single-policy';
+Readonly::Scalar my $SINGLE_POLICY_CONFIG_KEY => 'single-enforcer';
 
 #-----------------------------------------------------------------------------
 # Constructor
@@ -86,7 +86,7 @@ sub _init {
     $self->_validate_and_save_regex(
         $SINGLE_POLICY_CONFIG_KEY,
         $args{ qq/-$SINGLE_POLICY_CONFIG_KEY/ },
-        $options_processor->single_policy(),
+        $options_processor->single_enforcer(),
         $errors,
     );
     $self->_validate_and_save_color_severity(
@@ -161,19 +161,19 @@ sub _init {
 
 #-----------------------------------------------------------------------------
 
-sub add_policy {
+sub add_enforcer {
 
     my ( $self, %args ) = @_;
 
-    if ( not $args{-policy} ) {
-        throw_internal q{The -policy argument is required};
+    if ( not $args{-enforcer} ) {
+        throw_internal q{The -enforcer argument is required};
     }
 
-    my $enforcer  = $args{-policy};
+    my $enforcer  = $args{-enforcer};
 
-    # If the -policy is already a blessed object, then just add it directly.
+    # If the -enforcer is already a blessed object, then just add it directly.
     if ( blessed $enforcer ) {
-        $self->_add_policy_if_enabled($enforcer);
+        $self->_add_enforcer_if_enabled($enforcer);
         return $self;
     }
 
@@ -182,15 +182,15 @@ sub add_policy {
 
     my $factory       = $self->{_factory};
     my $enforcer_object =
-        $factory->create_policy(-name=>$enforcer, -params=>$params);
-    $self->_add_policy_if_enabled($enforcer_object);
+        $factory->create_enforcer(-name=>$enforcer, -params=>$params);
+    $self->_add_enforcer_if_enabled($enforcer_object);
 
     return $self;
 }
 
 #-----------------------------------------------------------------------------
 
-sub _add_policy_if_enabled {
+sub _add_enforcer_if_enabled {
     my ( $self, $enforcer_object ) = @_;
 
     my $config = $enforcer_object->__get_config()
@@ -222,10 +222,10 @@ sub _load_policies {
 
     for my $enforcer ( @policies ) {
 
-        # If -single-policy is true, only load policies that match it
-        if ( $self->single_policy() ) {
-            if ( $self->_policy_is_single_policy( $enforcer ) ) {
-                $self->add_policy( -policy => $enforcer );
+        # If -single-enforcer is true, only load policies that match it
+        if ( $self->single_enforcer() ) {
+            if ( $self->_enforcer_is_single_enforcer( $enforcer ) ) {
+                $self->add_enforcer( -enforcer => $enforcer );
             }
             next;
         }
@@ -237,21 +237,21 @@ sub _load_policies {
         my $load_me = $self->only() ? $FALSE : $TRUE;
 
         ## no critic (ProhibitPostfixControls)
-        $load_me = $FALSE if     $self->_policy_is_disabled( $enforcer );
-        $load_me = $TRUE  if     $self->_policy_is_enabled( $enforcer );
-        $load_me = $FALSE if     $self->_policy_is_unimportant( $enforcer );
-        $load_me = $FALSE if not $self->_policy_is_thematic( $enforcer );
-        $load_me = $TRUE  if     $self->_policy_is_included( $enforcer );
-        $load_me = $FALSE if     $self->_policy_is_excluded( $enforcer );
+        $load_me = $FALSE if     $self->_enforcer_is_disabled( $enforcer );
+        $load_me = $TRUE  if     $self->_enforcer_is_enabled( $enforcer );
+        $load_me = $FALSE if     $self->_enforcer_is_unimportant( $enforcer );
+        $load_me = $FALSE if not $self->_enforcer_is_thematic( $enforcer );
+        $load_me = $TRUE  if     $self->_enforcer_is_included( $enforcer );
+        $load_me = $FALSE if     $self->_enforcer_is_excluded( $enforcer );
 
 
         next if not $load_me;
-        $self->add_policy( -policy => $enforcer );
+        $self->add_enforcer( -enforcer => $enforcer );
     }
 
-    # When using -single-policy, only one policy should ever be loaded.
-    if ($self->single_policy() && scalar $self->policies() != 1) {
-        $self->_add_single_policy_exception_to($errors);
+    # When using -single-enforcer, only one enforcer should ever be loaded.
+    if ($self->single_enforcer() && scalar $self->policies() != 1) {
+        $self->_add_single_enforcer_exception_to($errors);
     }
 
     return;
@@ -259,31 +259,31 @@ sub _load_policies {
 
 #-----------------------------------------------------------------------------
 
-sub _policy_is_disabled {
+sub _enforcer_is_disabled {
     my ($self, $enforcer) = @_;
     my $profile = $self->_profile();
-    return $profile->policy_is_disabled( $enforcer );
+    return $profile->enforcer_is_disabled( $enforcer );
 }
 
 #-----------------------------------------------------------------------------
 
-sub _policy_is_enabled {
+sub _enforcer_is_enabled {
     my ($self, $enforcer) = @_;
     my $profile = $self->_profile();
-    return $profile->policy_is_enabled( $enforcer );
+    return $profile->enforcer_is_enabled( $enforcer );
 }
 
 #-----------------------------------------------------------------------------
 
-sub _policy_is_thematic {
+sub _enforcer_is_thematic {
     my ($self, $enforcer) = @_;
     my $theme = $self->theme();
-    return $theme->policy_is_thematic( -policy => $enforcer );
+    return $theme->enforcer_is_thematic( -enforcer => $enforcer );
 }
 
 #-----------------------------------------------------------------------------
 
-sub _policy_is_unimportant {
+sub _enforcer_is_unimportant {
     my ($self, $enforcer) = @_;
     my $enforcer_severity = $enforcer->get_severity();
     my $min_severity    = $self->{_severity};
@@ -292,7 +292,7 @@ sub _policy_is_unimportant {
 
 #-----------------------------------------------------------------------------
 
-sub _policy_is_included {
+sub _enforcer_is_included {
     my ($self, $enforcer) = @_;
     my $enforcer_long_name = ref $enforcer;
     my @inclusions  = $self->include();
@@ -301,7 +301,7 @@ sub _policy_is_included {
 
 #-----------------------------------------------------------------------------
 
-sub _policy_is_excluded {
+sub _enforcer_is_excluded {
     my ($self, $enforcer) = @_;
     my $enforcer_long_name = ref $enforcer;
     my @exclusions  = $self->exclude();
@@ -310,10 +310,10 @@ sub _policy_is_excluded {
 
 #-----------------------------------------------------------------------------
 
-sub _policy_is_single_policy {
+sub _enforcer_is_single_enforcer {
     my ($self, $enforcer) = @_;
 
-    my @patterns = $self->single_policy();
+    my @patterns = $self->single_enforcer();
     return if not @patterns;
 
     my $enforcer_long_name = ref $enforcer;
@@ -332,16 +332,16 @@ sub _new_global_value_exception {
 
 #-----------------------------------------------------------------------------
 
-sub _add_single_policy_exception_to {
+sub _add_single_enforcer_exception_to {
     my ($self, $errors) = @_;
 
     my $message_suffix = $EMPTY;
-    my $patterns = join q{", "}, $self->single_policy();
+    my $patterns = join q{", "}, $self->single_enforcer();
 
     if (scalar $self->policies() == 0) {
         $message_suffix =
             q{did not match any policies (in combination with }
-                . q{other policy restrictions).};
+                . q{other enforcer restrictions).};
     }
     else {
         $message_suffix  = qq{matched multiple policies:\n\t};
@@ -839,9 +839,9 @@ sub severity {
 
 #-----------------------------------------------------------------------------
 
-sub single_policy {
+sub single_enforcer {
     my ($self) = @_;
-    return @{ $self->{_single_policy} };
+    return @{ $self->{_single_enforcer} };
 }
 
 #-----------------------------------------------------------------------------
@@ -895,8 +895,8 @@ sub criticism_fatal {
 
 #-----------------------------------------------------------------------------
 
-sub site_policy_names {
-    return Perl::Critic::PolicyFactory::site_policy_names();
+sub site_enforcer_names {
+    return Perl::Critic::PolicyFactory::site_enforcer_names();
 }
 
 #-----------------------------------------------------------------------------
@@ -1004,13 +1004,13 @@ Not properly documented because you shouldn't be using this.
 
 =over
 
-=item C<< add_policy( -policy => $enforcer_name, -params => \%param_hash ) >>
+=item C<< add_enforcer( -enforcer => $enforcer_name, -params => \%param_hash ) >>
 
 Creates a Policy object and loads it into this Config.  If the object
 cannot be instantiated, it will throw a fatal exception.  Otherwise,
 it returns a reference to this Critic.
 
-B<-policy> is the name of a
+B<-enforcer> is the name of a
 L<Perl::Critic::Policy|Perl::Critic::Policy> subclass module.  The
 C<'Perl::Critic::Policy'> portion of the name can be omitted for
 brevity.  This argument is required.
@@ -1066,9 +1066,9 @@ Config.
 Returns the value of the C<-severity> attribute for this Config.
 
 
-=item C< single_policy() >
+=item C< single_enforcer() >
 
-Returns the value of the C<-single-policy> attribute for this Config.
+Returns the value of the C<-single-enforcer> attribute for this Config.
 
 
 =item C< theme() >
@@ -1158,7 +1158,7 @@ internally, but may be useful to you in some way.
 
 =over
 
-=item C<site_policy_names()>
+=item C<site_enforcer_names()>
 
 Returns a list of all the Policy modules that are currently installed
 in the Perl::Critic:Policy namespace.  These will include modules that
@@ -1220,7 +1220,7 @@ this:
     arg2 = value2
 
 C<Perl::Critic::Policy::Category::PolicyName> is the full name of a
-module that implements the policy.  The Policy modules distributed
+module that implements the enforcer.  The Policy modules distributed
 with Perl::Critic have been grouped into categories according to the
 table of contents in Damian Conway's book B<Perl Best Practices>. For
 brevity, you can omit the C<'Perl::Critic::Policy'> part of the module

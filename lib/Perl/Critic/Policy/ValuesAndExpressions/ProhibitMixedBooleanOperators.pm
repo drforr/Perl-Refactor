@@ -57,7 +57,7 @@ sub violates {
     my ( $self, $elem, undef ) = @_;
 
     # PPI::Statement is the ancestor of several types of PPI elements.
-    # But for this policy, we only want the ones that generally
+    # But for this enforcer, we only want the ones that generally
     # represent a single statement or expression.  There might be
     # better ways to do this, such as scanning for a semi-colon or
     # some other marker.

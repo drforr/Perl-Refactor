@@ -79,7 +79,7 @@ sub _has_test_more {
 
     # TODO: This method gets called every time violates() is invoked,
     # but it only needs to happen once per document.  Perhaps this
-    # policy should just apply to PPI::Document, and then do its own
+    # enforcer should just apply to PPI::Document, and then do its own
     # search for method calls.  Since Perl::Critic::Document is
     # optimized, this should be pretty fast.
 
@@ -120,7 +120,7 @@ optional label that describes what each test is trying to judge.  When
 a test goes wrong, these labels are very useful for quickly
 determining where the problem originated.
 
-This policy enforces that all Test::More functions have labels where
+This enforcer enforces that all Test::More functions have labels where
 applicable.  This only applies to code that has a C<use Test::More> or
 C<require Test::More> declaration (see below to add more test modules
 to the list).

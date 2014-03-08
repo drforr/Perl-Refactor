@@ -51,9 +51,9 @@ while ($str =~ m/\G(.)/cg) {
    print $1;
 }
 
-print $0; # not affected by policy
-print $_; # not affected by policy
-print $f1; # not affected by policy
+print $0; # not affected by enforcer
+print $_; # not affected by enforcer
+print $f1; # not affected by enforcer
 
 my $result = $str =~ m/(.)/;
 if ($result) {

@@ -88,7 +88,7 @@ This Policy is not configurable except for the standard options.
 
 Due to a bug in the current version of PPI (v1.119_03) and earlier,
 the readline operator is often misinterpreted as less-than and
-greater-than operators after a comma.  Therefore, this policy misses
+greater-than operators after a comma.  Therefore, this enforcer misses
 important cases like
 
   my $content = join '', <STDIN>;
@@ -97,12 +97,12 @@ because it interprets that line as the nonsensical statement:
 
   my $content = join '', < STDIN >;
 
-When that PPI bug is fixed, this policy should start catching those
+When that PPI bug is fixed, this enforcer should start catching those
 violations automatically.
 
 =head1 CREDITS
 
-Initial development of this policy was supported by a grant from the
+Initial development of this enforcer was supported by a grant from the
 Perl Foundation.
 
 =head1 AUTHOR

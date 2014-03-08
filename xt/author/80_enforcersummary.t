@@ -17,7 +17,7 @@ use File::Spec;
 use List::MoreUtils qw(any);
 
 use Perl::Critic::PolicyFactory ( -test => 1 );
-use Perl::Critic::TestUtils qw{ bundled_policy_names };
+use Perl::Critic::TestUtils qw{ bundled_enforcer_names };
 
 use Test::More;
 
@@ -34,7 +34,7 @@ if (open my ($fh), '<', $summary_file) {
     my $content = do {local $INPUT_RECORD_SEPARATOR=undef; <$fh> };
     close $fh or confess "Couldn't close $summary_file: $OS_ERROR";
 
-    my @enforcer_names = bundled_policy_names();
+    my @enforcer_names = bundled_enforcer_names();
     my @summaries    = $content =~ m/^=head2 [ ]+ L<[\w:]+[|]([\w:]+)>/gxms;
     plan( tests => 2 + 2 * @enforcer_names );
 
@@ -96,7 +96,7 @@ else {
 #-----------------------------------------------------------------------------
 
 # ensure we return true if this test is loaded by
-# t/80_policysummary.t.without_optional_dependencies.t
+# t/80_enforcersummary.t.without_optional_dependencies.t
 1;
 
 # Local Variables:

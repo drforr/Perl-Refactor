@@ -48,7 +48,7 @@ use Perl::Critic::Policy::Test;    # this is to test violation formatting
     can_ok('Perl::Critic::Violation', 'explanation');
     can_ok('Perl::Critic::Violation', 'filename');
     can_ok('Perl::Critic::Violation', 'source');
-    can_ok('Perl::Critic::Violation', 'policy');
+    can_ok('Perl::Critic::Violation', 'enforcer');
     can_ok('Perl::Critic::Violation', 'get_format');
     can_ok('Perl::Critic::Violation', 'set_format');
     can_ok('Perl::Critic::Violation', 'to_string');
@@ -81,7 +81,7 @@ use Perl::Critic::Policy::Test;    # this is to test violation formatting
     is(   $viol->visual_column_number(), 1,               'visual_column_number');
     is(   $viol->severity(),             99,              'severity');
     is(   $viol->source(),               $code,           'source');
-    is(   $viol->policy(),               $pkg,            'policy');
+    is(   $viol->enforcer(),               $pkg,            'enforcer');
     is(   $viol->element_class(),        'PPI::Document', 'element class');
     like( $viol->diagnostics(), qr/ \A $no_diagnostics_msg \z /xms, 'diagnostics');
 
@@ -130,7 +130,7 @@ use Perl::Critic::Policy::Test;    # this is to test violation formatting
     is( $viol->visual_column_number(), 1,                  'visual_column_number after dropping document');
     is( $viol->severity(),             99,                 'severity after dropping document');
     is( $viol->source(),               $code,              'source after dropping document');
-    is( $viol->policy(),               $pkg,               'policy after dropping document');
+    is( $viol->enforcer(),               $pkg,               'enforcer after dropping document');
     is( $viol->element_class(),        'PPI::Token::Word', 'element class after dropping document');
     like(
         $viol->diagnostics(),

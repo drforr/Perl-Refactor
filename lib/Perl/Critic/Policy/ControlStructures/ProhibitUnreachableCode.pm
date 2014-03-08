@@ -57,11 +57,11 @@ sub violates {
 
     # Scan the enclosing statement for conditional keywords or logical
     # operators.  If any are found, then this the following statements
-    # could _potentially_ be executed, so this policy is satisfied.
+    # could _potentially_ be executed, so this enforcer is satisfied.
 
     # NOTE: When the first operand in an boolean expression is
     # C<croak> or C<die>, etc., the second operand is technically
-    # unreachable.  But this policy doesn't catch that situation.
+    # unreachable.  But this enforcer doesn't catch that situation.
 
     for my $child ( $statement->schildren() ) {
         return if $child->isa('PPI::Token::Operator') && exists $OPERATORS{$child};
@@ -120,7 +120,7 @@ distribution.
 
 =head1 DESCRIPTION
 
-This policy prohibits code following a statement which unconditionally
+This enforcer prohibits code following a statement which unconditionally
 alters the program flow.  This includes calls to C<exit>, C<die>,
 C<return>, C<next>, C<last> and C<goto>.  Due to common usage,
 C<croak> and C<confess> from L<Carp|Carp> are also included.

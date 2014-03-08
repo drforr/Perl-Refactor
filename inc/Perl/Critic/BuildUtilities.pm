@@ -112,8 +112,8 @@ sub test_wrappers_to_generate {
         t/00_modules.t
         t/01_config.t
         t/01_config_bad_perlrefactorrc.t
-        t/01_policy_config.t
-        t/02_policy.t
+        t/01_enforcer_config.t
+        t/02_enforcer.t
         t/03_pragmas.t
         t/04_options_processor.t
         t/05_utils.t
@@ -125,20 +125,20 @@ sub test_wrappers_to_generate {
         t/08_document.t
         t/09_theme.t
         t/10_user_profile.t
-        t/11_policy_factory.t
-        t/12_policy_listing.t
+        t/11_enforcer_factory.t
+        t/12_enforcer_listing.t
         t/12_theme_listing.t
         t/13_bundled_policies.t
-        t/14_policy_parameters.t
+        t/14_enforcer_parameters.t
         t/15_statistics.t
         t/20_policies.t
-        t/20_policy_pod_spelling.t
-        t/20_policy_prohibit_evil_modules.t
-        t/20_policy_prohibit_hard_tabs.t
-        t/20_policy_prohibit_trailing_whitespace.t
-        t/20_policy_require_consistent_newlines.t
-        t/20_policy_require_tidy_code.t
-        xt/author/80_policysummary.t
+        t/20_enforcer_pod_spelling.t
+        t/20_enforcer_prohibit_evil_modules.t
+        t/20_enforcer_prohibit_hard_tabs.t
+        t/20_enforcer_prohibit_trailing_whitespace.t
+        t/20_enforcer_require_consistent_newlines.t
+        t/20_enforcer_require_tidy_code.t
+        xt/author/80_enforcersummary.t
         t/92_memory_leaks.t
         xt/author/94_includes.t
     >;

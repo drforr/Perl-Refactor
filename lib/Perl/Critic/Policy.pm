@@ -26,8 +26,8 @@ use Perl::Critic::Utils qw<
     :data_conversion
     interpolate
     is_integer
-    policy_long_name
-    policy_short_name
+    enforcer_long_name
+    enforcer_short_name
     severity_to_number
 >;
 use Perl::Critic::Utils::DataConversion qw< dor >;
@@ -40,7 +40,7 @@ use Perl::Critic::Exception::Configuration;
 use Perl::Critic::Exception::Configuration::Option::Policy::ExtraParameter;
 use Perl::Critic::Exception::Configuration::Option::Policy::ParameterValue;
 use Perl::Critic::Exception::Fatal::PolicyDefinition
-    qw< throw_policy_definition >;
+    qw< throw_enforcer_definition >;
 use Perl::Critic::PolicyConfig qw<>;
 use Perl::Critic::PolicyParameter qw<>;
 use Perl::Critic::Violation qw<>;
@@ -253,7 +253,7 @@ sub __set_config {
 sub get_long_name {
     my ($self) = @_;
 
-    return policy_long_name(ref $self);
+    return enforcer_long_name(ref $self);
 }
 
 #-----------------------------------------------------------------------------
@@ -261,7 +261,7 @@ sub get_long_name {
 sub get_short_name {
     my ($self) = @_;
 
-    return policy_short_name(ref $self);
+    return enforcer_short_name(ref $self);
 }
 
 #-----------------------------------------------------------------------------
@@ -407,7 +407,7 @@ sub get_parameters {
 sub violates {
     my ($self) = @_;
 
-    return throw_policy_definition
+    return throw_enforcer_definition
         $self->get_short_name() . q/ does not implement violates()./;
 }
 
@@ -427,7 +427,7 @@ sub new_parameter_value_exception {
     my ( $self, $option_name, $option_value, $source, $message_suffix ) = @_;
 
     return Perl::Critic::Exception::Configuration::Option::Policy::ParameterValue->new(
-        policy          => $self->get_short_name(),
+        enforcer          => $self->get_short_name(),
         option_name     => $option_name,
         option_value    => $option_value,
         source          => $source,
@@ -504,7 +504,7 @@ sub _format_lack_of_parameter_metadata {
     return interpolate($message) if $message;
 
     return
-        'Cannot programmatically discover what parameters this policy takes.';
+        'Cannot programmatically discover what parameters this enforcer takes.';
 }
 
 #-----------------------------------------------------------------------------
@@ -607,7 +607,7 @@ your subclass B<must> override this method.
 
 Returns a reference to a new C<Perl::Critic::Violation> object. The
 arguments are a description of the violation (as string), an
-explanation for the policy (as string) or a series of page numbers in
+explanation for the enforcer (as string) or a series of page numbers in
 PBP (as an ARRAY ref), a reference to the L<PPI|PPI> element that
 caused the violation.
 
@@ -632,18 +632,18 @@ Useful in parameter parser implementations.
 
 =item C< get_long_name() >
 
-Return the full package name of this policy.
+Return the full package name of this enforcer.
 
 
 =item C< get_short_name() >
 
-Return the name of this policy without the "Perl::Critic::Policy::"
+Return the name of this enforcer without the "Perl::Critic::Policy::"
 prefix.
 
 
 =item C< is_enabled() >
 
-Answer whether this policy is really active or not.  Returns a true
+Answer whether this enforcer is really active or not.  Returns a true
 value if it is, a false, yet defined, value if it isn't, and an
 undefined value if it hasn't yet been decided whether it will be.
 
@@ -658,14 +658,14 @@ increases.
 
 =item C< default_maximum_violations_per_document() >
 
-Returns the default maximum number of violations for this policy to
+Returns the default maximum number of violations for this enforcer to
 report per document.  By default, this not defined, but subclasses may
 override this.
 
 
 =item C< get_maximum_violations_per_document() >
 
-Returns the maximum number of violations this policy will report for a
+Returns the maximum number of violations this enforcer will report for a
 single document.  If this is not defined, then there is no limit.  If
 L</set_maximum_violations_per_document()> has not been invoked, then
 L</default_maximum_violations_per_document()> is returned.
@@ -673,7 +673,7 @@ L</default_maximum_violations_per_document()> is returned.
 
 =item C< set_maximum_violations_per_document() >
 
-Specify the maximum violations that this policy should report for a
+Specify the maximum violations that this enforcer should report for a
 document.
 
 
@@ -713,7 +713,7 @@ possible values.
 Returns a sorted list of the default themes associated with this
 Policy.  The default method returns an empty list.  Policy authors
 should override this method to return a list of themes that are
-appropriate for their policy.
+appropriate for their enforcer.
 
 
 =item C< get_themes() >
@@ -737,13 +737,13 @@ preserved.  Duplicate themes will be removed.
 
 =item C< get_abstract() >
 
-Retrieve the abstract for this policy (the part of the NAME section of
+Retrieve the abstract for this enforcer (the part of the NAME section of
 the POD after the module name), if it is available.
 
 
 =item C< get_raw_abstract() >
 
-Retrieve the abstract for this policy (the part of the NAME section of
+Retrieve the abstract for this enforcer (the part of the NAME section of
 the POD after the module name), if it is available, in the unparsed
 form.
 
@@ -759,8 +759,8 @@ Returns a reference to an array containing instances of
 L<Perl::Critic::PolicyParameter|Perl::Critic::PolicyParameter>.
 
 Note that this will return an empty list if the parameters for this
-policy are unknown.  In order to differentiate between this
-circumstance and the one where this policy does not take any
+enforcer are unknown.  In order to differentiate between this
+circumstance and the one where this enforcer does not take any
 parameters, it is necessary to call C<parameter_metadata_available()>.
 
 
@@ -779,7 +779,7 @@ they are evaluated in string context.
 
 =item C<to_string()>
 
-Returns a string representation of the policy.  The content of the
+Returns a string representation of the enforcer.  The content of the
 string depends on the current value returned by C<get_format()>.
 See L<"OVERLOADS"> for the details.
 
@@ -791,7 +791,7 @@ Policy doesn't have any potential side effects.
 
 This method returns a true value by default.
 
-An "unsafe" policy might attempt to compile the code, which, if you have
+An "unsafe" enforcer might attempt to compile the code, which, if you have
 C<BEGIN> or C<CHECK> blocks that affect files or connect to databases, is not
 a safe thing to do.  If you are writing a such a Policy, then you should
 override this method to return false.
@@ -838,12 +838,12 @@ Name of the Policy without the C<Perl::Critic::Policy::> prefix.
 
 =item C<%a>
 
-The policy abstract.
+The enforcer abstract.
 
 
 =item C<%O>
 
-List of supported policy parameters.  Takes an option of a format
+List of supported enforcer parameters.  Takes an option of a format
 string for L<Perl::Critic::PolicyParameter/"to_formatted_string">.
 For example, this can be used like C<%{%n - %d\n}O> to get a list of
 parameter names followed by their descriptions.
@@ -851,42 +851,42 @@ parameter names followed by their descriptions.
 
 =item C<%U>
 
-A message stating that the parameters for the policy are unknown if
+A message stating that the parameters for the enforcer are unknown if
 C<parameter_metadata_available()> returns false.  Takes an option of
 what the message should be, which defaults to "Cannot programmatically
-discover what parameters this policy takes.".  The value of this
+discover what parameters this enforcer takes.".  The value of this
 option is interpolated in order to expand the standard escape
 sequences (C<\n>, C<\t>, etc.).
 
 
 =item C<%S>
 
-The default severity level of the policy.
+The default severity level of the enforcer.
 
 
 =item C<%s>
 
-The current severity level of the policy.
+The current severity level of the enforcer.
 
 
 =item C<%T>
 
-The default themes for the policy.
+The default themes for the enforcer.
 
 
 =item C<%t>
 
-The current themes for the policy.
+The current themes for the enforcer.
 
 
 =item C<%V>
 
-The default maximum number of violations per document of the policy.
+The default maximum number of violations per document of the enforcer.
 
 
 =item C<%v>
 
-The current maximum number of violations per document of the policy.
+The current maximum number of violations per document of the enforcer.
 
 
 =back

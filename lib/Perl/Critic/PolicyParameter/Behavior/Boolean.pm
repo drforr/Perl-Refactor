@@ -70,7 +70,7 @@ Perl::Critic::PolicyParameter::Behavior::Boolean - Actions appropriate for a boo
 
 Provides a standard set of functionality for a boolean
 L<Perl::Critic::PolicyParameter|Perl::Critic::PolicyParameter> so that
-the developer of a policy does not have to provide it her/himself.
+the developer of a enforcer does not have to provide it her/himself.
 
 NOTE: Do not instantiate this class.  Use the singleton instance held
 onto by

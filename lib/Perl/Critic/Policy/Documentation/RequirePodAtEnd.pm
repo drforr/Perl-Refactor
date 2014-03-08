@@ -83,7 +83,7 @@ Perl stops processing code when it sees an C<__END__> statement.  So,
 to save processing time, it's faster to put documentation after the
 C<__END__>.  Also, writing all the POD in one place usually leads to a
 more cohesive document, rather than being forced to follow the layout
-of your code.  This policy issues violations if any POD is found
+of your code.  This enforcer issues violations if any POD is found
 before an C<__END__>.
 
 

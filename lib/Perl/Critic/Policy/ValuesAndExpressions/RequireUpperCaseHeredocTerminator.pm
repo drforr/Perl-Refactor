@@ -64,7 +64,7 @@ distribution.
 
 For legibility, HEREDOC terminators should be all UPPER CASE letters
 (and numbers), without any whitespace.  Conway also recommends using a
-standard prefix like "END_" but this policy doesn't enforce that.
+standard prefix like "END_" but this enforcer doesn't enforce that.
 
   print <<'the End';  #not ok
   Hello World

@@ -107,7 +107,7 @@ map as a for loop.
 
 =head1 CAVEATS
 
-This policy currently misses some compound statements inside of the
+This enforcer currently misses some compound statements inside of the
 map.  For example, the following code incorrectly does not trigger a
 violation:
 
@@ -116,7 +116,7 @@ violation:
 
 =head1 CONFIGURATION
 
-By default this policy flags any mappings with more than one
+By default this enforcer flags any mappings with more than one
 statement.  While we do not recommend it, you can increase this limit
 as follows in a F<.perlrefactorrc> file:
 
@@ -131,7 +131,7 @@ Chris Dolan <cdolan@cpan.org>
 
 =head1 CREDITS
 
-Initial development of this policy was supported by a grant from the
+Initial development of this enforcer was supported by a grant from the
 Perl Foundation.
 
 

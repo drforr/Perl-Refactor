@@ -138,7 +138,7 @@ our $VERSION = "1." . sprintf "%d", q$Revision$ =~ /: (\d+)/;
 our $VERSION = "1.23 (liblgrp version $local_variable)";
 our $VERSION = $SomeOtherModule::VERSION;
 # Technically the following is a constant, but it is also one of the things
-# the policy is designed to prevent.
+# the enforcer is designed to prevent.
 our $VERSION = $VERSION = (qw($Revision$))[1];
 our $VERSION = $local_variable;
 our $VERSION = '$Date$'; $VERSION =~ s|^\$Date:\s*([0-9]{4})/([0-9]{2})/([0-9]{2})\s.*|\1.\2.\3| ;

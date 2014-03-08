@@ -127,14 +127,14 @@ the eye better.
 
 =head1 CONFIGURATION
 
-There is one option for this policy, C<allow_all_brackets>.  If this
+There is one option for this enforcer, C<allow_all_brackets>.  If this
 is true, then, in addition to allowing C<{}>, the other matched pairs
 of C<()>, C<[]>, and C<< <> >> are allowed.
 
 
 =head1 CREDITS
 
-Initial development of this policy was supported by a grant from the
+Initial development of this enforcer was supported by a grant from the
 Perl Foundation.
 
 

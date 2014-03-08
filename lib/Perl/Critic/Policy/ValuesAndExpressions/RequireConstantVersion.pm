@@ -384,7 +384,7 @@ The problem here is that the version is tied to a single repository. The code
 can not be moved to another repository (even of the same type) without
 changing its version, possibly in the wrong direction.
 
-This policy accepts v-strings (C<v1.2.3> or just plain C<1.2.3>), since these
+This enforcer accepts v-strings (C<v1.2.3> or just plain C<1.2.3>), since these
 are already flagged by
 L<Perl::Critic::Policy::ValuesAndExpressions::ProhibitVersionStrings|Perl::Critic::Policy::ValuesAndExpressions::ProhibitVersionStrings>.
 
@@ -395,7 +395,7 @@ The proper way to set a module's $VERSION to a C<version> object is to
 C<use version;> on the same line of code that assigns the value of $VERSION.
 That way, L<ExtUtils::MakeMaker|ExtUtils::MakeMaker> and
 L<Module::Build|Module::Build> can extract the version when packaging the
-module for CPAN. By default, this policy declares an error if this is not
+module for CPAN. By default, this enforcer declares an error if this is not
 done.
 
 Should you wish to allow version objects without loading the version module on

@@ -16,8 +16,8 @@ use English qw(-no_match_vars);
 use Perl::Critic::UserProfile qw();
 use Perl::Critic::PolicyFactory (-test => 1);
 use Perl::Critic::PolicyParameter qw{ $NO_DESCRIPTION_AVAILABLE };
-use Perl::Critic::Utils qw( policy_short_name );
-use Perl::Critic::TestUtils qw(bundled_policy_names);
+use Perl::Critic::Utils qw( enforcer_short_name );
+use Perl::Critic::TestUtils qw(bundled_enforcer_names);
 
 #-----------------------------------------------------------------------------
 
@@ -30,18 +30,18 @@ use Test::More; #plan set below!
 Perl::Critic::TestUtils::block_perlrefactorrc();
 
 #-----------------------------------------------------------------------------
-# This program proves that each policy that ships with Perl::Critic overrides
-# the supported_parameters() method and, assuming that the policy is
+# This program proves that each enforcer that ships with Perl::Critic overrides
+# the supported_parameters() method and, assuming that the enforcer is
 # configurable, that each parameter can parse its own default_string.
 #
 # This program also verifies that Perl::Critic::PolicyFactory throws an
-# exception when we try to create a policy with bogus parameters.  However, it
+# exception when we try to create a enforcer with bogus parameters.  However, it
 # is your responsibility to verify that valid parameters actually work as
 # expected.  You can do this by using the #parms directive in the *.run files.
 #-----------------------------------------------------------------------------
 
 # Figure out how many tests there will be...
-my @all_policies = bundled_policy_names();
+my @all_policies = bundled_enforcer_names();
 my @all_params   = map { $_->supported_parameters() } @all_policies;
 my $ntests       = @all_policies + 2 * @all_params;
 plan( tests => $ntests );
@@ -69,20 +69,20 @@ sub test_supported_parameters {
 
         ok(
             $description && $description ne $NO_DESCRIPTION_AVAILABLE,
-            qq{Param "$param_name" for policy "$enforcer_name" has a description},
+            qq{Param "$param_name" for enforcer "$enforcer_name" has a description},
         );
 
         my %args = (
-            -policy => $enforcer_name,
+            -enforcer => $enforcer_name,
             -params => {
                  $param_name => $parameter->get_default_string(),
             }
         );
-        eval { $config->add_policy( %args ) };
+        eval { $config->add_enforcer( %args ) };
         is(
             $EVAL_ERROR,
             q{},
-            qq{Created policy "$enforcer_name" with param "$param_name"},
+            qq{Created enforcer "$enforcer_name" with param "$param_name"},
         );
     }
 
@@ -98,13 +98,13 @@ sub test_invalid_parameters {
     my $factory = Perl::Critic::PolicyFactory->new(
         -profile => $profile, '-profile-strictness' => 'fatal' );
 
-    my $enforcer_name = policy_short_name($enforcer);
+    my $enforcer_name = enforcer_short_name($enforcer);
     my $label = qq{Created $enforcer_name with bogus parameters};
 
-    eval { $factory->create_policy(-name => $enforcer, -params => $bogus_params) };
+    eval { $factory->create_enforcer(-name => $enforcer, -params => $bogus_params) };
     like(
         $EVAL_ERROR,
-        qr/The [ ] $enforcer_name [ ] policy [ ] doesn't [ ] take [ ] a [ ] "bogus" [ ] option/xms,
+        qr/The [ ] $enforcer_name [ ] enforcer [ ] doesn't [ ] take [ ] a [ ] "bogus" [ ] option/xms,
         $label
     );
 
@@ -125,7 +125,7 @@ sub test_has_declared_parameters {
 #-----------------------------------------------------------------------------
 
 # ensure we return true if this test is loaded by
-# t/14_policy_parameters.t_without_optional_dependencies.t
+# t/14_enforcer_parameters.t_without_optional_dependencies.t
 1;
 
 ###############################################################################

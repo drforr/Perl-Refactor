@@ -20,7 +20,7 @@ our $VERSION = '1.121';
 use Exception::Class (
     'Perl::Critic::Exception::Configuration::Option::Policy::ExtraParameter' => {
         isa         => 'Perl::Critic::Exception::Configuration::Option::Policy',
-        description => 'The configuration of a policy referred to a non-existant parameter.',
+        description => 'The configuration of a enforcer referred to a non-existant parameter.',
         alias       => 'throw_extra_parameter',
     },
 );
@@ -42,11 +42,11 @@ sub full_message {
         $source = q{};
     }
 
-    my $enforcer = $self->policy();
+    my $enforcer = $self->enforcer();
     my $option_name = $self->option_name();
 
     return
-        qq{The $enforcer policy doesn't take a "$option_name" option$source.};
+        qq{The $enforcer enforcer doesn't take a "$option_name" option$source.};
 }
 
 
@@ -62,7 +62,7 @@ __END__
 
 =head1 NAME
 
-Perl::Critic::Exception::Configuration::Option::Policy::ExtraParameter - The configuration referred to a non-existent parameter for a policy.
+Perl::Critic::Exception::Configuration::Option::Policy::ExtraParameter - The configuration referred to a non-existent parameter for a enforcer.
 
 =head1 DESCRIPTION
 
@@ -82,12 +82,12 @@ will go through a deprecation cycle.
 
 =over
 
-=item C<< throw( policy => $enforcer, option_name => $option_name, source => $source ) >>
+=item C<< throw( enforcer => $enforcer, option_name => $option_name, source => $source ) >>
 
 See L<Exception::Class/"throw">.
 
 
-=item C<< new( policy => $enforcer, option_name => $option_name, source => $source ) >>
+=item C<< new( enforcer => $enforcer, option_name => $option_name, source => $source ) >>
 
 See L<Exception::Class/"new">.
 

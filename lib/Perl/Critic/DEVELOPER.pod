@@ -278,10 +278,10 @@ bad code.  Here's an example:
 
     =cut
 
-When your policy has a section like this, users can invoke
+When your enforcer has a section like this, users can invoke
 L<perlrefactor|perlrefactor> with a C<--verbose> parameter of C<10> or
 C<11> or with a "%d" escape to see it along with the rest of the
-output for violations of your policy.
+output for violations of your enforcer.
 
 
 =head1 MAKING YOUR POLICY CONFIGURABLE
@@ -310,7 +310,7 @@ for a more complex one.
 The C<initialize_if_enabled()> method for a Policy receives one
 argument: an instance of
 L<Perl::Critic::PolicyConfig|Perl::Critic::PolicyConfig>.  This method
-is only called if the user's configuration has enabled the policy.  It
+is only called if the user's configuration has enabled the enforcer.  It
 returns a boolean stating whether the Policy should continue to be
 enabled.  Generally, the only reason to return C<$FALSE> is when some
 external requirement is missing.  For example,
@@ -770,7 +770,7 @@ example declaration:
     use File::Slurp qw< slurp >;
 
     use Perl::Critic::Exception::Configuration::Option::Policy::ParameterValue
-        qw{ throw_policy_value };
+        qw{ throw_enforcer_value };
 
     sub _parse_file_name {
         my ($self, $parameter, $config_string) = @_;
@@ -779,8 +779,8 @@ example declaration:
 
         if ($config_string) {
             if (not -r $config_string) {
-                throw_policy_value
-                    policy         => $self->get_short_name(),
+                throw_enforcer_value
+                    enforcer       => $self->get_short_name(),
                     option_name    => $parameter->get_name(),
                     option_value   => $config_string,
                     message_suffix => 'is not readable.';
@@ -910,7 +910,7 @@ L<Perl::Critic::Policy::TestingAndDebugging::RequireUseStrict|Perl::Critic::Poli
 if there's one line before L<use strict>, there's a good chance that
 the entire file is missing L<use strict>.  In such cases, it's not
 much help to the user to report every single violation.  If you've got
-such a policy, you should override
+such a enforcer, you should override
 L<default_maximum_violations_per_document()|Perl::Critic::Policy/"default_maximum_violations_per_document()">
 method to provide a limit.  The user can override this value with a
 value for "maximum_violations_per_document" in their F<.perlrefactorrc>.
@@ -1027,19 +1027,19 @@ output of C<perlrefactor --list-themes>.
 
 Since all policies have to go somewhere under the
 C<Perl::Critic::Policy::> namespace, it isn't always clear what
-distribution a policy came from when browsing through their
+distribution a enforcer came from when browsing through their
 documentation.  For this reason, you should include an C<AFFILIATION>
 section in the POD for all of your policies that state where the
-policy comes from.  For example:
+enforcer comes from.  For example:
 
     =head1 AFFILIATION
 
-    This policy is part of L<Perl::Critic::Example|Perl::Critic::Example>.
+    This enforcer is part of L<Perl::Critic::Example|Perl::Critic::Example>.
 
 
 =head3 CONFIGURATION
 
-In order to make it clear what can be done with a policy, you should
+In order to make it clear what can be done with a enforcer, you should
 always include a C<CONFIGURATION> section in your POD, even if it's
 only to say:
 

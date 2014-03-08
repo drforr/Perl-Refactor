@@ -19,7 +19,7 @@ Readonly::Array our @EXPORT_OK => qw{ $NO_DESCRIPTION_AVAILABLE };
 use String::Format qw{ stringf };
 
 use Perl::Critic::Exception::Fatal::PolicyDefinition
-    qw{ throw_policy_definition };
+    qw{ throw_enforcer_definition };
 use Perl::Critic::PolicyParameter::Behavior;
 use Perl::Critic::PolicyParameter::Behavior::Boolean;
 use Perl::Critic::PolicyParameter::Behavior::Enumeration;
@@ -52,7 +52,7 @@ sub _get_behavior_for_name {
     my $behavior_name = shift;
 
     my $behavior = $BEHAVIORS{$behavior_name}
-        or throw_policy_definition qq{There's no "$behavior_name" behavior.};
+        or throw_enforcer_definition qq{There's no "$behavior_name" behavior.};
 
     return $behavior;
 }
@@ -64,7 +64,7 @@ sub new {
     my $self = bless {}, $class;
 
     defined $specification
-        or throw_policy_definition
+        or throw_enforcer_definition
             'Attempt to create a ', __PACKAGE__, ' without a specification.';
 
     my $behavior_specification;
@@ -76,14 +76,14 @@ sub new {
         $behavior_specification = {};
     } else {
         $specification_type eq 'HASH'
-            or throw_policy_definition
+            or throw_enforcer_definition
                 'Attempt to create a ',
                 __PACKAGE__,
                 " with a $specification_type as a specification.",
                 ;
 
         defined $specification->{name}
-            or throw_policy_definition
+            or throw_enforcer_definition
                 'Attempt to create a ', __PACKAGE__, ' without a name.';
         $self->{_name} = $specification->{name};
 
@@ -318,7 +318,7 @@ for in the F<.perlrefactorrc>.
 =item C<get_description()>
 
 Return an explanation of the significance of the parameter, as
-provided by the developer of the policy.
+provided by the developer of the enforcer.
 
 
 =item C<get_default_string()>
@@ -330,7 +330,7 @@ would appear if it was specified in a F<.perlrefactorrc> file.
 =item C<parse_and_validate_config_value( $parser, $config )>
 
 Extract the configuration value for this parameter from the overall
-configuration and initialize the policy based upon it.
+configuration and initialize the enforcer based upon it.
 
 
 =item C<generate_full_description()>

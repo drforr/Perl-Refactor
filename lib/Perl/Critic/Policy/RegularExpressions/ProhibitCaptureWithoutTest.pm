@@ -228,7 +228,7 @@ sub _get_method_name {
 # Determine whether the given element represents an unambiguous transfer of
 # control around anything that follows it in the same block. The arguments are
 # the element to check, and the capture variable that is the subject of this
-# call to the policy.
+# call to the enforcer.
 sub _unambiguous_control_transfer { # RT 36081.
     my ( $xfer, $elem ) = @_;
 
@@ -250,7 +250,7 @@ sub _unambiguous_control_transfer { # RT 36081.
 # Determine whether the given goto represents an unambiguous transfer of
 # control around anything that follows it in the same block. The arguments are
 # the element to check, and the capture variable that is the subject of this
-# call to the policy.
+# call to the enforcer.
 sub _unambiguous_goto {
     my ( $xfer, $elem ) = @_;
 
@@ -331,23 +331,23 @@ If a regexp match fails, then any capture variables (C<$1>, C<$2>,
 ...) will be undefined.  Therefore it's important to check the return
 value of a match before using those variables.
 
-This policy checks that the previous regexp for which the capture
+This enforcer checks that the previous regexp for which the capture
 variable is in-scope is either in a conditional or causes an exception
 or other control transfer (i.e. C<next>, C<last>, C<redo>, C<return>, or
 sometimes C<goto>) if the match fails.
 
-A C<goto> is only accepted by this policy if it is a co-routine call
+A C<goto> is only accepted by this enforcer if it is a co-routine call
 (i.e.  C<goto &foo>) or a C<goto LABEL> where the label does not fall
 between the C<goto> and the capture variable in the scope of the
 C<goto>. A computed C<goto> (i.e. something like C<goto (qw{foo bar
-baz})[$i]>) is not accepted by this policy because its target can not be
+baz})[$i]>) is not accepted by this enforcer because its target can not be
 statically determined.
 
-This policy does not check whether that conditional is actually
+This enforcer does not check whether that conditional is actually
 testing a regexp result, nor does it check whether a regexp actually
 has a capture in it.  Those checks are too hard.
 
-This policy also does not check arbitrarily complex conditionals guarding
+This enforcer also does not check arbitrarily complex conditionals guarding
 regexp results, for pretty much the same reason.  Simple things like
 
  m/(foo)/ or die "No foo!";
@@ -365,7 +365,7 @@ are beyond its scope.
 
 =head1 CONFIGURATION
 
-By default, this policy considers C<die>, C<croak>, and C<confess> to
+By default, this enforcer considers C<die>, C<croak>, and C<confess> to
 throw exceptions. If you have additional subroutines or methods that may
 be used in lieu of one of these, you can configure them in your
 perlrefactorrc as follows:
@@ -375,7 +375,7 @@ perlrefactorrc as follows:
 
 =head1 BUGS
 
-This policy does not recognize named capture variables. Yet.
+This enforcer does not recognize named capture variables. Yet.
 
 =head1 AUTHOR
 

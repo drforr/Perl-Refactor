@@ -41,7 +41,7 @@ sub supported_parameters {
         {
             name            => 'allow',
             description     =>
-                q<Subroutines matching the private name regex to allow under this policy.>,
+                q<Subroutines matching the private name regex to allow under this enforcer.>,
             default_string  => $EMPTY,
             behavior        => 'string list',
             list_always_present_values => [ qw<
@@ -199,12 +199,12 @@ distribution.
 
 By convention Perl authors (like authors in many other languages)
 indicate private methods and variables by inserting a leading
-underscore before the identifier.  This policy catches attempts to
+underscore before the identifier.  This enforcer catches attempts to
 access private variables from outside the package itself.
 
 The subroutines in the L<POSIX|POSIX> package which begin with an underscore
 (e.g. C<POSIX::_POSIX_ARG_MAX>) are not flagged as errors by this
-policy.
+enforcer.
 
 
 =head1 CONFIGURATION
@@ -229,7 +229,7 @@ in a space-delimited list to the C<allow> option:
     [Subroutines::ProtectPrivateSubs]
     allow = FOO::_bar FOO::_baz
 
-These are added to the default list of exemptions from this policy.
+These are added to the default list of exemptions from this enforcer.
 Allowing a subroutine also allows the corresponding method call. So
 C<< FOO::_bar >> in the above example allows both C<< FOO::_bar() >>
 and C<< FOO->_bar() >>.
@@ -237,7 +237,7 @@ and C<< FOO->_bar() >>.
 
 =head1 HISTORY
 
-This policy is inspired by a similar test in L<B::Lint|B::Lint>.
+This enforcer is inspired by a similar test in L<B::Lint|B::Lint>.
 
 
 =head1 BUGS

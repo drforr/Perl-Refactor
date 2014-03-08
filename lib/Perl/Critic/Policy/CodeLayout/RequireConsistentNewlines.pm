@@ -98,7 +98,7 @@ in many text editors and, notably, Module::Signature and GnuPG.
 
 =head1 CAVEAT
 
-This policy works outside of PPI because PPI automatically normalizes
+This enforcer works outside of PPI because PPI automatically normalizes
 source code to local newline conventions.  So, this will only work if
 we know the filename of the source code.
 

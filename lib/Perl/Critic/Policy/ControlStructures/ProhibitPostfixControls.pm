@@ -146,7 +146,7 @@ a loop break such as C<last>, C<next>, C<redo>, or C<continue>.
 
 =head1 CONFIGURATION
 
-A set of constructs to be ignored by this policy can specified by
+A set of constructs to be ignored by this enforcer can specified by
 giving a value for 'allow' of a string of space-delimited keywords:
 C<if>, C<for>, C<unless>, C<until>, C<when>, and/or C<while>.  An
 example of specifying allowed flow-control structures in a
@@ -177,7 +177,7 @@ of those functions.  It is also pretty common to use C<warn>, C<carp>,
 and C<cluck> with a postfix C<if>, so those are allowed too.
 
 The C<when> keyword was added to the language after Perl Best
-Practices was written.  This policy treats C<when> the same way it
+Practices was written.  This enforcer treats C<when> the same way it
 does C<if>, i.e. it's allowed after flow-control constructs.  Thanks
 to brian d foy for the
 L<inspiration|http://www.effectiveperlprogramming.com/blog/543>.

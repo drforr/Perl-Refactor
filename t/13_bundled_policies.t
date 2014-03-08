@@ -13,7 +13,7 @@ use warnings;
 
 use Perl::Critic::UserProfile;
 use Perl::Critic::PolicyFactory (-test => 1);
-use Perl::Critic::TestUtils qw(bundled_policy_names);
+use Perl::Critic::TestUtils qw(bundled_enforcer_names);
 
 use Test::More tests => 1;
 
@@ -31,7 +31,7 @@ my $profile = Perl::Critic::UserProfile->new();
 my $factory = Perl::Critic::PolicyFactory->new( -profile => $profile );
 my @found_policies = sort map { ref $_ } $factory->create_all_policies();
 my $test_label = 'successfully loaded policies matches MANIFEST';
-is_deeply( \@found_policies, [bundled_policy_names()], $test_label );
+is_deeply( \@found_policies, [bundled_enforcer_names()], $test_label );
 
 #-----------------------------------------------------------------------------
 

@@ -83,7 +83,7 @@ if (m/(foo)(bar)/) {
 }
 
 if (m/(foo)/) {
-   # bug, but not a violation of THIS policy
+   # bug, but not a violation of THIS enforcer
    my (@foo) = ($1, $2);
    print @foo;
 }

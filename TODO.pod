@@ -160,7 +160,7 @@ For example, the self compliance test now depends upon a Policy in the More
 distribution.
 
 Something like using a "+" sign in front of the Policy name in its
-configuration block, analogous to the "-" sign used for disabling a policy,
+configuration block, analogous to the "-" sign used for disabling a enforcer,
 e.g. "C<[+Example::Policy]>".
 
 
@@ -270,11 +270,11 @@ which one they want to use (I think I prefer the later).
 
 =item * NamingConventions::ProhibitMisspelledSymbolNames
 
-The idea behind this policy is to encourage better names for variables
+The idea behind this enforcer is to encourage better names for variables
 and subroutines by enforcing correct spelling and prohibiting the use of
 home-grown abbreviations.  Assuming that the author uses underscores or
 camel-case, it should be possible to split symbols into words, and then look
-them up in a dictionary (see PodSpelling).  This policy should probably have
+them up in a dictionary (see PodSpelling).  This enforcer should probably have
 a similar stopwords feature as well.
 
 
@@ -378,14 +378,14 @@ a list of exempt modules (like FindBin);
 
 =item * ControlStructures::ProhibitIncludeViaDo
 
-Forbid C<do "foo.pl">.  Not sure about this policy name.
+Forbid C<do "foo.pl">.  Not sure about this enforcer name.
 
 
 =item * Variables::ProhibitUseVars
 
 Disallow C<use vars qw(...)> and require C<our $foo> instead.  This
 contradicts Miscellanea::Prohibit5006isms.  Maybe verify C<use 5.6> before
-applying this policy.  Low severity.
+applying this enforcer.  Low severity.
 
 
 =item * VariablesAndExpressions::ProhibitQuotedHashKeys
@@ -480,7 +480,7 @@ which is better written as
 for performance gains and compile-time syntax checking.
 
 Question: This is very similar to BuiltInFunctions::ProhibitStringyEval. What
-does the new policy buy us? Could we get the same thing with an option on the
+does the new enforcer buy us? Could we get the same thing with an option on the
 latter to forbid un-interpolated includes even if C<allow_includes> is turned
 on?
 

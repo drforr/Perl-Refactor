@@ -11,7 +11,7 @@ use 5.006001;
 use strict;
 use warnings;
 
-use Perl::Critic::Utils qw{ &policy_short_name };
+use Perl::Critic::Utils qw{ &enforcer_short_name };
 
 our $VERSION = '1.121';
 
@@ -20,8 +20,8 @@ our $VERSION = '1.121';
 use Exception::Class (
     'Perl::Critic::Exception::Configuration::Option::Policy' => {
         isa         => 'Perl::Critic::Exception::Configuration::Option',
-        description => 'A problem with the configuration of a policy.',
-        fields      => [ qw{ policy } ],
+        description => 'A problem with the configuration of a enforcer.',
+        fields      => [ qw{ enforcer } ],
     },
 );
 
@@ -30,9 +30,9 @@ use Exception::Class (
 sub new {
     my ($class, %options) = @_;
 
-    my $enforcer = $options{policy};
+    my $enforcer = $options{enforcer};
     if ($enforcer) {
-        $options{policy} = policy_short_name($enforcer);
+        $options{enforcer} = enforcer_short_name($enforcer);
     }
 
     return $class->SUPER::new(%options);
@@ -51,7 +51,7 @@ __END__
 
 =head1 NAME
 
-Perl::Critic::Exception::Configuration::Option::Policy - A problem with configuration of a policy.
+Perl::Critic::Exception::Configuration::Option::Policy - A problem with configuration of a enforcer.
 
 =head1 DESCRIPTION
 
@@ -72,9 +72,9 @@ will go through a deprecation cycle.
 
 =over
 
-=item C<policy()>
+=item C<enforcer()>
 
-The short name of the policy that had configuration problems.
+The short name of the enforcer that had configuration problems.
 
 
 =back

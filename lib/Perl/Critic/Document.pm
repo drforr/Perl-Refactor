@@ -407,7 +407,7 @@ sub process_annotations {
 
 #-----------------------------------------------------------------------------
 
-sub line_is_disabled_for_policy {
+sub line_is_disabled_for_enforcer {
     my ($self, $line, $enforcer) = @_;
     my $enforcer_name = ref $enforcer || $enforcer;
 
@@ -821,7 +821,7 @@ Causes this Document to scan itself and mark which lines &
 policies are disabled by the C<"## no critic"> annotations.
 
 
-=item C<< line_is_disabled_for_policy($line, $enforcer_object) >>
+=item C<< line_is_disabled_for_enforcer($line, $enforcer_object) >>
 
 Returns true if the given C<$enforcer_object> or C<$enforcer_name> has
 been disabled for at C<$line> in this Document.  Otherwise, returns false.

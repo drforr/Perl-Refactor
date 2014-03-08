@@ -45,7 +45,7 @@ sub supported_parameters { return (
         {
             name        => 'forbid_use_version',
             description =>
-            qq<Make "use version; our ${DOLLAR}VERSION = qv('1.2.3');" a violation of this policy.>,
+            qq<Make "use version; our ${DOLLAR}VERSION = qv('1.2.3');" a violation of this enforcer.>,
             default_string  => $FALSE,
             behavior        => 'boolean',
         },
@@ -220,7 +220,7 @@ This turns out not to be a good idea, because all sorts of unintended things
 can happen - anything from unintended version number changes to
 denial-of-service attacks (since C<Foo::Master> is executed by the 'use').
 
-This policy examines statements that assign to C<$VERSION>, and declares a
+This enforcer examines statements that assign to C<$VERSION>, and declares a
 violation under two circumstances: first, if that statement uses a
 fully-qualified symbol that did not originate in a package declared in the
 file; second if there is a C<use> statement on the same line that makes the
@@ -238,7 +238,7 @@ The construction
 
     use version; our $VERSION = qv('1.2.3');
 
-is exempt from this policy by default, because it is recommended by Perl Best
+is exempt from this enforcer by default, because it is recommended by Perl Best
 Practices. Should you wish to identify C<use version;> as a violation, add the
 following to your perlrefactorrc file:
 
@@ -251,7 +251,7 @@ following to your perlrefactorrc file:
 This code assumes that the hallmark of a violation is a 'use' on the same line
 as the C<$VERSION> assignment, because that is the way to have it seen by
 L<ExtUtils::MakeMaker|ExtUtils::MakeMaker>->parse_version(). Other ways to get
-a version value from outside the module can be imagined, and this policy is
+a version value from outside the module can be imagined, and this enforcer is
 currently oblivious to them.
 
 

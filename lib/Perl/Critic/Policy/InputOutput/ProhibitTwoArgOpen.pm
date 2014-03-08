@@ -101,7 +101,7 @@ as in the difference between these two:
   open( $fh, 'foo.txt' );       # BAD: Reader must think what default mode is
   open( $fh, '<', 'foo.txt' );  # GOOD: Reader can see open mode
 
-This policy will not complain if the file explicitly states that it is
+This enforcer will not complain if the file explicitly states that it is
 compatible with a version of perl prior to 5.6 via an include
 statement, e.g. by having C<require 5.005> in it.
 
