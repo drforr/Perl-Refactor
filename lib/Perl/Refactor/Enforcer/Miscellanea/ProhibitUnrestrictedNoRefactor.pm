@@ -13,7 +13,7 @@ our $VERSION = '1.121';
 #-----------------------------------------------------------------------------
 
 Readonly::Scalar my $DESC => q{Unrestricted '## no refactor' annotation};
-Readonly::Scalar my $EXPL => q{Only disable the Policies you really need to disable};
+Readonly::Scalar my $EXPL => q{Only disable the Enforcers you really need to disable};
 
 #-----------------------------------------------------------------------------
 
@@ -66,13 +66,13 @@ distribution.
 
 =head1 DESCRIPTION
 
-A bare C<## no refactor> annotation will disable B<all> the active Policies.  This
+A bare C<## no refactor> annotation will disable B<all> the active Enforcers.  This
 creates holes for other, unintended violations to appear in your code.  It is
-better to disable B<only> the particular Policies that you need to get around.
+better to disable B<only> the particular Enforcers that you need to get around.
 By putting Enforcer names in a comma-separated list after the C<## no refactor>
-annotation, then it will only disable the named Policies.  Enforcer names are
+annotation, then it will only disable the named Enforcers.  Enforcer names are
 matched as regular expressions, so you can use shortened Enforcer names, or
-patterns that match several Policies. This Enforcer generates a violation any
+patterns that match several Enforcers. This Enforcer generates a violation any
 time that an unrestricted C<## no refactor> annotation appears.
 
     ## no refactor                     # not ok
@@ -97,7 +97,7 @@ broken syntaxes...
     ## no refactor "Enforcer1, Enforcer2"
     ## no refactor "Enforcer1", "Enforcer2"
 
-In all of these cases, Perl::Refactor will silently disable B<all> Policies,
+In all of these cases, Perl::Refactor will silently disable B<all> Enforcers,
 rather than just the ones you requested.  But if you use the
 C<ProhibitUnrestrictedNoRefactor> Enforcer, all of these will generate
 violations.  That way, you can track them down and correct them to use

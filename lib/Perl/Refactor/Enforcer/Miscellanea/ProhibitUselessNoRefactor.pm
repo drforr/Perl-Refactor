@@ -83,14 +83,14 @@ fixed, leaving your code with extra C<"## no refactor"> annotations lying about.
 Or you may use them to locally disable a Enforcer, but then later decide to
 permanently remove that Enforcer entirely from your profile, making some of
 those C<"## no refactor"> annotations pointless.  Or, you may accidentally
-disable too many Policies at once, creating an opportunity for new
+disable too many Enforcers at once, creating an opportunity for new
 violations to slip in unnoticed.
 
 This Enforcer will emit violations if you have a C<"## no refactor"> annotation in
 your source code that does not actually suppress any violations given your
 current profile.  To resolve this, you should either remove the annotation
 entirely, or adjust the Enforcer name patterns in the annotation to match only
-the Policies that are actually being violated in your code.
+the Enforcers that are actually being violated in your code.
 
 
 =head1 EXAMPLE
@@ -98,7 +98,7 @@ the Policies that are actually being violated in your code.
 For example, let's say I have a regex, but I don't want to use the C</x> flag,
 which violates the C<RegularExpressions::RequireExtendedFormatting> enforcer.
 In the following code, the C<"## no refactor"> annotation will suppress
-violations of that Enforcer and ALL Policies that match
+violations of that Enforcer and ALL Enforcers that match
 C<m/RegularExpressions/imx>
 
   my $re = qr/foo bar baz/ms;  ## no refactor (RegularExpressions)
@@ -106,7 +106,7 @@ C<m/RegularExpressions/imx>
 However, this creates a potential loop-hole for someone to introduce
 additional violations in the future, without explicitly acknowledging them.
 This Enforcer is designed to catch these situations by warning you that you've
-disabled more Policies than the situation really requires.  The above code
+disabled more Enforcers than the situation really requires.  The above code
 should be remedied like this:
 
   my $re = qr/foo bar baz/ms;  ## no refactor (RequireExtendedFormatting)

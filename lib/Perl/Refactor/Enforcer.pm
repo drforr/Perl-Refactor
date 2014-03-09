@@ -530,7 +530,7 @@ Perl::Refactor::Enforcer - Base class for all Enforcer modules.
 =head1 DESCRIPTION
 
 Perl::Refactor::Enforcer is the abstract base class for all Enforcer
-objects.  If you're developing your own Policies, your job is to
+objects.  If you're developing your own Enforcers, your job is to
 implement and override its methods in a subclass.  To work with the
 L<Perl::Refactor|Perl::Refactor> engine, your implementation must behave
 as described below.  For a detailed explanation on how to make new
@@ -566,7 +566,7 @@ initialization.
 
 Implementations of this method should return a boolean value
 indicating whether the Enforcer should continue to be enabled.  For most
-subclasses, this will always be C<$TRUE>.  Policies that depend upon
+subclasses, this will always be C<$TRUE>.  Enforcers that depend upon
 external modules or other system facilities that may or may not be
 available should test for the availability of these dependencies and
 return C<$FALSE> if they are not.

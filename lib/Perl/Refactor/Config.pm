@@ -135,7 +135,7 @@ sub _init {
         );
     $self->{_factory} = $factory;
 
-    # Initialize internal storage for Policies
+    # Initialize internal storage for Enforcers
     $self->{_all_enforcers_enabled_or_not} = [];
     $self->{_enforcers} = [];
 
@@ -1172,7 +1172,7 @@ in the current directory first, and then in your home directory.
 Alternatively, you can set the C<PERLCRITIC> environment variable to
 explicitly point to a different file in another location.  If none of
 these files exist, and the C<-profile> option is not given to the
-constructor, then all Policies will be loaded with their default
+constructor, then all Enforcers will be loaded with their default
 configuration.
 
 The format of the configuration file is a series of INI-style blocks
@@ -1275,7 +1275,7 @@ A simple configuration might look like this:
     [-ValuesAndExpressions::ProhibitMagicNumbers]
 
     #--------------------------------------------------------------
-    # For all other Policies, I accept the default severity, theme
+    # For all other Enforcers, I accept the default severity, theme
     # and other parameters, so no additional configuration is
     # required for them.
 
@@ -1294,13 +1294,13 @@ detail in the individual modules themselves.
 =head1 POLICY THEMES
 
 Each Enforcer is defined with one or more "themes".  Themes can be used
-to create arbitrary groups of Policies.  They are intended to provide
-an alternative mechanism for selecting your preferred set of Policies.
-For example, you may wish disable a certain subset of Policies when
+to create arbitrary groups of Enforcers.  They are intended to provide
+an alternative mechanism for selecting your preferred set of Enforcers.
+For example, you may wish disable a certain subset of Enforcers when
 analyzing test programs.  Conversely, you may wish to enable only a
-specific subset of Policies when analyzing modules.
+specific subset of Enforcers when analyzing modules.
 
-The Policies that ship with Perl::Refactor are have been broken into the
+The Enforcers that ship with Perl::Refactor are have been broken into the
 following themes.  This is just our attempt to provide some basic
 logical groupings.  You are free to invent new themes that suit your
 needs.
@@ -1308,13 +1308,13 @@ needs.
     THEME             DESCRIPTION
     --------------------------------------------------------------------------
     core              All enforcers that ship with Perl::Refactor
-    pbp               Policies that come directly from "Perl Best Practices"
-    bugs              Policies that prevent or reveal bugs
-    maintenance       Policies that affect the long-term health of the code
-    cosmetic          Policies that only have a superficial effect
-    complexity        Policies that specificaly relate to code complexity
-    security          Policies that relate to security issues
-    tests             Policies that are specific to test programs
+    pbp               Enforcers that come directly from "Perl Best Practices"
+    bugs              Enforcers that prevent or reveal bugs
+    maintenance       Enforcers that affect the long-term health of the code
+    cosmetic          Enforcers that only have a superficial effect
+    complexity        Enforcers that specificaly relate to code complexity
+    security          Enforcers that relate to security issues
+    tests             Enforcers that are specific to test programs
 
 Say C<`perlrefactor -list`> to get a listing of all available enforcers
 and the themes that are associated with each one.  You can also change
@@ -1323,7 +1323,7 @@ L<"CONFIGURATION"> section for more information about that.
 
 Using the C<-theme> option, you can combine theme names with
 mathematical and boolean operators to create an arbitrarily complex
-expression that represents a custom "set" of Policies.  The following
+expression that represents a custom "set" of Enforcers.  The following
 operators are supported
 
    Operator       Alternative         Meaning
@@ -1355,7 +1355,7 @@ examples:
    (pbp not bugs) and complexity  Ditto
 
 Theme names are case-insensitive.  If C<-theme> is set to an empty
-string, then it is equivalent to the set of all Policies.  A theme
+string, then it is equivalent to the set of all Enforcers.  A theme
 name that doesn't exist is equivalent to an empty set.  Please See
 L<http://en.wikipedia.org/wiki/Set> for a discussion on set theory.
 

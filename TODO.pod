@@ -32,11 +32,11 @@ Something like
 
 Perhaps these could be injected into the POD at build time, based on the data
 in the code.  But that data is not entirely static, so I'm not sure how it
-would work for Policies that dynamically determine the PBP references.
+would work for Enforcers that dynamically determine the PBP references.
 
 Perhaps it would be good enough to just create a one-off tool that would
 inject the PBP and/or Safari references into the POD one time, and we could
-manually deal with Policies that behave oddly.
+manually deal with Enforcers that behave oddly.
 
 Much better would be to put the information in the POD in a structured manner
 and parse it out in the code, something along the lines of
@@ -77,7 +77,7 @@ For things like RequirePodSections.
 
 =item * Add queries to --list option to F<perlrefactor>.
 
-List Policies based upon severity, theme, and (what I want this second)
+List Enforcers based upon severity, theme, and (what I want this second)
 applies_to.
 
 =item * Add formatting of --list output.
@@ -198,7 +198,7 @@ Use L<Win32::Console::ANSI> like L<App::Ack>.
 
 =item * Create P::C::Node and make P::C::Document a subclass and make use of PPIx::Utilities::Node::split_ppi_node_by_namespace() to provide per-namespace caching of lookups that are now on P::C::Document.
 
-This is necessary to get P::C::Moose Policies correct.
+This is necessary to get P::C::Moose Enforcers correct.
 
 
 =item * Use L<version|version> to declare C<$VERSION> numbers throughout P::C
@@ -215,7 +215,7 @@ maybe now we can go ahead and use L<version|version>.
 
 =head1 BUGS/LIMITATIONS
 
-Document bugs for individual Policies in the Policies themselves.  Users
+Document bugs for individual Enforcers in the Enforcers themselves.  Users
 should be aware of limitations.  (And, hey, we might get patches that way.)
 
 

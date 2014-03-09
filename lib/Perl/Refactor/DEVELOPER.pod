@@ -12,11 +12,11 @@ Perl::Refactor::DEVELOPER - How to make new Perl::Refactor::Enforcer modules.
 For developers who want to create custom coding standards, the
 following tells how to create a Enforcer module for
 L<Perl::Refactor|Perl::Refactor>.  Although the Perl::Refactor distribution
-already includes a number of Policies based on Damian Conway's book
+already includes a number of Enforcers based on Damian Conway's book
 I<Perl Best Practices> (which will be referred to via "I<PBP>" from
 here on), Perl::Refactor is not limited to his guidelines and can be
 used to enforce any practice, preference, or style that you want to
-follow.  You can even write Policies to enforce contradictory
+follow.  You can even write Enforcers to enforce contradictory
 guidelines.  All you need to do is write a corresponding
 L<Perl::Refactor::Enforcer|Perl::Refactor::Enforcer> subclass, which may
 require as little as 10 lines of code.
@@ -43,7 +43,7 @@ decides that a coding standard has been violated, it returns one
 or more L<Perl::Refactor::Violation|Perl::Refactor::Violation> objects.
 If there are no violations, then the Enforcer returns nothing.
 
-Policies are usually written based on existing enforcers, so let's look
+Enforcers are usually written based on existing enforcers, so let's look
 at one to see how it works.  The F<RequireBlockGrep.pm> Enforcer is
 relatively simple and demonstrates most of the important issues.  The
 goal of this Enforcer is to enforce that every call to C<grep> uses a
@@ -56,7 +56,7 @@ this Enforcer are discussed in detail in I<PBP>.
 First, the Enforcer module needs to have a name.  Perl::Refactor uses
 L<Module::Pluggable|Module::Pluggable> to automatically discover all
 modules in the C<Perl::Refactor::Enforcer> namespace.  Also, we've adopted
-the convention of grouping Policies into directories according to the
+the convention of grouping Enforcers into directories according to the
 chapters of I<PBP>.  Since the goal of this Enforcer is to enforce the
 use of block arguments to C<grep> and it comes from the "Builtin
 Functions" chapter of I<PBP>, we call it
@@ -118,8 +118,8 @@ the C<:severities> tag.
     sub default_severity     { return $SEVERITY_HIGH      }
 
 Likewise, the C<default_themes()> method returns a list of theme
-names.  Themes are intended to be named groups of Policies.  All
-Policies that ship with Perl::Refactor have a C<"core"> theme.  Since
+names.  Themes are intended to be named groups of Enforcers.  All
+Enforcers that ship with Perl::Refactor have a C<"core"> theme.  Since
 use of C<grep> without blocks often leads to bugs, we include a
 C<"bugs"> theme.  And since this Enforcer comes directly from I<PBP>,
 this Enforcer should be a member of the C<"pbp"> theme.
@@ -127,10 +127,10 @@ this Enforcer should be a member of the C<"pbp"> theme.
     sub default_themes       { return qw( core bugs pbp ) }
 
 As a Enforcer author, you can assign any themes you want to the Enforcer.
-If you're publishing a suite of custom Policies, we suggest that you
-create a unique theme that covers all the Policies in the
+If you're publishing a suite of custom Enforcers, we suggest that you
+create a unique theme that covers all the Enforcers in the
 distribution.  That way, users can easily enable or disable all of
-your enforcers at once.  For example, Policies in the
+your enforcers at once.  For example, Enforcers in the
 L<Perl::Refactor::More|Perl::Refactor::More> distribution all have a
 C<"more"> theme.
 
@@ -288,7 +288,7 @@ trailing whitespace removed.  By default, you will need to handle
 conversion of that string to a useful form yourself.  However, if you
 provide some metadata about your parameters, the parameter handling
 will be taken care of for you.  (Additionally, tools that deal with
-Policies themselves can use this information to enhance their
+Enforcers themselves can use this information to enhance their
 functionality.  See the L<perlrefactor|perlrefactor> C<--profile-proto>
 option for an example.)
 
@@ -395,11 +395,11 @@ L<Perl::Refactor::Enforcer::CodeLayout::RequireTidyCode|Perl::Refactor::Enforcer
 
 =head2 Note On Constructors
 
-It used to be the case that Policies handled configuration by
+It used to be the case that Enforcers handled configuration by
 implementing a constructor.  However, there was no requirement to call
 the base constructor; as long as the Enforcer ended up being a blessed
 hash reference, everything was fine.  Unfortunately, this meant that
-Policies would be loaded and their prerequisites would be C<use>d,
+Enforcers would be loaded and their prerequisites would be C<use>d,
 even if the Enforcer wasn't enabled, slowing things down.  Also, this
 severely restricted the core of L<Perl::Refactor|Perl::Refactor>'s ability
 to enhance things.  Use of constructors is deprecated and is
@@ -917,9 +917,9 @@ for examples.
 
 =head2 C<is_safe()>
 
-Most L<Perl::Refactor> Policies are purely I<static>.  In other words,
+Most L<Perl::Refactor> Enforcers are purely I<static>.  In other words,
 they never compile or execute any of the source code that they
-analyze.  However it is possible to write I<dynamic> Policies that do
+analyze.  However it is possible to write I<dynamic> Enforcers that do
 compile or execute code, which may result in unsafe operations (see
 L<Perl::Refactor::Dynamic|Perl::Refactor::Dynamic> for an example).  So
 the C<is_safe()> method is used to indicate whether a Enforcer can be
@@ -958,7 +958,7 @@ A typical implementation will look like:
 
     =head1 NAME
 
-    Perl::Refactor::Example - Policies for Perl::Refactor that act as an example.
+    Perl::Refactor::Example - Enforcers for Perl::Refactor that act as an example.
 
     =head1 AFFILIATION
 

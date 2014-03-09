@@ -217,11 +217,11 @@ sub _parse_annotation {
 
     my ($annotation_element) = @_;
 
-    #############################################################################
+    ############################################################################
     # This regex captures the list of Enforcer name patterns that are to be
     # disabled.  It is generally assumed that the element has already been
     # verified as a no-refactor annotation.  So if this regex does not match,
-    # then it implies that all Policies are to be disabled.
+    # then it implies that all Enforcers are to be disabled.
     #
     my $no_refactor = qr{\#\# \s* no \s+ refactor \s* (?:qw)? [("'] ([\s\w:,]+) }xms;
     #                  -------------------------- ------- ----- -----------
@@ -234,7 +234,7 @@ sub _parse_annotation {
     #                                                                |
     #                 Capture entire Enforcer list (with delimiters) here
     #
-    #############################################################################
+    ############################################################################
 
     my @disabled_enforcer_names = ();
     if ( my ($patterns_string) = $annotation_element =~ $no_refactor ) {
@@ -250,8 +250,8 @@ sub _parse_annotation {
 
         # It is possible that the Enforcer patterns listed in the annotation do not
         # match any of the site enforcer names.  This could happen when running
-        # on a machine that does not have the same set of Policies as the author.
-        # So we must return something here, otherwise all Policies will be
+        # on a machine that does not have the same set of Enforcers as the author.
+        # So we must return something here, otherwise all Enforcers will be
         # disabled.  We probably need to add a mechanism to (optionally) warn
         # about this, just to help the author avoid writing invalid Enforcer names.
 
@@ -293,7 +293,7 @@ Perl::Refactor::Annotation - A "## no refactor" annotation in a document.
 
 C<Perl::Refactor::Annotation> represents a single C<"## no refactor">
 annotation in a L<PPI:Document>.  The Annotation takes care of parsing
-the annotation and keeps track of which lines and Policies it affects.
+the annotation and keeps track of which lines and Enforcers it affects.
 It is intended to encapsulate the details of the no-refactor
 annotations, and to provide a way for Enforcer objects to interact with
 the annotations (via a L<Perl::Refactor::Document|Perl::Refactor::Document>).
@@ -343,7 +343,7 @@ conforms to the C<"## no refactor"> syntax.
 =item C<< disables_line( $line ) >>
 
 Returns true if this Annotation disables C<$line> for any (or all)
-Policies.
+Enforcers.
 
 
 =item C<< disables_enforcer( $enforcer_object ) >>
@@ -356,7 +356,7 @@ C<$enforcer_name> at any (or all) lines.
 
 =item C<< disables_all_enforcers() >>
 
-Returns true if this Annotation disables all Policies at any (or all)
+Returns true if this Annotation disables all Enforcers at any (or all)
 lines.  If this method returns true, C<disabled_enforcers> will return
 an empty list.
 
@@ -369,8 +369,8 @@ numbers where this Annotation has effect.
 
 =item C<< disabled_enforcers() >>
 
-Returns a list of the names of the Policies that are affected by this
-Annotation.  If this list is empty, then it means that all Policies
+Returns a list of the names of the Enforcers that are affected by this
+Annotation.  If this list is empty, then it means that all Enforcers
 are affected by this Annotation, and C<disables_all_enforcers()> should
 return true.
 

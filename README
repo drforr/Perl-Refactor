@@ -15,7 +15,7 @@ DESCRIPTION
     Perl::Refactor::Enforcer modules that attempt to enforce various coding
     guidelines. Most Enforcer modules are based on Damian Conway's book Perl
     Best Practices. However, Perl::Refactor is not limited to PBP and will
-    even support Policies that contradict Conway. You can enable, disable,
+    even support Enforcers that contradict Conway. You can enable, disable,
     and customize those Polices through the Perl::Refactor interface. You can
     also create new Enforcer modules that suit your own tastes.
 
@@ -72,7 +72,7 @@ CONSTRUCTOR
         file in the current directory, and then in your home directory.
         Alternatively, you can set the "PERLCRITIC" environment variable to
         point to a file in another location. If a configuration file can't
-        be found, or if $FILE is an empty string, then all Policies will be
+        be found, or if $FILE is an empty string, then all Enforcers will be
         loaded with their default configuration. See "CONFIGURATION" for
         more information.
 
@@ -101,9 +101,9 @@ CONSTRUCTOR
         criticism reports only the most severe violations, and so on down to
         a "brutal" criticism which reports even the most minor violations.
 
-        -theme is special expression that determines which Policies to apply
+        -theme is special expression that determines which Enforcers to apply
         based on their respective themes. For example, the following would
-        load only Policies that have a 'bugs' AND 'pbp' theme:
+        load only Enforcers that have a 'bugs' AND 'pbp' theme:
 
           my $refactor = Perl::Refactor->new( -theme => 'bugs && pbp' );
 
@@ -140,7 +140,7 @@ CONSTRUCTOR
         both patterns.
 
         -single-enforcer is a string "PATTERN". Only one enforcer that matches
-        "m/$PATTERN/ixms" will be used. Policies that do not match will be
+        "m/$PATTERN/ixms" will be used. Enforcers that do not match will be
         excluded. This option has precedence over the "-severity", "-theme",
         "-include", "-exclude", and "-only" options. You can set the default
         value for this option in your .perlrefactorrc file.
@@ -153,9 +153,9 @@ CONSTRUCTOR
         default value for this option in your .perlrefactorrc file.
 
         -only is a boolean value. If set to a true value, Perl::Refactor will
-        only choose from Policies that are mentioned in the user's profile.
+        only choose from Enforcers that are mentioned in the user's profile.
         If set to a false value (which is the default), then Perl::Refactor
-        chooses from all the Policies that it finds at your site. You can
+        chooses from all the Enforcers that it finds at your site. You can
         set the default value for this option in your .perlrefactorrc file.
 
         -profile-strictness is an enumerated value, one of
@@ -167,7 +167,7 @@ CONSTRUCTOR
         Perl::Refactor will make certain warnings about problems found in a
         .perlrefactorrc or file specified via the -profile option fatal. For
         example, Perl::Refactor normally only "warn"s about profiles referring
-        to non-existent Policies, but this value makes this situation fatal.
+        to non-existent Enforcers, but this value makes this situation fatal.
         Correspondingly, "$PROFILE_STRICTNESS_QUIET" in
         Perl::Refactor::Utils::Constants makes Perl::Refactor shut up about
         these things.
@@ -185,7 +185,7 @@ CONSTRUCTOR
         of format specifications. You can set the default value for this
         option in your .perlrefactorrc file.
 
-        -unsafe directs Perl::Refactor to allow the use of Policies that are
+        -unsafe directs Perl::Refactor to allow the use of Enforcers that are
         marked as "unsafe" by the author. Such enforcers may compile
         untrusted code or do other nefarious things.
 
@@ -209,13 +209,13 @@ CONSTRUCTOR
 METHODS
     "refactor( $source_code )"
         Runs the $source_code through the Perl::Refactor engine using all the
-        Policies that have been loaded into this engine. If $source_code is
+        Enforcers that have been loaded into this engine. If $source_code is
         a scalar reference, then it is treated as a string of actual Perl
         code. If $source_code is a reference to an instance of
         PPI::Document, then that instance is used directly. Otherwise, it is
         treated as a path to a local file containing Perl code. This method
         returns a list of Perl::Refactor::Violation objects for each violation
-        of the loaded Policies. The list is sorted in the order that the
+        of the loaded Enforcers. The list is sorted in the order that the
         Violations appear in the code. If there are no violations, this
         method returns an empty list.
 
@@ -349,8 +349,8 @@ CONFIGURATION
     case-insensitive. See "POLICY THEMES" for more information.
 
     "maximum_violations_per_document" limits the number of Violations the
-    Enforcer will return for a given document. Some Policies have a default
-    limit; see the documentation for the individual Policies to see whether
+    Enforcer will return for a given document. Some Enforcers have a default
+    limit; see the documentation for the individual Enforcers to see whether
     there is one. To force a Enforcer to not have a limit, specify "no_limit"
     or the empty string for the value of this parameter.
 
@@ -404,7 +404,7 @@ CONFIGURATION
         [-ValuesAndExpressions::ProhibitMagicNumbers]
 
         #--------------------------------------------------------------
-        # For all other Policies, I accept the default severity,
+        # For all other Enforcers, I accept the default severity,
         # so no additional configuration is required for them.
 
     For additional configuration examples, see the perlrefactorrc file that is
@@ -427,37 +427,37 @@ THE POLICIES
 
 POLICY THEMES
     Each Enforcer is defined with one or more "themes". Themes can be used to
-    create arbitrary groups of Policies. They are intended to provide an
-    alternative mechanism for selecting your preferred set of Policies. For
-    example, you may wish disable a certain subset of Policies when
+    create arbitrary groups of Enforcers. They are intended to provide an
+    alternative mechanism for selecting your preferred set of Enforcers. For
+    example, you may wish disable a certain subset of Enforcers when
     analyzing test programs. Conversely, you may wish to enable only a
-    specific subset of Policies when analyzing modules.
+    specific subset of Enforcers when analyzing modules.
 
-    The Policies that ship with Perl::Refactor have been broken into the
+    The Enforcers that ship with Perl::Refactor have been broken into the
     following themes. This is just our attempt to provide some basic logical
     groupings. You are free to invent new themes that suit your needs.
 
         THEME             DESCRIPTION
         --------------------------------------------------------------------------
         core              All enforcers that ship with Perl::Refactor
-        pbp               Policies that come directly from "Perl Best Practices"
-        bugs              Policies that that prevent or reveal bugs
-        certrec           Policies that CERT recommends
-        certrule          Policies that CERT considers rules
-        maintenance       Policies that affect the long-term health of the code
-        cosmetic          Policies that only have a superficial effect
-        complexity        Policies that specificaly relate to code complexity
-        security          Policies that relate to security issues
-        tests             Policies that are specific to test programs
+        pbp               Enforcers that come directly from "Perl Best Practices"
+        bugs              Enforcers that that prevent or reveal bugs
+        certrec           Enforcers that CERT recommends
+        certrule          Enforcers that CERT considers rules
+        maintenance       Enforcers that affect the long-term health of the code
+        cosmetic          Enforcers that only have a superficial effect
+        complexity        Enforcers that specificaly relate to code complexity
+        security          Enforcers that relate to security issues
+        tests             Enforcers that are specific to test programs
 
     Any Enforcer may fit into multiple themes. Say "perlrefactor -list" to get a
-    listing of all available Policies and the themes that are associated
+    listing of all available Enforcers and the themes that are associated
     with each one. You can also change the theme for any Enforcer in your
     .perlrefactorrc file. See the "CONFIGURATION" section for more information
     about that.
 
     Using the "-theme" option, you can create an arbitrarily complex rule
-    that determines which Policies will be loaded. Precedence is the same as
+    that determines which Enforcers will be loaded. Precedence is the same as
     regular Perl code, and you can use parentheses to enforce precedence as
     well. Supported operators are:
 
@@ -468,7 +468,7 @@ POLICY THEMES
         !           not            'pbp && ! (portability || complexity)'
 
     Theme names are case-insensitive. If the "-theme" is set to an empty
-    string, then it evaluates as true all Policies.
+    string, then it evaluates as true all Enforcers.
 
 BENDING THE RULES
     Perl::Refactor takes a hard-line approach to your code: either you comply
@@ -503,8 +503,8 @@ BENDING THE RULES
     then only that line of code is overlooked. To direct perlrefactor to
     ignore the ""## no refactor"" annotations, use the "--force" option.
 
-    A bare "## no refactor" annotation disables all the active Policies. If
-    you wish to disable only specific Policies, add a list of Enforcer names
+    A bare "## no refactor" annotation disables all the active Enforcers. If
+    you wish to disable only specific Enforcers, add a list of Enforcer names
     as arguments, just as you would for the "no strict" or ""no warnings""
     pragmas. For example, this would disable the "ProhibitEmptyQuotes" and
     "ProhibitPostfixControls" enforcers until the end of the block or until
@@ -523,7 +523,7 @@ BENDING THE RULES
 
     Since the Enforcer names are matched against the "## no refactor" arguments
     as regular expressions, you can abbreviate the Enforcer names or disable
-    an entire family of Policies in one shot like this:
+    an entire family of Enforcers in one shot like this:
 
         ## no refactor (NamingConventions)
 
@@ -535,11 +535,11 @@ BENDING THE RULES
 
     The argument list must be enclosed in parentheses and must contain one
     or more comma-separated barewords (e.g. don't use quotes). The "## no
-    refactor" annotations can be nested, and Policies named by an inner
+    refactor" annotations can be nested, and Enforcers named by an inner
     annotation will be disabled along with those already disabled an outer
     annotation.
 
-    Some Policies like "Subroutines::ProhibitExcessComplexity" apply to an
+    Some Enforcers like "Subroutines::ProhibitExcessComplexity" apply to an
     entire block of code. In those cases, "## no refactor" must appear on the
     line where the violation is reported. For example:
 
@@ -547,12 +547,12 @@ BENDING THE RULES
             # Your code here...
         }
 
-    Policies such as "Documentation::RequirePodSections" apply to the entire
+    Enforcers such as "Documentation::RequirePodSections" apply to the entire
     document, in which case violations are reported at line 1.
 
     Use this feature wisely. "## no refactor" annotations should be used in
     the smallest possible scope, or only on individual lines of code. And
-    you should always be as specific as possible about which Policies you
+    you should always be as specific as possible about which Enforcers you
     want to disable (i.e. never use a bare "## no refactor"). If Perl::Refactor
     complains about your code, try and find a compliant solution before
     resorting to this feature.
@@ -569,7 +569,7 @@ THE Perl::Refactor PHILOSOPHY
 
 EXTENDING THE CRITIC
     The modular design of Perl::Refactor is intended to facilitate the
-    addition of new Policies. You'll need to have some understanding of PPI,
+    addition of new Enforcers. You'll need to have some understanding of PPI,
     but most Enforcer modules are pretty straightforward and only require
     about 20 lines of code. Please see the Perl::Refactor::DEVELOPER file
     included in this distribution for a step-by-step demonstration of how to
@@ -583,9 +583,9 @@ EXTENDING THE CRITIC
     message to <mailto:dev-subscribe@perlrefactor.tigris.org>.
 
     The Perl::Refactor team is also available for hire. If your organization
-    has its own coding standards, we can create custom Policies to enforce
+    has its own coding standards, we can create custom Enforcers to enforce
     your local guidelines. Or if your code base is prone to a particular
-    defect pattern, we can design Policies that will help you catch those
+    defect pattern, we can design Enforcers that will help you catch those
     costly defects before they go into production. To discuss your needs
     with the Perl::Refactor team, just contact
     "<jeff@imaginative-software.com>".
@@ -657,7 +657,7 @@ CONTACTING THE DEVELOPMENT TEAM
     <https://twitter.com/perlrefactor>.
 
 SEE ALSO
-    There are a number of distributions of additional Policies available. A
+    There are a number of distributions of additional Enforcers available. A
     few are listed here:
 
     Perl::Refactor::More

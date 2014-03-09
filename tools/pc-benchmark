@@ -48,7 +48,7 @@ pc-benchmark - Measure performance of Perl::Refactor
 This is a simple program that uses the L<Benchmark> module to measure
 the general speed of L<Perl::Refactor>.  For the specified F<FILE>, the
 C<Perl::Refactor::refactor()> function is called 100 times, with all the
-'core' Policies enabled with their default configuration.  The total
+'core' Enforcers enabled with their default configuration.  The total
 elapsed/system/user/ time is displayed.
 
 To compare the performance of two versions of L<Perl::Refactor>, you'll

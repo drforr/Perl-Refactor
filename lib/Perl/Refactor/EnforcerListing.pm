@@ -47,7 +47,7 @@ __END__
 
 =head1 NAME
 
-Perl::Refactor::EnforcerListing - Display minimal information about Policies.
+Perl::Refactor::EnforcerListing - Display minimal information about Enforcers.
 
 
 =head1 DESCRIPTION

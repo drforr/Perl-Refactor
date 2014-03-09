@@ -194,9 +194,9 @@ sub _refactor {
 
 sub _futz_with_enforcer_order {
     # The ProhibitUselessNoRefactor enforcer is another special enforcer.  It
-    # deals with the violations that *other* Policies produce.  Therefore
-    # it needs to be run *after* all the other Policies.  TODO: find
-    # a way for Policies to express an ordering preference somehow.
+    # deals with the violations that *other* Enforcers produce.  Therefore
+    # it needs to be run *after* all the other Enforcers.  TODO: find
+    # a way for Enforcers to express an ordering preference somehow.
 
     my @enforcer_objects = @_;
     my $magical_enforcer_name = 'Perl::Refactor::Enforcer::Miscellanea::ProhibitUselessNoRefactor';
@@ -240,7 +240,7 @@ source code analysis engine.  Perl::Refactor is distributed with a
 number of L<Perl::Refactor::Enforcer|Perl::Refactor::Enforcer> modules that
 attempt to enforce various coding guidelines.  Most Enforcer modules are
 based on Damian Conway's book B<Perl Best Practices>.  However,
-Perl::Refactor is B<not> limited to PBP and will even support Policies
+Perl::Refactor is B<not> limited to PBP and will even support Enforcers
 that contradict Conway.  You can enable, disable, and customize those
 Polices through the Perl::Refactor interface.  You can also create new
 Enforcer modules that suit your own tastes.
@@ -305,7 +305,7 @@ configuration file in the current directory, and then in your home
 directory.  Alternatively, you can set the C<PERLCRITIC> environment
 variable to point to a file in another location.  If a configuration
 file can't be found, or if C<$FILE> is an empty string, then all
-Policies will be loaded with their default configuration.  See
+Enforcers will be loaded with their default configuration.  See
 L<"CONFIGURATION"> for more information.
 
 B<-severity> is the minimum severity level.  Only Enforcer modules that
@@ -333,9 +333,9 @@ The names reflect how severely the code is criticized: a C<gentle>
 criticism reports only the most severe violations, and so on down to a
 C<brutal> criticism which reports even the most minor violations.
 
-B<-theme> is special expression that determines which Policies to
+B<-theme> is special expression that determines which Enforcers to
 apply based on their respective themes.  For example, the following
-would load only Policies that have a 'bugs' AND 'pbp' theme:
+would load only Enforcers that have a 'bugs' AND 'pbp' theme:
 
   my $refactor = Perl::Refactor->new( -theme => 'bugs && pbp' );
 
@@ -372,7 +372,7 @@ conjunction with the C<-include> option.  Note that C<-exclude> takes
 precedence over C<-include> when a Enforcer matches both patterns.
 
 B<-single-enforcer> is a string C<PATTERN>.  Only one enforcer that
-matches C<m/$PATTERN/ixms> will be used.  Policies that do not match
+matches C<m/$PATTERN/ixms> will be used.  Enforcers that do not match
 will be excluded.  This option has precedence over the C<-severity>,
 C<-theme>, C<-include>, C<-exclude>, and C<-only> options.  You can
 set the default value for this option in your F<.perlrefactorrc> file.
@@ -385,9 +385,9 @@ silently causes the C<-severity> to be set to 1.  You can set the
 default value for this option in your F<.perlrefactorrc> file.
 
 B<-only> is a boolean value.  If set to a true value, Perl::Refactor
-will only choose from Policies that are mentioned in the user's
+will only choose from Enforcers that are mentioned in the user's
 profile.  If set to a false value (which is the default), then
-Perl::Refactor chooses from all the Policies that it finds at your site.
+Perl::Refactor chooses from all the Enforcers that it finds at your site.
 You can set the default value for this option in your F<.perlrefactorrc>
 file.
 
@@ -400,7 +400,7 @@ to L<Perl::Refactor::Utils::Constants/"$PROFILE_STRICTNESS_FATAL">,
 Perl::Refactor will make certain warnings about problems found in a
 F<.perlrefactorrc> or file specified via the B<-profile> option fatal.
 For example, Perl::Refactor normally only C<warn>s about profiles
-referring to non-existent Policies, but this value makes this
+referring to non-existent Enforcers, but this value makes this
 situation fatal.  Correspondingly,
 L<Perl::Refactor::Utils::Constants/"$PROFILE_STRICTNESS_QUIET"> makes
 Perl::Refactor shut up about these things.
@@ -419,7 +419,7 @@ L<Perl::Refactor::Violation|Perl::Refactor::Violation> for an explanation
 of format specifications.  You can set the default value for this
 option in your F<.perlrefactorrc> file.
 
-B<-unsafe> directs Perl::Refactor to allow the use of Policies that are marked
+B<-unsafe> directs Perl::Refactor to allow the use of Enforcers that are marked
 as "unsafe" by the author.  Such enforcers may compile untrusted code or do
 other nefarious things.
 
@@ -450,14 +450,14 @@ cause only the relevant filenames to be displayed.
 =item C<refactor( $source_code )>
 
 Runs the C<$source_code> through the Perl::Refactor engine using all the
-Policies that have been loaded into this engine.  If C<$source_code>
+Enforcers that have been loaded into this engine.  If C<$source_code>
 is a scalar reference, then it is treated as a string of actual Perl
 code.  If C<$source_code> is a reference to an instance of
 L<PPI::Document|PPI::Document>, then that instance is used directly.
 Otherwise, it is treated as a path to a local file containing Perl
 code.  This method returns a list of
 L<Perl::Refactor::Violation|Perl::Refactor::Violation> objects for each
-violation of the loaded Policies.  The list is sorted in the order
+violation of the loaded Enforcers.  The list is sorted in the order
 that the Violations appear in the code.  If there are no violations,
 this method returns an empty list.
 
@@ -606,8 +606,8 @@ Themes are case-insensitive.  See L<"POLICY THEMES"> for more
 information.
 
 C<maximum_violations_per_document> limits the number of Violations the
-Enforcer will return for a given document.  Some Policies have a default
-limit; see the documentation for the individual Policies to see
+Enforcer will return for a given document.  Some Enforcers have a default
+limit; see the documentation for the individual Enforcers to see
 whether there is one.  To force a Enforcer to not have a limit, specify
 "no_limit" or the empty string for the value of this parameter.
 
@@ -661,7 +661,7 @@ A simple configuration might look like this:
     [-ValuesAndExpressions::ProhibitMagicNumbers]
 
     #--------------------------------------------------------------
-    # For all other Policies, I accept the default severity,
+    # For all other Enforcers, I accept the default severity,
     # so no additional configuration is required for them.
 
 For additional configuration examples, see the F<perlrefactorrc> file
@@ -689,13 +689,13 @@ section below for a list of some of these distributions.
 =head1 POLICY THEMES
 
 Each Enforcer is defined with one or more "themes".  Themes can be used
-to create arbitrary groups of Policies.  They are intended to provide
-an alternative mechanism for selecting your preferred set of Policies.
-For example, you may wish disable a certain subset of Policies when
+to create arbitrary groups of Enforcers.  They are intended to provide
+an alternative mechanism for selecting your preferred set of Enforcers.
+For example, you may wish disable a certain subset of Enforcers when
 analyzing test programs.  Conversely, you may wish to enable only a
-specific subset of Policies when analyzing modules.
+specific subset of Enforcers when analyzing modules.
 
-The Policies that ship with Perl::Refactor have been broken into the
+The Enforcers that ship with Perl::Refactor have been broken into the
 following themes.  This is just our attempt to provide some basic
 logical groupings.  You are free to invent new themes that suit your
 needs.
@@ -703,25 +703,25 @@ needs.
     THEME             DESCRIPTION
     --------------------------------------------------------------------------
     core              All enforcers that ship with Perl::Refactor
-    pbp               Policies that come directly from "Perl Best Practices"
-    bugs              Policies that that prevent or reveal bugs
-    certrec           Policies that CERT recommends
-    certrule          Policies that CERT considers rules
-    maintenance       Policies that affect the long-term health of the code
-    cosmetic          Policies that only have a superficial effect
-    complexity        Policies that specificaly relate to code complexity
-    security          Policies that relate to security issues
-    tests             Policies that are specific to test programs
+    pbp               Enforcers that come directly from "Perl Best Practices"
+    bugs              Enforcers that that prevent or reveal bugs
+    certrec           Enforcers that CERT recommends
+    certrule          Enforcers that CERT considers rules
+    maintenance       Enforcers that affect the long-term health of the code
+    cosmetic          Enforcers that only have a superficial effect
+    complexity        Enforcers that specificaly relate to code complexity
+    security          Enforcers that relate to security issues
+    tests             Enforcers that are specific to test programs
 
 
 Any Enforcer may fit into multiple themes.  Say C<"perlrefactor -list"> to
-get a listing of all available Policies and the themes that are
+get a listing of all available Enforcers and the themes that are
 associated with each one.  You can also change the theme for any
 Enforcer in your F<.perlrefactorrc> file.  See the L<"CONFIGURATION">
 section for more information about that.
 
 Using the C<-theme> option, you can create an arbitrarily complex rule
-that determines which Policies will be loaded.  Precedence is the same
+that determines which Enforcers will be loaded.  Precedence is the same
 as regular Perl code, and you can use parentheses to enforce
 precedence as well.  Supported operators are:
 
@@ -732,7 +732,7 @@ precedence as well.  Supported operators are:
     !           not            'pbp && ! (portability || complexity)'
 
 Theme names are case-insensitive.  If the C<-theme> is set to an empty
-string, then it evaluates as true all Policies.
+string, then it evaluates as true all Enforcers.
 
 
 =head1 BENDING THE RULES
@@ -769,8 +769,8 @@ refactor"> annotation is on the same line as a code statement, then only that
 line of code is overlooked.  To direct perlrefactor to ignore the C<"## no
 refactor"> annotations, use the C<--force> option.
 
-A bare C<"## no refactor"> annotation disables all the active Policies.  If
-you wish to disable only specific Policies, add a list of Enforcer names
+A bare C<"## no refactor"> annotation disables all the active Enforcers.  If
+you wish to disable only specific Enforcers, add a list of Enforcer names
 as arguments, just as you would for the C<"no strict"> or C<"no
 warnings"> pragmas.  For example, this would disable the
 C<ProhibitEmptyQuotes> and C<ProhibitPostfixControls> enforcers until
@@ -790,7 +790,7 @@ the end of the block or until the next C<"## use refactor"> annotation
 
 Since the Enforcer names are matched against the C<"## no refactor">
 arguments as regular expressions, you can abbreviate the Enforcer names
-or disable an entire family of Policies in one shot like this:
+or disable an entire family of Enforcers in one shot like this:
 
     ## no refactor (NamingConventions)
 
@@ -802,11 +802,11 @@ or disable an entire family of Policies in one shot like this:
 
 The argument list must be enclosed in parentheses and must contain one
 or more comma-separated barewords (e.g. don't use quotes).  The
-C<"## no refactor"> annotations can be nested, and Policies named by an
+C<"## no refactor"> annotations can be nested, and Enforcers named by an
 inner annotation will be disabled along with those already disabled an
 outer annotation.
 
-Some Policies like C<Subroutines::ProhibitExcessComplexity> apply to
+Some Enforcers like C<Subroutines::ProhibitExcessComplexity> apply to
 an entire block of code.  In those cases, C<"## no refactor"> must
 appear on the line where the violation is reported.  For example:
 
@@ -814,12 +814,12 @@ appear on the line where the violation is reported.  For example:
         # Your code here...
     }
 
-Policies such as C<Documentation::RequirePodSections> apply to the
+Enforcers such as C<Documentation::RequirePodSections> apply to the
 entire document, in which case violations are reported at line 1.
 
 Use this feature wisely.  C<"## no refactor"> annotations should be used in the
 smallest possible scope, or only on individual lines of code. And you
-should always be as specific as possible about which Policies you want
+should always be as specific as possible about which Enforcers you want
 to disable (i.e. never use a bare C<"## no refactor">).  If Perl::Refactor
 complains about your code, try and find a compliant solution before
 resorting to this feature.
@@ -841,7 +841,7 @@ into Perl::Refactor.
 =head1 EXTENDING THE CRITIC
 
 The modular design of Perl::Refactor is intended to facilitate the
-addition of new Policies.  You'll need to have some understanding of
+addition of new Enforcers.  You'll need to have some understanding of
 L<PPI|PPI>, but most Enforcer modules are pretty straightforward and
 only require about 20 lines of code.  Please see the
 L<Perl::Refactor::DEVELOPER|Perl::Refactor::DEVELOPER> file included in
@@ -857,8 +857,8 @@ send a message to L<mailto:dev-subscribe@perlrefactor.tigris.org>.
 
 The Perl::Refactor team is also available for hire.  If your
 organization has its own coding standards, we can create custom
-Policies to enforce your local guidelines.  Or if your code base is
-prone to a particular defect pattern, we can design Policies that will
+Enforcers to enforce your local guidelines.  Or if your code base is
+prone to a particular defect pattern, we can design Enforcers that will
 help you catch those costly defects B<before> they go into production.
 To discuss your needs with the Perl::Refactor team, just contact C<<
 <jeff@imaginative-software.com> >>.
@@ -937,7 +937,7 @@ L<https://twitter.com/perlrefactor>.
 
 =head1 SEE ALSO
 
-There are a number of distributions of additional Policies available.
+There are a number of distributions of additional Enforcers available.
 A few are listed here:
 
 L<Perl::Refactor::More|Perl::Refactor::More>

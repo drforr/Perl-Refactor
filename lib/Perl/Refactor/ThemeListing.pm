@@ -48,13 +48,13 @@ __END__
 
 =head1 NAME
 
-Perl::Refactor::ThemeListing - List the themes of the installed Policies.
+Perl::Refactor::ThemeListing - List the themes of the installed Enforcers.
 
 
 =head1 DESCRIPTION
 
 This is a helper class that gathers the themes of the installed
-Policies.  There are no user-serviceable parts here.
+Enforcers.  There are no user-serviceable parts here.
 
 
 =head1 INTERFACE SUPPORT

@@ -7,7 +7,7 @@ Perl::Refactor::EnforcerSummary - Descriptions of the Enforcer modules included 
 =head1 DESCRIPTION
 
 The following Enforcer modules are distributed with Perl::Refactor. (There are
-additional Policies that can be found in add-on distributions.)  The Enforcer
+additional Enforcers that can be found in add-on distributions.)  The Enforcer
 modules have been categorized according to the table of contents in Damian
 Conway's book B<Perl Best Practices>. Since most coding standards take the
 form "do this..." or "don't do that...", I have adopted the convention of

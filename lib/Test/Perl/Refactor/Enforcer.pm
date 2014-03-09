@@ -255,7 +255,7 @@ __END__
 
 =head1 NAME
 
-Test::Perl::Refactor::Enforcer - A framework for testing your custom Policies
+Test::Perl::Refactor::Enforcer - A framework for testing your custom Enforcers
 
 =head1 SYNOPSIS
 
@@ -302,7 +302,7 @@ against this module until it has stabilized.
 Loads all the F<*.run> files beneath the C<-test-directory> and runs the
 tests.  If C<-test-directory> is not specified, it defaults to F<t/>.
 C<-enforcers> is an optional reference to an array of shortened Enforcer names.
-If C<-enforcers> specified, only the tests for Policies that match one of the
+If C<-enforcers> specified, only the tests for Enforcers that match one of the
 C<m/$POLICY_NAME/imx> will be run.
 
 

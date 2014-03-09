@@ -376,7 +376,7 @@ __END__
 
 =head1 NAME
 
-Perl::Refactor::TestUtils - Utility functions for testing new Policies.
+Perl::Refactor::TestUtils - Utility functions for testing new Enforcers.
 
 
 =head1 INTERFACE SUPPORT

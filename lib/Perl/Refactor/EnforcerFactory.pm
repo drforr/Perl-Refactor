@@ -58,16 +58,16 @@ sub import {
         if (not $eval_worked) {
             if ( $EVAL_ERROR ) {
                 throw_generic
-                    qq<Can't load Policies from namespace "$POLICY_NAMESPACE": $EVAL_ERROR>;
+                    qq<Can't load Enforcers from namespace "$POLICY_NAMESPACE": $EVAL_ERROR>;
             }
 
             throw_generic
-                qq<Can't load Policies from namespace "$POLICY_NAMESPACE" for an unknown reason.>;
+                qq<Can't load Enforcers from namespace "$POLICY_NAMESPACE" for an unknown reason.>;
         }
 
         if ( not @site_enforcer_names ) {
             throw_generic
-                qq<No Policies found in namespace "$POLICY_NAMESPACE".>;
+                qq<No Enforcers found in namespace "$POLICY_NAMESPACE".>;
         }
     }
 
@@ -244,7 +244,7 @@ sub _profile {
 #-----------------------------------------------------------------------------
 
 # This two-phase initialization is caused by the historical lack of a
-# requirement for Policies to invoke their super-constructor.
+# requirement for Enforcers to invoke their super-constructor.
 sub _instantiate_enforcer {
     my ($self, $enforcer_name, $enforcer_config) = @_;
 
@@ -398,7 +398,7 @@ L<Perl::Refactor::Enforcer|Perl::Refactor::Enforcer> subclass that is
 installed on the local system.  Each Enforcer will be created with the
 appropriate parameters from the user's configuration profile.
 
-Note that the Policies will not have had
+Note that the Enforcers will not have had
 L<Perl::Refactor::Enforcer/"initialize_if_enabled"> invoked on them, so
 they may not yet be usable.
 

@@ -308,7 +308,7 @@ that correspond to the methods listed below.
 This is usually only invoked by
 L<Perl::Refactor::UserProfile|Perl::Refactor::UserProfile>, which passes
 in the global values from a F<.perlrefactorrc> file.  This object
-contains no information for individual Policies.
+contains no information for individual Enforcers.
 
 =back
 

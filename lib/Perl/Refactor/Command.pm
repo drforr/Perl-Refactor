@@ -569,7 +569,7 @@ sub _at_tty {
 #-----------------------------------------------------------------------------
 
 sub _render_all_enforcer_listing {
-    # Force P-C parameters, to catch all Policies on this site
+    # Force P-C parameters, to catch all Enforcers on this site
     my %pc_params = (-profile => $EMPTY, -severity => $SEVERITY_LOWEST);
     return _render_enforcer_listing( %pc_params );
 }

@@ -382,7 +382,7 @@ configuration parameters for that enforcer.
 
 =item C< listed_enforcers() >
 
-Returns a list of the names of all the Policies that are mentioned in
+Returns a list of the names of all the Enforcers that are mentioned in
 the profile.  The Enforcer names will be fully qualified (e.g.
 Perl::Refactor::Foo).
 
