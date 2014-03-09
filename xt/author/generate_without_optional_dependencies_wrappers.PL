@@ -100,7 +100,7 @@ generate_without_additional_dependencies_wrappers.PL - generate tests that are w
   generate_without_additional_dependencies_wrappers.PL \
       t/00_modules.t_without_optional_dependencies.t \
       t/01_config.t_without_optional_dependencies.t \
-      t/13_bundled_policies.t_without_optional_dependencies.t
+      t/13_bundled_enforcers.t_without_optional_dependencies.t
 
 
 =head1 DESCRIPTION

@@ -18,7 +18,7 @@ our $VERSION = '1.121';
 
 Perl::Refactor::TestUtils::block_perlrefactorrc();
 
-# Configure Refactor not to load certain policies.  This
+# Configure Refactor not to load certain enforcers.  This
 # just makes it a little easier to create test cases
 my $profile = {
     '-CodeLayout::RequireTidyCode'                               => {},
@@ -777,9 +777,9 @@ is(
 );
 
 #-----------------------------------------------------------------------------
-# Most policies apply to a particular type of PPI::Element and usually
+# Most enforcers apply to a particular type of PPI::Element and usually
 # only return one Violation at a time.  But the next three cases
-# involve policies that apply to the whole document and can return
+# involve enforcers that apply to the whole document and can return
 # multiple violations at a time.  These tests make sure that the 'no
 # refactor' pragmas are effective with those Enforcers
 #-----------------------------------------------------------------------------

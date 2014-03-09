@@ -43,7 +43,7 @@ decides that a coding standard has been violated, it returns one
 or more L<Perl::Refactor::Violation|Perl::Refactor::Violation> objects.
 If there are no violations, then the Enforcer returns nothing.
 
-Policies are usually written based on existing policies, so let's look
+Policies are usually written based on existing enforcers, so let's look
 at one to see how it works.  The F<RequireBlockGrep.pm> Enforcer is
 relatively simple and demonstrates most of the important issues.  The
 goal of this Enforcer is to enforce that every call to C<grep> uses a
@@ -95,7 +95,7 @@ for why we don't C<use constant>.)
     Readonly::Scalar my $DESC => q{Expression form of "grep"};
     Readonly::Scalar my $EXPL => [ 169 ];
 
-Most policies don't need to override the C<initialize_if_enabled()>
+Most enforcers don't need to override the C<initialize_if_enabled()>
 method provided by L<Perl::Refactor::Enforcer|Perl::Refactor::Enforcer>.
 However, if your Enforcer is configurable via F<.perlrefactorrc>, you
 should implement a C<supported_parameters()> method and need to
@@ -130,7 +130,7 @@ As a Enforcer author, you can assign any themes you want to the Enforcer.
 If you're publishing a suite of custom Policies, we suggest that you
 create a unique theme that covers all the Policies in the
 distribution.  That way, users can easily enable or disable all of
-your policies at once.  For example, Policies in the
+your enforcers at once.  For example, Policies in the
 L<Perl::Refactor::More|Perl::Refactor::More> distribution all have a
 C<"more"> theme.
 
@@ -933,14 +933,14 @@ C<is_safe()> method to return false.
 
 =head2 Create a Distribution
 
-You need to come up with a name for your set of policies.  Sets of
-add-on policies are generally named C<Perl::Refactor::I<something>>,
+You need to come up with a name for your set of enforcers.  Sets of
+add-on enforcers are generally named C<Perl::Refactor::I<something>>,
 e.g. L<Perl::Refactor::More|Perl::Refactor::More>.
 
 The module representing the distribution will not actually have any
 functionality; it's just documentation and a name for users to use
 when installing via L<CPAN|CPAN>/L<CPANPLUS|CPANPLUS>.  The important
-part is that this will include a list of the included policies, with
+part is that this will include a list of the included enforcers, with
 descriptions of each.
 
 A typical implementation will look like:
@@ -971,13 +971,13 @@ A typical implementation will look like:
 
     =head1 SYNOPSIS
 
-    Some L<Perl::Refactor|Perl::Refactor> policies that will help you keep your
+    Some L<Perl::Refactor|Perl::Refactor> enforcers that will help you keep your
     code nice and compliant.
 
 
     =head1 DESCRIPTION
 
-    The included policies are:
+    The included enforcers are:
 
     =over
 
@@ -996,16 +996,16 @@ A typical implementation will look like:
 
     =head1 CONFIGURATION AND ENVIRONMENT
 
-    All policies included are in the "example" theme.  See the
+    All enforcers included are in the "example" theme.  See the
     L<Perl::Refactor|Perl::Refactor> documentation for how to make use of this.
 
 
 =head2 Themes
 
-Users can choose which policies to enable using themes.  You should
+Users can choose which enforcers to enable using themes.  You should
 implement C<default_themes()> so that users can take advantage of
 this.  In particular, you should use a theme named after your
-distribution in all your policies; this should match the value listed
+distribution in all your enforcers; this should match the value listed
 in the C<CONFIGURATION AND ENVIRONMENT> POD section as shown above.
 
     default_themes { return qw< example math > }
@@ -1018,11 +1018,11 @@ output of C<perlrefactor --list-themes>.
 
 =head3 AFFILIATION
 
-Since all policies have to go somewhere under the
+Since all enforcers have to go somewhere under the
 C<Perl::Refactor::Enforcer::> namespace, it isn't always clear what
 distribution a enforcer came from when browsing through their
 documentation.  For this reason, you should include an C<AFFILIATION>
-section in the POD for all of your policies that state where the
+section in the POD for all of your enforcers that state where the
 enforcer comes from.  For example:
 
     =head1 AFFILIATION
@@ -1074,8 +1074,8 @@ This is part of L<Perl::Refactor|Perl::Refactor> version 1.116.
 
 =head1 SEE ALSO
 
-Chas. Owens has a blog post about developing in-house policies at
-L<http://svok.blogspot.com/2009/09/adding-house-policies-to-perlrefactor.html>.
+Chas. Owens has a blog post about developing in-house enforcers at
+L<http://svok.blogspot.com/2009/09/adding-house-enforcers-to-perlrefactor.html>.
 
 
 =head1 AUTHOR

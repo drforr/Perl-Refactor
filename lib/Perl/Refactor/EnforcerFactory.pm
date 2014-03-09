@@ -44,7 +44,7 @@ sub import {
 
     my ( $class, %args ) = @_;
     my $test_mode = $args{-test};
-    my $extra_test_policies = $args{'-extra-test-policies'};
+    my $extra_test_enforcers = $args{'-extra-test-enforcers'};
 
     if ( not @site_enforcer_names ) {
         my $eval_worked = eval {
@@ -71,7 +71,7 @@ sub import {
         }
     }
 
-    # In test mode, only load native policies, not third-party ones.  So this
+    # In test mode, only load native enforcers, not third-party ones.  So this
     # filters out any enforcer that was loaded from within a directory called
     # "blib".  During the usual "./Build test" process this works fine,
     # but it doesn't work if you are using prove to test against the code
@@ -80,9 +80,9 @@ sub import {
     if ( $test_mode && any {m/\b blib \b/xms} @INC ) {
         @site_enforcer_names = _modules_from_blib( @site_enforcer_names );
 
-        if ($extra_test_policies) {
+        if ($extra_test_enforcers) {
             my @extra_enforcer_full_names =
-                map { "${POLICY_NAMESPACE}::$_" } @{$extra_test_policies};
+                map { "${POLICY_NAMESPACE}::$_" } @{$extra_test_enforcers};
 
             push @site_enforcer_names, @extra_enforcer_full_names;
         }
@@ -149,7 +149,7 @@ sub _init {
                     : Perl::Refactor::Exception::AggregateConfiguration->new();
         }
 
-        $self->_validate_policies_in_profile( $errors );
+        $self->_validate_enforcers_in_profile( $errors );
 
         if (
                 not $incoming_errors
@@ -199,7 +199,7 @@ sub create_enforcer {
 
 #-----------------------------------------------------------------------------
 
-sub create_all_policies {
+sub create_all_enforcers {
 
     my ( $self, $incoming_errors ) = @_;
 
@@ -207,7 +207,7 @@ sub create_all_policies {
         $incoming_errors
             ? $incoming_errors
             : Perl::Refactor::Exception::AggregateConfiguration->new();
-    my @policies;
+    my @enforcers;
 
     foreach my $name ( site_enforcer_names() ) {
         my $enforcer = eval { $self->create_enforcer( -name => $name ) };
@@ -215,7 +215,7 @@ sub create_all_policies {
         $errors->add_exception_or_rethrow( $EVAL_ERROR );
 
         if ( $enforcer ) {
-            push @policies, $enforcer;
+            push @enforcers, $enforcer;
         }
     }
 
@@ -223,7 +223,7 @@ sub create_all_policies {
         $errors->rethrow();
     }
 
-    return @policies;
+    return @enforcers;
 }
 
 #-----------------------------------------------------------------------------
@@ -291,14 +291,14 @@ sub _handle_enforcer_instantiation_exception {
 
 #-----------------------------------------------------------------------------
 
-sub _validate_policies_in_profile {
+sub _validate_enforcers_in_profile {
     my ($self, $errors) = @_;
 
     my $profile = $self->_profile();
-    my %known_policies = hashify( $self->site_enforcer_names() );
+    my %known_enforcers = hashify( $self->site_enforcer_names() );
 
-    for my $enforcer_name ( $profile->listed_policies() ) {
-        if ( not exists $known_policies{$enforcer_name} ) {
+    for my $enforcer_name ( $profile->listed_enforcers() ) {
+        if ( not exists $known_enforcers{$enforcer_name} ) {
             my $message = qq{Enforcer "$enforcer_name" is not installed.};
 
             if ( $errors ) {
@@ -391,7 +391,7 @@ L<Perl::Refactor::Enforcer/"initialize_if_enabled"> invoked on it, so it
 may not yet be usable.
 
 
-=item C< create_all_policies() >
+=item C< create_all_enforcers() >
 
 Constructs and returns one instance of each
 L<Perl::Refactor::Enforcer|Perl::Refactor::Enforcer> subclass that is

@@ -34,14 +34,14 @@ Perl::Refactor::TestUtils::block_perlrefactorrc();
 #-----------------------------------------------------------------------------
 
 # Figure out how many tests there will be...
-my @all_policies = bundled_enforcer_names();
-my @all_params   = map { $_->supported_parameters() } @all_policies;
-my $ntests       = @all_policies + 2 * @all_params;
+my @all_enforcers = bundled_enforcer_names();
+my @all_params   = map { $_->supported_parameters() } @all_enforcers;
+my $ntests       = @all_enforcers + 2 * @all_params;
 plan( tests => $ntests );
 
 #-----------------------------------------------------------------------------
 
-for my $enforcer ( @all_policies ) {
+for my $enforcer ( @all_enforcers ) {
     test_has_declared_parameters( $enforcer );
     test_invalid_parameters( $enforcer );
     test_supported_parameters( $enforcer );

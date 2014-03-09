@@ -54,11 +54,11 @@ sub add_enforcer {
 
 #-----------------------------------------------------------------------------
 
-sub policies {
+sub enforcers {
     my $self = shift;
 
     #Delegate to Perl::Refactor::Config
-    return $self->config()->policies();
+    return $self->config()->enforcers();
 }
 
 #-----------------------------------------------------------------------------
@@ -102,9 +102,9 @@ sub refactor {  ## no refactor (ArgUnpacking)
                 '-program-extensions' => [$config->program_extensions_as_regexes()],
             );
 
-    if ( 0 == $self->policies() ) {
+    if ( 0 == $self->enforcers() ) {
         Perl::Refactor::Exception::Configuration::Generic->throw(
-            message => 'There are no enabled policies.',
+            message => 'There are no enabled enforcers.',
         )
     }
 
@@ -123,9 +123,9 @@ sub _gather_violations {
     }
 
     # Evaluate each enforcer
-    my @policies = $self->config->policies();
-    my @ordered_policies = _futz_with_enforcer_order(@policies);
-    my @violations = map { _refactor($_, $doc) } @ordered_policies;
+    my @enforcers = $self->config->enforcers();
+    my @ordered_enforcers = _futz_with_enforcer_order(@enforcers);
+    my @violations = map { _refactor($_, $doc) } @ordered_enforcers;
 
     # Accumulate statistics
     $self->statistics->accumulate( $doc, \@violations );
@@ -420,7 +420,7 @@ of format specifications.  You can set the default value for this
 option in your F<.perlrefactorrc> file.
 
 B<-unsafe> directs Perl::Refactor to allow the use of Policies that are marked
-as "unsafe" by the author.  Such policies may compile untrusted code or do
+as "unsafe" by the author.  Such enforcers may compile untrusted code or do
 other nefarious things.
 
 B<-color> and B<-pager> are not used by Perl::Refactor but is provided for the benefit
@@ -477,7 +477,7 @@ The contents of this hash reference will be passed into to the
 constructor of the Enforcer module.  See the documentation in the
 relevant Enforcer module for a description of the arguments it supports.
 
-=item C< policies() >
+=item C< enforcers() >
 
 Returns a list containing references to all the Enforcer objects that
 have been loaded into this engine.  Objects will be in the order that
@@ -645,8 +645,8 @@ A simple configuration might look like this:
     severity = cruel   # Same as "severity = 2"
 
     #--------------------------------------------------------------
-    # Give these policies a custom theme.  I can activate just
-    # these policies by saying `perlrefactor -theme larry`
+    # Give these enforcers a custom theme.  I can activate just
+    # these enforcers by saying `perlrefactor -theme larry`
 
     [Modules::RequireFilenameMatchesPackage]
     add_themes = larry
@@ -680,7 +680,7 @@ detail in the individual modules themselves.  Say C<"perlrefactor -doc
 PATTERN"> to see the perldoc for all Enforcer modules that match the
 regex C<m/PATTERN/ixms>
 
-There are a number of distributions of additional policies on CPAN.
+There are a number of distributions of additional enforcers on CPAN.
 If L<Perl::Refactor|Perl::Refactor> doesn't contain a enforcer that you
 want, some one may have already written it.  See the L</"SEE ALSO">
 section below for a list of some of these distributions.
@@ -702,7 +702,7 @@ needs.
 
     THEME             DESCRIPTION
     --------------------------------------------------------------------------
-    core              All policies that ship with Perl::Refactor
+    core              All enforcers that ship with Perl::Refactor
     pbp               Policies that come directly from "Perl Best Practices"
     bugs              Policies that that prevent or reveal bugs
     certrec           Policies that CERT recommends
@@ -773,7 +773,7 @@ A bare C<"## no refactor"> annotation disables all the active Policies.  If
 you wish to disable only specific Policies, add a list of Enforcer names
 as arguments, just as you would for the C<"no strict"> or C<"no
 warnings"> pragmas.  For example, this would disable the
-C<ProhibitEmptyQuotes> and C<ProhibitPostfixControls> policies until
+C<ProhibitEmptyQuotes> and C<ProhibitPostfixControls> enforcers until
 the end of the block or until the next C<"## use refactor"> annotation
 (whichever comes first):
 
@@ -834,7 +834,7 @@ practices are, but rather, to implement the practices discovered by
 others.  Ultimately, you make the rules -- Perl::Refactor is merely a
 tool for encouraging consistency.  If there is a enforcer that you think
 is important or that we have overlooked, we would be very grateful for
-contributions, or you can simply load your own private set of policies
+contributions, or you can simply load your own private set of enforcers
 into Perl::Refactor.
 
 
@@ -975,7 +975,7 @@ find any bugs, particularly false-positives or false-negatives from a
 Perl::Refactor::Enforcer, please submit them to
 L<https://github.com/Perl-Refactor/Perl-Refactor/issues>.  Thanks.
 
-Most policies will produce false-negatives if they cannot understand a
+Most enforcers will produce false-negatives if they cannot understand a
 particular block of code.
 
 
@@ -997,7 +997,7 @@ Giuseppe Maxia - For all the great ideas and positive encouragement.
 and Sharon, my wife - For putting up with my all-night code sessions.
 
 Thanks also to the Perl Foundation for providing a grant to support
-Chris Dolan's project to implement twenty PBP policies.
+Chris Dolan's project to implement twenty PBP enforcers.
 L<http://www.perlfoundation.org/april_1_2007_new_grant_awards>
 
 

@@ -236,7 +236,7 @@ up a code corpus can be tracked.
 
 Note the explanation attribute of
 L<Perl::Refactor::Violation|Perl::Refactor::Violation> is constant for
-most policies, but some of them do provide more specific diagnostics
+most enforcers, but some of them do provide more specific diagnostics
 of the code in question.
 
 

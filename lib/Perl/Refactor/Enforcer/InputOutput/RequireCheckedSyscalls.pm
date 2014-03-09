@@ -194,7 +194,7 @@ existing.  Nyah nyah.  I shouldn't code after midnight.
 Initial development of this enforcer was supported by a grant from the
 Perl Foundation.
 
-This enforcer module is based heavily on policies written by Andrew
+This enforcer module is based heavily on enforcers written by Andrew
 Moore <amoore@mooresystems.com>.
 
 

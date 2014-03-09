@@ -52,7 +52,7 @@ sub summarize {
     my $refactor = Perl::Refactor->new( -severity => 1 );
 
     my %total_severities;
-    my %total_policies;
+    my %total_enforcers;
     my %types;
     my %files;
 
@@ -77,19 +77,19 @@ sub summarize {
         $types{$type}{files}++;
         foreach my $violation ( $refactor->refactor($file) ) {
             $files{ $relative_path }{ severities }{ $violation->severity() }++;
-            $files{ $relative_path }{ policies   }{ $violation->enforcer() }++;
+            $files{ $relative_path }{ enforcers  }{ $violation->enforcer() }++;
 
             $types{ $type          }{ severities }{ $violation->severity() }++;
-            $types{ $type          }{ policies   }{ $violation->enforcer() }++;
+            $types{ $type          }{ enforcers  }{ $violation->enforcer() }++;
 
             $total_severities{ $violation->severity() }++;
-            $total_policies{   $violation->enforcer() }++;
+            $total_enforcers{  $violation->enforcer() }++;
         }
     }
 
     return {
         severities  => \%total_severities,
-        policies    => \%total_policies,
+        enforcers    => \%total_enforcers,
         types       => \%types,
         files       => \%files,
     };
@@ -116,7 +116,7 @@ sub report_totals {
 
     say;
     say 'Total violations by enforcer:';
-    report_policies( $results->{policies} );
+    report_enforcers( $results->{enforcers} );
 
     return;
 }
@@ -139,7 +139,7 @@ sub report_types {
 
         say;
         say "Violations in $type files by enforcer:";
-        report_policies( $types->{$type}{policies} );
+        report_enforcers( $types->{$type}{enforcers} );
     }
 
     return;
@@ -157,7 +157,7 @@ sub report_files {
 
         say;
         say "Violations in $file by enforcer:";
-        report_policies( $files->{$file}{policies} );
+        report_enforcers( $files->{$file}{enforcers} );
     }
 
     return;
@@ -175,13 +175,13 @@ sub report_severities {
 }
 
 
-sub report_policies {
-    my ($policies) = @_;
+sub report_enforcers {
+    my ($enforcers) = @_;
 
-    foreach my $enforcer ( sort keys %{$policies} ) {
+    foreach my $enforcer ( sort keys %{$enforcers} ) {
         (my $short_enforcer = $enforcer) =~ s/ \A Perl::Refactor::Enforcer:: //xms;
 
-        say qq{\t}, $short_enforcer, ': ', $policies->{$enforcer};
+        say qq{\t}, $short_enforcer, ': ', $enforcers->{$enforcer};
     }
 
     return;
@@ -207,8 +207,8 @@ C<generatestats> - Produce some simple quality statistics of a codebase
 =head1 DESCRIPTION
 
 Scan a body of code and generate some statistics on violations of the
-installed L<Perl::Refactor|Perl::Refactor> policies.  While there is no means of
-configuring the policies here, this will take into account your
+installed L<Perl::Refactor|Perl::Refactor> enforcers.  While there is no means of
+configuring the enforcers here, this will take into account your
 F<.perlrefactorrc>, if available.
 
 

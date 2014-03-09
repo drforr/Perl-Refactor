@@ -407,7 +407,7 @@ sub line_is_disabled_for_enforcer {
     # HACK: This Enforcer is special.  If it is active, it cannot be
     # disabled by a "## no refactor" annotation.  Rather than create a general
     # hook in Enforcer.pm for enabling this behavior, we chose to hack
-    # it here, since this isn't the kind of thing that most policies do
+    # it here, since this isn't the kind of thing that most enforcers do
 
     return 0 if $enforcer_name eq
         'Perl::Refactor::Enforcer::Miscellanea::ProhibitUnrestrictedNoRefactor';
@@ -426,12 +426,12 @@ sub add_annotation {
     for my $annotation (@annotations) {
 
         my ($start, $end) = $annotation->effective_range();
-        my @affected_policies = $annotation->disables_all_policies ?
-            qw(ALL) : $annotation->disabled_policies();
+        my @affected_enforcers = $annotation->disables_all_enforcers ?
+            qw(ALL) : $annotation->disabled_enforcers();
 
         # TODO: Find clever way to do this with hash slices
         for my $line ($start .. $end) {
-            for my $enforcer (@affected_policies) {
+            for my $enforcer (@affected_enforcers) {
                 $self->{_disabled_line_map}->{$line}->{$enforcer} = 1;
             }
         }
@@ -811,7 +811,7 @@ here.
 =item C<< process_annotations() >>
 
 Causes this Document to scan itself and mark which lines &
-policies are disabled by the C<"## no refactor"> annotations.
+enforcers are disabled by the C<"## no refactor"> annotations.
 
 
 =item C<< line_is_disabled_for_enforcer($line, $enforcer_object) >>

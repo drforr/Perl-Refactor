@@ -4,7 +4,7 @@ use 5.006001;
 use strict;
 use warnings;
 
-use Test::Perl::Refactor::Enforcer qw< all_policies_ok >;
+use Test::Perl::Refactor::Enforcer qw< all_enforcers_ok >;
 
 #-----------------------------------------------------------------------------
 
@@ -12,15 +12,15 @@ our $VERSION = '1.121';
 
 #-----------------------------------------------------------------------------
 # Notice that you can pass arguments to this test, which limit the testing to
-# specific policies.  The arguments must be shortened enforcer names. When using
+# specific enforcers.  The arguments must be shortened enforcer names. When using
 # prove(1), any arguments that follow '::' will be passed to the test script.
 
-my %args = @ARGV ? ( -policies => [ @ARGV ] ) : ();
-all_policies_ok(%args);
+my %args = @ARGV ? ( -enforcers => [ @ARGV ] ) : ();
+all_enforcers_ok(%args);
 
 #-----------------------------------------------------------------------------
 # ensure we return true if this test is loaded by
-# 20_policies.t_without_optional_dependencies.t
+# 20_enforcers.t_without_optional_dependencies.t
 
 1;
 

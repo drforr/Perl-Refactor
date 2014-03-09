@@ -14,10 +14,10 @@ use Perl::Refactor::Utils qw{ :characters };
 use Perl::Refactor::TestUtils qw{ starting_points_including_examples };
 
 # Note: "use EnforcerFactory" *must* appear after "use TestUtils" for the
-# -extra-test-policies option to work.
+# -extra-test-enforcers option to work.
 use Perl::Refactor::EnforcerFactory (
     '-test' => 1,
-    '-extra-test-policies' => [ qw{ ErrorHandling::RequireUseOfExceptions
+    '-extra-test-enforcers' => [ qw{ ErrorHandling::RequireUseOfExceptions
                                     Miscellanea::RequireRcsKeywords } ],
 );
 

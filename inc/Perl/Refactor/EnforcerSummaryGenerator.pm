@@ -36,7 +36,7 @@ sub generate_enforcer_summary {
     my $configuration =
       Perl::Refactor::Config->new(-profile => $EMPTY, -severity => 1, -theme => 'core');
 
-    my @policies = $configuration->all_policies_enabled_or_not();
+    my @enforcers = $configuration->all_enforcers_enabled_or_not();
     my $enforcer_summary = 'lib/Perl/Refactor/EnforcerSummary.pod';
 
     ## no refactor (RequireBriefOpen)
@@ -77,7 +77,7 @@ my $format = <<'END_POLICY';
 END_POLICY
 
 eval {
-    foreach my $enforcer (@policies) {
+    foreach my $enforcer (@enforcers) {
         my $module_abstract = $enforcer->get_raw_abstract();
 
         printf

@@ -33,7 +33,7 @@ Readonly::Array our @EXPORT_OK => qw(
     get_author_test_skip_message
     starting_points_including_examples
     bundled_enforcer_names
-    names_of_policies_willing_to_work
+    names_of_enforcers_willing_to_work
 );
 
 #-----------------------------------------------------------------------------
@@ -349,17 +349,17 @@ sub bundled_enforcer_names {
     my $manifest = ExtUtils::Manifest::maniread();
     my @enforcer_paths = map {m{\A lib/(Perl/Refactor/Enforcer/.*).pm \z}xms} keys %{$manifest};
     my @enforcers = map { join q{::}, split m{/}xms, $_} @enforcer_paths;
-    my @sorted_policies = sort @enforcers;
-    return @sorted_policies;
+    my @sorted_enforcers = sort @enforcers;
+    return @sorted_enforcers;
 }
 
-sub names_of_policies_willing_to_work {
+sub names_of_enforcers_willing_to_work {
     my %configuration = @_;
 
     my @enforcers_willing_to_work =
         Perl::Refactor::Config
             ->new( %configuration )
-            ->policies();
+            ->enforcers();
 
     return map { ref $_ } @enforcers_willing_to_work;
 }
@@ -396,7 +396,7 @@ interface will go through a deprecation cycle.
     1;
     END_CODE
 
-    # Critique code against all loaded policies...
+    # Critique code against all loaded enforcers...
     my $perl_refactor_config = { -severity => 2 };
     my $violation_count = refactor( \$code, $perl_refactor_config);
 
@@ -459,7 +459,7 @@ whole bunch.
 
 Like C<prefactor_with_violations()>, but pretends that the code was
 loaded from the specified filename.  This is handy for testing
-policies like C<Modules::RequireFilenameMatchesPackage> which care
+enforcers like C<Modules::RequireFilenameMatchesPackage> which care
 about the filename that the source derived from.
 
 The C<$filename> parameter must be a relative path, not absolute.  The
@@ -470,7 +470,7 @@ L<File::Temp|File::Temp> and will be automatically deleted.
 =item frefactor( $enforcer_name, $code_string_ref, $filename, $config_ref )
 
 Like C<prefactor()>, but pretends that the code was loaded from the
-specified filename.  This is handy for testing policies like
+specified filename.  This is handy for testing enforcers like
 C<Modules::RequireFilenameMatchesPackage> which care about the
 filename that the source derived from.
 
@@ -516,9 +516,9 @@ F<lib/Perl/Refactor/Enforcer/*.pm> and converts the results to package
 names.
 
 
-=item names_of_policies_willing_to_work( %configuration )
+=item names_of_enforcers_willing_to_work( %configuration )
 
-Returns a list of the packages of policies that are willing to
+Returns a list of the packages of enforcers that are willing to
 function on the current system using the specified configuration.
 
 

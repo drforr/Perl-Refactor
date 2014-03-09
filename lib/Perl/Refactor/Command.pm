@@ -229,7 +229,7 @@ sub _refactor {
 
     require Perl::Refactor;
     $refactor = Perl::Refactor->new( %{$opts_ref} );
-    $refactor->policies() || die "No policies selected.\n";
+    $refactor->enforcers() || die "No enforcers selected.\n";
 
     _set_up_pager($refactor->config()->pager());
 
@@ -432,12 +432,12 @@ sub _report_statistics {
         _out "\n";
 
         my %enforcer_violations = %{ $statistics->violations_by_enforcer() };
-        my @policies = sort keys %enforcer_violations;
+        my @enforcers = sort keys %enforcer_violations;
         $width =
             max
                 map { length _commaify( $enforcer_violations{$_} ) }
-                    @policies;
-        foreach my $enforcer (@policies) {
+                    @enforcers;
+        foreach my $enforcer (@enforcers) {
             _out
                 sprintf
                     "%*s violations of %s.\n",
@@ -582,8 +582,8 @@ sub _render_enforcer_listing {
     require Perl::Refactor::EnforcerListing;
     require Perl::Refactor;
 
-    my @policies = Perl::Refactor->new( %pc_params )->policies();
-    my $listing = Perl::Refactor::EnforcerListing->new( -policies => \@policies );
+    my @enforcers = Perl::Refactor->new( %pc_params )->enforcers();
+    my $listing = Perl::Refactor::EnforcerListing->new( -enforcers => \@enforcers );
     _out $listing;
 
     exit $EXIT_SUCCESS;
@@ -597,8 +597,8 @@ sub _render_theme_listing {
     require Perl::Refactor;
 
     my %pc_params = (-profile => $EMPTY, -severity => $SEVERITY_LOWEST);
-    my @policies = Perl::Refactor->new( %pc_params )->policies();
-    my $listing = Perl::Refactor::ThemeListing->new( -policies => \@policies );
+    my @enforcers = Perl::Refactor->new( %pc_params )->enforcers();
+    my $listing = Perl::Refactor::ThemeListing->new( -enforcers => \@enforcers );
     _out $listing;
 
     exit $EXIT_SUCCESS;
@@ -612,8 +612,8 @@ sub _render_profile_prototype {
     require Perl::Refactor;
 
     my %pc_params = (-profile => $EMPTY, -severity => $SEVERITY_LOWEST);
-    my @policies = Perl::Refactor->new( %pc_params )->policies();
-    my $prototype = Perl::Refactor::ProfilePrototype->new( -policies => \@policies );
+    my @enforcers = Perl::Refactor->new( %pc_params )->enforcers();
+    my $prototype = Perl::Refactor::ProfilePrototype->new( -enforcers => \@enforcers );
     _out $prototype;
 
     exit $EXIT_SUCCESS;
@@ -631,11 +631,11 @@ sub _render_enforcer_docs {
     _set_up_pager($refactor->config()->pager());
 
     require Perl::Refactor::EnforcerFactory;
-    my @site_policies  = Perl::Refactor::EnforcerFactory->site_enforcer_names();
-    my @matching_policies  = grep { $_ =~ m/$pattern/ixms } @site_policies;
+    my @site_enforcers  = Perl::Refactor::EnforcerFactory->site_enforcer_names();
+    my @matching_enforcers  = grep { $_ =~ m/$pattern/ixms } @site_enforcers;
 
     # "-T" means don't send to pager
-    my @perldoc_output = map {`perldoc -T $_`} @matching_policies;  ## no refactor (ProhibitBacktick)
+    my @perldoc_output = map {`perldoc -T $_`} @matching_enforcers;  ## no refactor (ProhibitBacktick)
     _out @perldoc_output;
 
     exit $EXIT_SUCCESS;

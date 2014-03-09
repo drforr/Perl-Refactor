@@ -45,7 +45,7 @@ if (open my ($fh), '<', $summary_file) {
 
     my $profile = Perl::Refactor::UserProfile->new();
     my $factory = Perl::Refactor::EnforcerFactory->new( -profile => $profile );
-    my %found_policies = map { ref $_ => $_ } $factory->create_all_policies();
+    my %found_enforcers = map { ref $_ => $_ } $factory->create_all_enforcers();
 
     my %descriptions = $content =~ m/^=head2 [ ]+ L<[\w:]+[|]([\w:]+)>\n\n([^\n]+)/gxms;
     for my $enforcer_name (keys %descriptions) {
@@ -71,8 +71,8 @@ if (open my ($fh), '<', $summary_file) {
         is( $has_summary, 1, $label );
 
         my $summary_severity = $descriptions{$enforcer_name}->{severity};
-        my $real_severity = $found_policies{$enforcer_name} &&
-          $found_policies{$enforcer_name}->default_severity;
+        my $real_severity = $found_enforcers{$enforcer_name} &&
+          $found_enforcers{$enforcer_name}->default_severity;
         is( $summary_severity, $real_severity, "severity for $enforcer_name" );
     }
 

@@ -26,12 +26,12 @@ my $default_configuration =
         -severity => 1,
         -theme => 'core',
     );
-my @default_policies = $default_configuration->policies();
+my @default_enforcers = $default_configuration->enforcers();
 
 my $enforcer_test_count;
 
-$enforcer_test_count = 4 * @default_policies;
-foreach my $enforcer (@default_policies) {
+$enforcer_test_count = 4 * @default_enforcers;
+foreach my $enforcer (@default_enforcers) {
     if (
             $enforcer->parameter_metadata_available()
         and not $enforcer->isa('Perl::Refactor::Enforcer::CodeLayout::RequireTidyCode')
@@ -46,7 +46,7 @@ plan tests => $test_count;
 
 my $profile_generator =
     Perl::Refactor::ProfilePrototype->new(
-        -policies                   => \@default_policies,
+        -enforcers                   => \@default_enforcers,
         '-comment-out-parameters'   => 0,
         -config                     => $default_configuration,
     );
@@ -204,24 +204,24 @@ cmp_deeply(
 
 #-----------------------------------------------------------------------------
 
-my @derived_policies = $derived_configuration->policies();
+my @derived_enforcers = $derived_configuration->enforcers();
 
 my $enforcer_counts_match =
     is(
-        scalar @derived_policies,
-        scalar @default_policies,
+        scalar @derived_enforcers,
+        scalar @default_enforcers,
         'same enforcer count'
     );
 
 SKIP: {
     skip
-        q{because there weren't the same number of policies},
+        q{because there weren't the same number of enforcers},
             $enforcer_test_count
         if not $enforcer_counts_match;
 
-    for (my $x = 0; $x < @default_policies; $x++) { ## no refactor (ProhibitCStyleForLoops)
-        my $derived_enforcer = $derived_policies[$x];
-        my $default_enforcer = $default_policies[$x];
+    for (my $x = 0; $x < @default_enforcers; $x++) { ## no refactor (ProhibitCStyleForLoops)
+        my $derived_enforcer = $derived_enforcers[$x];
+        my $default_enforcer = $default_enforcers[$x];
 
         is(
             $derived_enforcer->get_short_name(),

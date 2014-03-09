@@ -50,7 +50,7 @@ dump-autodie-tag-contents - List the perl functions covered by a given L<autodie
 =head1 DESCRIPTION
 
 This is a simple tool for helping to maintain the InputOutput::RequireChecked*
-policies.
+enforcers.
 
 It lists all the perl builtins that a given L<autotag> tag covers.  If none is
 specified, the ":default" tag is used.

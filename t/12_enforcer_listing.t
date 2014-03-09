@@ -21,9 +21,9 @@ our $VERSION = '1.121';
 my $profile = Perl::Refactor::UserProfile->new( -profile => 'NONE' );
 my @enforcer_names = Perl::Refactor::EnforcerFactory::site_enforcer_names();
 my $factory = Perl::Refactor::EnforcerFactory->new( -profile => $profile );
-my @policies = map { $factory->create_enforcer( -name => $_ ) } @enforcer_names;
-my $listing = Perl::Refactor::EnforcerListing->new( -policies => \@policies );
-my $enforcer_count = scalar @policies;
+my @enforcers = map { $factory->create_enforcer( -name => $_ ) } @enforcer_names;
+my $listing = Perl::Refactor::EnforcerListing->new( -enforcers => \@enforcers );
+my $enforcer_count = scalar @enforcers;
 
 plan( tests => $enforcer_count + 1);
 
@@ -35,7 +35,7 @@ plan( tests => $enforcer_count + 1);
 my $listing_as_string = "$listing";
 my @listing_lines = split m/ \n /xms, $listing_as_string;
 my $line_count = scalar @listing_lines;
-is( $line_count, $enforcer_count, qq{Listing has all $enforcer_count policies} );
+is( $line_count, $enforcer_count, qq{Listing has all $enforcer_count enforcers} );
 
 
 my $listing_pattern = qr< \A \d [ ] [\w:]+ [ ] \[ [\w\s]+ \] \z >xms;

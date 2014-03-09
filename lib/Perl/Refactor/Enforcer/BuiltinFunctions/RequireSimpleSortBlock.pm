@@ -78,7 +78,7 @@ the sort block, because the sort block is called C<N log N> times
 instead of just C<N> times.
 
 This enforcer prohibits the most blatant case of complicated sort
-blocks: multiple statements.  Future policies may wish to examine the
+blocks: multiple statements.  Future enforcers may wish to examine the
 sort block in more detail -- looking for subroutine calls or large
 numbers of operations.
 

@@ -95,7 +95,7 @@ Perl::Refactor::TestUtils::block_perlrefactorrc();
 }
 
 #-----------------------------------------------------------------------------
-# Test warnings about bogus policies
+# Test warnings about bogus enforcers
 
 {
     my $last_warning = q{}; #Trap warning messages here

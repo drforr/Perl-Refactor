@@ -5,7 +5,7 @@
 ;; This is a minor mode for emacs intended to allow you to
 ;; automatically incorporate perlrefactor into your daily code
 ;; writing. When enabled it can optionally prevent you from saving
-;; code that doesn't pass your enabled perlrefactor policies.
+;; code that doesn't pass your enabled perlrefactor enforcers.
 ;;
 ;; Even if you don't enable the automatic code checking you can still
 ;; use the automatic checking or the `perlrefactor' function.
@@ -207,7 +207,7 @@ For example:
 
   layout
 
-This would cause \"perlrefactor\" to apply all the \"CodeLayout::*\" policies
+This would cause \"perlrefactor\" to apply all the \"CodeLayout::*\" enforcers
 even if they have a severity level that is less than the default level of 5,
 or have been disabled in your .perlrefactorrc file.  You can specify multiple
 `perlrefactor-include' options and you can use it in conjunction with the

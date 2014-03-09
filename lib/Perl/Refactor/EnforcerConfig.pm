@@ -287,7 +287,7 @@ Sets the profile strictness associated with the configuration.
 
 Deals with any extra parameters according to the profile_strictness
 setting.  To be called by Perl::Refactor::Enforcer->new() once all valid
-policies have been processed and removed from the configuration.
+enforcers have been processed and removed from the configuration.
 
 If profile_strictness is $PROFILE_STRICTNESS_QUIET, extra enforcer
 parameters are ignored.

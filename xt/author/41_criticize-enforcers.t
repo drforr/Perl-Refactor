@@ -2,7 +2,7 @@
 
 # Extra self-compliance tests for Enforcer classes.  This just checks for
 # additional POD sections that we want in every Enforcer module.  See the
-# 41_perlrefactorrc-policies file for the precise configuration.
+# 41_perlrefactorrc-enforcers file for the precise configuration.
 
 use 5.006001;
 use strict;
@@ -44,7 +44,7 @@ if ( $ENV{PERL_CRITIC_CACHE} ) {
 #-----------------------------------------------------------------------------
 # Run refactor against all of our own files
 
-my $rcfile = File::Spec->catfile( qw< xt author 41_perlrefactorrc-policies > );
+my $rcfile = File::Spec->catfile( qw< xt author 41_perlrefactorrc-enforcers > );
 Test::Perl::Refactor->import( -profile => $rcfile );
 
 my $path =

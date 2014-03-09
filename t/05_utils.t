@@ -42,7 +42,7 @@ test_is_backup();
 test_first_arg();
 test_parse_arg_list();
 test_is_function_call();
-test_find_bundled_policies();
+test_find_bundled_enforcers();
 test_is_unchecked_call();
 
 #-----------------------------------------------------------------------------
@@ -436,13 +436,13 @@ sub test_is_function_call {
 
 #-----------------------------------------------------------------------------
 
-sub test_find_bundled_policies {
+sub test_find_bundled_enforcers {
     Perl::Refactor::TestUtils::block_perlrefactorrc();
 
-    my @native_policies = bundled_enforcer_names();
+    my @native_enforcers = bundled_enforcer_names();
     my $enforcer_dir = File::Spec->catfile( qw(lib Perl Refactor Enforcer) );
-    my @found_policies  = all_perl_files( $enforcer_dir );
-    is( scalar @found_policies, scalar @native_policies, 'Find all perl code');
+    my @found_enforcers  = all_perl_files( $enforcer_dir );
+    is( scalar @found_enforcers, scalar @native_enforcers, 'Find all perl code');
 
     return;
 }

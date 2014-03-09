@@ -52,7 +52,7 @@ can_ok('Perl::Refactor', 'new');
 can_ok('Perl::Refactor', 'add_enforcer');
 can_ok('Perl::Refactor', 'config');
 can_ok('Perl::Refactor', 'refactor');
-can_ok('Perl::Refactor', 'policies');
+can_ok('Perl::Refactor', 'enforcers');
 
 #Set -profile to avoid messing with .perlrefactorrc
 my $refactor = Perl::Refactor->new( -profile => 'NONE' );
@@ -65,7 +65,7 @@ is($refactor->VERSION(), $version_string, 'Perl::Refactor version');
 use_ok('Perl::Refactor::Config') or BAIL_OUT(q<Can't continue.>);
 can_ok('Perl::Refactor::Config', 'new');
 can_ok('Perl::Refactor::Config', 'add_enforcer');
-can_ok('Perl::Refactor::Config', 'policies');
+can_ok('Perl::Refactor::Config', 'enforcers');
 can_ok('Perl::Refactor::Config', 'exclude');
 can_ok('Perl::Refactor::Config', 'force');
 can_ok('Perl::Refactor::Config', 'include');

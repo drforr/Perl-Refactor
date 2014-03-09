@@ -121,10 +121,10 @@ sub test_wrappers_to_generate {
         t/11_enforcer_factory.t
         t/12_enforcer_listing.t
         t/12_theme_listing.t
-        t/13_bundled_policies.t
+        t/13_bundled_enforcers.t
         t/14_enforcer_parameters.t
         t/15_statistics.t
-        t/20_policies.t
+        t/20_enforcers.t
         t/20_enforcer_pod_spelling.t
         t/20_enforcer_prohibit_evil_modules.t
         t/20_enforcer_prohibit_hard_tabs.t

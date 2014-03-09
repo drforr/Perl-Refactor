@@ -22,7 +22,7 @@ my $profile = Perl::Refactor::UserProfile->new( -profile => 'NONE' );
 my @enforcer_names = Perl::Refactor::EnforcerFactory::site_enforcer_names();
 my $factory = Perl::Refactor::EnforcerFactory->new( -profile => $profile );
 my @enforcers = map { $factory->create_enforcer( -name => $_ ) } @enforcer_names;
-my $listing = Perl::Refactor::ThemeListing->new( -policies => \@enforcers );
+my $listing = Perl::Refactor::ThemeListing->new( -enforcers => \@enforcers );
 
 my $expected = <<'END_EXPECTED';
 bugs

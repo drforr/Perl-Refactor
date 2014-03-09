@@ -19,8 +19,8 @@ sub new {
     my ($class, %args) = @_;
     my $self = bless {}, $class;
 
-    my $policies = $args{-policies} || [];
-    $self->{_policies} = [ sort _by_type @{ $policies } ];
+    my $enforcers = $args{-enforcers} || [];
+    $self->{_enforcers} = [ sort _by_type @{ $enforcers } ];
 
     my $comment_out_parameters = $args{'-comment-out-parameters'};
     if (not defined $comment_out_parameters) {
@@ -40,10 +40,10 @@ sub new {
 
 #-----------------------------------------------------------------------------
 
-sub _get_policies {
+sub _get_enforcers {
     my ($self) = @_;
 
-    return $self->{_policies};
+    return $self->{_enforcers};
 }
 
 sub _comment_out_parameters {
@@ -161,7 +161,7 @@ sub to_string {
 
     Perl::Refactor::Enforcer::set_format( $self->_proto_format() );
 
-    return $prototype . "\n\n" . join q{}, map { "$_" } @{ $self->_get_policies() };
+    return $prototype . "\n\n" . join q{}, map { "$_" } @{ $self->_get_enforcers() };
 }
 
 #-----------------------------------------------------------------------------
@@ -228,7 +228,7 @@ to change without notice.
 
 =over
 
-=item C<< new( -policies => \@POLICY_OBJECTS ) >>
+=item C<< new( -enforcers => \@POLICY_OBJECTS ) >>
 
 Returns a reference to a new C<Perl::Refactor::ProfilePrototype> object.
 

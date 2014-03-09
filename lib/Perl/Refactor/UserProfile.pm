@@ -107,7 +107,7 @@ sub enforcer_is_enabled {
 
 #-----------------------------------------------------------------------------
 
-sub listed_policies {
+sub listed_enforcers {
 
     my ( $self, $enforcer ) = @_;
     my @normalized_enforcer_names = ();
@@ -380,7 +380,7 @@ object or the name of one, returns a reference to a hash of the user's
 configuration parameters for that enforcer.
 
 
-=item C< listed_policies() >
+=item C< listed_enforcers() >
 
 Returns a list of the names of all the Policies that are mentioned in
 the profile.  The Enforcer names will be fully qualified (e.g.

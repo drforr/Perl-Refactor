@@ -137,7 +137,7 @@ __END__
 
 =head1 NAME
 
-Perl::Refactor::Theme - Construct thematic sets of policies.
+Perl::Refactor::Theme - Construct thematic sets of enforcers.
 
 
 =head1 DESCRIPTION

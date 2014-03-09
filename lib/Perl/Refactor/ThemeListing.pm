@@ -19,7 +19,7 @@ sub new {
 
     my $self = bless {}, $class;
 
-    $self->{_policies} = $args{-policies} || [];
+    $self->{_enforcers} = $args{-enforcers} || [];
 
     return $self;
 }
@@ -30,7 +30,7 @@ sub to_string {
     my ($self) = @_;
 
     my %themes;
-    foreach my $enforcer ( @{ $self->{_policies} } ) {
+    foreach my $enforcer ( @{ $self->{_enforcers} } ) {
         my @themes = $enforcer->get_themes();
         @themes{ @themes } = @themes;
     }
@@ -67,7 +67,7 @@ to change without notice.
 
 =over
 
-=item C<< new( -policies => \@POLICY_OBJECTS ) >>
+=item C<< new( -enforcers => \@POLICY_OBJECTS ) >>
 
 Returns a reference to a new C<Perl::Refactor::ThemeListing> object.
 

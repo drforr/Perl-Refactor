@@ -32,7 +32,7 @@ sub violates {
 
     my @violations = ();
     for my $annotation ($doc->annotations()) {
-        if ($annotation->disables_all_policies()) {
+        if ($annotation->disables_all_enforcers()) {
             my $elem = $annotation->element();
             push @violations, $self->violation($DESC, $EXPL, $elem);
         }

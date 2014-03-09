@@ -50,9 +50,9 @@ sub _init {
     my $annotation_element = $args{-element} || confess '-element argument is required';
     $self->{_element} = $annotation_element;
 
-    my %disabled_policies = _parse_annotation( $annotation_element );
-    $self->{_disables_all_policies} = %disabled_policies ? 0 : 1;
-    $self->{_disabled_policies} = \%disabled_policies;
+    my %disabled_enforcers = _parse_annotation( $annotation_element );
+    $self->{_disables_all_enforcers} = %disabled_enforcers ? 0 : 1;
+    $self->{_disabled_enforcers} = \%disabled_enforcers;
 
     # Grab surrounding nodes to determine the context.
     # This determines whether the annotation applies to
@@ -138,25 +138,25 @@ sub effective_range {
 
 #-----------------------------------------------------------------------------
 
-sub disabled_policies {
+sub disabled_enforcers {
     my $self = shift;
-    return keys %{ $self->{_disabled_policies} };
+    return keys %{ $self->{_disabled_enforcers} };
 }
 
 #-----------------------------------------------------------------------------
 
 sub disables_enforcer {
     my ($self, $enforcer_name) = @_;
-    return 1 if $self->{_disabled_policies}->{$enforcer_name};
-    return 1 if $self->disables_all_policies();
+    return 1 if $self->{_disabled_enforcers}->{$enforcer_name};
+    return 1 if $self->disables_all_enforcers();
     return 0;
 }
 
 #-----------------------------------------------------------------------------
 
-sub disables_all_policies {
+sub disables_all_enforcers {
     my ($self) = @_;
-    return $self->{_disables_all_policies};
+    return $self->{_disables_all_enforcers};
 }
 
 #-----------------------------------------------------------------------------
@@ -283,10 +283,10 @@ Perl::Refactor::Annotation - A "## no refactor" annotation in a document.
 
   $bool = $annotation->disables_line( $number );
   $bool = $annotation->disables_enforcer( $enforcer_object );
-  $bool = $annotation->disables_all_policies();
+  $bool = $annotation->disables_all_enforcers();
 
   ($start, $end) = $annotation->effective_range();
-  @disabled_enforcer_names = $annotation->disabled_policies();
+  @disabled_enforcer_names = $annotation->disabled_enforcers();
 
 
 =head1 DESCRIPTION
@@ -354,10 +354,10 @@ Returns true if this Annotation disables C<$enforcer_object> or
 C<$enforcer_name> at any (or all) lines.
 
 
-=item C<< disables_all_policies() >>
+=item C<< disables_all_enforcers() >>
 
 Returns true if this Annotation disables all Policies at any (or all)
-lines.  If this method returns true, C<disabled_policies> will return
+lines.  If this method returns true, C<disabled_enforcers> will return
 an empty list.
 
 
@@ -367,11 +367,11 @@ Returns a two-element list, representing the first and last line
 numbers where this Annotation has effect.
 
 
-=item C<< disabled_policies() >>
+=item C<< disabled_enforcers() >>
 
 Returns a list of the names of the Policies that are affected by this
 Annotation.  If this list is empty, then it means that all Policies
-are affected by this Annotation, and C<disables_all_policies()> should
+are affected by this Annotation, and C<disables_all_enforcers()> should
 return true.
 
 

@@ -17,7 +17,7 @@ our $VERSION = '1.121';
 
 Perl::Refactor::TestUtils::block_perlrefactorrc();
 
-# This specific enforcer is being tested without 20_policies.t because the .run file
+# This specific enforcer is being tested without 20_enforcers.t because the .run file
 # would have to contain invisible characters.
 
 my $code;

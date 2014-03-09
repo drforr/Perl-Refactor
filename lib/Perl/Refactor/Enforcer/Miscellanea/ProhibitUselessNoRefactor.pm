@@ -117,7 +117,7 @@ the name of the Enforcer that I'm trying to suppress.
 
 =head1 NOTE
 
-Changing your F<.perlrefactorrc> file and disabling policies globally or running
+Changing your F<.perlrefactorrc> file and disabling enforcers globally or running
 at a higher (i.e. less restrictive) severity level may cause this Enforcer to
 emit additional violations.  So you might want to defer using this Enforcer
 until you have a fairly stable profile.
