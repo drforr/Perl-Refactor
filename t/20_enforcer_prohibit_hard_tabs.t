@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 # common P::C testing tools
-use Perl::Refactor::TestUtils qw(pcritique fcritique);
+use Perl::Refactor::TestUtils qw(prefactor frefactor);
 
 use Test::More tests => 10;
 
@@ -39,7 +39,7 @@ sub my_sub {
 
 END_PERL
 
-is( pcritique($enforcer, \$code), 0, $enforcer );
+is( prefactor($enforcer, \$code), 0, $enforcer );
 
 #-----------------------------------------------------------------------------
 
@@ -48,7 +48,7 @@ $code = <<"END_PERL";
 print "\t  \t  foobar  \t";
 END_PERL
 
-is( pcritique($enforcer, \$code), 1, $enforcer );
+is( prefactor($enforcer, \$code), 1, $enforcer );
 
 #-----------------------------------------------------------------------------
 
@@ -63,7 +63,7 @@ my \@list = qw(
 
 END_PERL
 
-is( pcritique($enforcer, \$code, \%config), 0, 'Leading tabs in qw()' );
+is( prefactor($enforcer, \$code, \%config), 0, 'Leading tabs in qw()' );
 
 #-----------------------------------------------------------------------------
 
@@ -77,7 +77,7 @@ my \@list = qw(
 
 END_PERL
 
-is( pcritique($enforcer, \$code, \%config), 1, 'Non-leading tabs in qw()' );
+is( prefactor($enforcer, \$code, \%config), 1, 'Non-leading tabs in qw()' );
 
 #-----------------------------------------------------------------------------
 # RT #32440
@@ -99,7 +99,7 @@ $code = <<"END_PERL";
 
 END_PERL
 
-is( pcritique($enforcer, \$code, \%config), 0, 'Leading tabs in extended regex' );
+is( prefactor($enforcer, \$code, \%config), 0, 'Leading tabs in extended regex' );
 
 #-----------------------------------------------------------------------------
 # RT #32440
@@ -123,7 +123,7 @@ $code = <<"END_PERL";
 
 END_PERL
 
-is( pcritique($enforcer, \$code, \%config), 2, 'Leading tabs in non-extended regex' );
+is( prefactor($enforcer, \$code, \%config), 2, 'Leading tabs in non-extended regex' );
 
 #-----------------------------------------------------------------------------
 # RT #32440
@@ -138,7 +138,7 @@ $code = <<"END_PERL";
 
 END_PERL
 
-is( pcritique($enforcer, \$code, \%config), 1, 'Non-leading tabs in extended regex' );
+is( prefactor($enforcer, \$code, \%config), 1, 'Non-leading tabs in extended regex' );
 
 #-----------------------------------------------------------------------------
 
@@ -154,7 +154,7 @@ sub my_sub {
 END_PERL
 
 %config = (allow_leading_tabs => 0);
-is( pcritique($enforcer, \$code, \%config), 3, $enforcer );
+is( prefactor($enforcer, \$code, \%config), 3, $enforcer );
 
 #-----------------------------------------------------------------------------
 
@@ -170,7 +170,7 @@ sub my_sub {
 END_PERL
 
 %config = (allow_leading_tabs => 0);
-is( pcritique($enforcer, \$code, \%config), 3, $enforcer );
+is( prefactor($enforcer, \$code, \%config), 3, $enforcer );
 
 #-----------------------------------------------------------------------------
 
@@ -184,7 +184,7 @@ foo\tbar\tbaz
 END_PERL
 
 %config = (allow_leading_tabs => 0);
-is( pcritique($enforcer, \$code, \%config), 0, 'Tabs in __DATA__' );
+is( prefactor($enforcer, \$code, \%config), 0, 'Tabs in __DATA__' );
 
 #-----------------------------------------------------------------------------
 

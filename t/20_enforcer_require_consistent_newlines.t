@@ -6,7 +6,7 @@ use warnings;
 
 use charnames ':full';
 
-use Perl::Refactor::TestUtils qw(pcritique fcritique);
+use Perl::Refactor::TestUtils qw(prefactor frefactor);
 
 use Test::More tests => 29;
 
@@ -45,7 +45,7 @@ DataLine1
 DataLine2
 END_PERL
 
-is( fcritique($enforcer, \$base_code), 0, $enforcer );
+is( frefactor($enforcer, \$base_code), 0, $enforcer );
 
 my @lines = split m/\n/xms, $base_code;
 for my $keyword (qw<
@@ -62,7 +62,7 @@ for my $keyword (qw<
     ) {
         next if $nl eq "\n";
         ($code = $base_code) =~ s/ (\Q$keyword\E) \n /$1$nl/xms;
-        is( fcritique($enforcer, \$code), $nfail, $enforcer.' - '.$keyword );
+        is( frefactor($enforcer, \$code), $nfail, $enforcer.' - '.$keyword );
     }
 }
 
@@ -73,7 +73,7 @@ for my $nl (
 ) {
     next if $nl eq "\n";
     ($code = $base_code) =~ s/ \n /$nl/xms;
-    is( pcritique($enforcer, \$code), 0, $enforcer.' - no filename' );
+    is( prefactor($enforcer, \$code), 0, $enforcer.' - no filename' );
 }
 
 # ensure we return true if this test is loaded by

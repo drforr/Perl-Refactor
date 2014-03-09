@@ -4,7 +4,7 @@ use 5.006001;
 use strict;
 use warnings;
 
-use Perl::Refactor::TestUtils qw< pcritique >;
+use Perl::Refactor::TestUtils qw< prefactor >;
 use Perl::Refactor::Utils     qw< $EMPTY >;
 
 use Test::More tests => 1;
@@ -28,7 +28,7 @@ use Super::Evil::Module;
 
 END_PERL
 
-my $result = eval { pcritique( $enforcer, \$code, {modules => $EMPTY} ); 1; };
+my $result = eval { prefactor( $enforcer, \$code, {modules => $EMPTY} ); 1; };
 ok(
     ! $result,
     "$enforcer does not run if there are no evil modules configured.",

@@ -64,7 +64,7 @@ my $refactor =
         -profile => $profile,
         -theme => 'core',
     );
-my @violations = $refactor->critique( \$code );
+my @violations = $refactor->refactor( \$code );
 
 #print @violations;
 #exit;

@@ -4,7 +4,7 @@ use 5.006001;
 use strict;
 use warnings;
 
-use Perl::Refactor::TestUtils qw(pcritique);
+use Perl::Refactor::TestUtils qw(prefactor);
 
 use Test::More tests => 6;
 
@@ -30,7 +30,7 @@ END_PERL
 
 %config = (perltidyrc => q{});
 is(
-    pcritique($enforcer, \$code, \%config),
+    prefactor($enforcer, \$code, \%config),
     1,
     'Untidy code',
 );
@@ -45,7 +45,7 @@ END_PERL
 
 %config = (perltidyrc => q{});
 is(
-    pcritique($enforcer, \$code, \%config),
+    prefactor($enforcer, \$code, \%config),
     0,
     'Tidy with one trailing newline',
 );
@@ -61,7 +61,7 @@ END_PERL
 
 %config = (perltidyrc => q{});
 is(
-    pcritique($enforcer, \$code, \%config),
+    prefactor($enforcer, \$code, \%config),
     0,
     'Tidy with two trailing newlines',
 );
@@ -84,7 +84,7 @@ END_PERL
 
 %config = (perltidyrc => q{});
 is(
-    pcritique($enforcer, \$code, \%config),
+    prefactor($enforcer, \$code, \%config),
     0,
     'Tidy with several trailing newlines',
 );
@@ -102,7 +102,7 @@ END_PERL
 
 %config = (perltidyrc => q{});
 is(
-    pcritique($enforcer, \$code, \%config),
+    prefactor($enforcer, \$code, \%config),
     0,
     'Tidy with heredoc',
 );
@@ -120,7 +120,7 @@ END_PERL
 
 %config = (perltidyrc => q{});
 is(
-    pcritique($enforcer, \$code, \%config),
+    prefactor($enforcer, \$code, \%config),
     0,
     'Tidy with shell escape',
 );

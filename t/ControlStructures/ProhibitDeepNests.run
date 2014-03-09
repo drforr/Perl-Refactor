@@ -81,7 +81,7 @@ if ($condition) {
   }
 }
 
-is( pcritique($enforcer, \$code), 1, '');
+is( prefactor($enforcer, \$code), 1, '');
 
 #-----------------------------------------------------------------------------
 

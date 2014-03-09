@@ -81,7 +81,7 @@ sub load {
 
         say "Processing $relative_path.";
 
-        foreach my $violation ( $refactor->critique($file) ) {
+        foreach my $violation ( $refactor->refactor($file) ) {
             my ($line, $column) = @{ $violation->location() };
 
             execute_insert_statement(

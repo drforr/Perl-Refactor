@@ -9,7 +9,7 @@ no;      #incomplete statement
 END_PERL
 
 $enforcer = 'Modules::RequireBarewordIncludes';
-is( pcritique($enforcer, \$code), 0, $enforcer);
+is( prefactor($enforcer, \$code), 0, $enforcer);
 
 #-----------------------------------------------------------------------------
 

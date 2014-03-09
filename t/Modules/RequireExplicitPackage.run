@@ -6,7 +6,7 @@ package foo;
 END_PERL
 
 $enforcer = 'Modules::RequireExplicitPackage';
-is( pcritique($enforcer, \$code), 1, $enforcer.' 1 stmnt before package');
+is( prefactor($enforcer, \$code), 1, $enforcer.' 1 stmnt before package');
 
 #-----------------------------------------------------------------------------
 

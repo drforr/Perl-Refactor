@@ -24,7 +24,7 @@ use Perl::Refactor::Utils qw< :characters hashify shebang_line >;
 
 our $VERSION = '1.121';
 
-Readonly::Array our @EXPORT_OK => qw(critique);
+Readonly::Array our @EXPORT_OK => qw(refactor);
 
 #=============================================================================
 # PUBLIC methods
@@ -70,7 +70,7 @@ sub statistics {
 
 #-----------------------------------------------------------------------------
 
-sub critique {  ## no refactor (ArgUnpacking)
+sub refactor {  ## no refactor (ArgUnpacking)
 
     #-------------------------------------------------------------------
     # This subroutine can be called as an object method or as a static
@@ -81,12 +81,12 @@ sub critique {  ## no refactor (ArgUnpacking)
     # of the ways this subroutine might get called:
     #
     # #Object style...
-    # $refactor->critique( $code );
+    # $refactor->refactor( $code );
     #
     # #Functional style...
-    # critique( $code );
-    # critique( {}, $code );
-    # critique( {-foo => bar}, $code );
+    # refactor( $code );
+    # refactor( {}, $code );
+    # refactor( {-foo => bar}, $code );
     #------------------------------------------------------------------
 
     my ( $self, $source_code ) = @_ >= 2 ? @_ : ( {}, $_[0] );
@@ -125,7 +125,7 @@ sub _gather_violations {
     # Evaluate each enforcer
     my @policies = $self->config->policies();
     my @ordered_policies = _futz_with_enforcer_order(@policies);
-    my @violations = map { _critique($_, $doc) } @ordered_policies;
+    my @violations = map { _refactor($_, $doc) } @ordered_policies;
 
     # Accumulate statistics
     $self->statistics->accumulate( $doc, \@violations );
@@ -144,7 +144,7 @@ sub _gather_violations {
 #=============================================================================
 # PRIVATE functions
 
-sub _critique {
+sub _refactor {
     my ($enforcer, $doc) = @_;
 
     return if not $enforcer->prepare_to_scan_document($doc);
@@ -228,7 +228,7 @@ Perl::Refactor - Critique Perl source code for best-practices.
     use Perl::Refactor;
     my $file = shift;
     my $refactor = Perl::Refactor->new();
-    my @violations = $refactor->critique($file);
+    my @violations = $refactor->refactor($file);
     print @violations;
 
 
@@ -447,7 +447,7 @@ cause only the relevant filenames to be displayed.
 
 =over
 
-=item C<critique( $source_code )>
+=item C<refactor( $source_code )>
 
 Runs the C<$source_code> through the Perl::Refactor engine using all the
 Policies that have been loaded into this engine.  If C<$source_code>
@@ -500,22 +500,22 @@ accumulates data for all files that are analyzed by this Refactor.
 =head1 FUNCTIONAL INTERFACE
 
 For those folks who prefer to have a functional interface, The
-C<critique> method can be exported on request and called as a static
+C<refactor> method can be exported on request and called as a static
 function.  If the first argument is a hashref, its contents are used
 to construct a new Perl::Refactor object internally.  The keys of that
 hash should be the same as those supported by the C<Perl::Refactor::new>
 method.  Here are some examples:
 
-    use Perl::Refactor qw(critique);
+    use Perl::Refactor qw(refactor);
 
     # Use default parameters...
-    @violations = critique( $some_file );
+    @violations = refactor( $some_file );
 
     # Use custom parameters...
-    @violations = critique( {-severity => 2}, $some_file );
+    @violations = refactor( {-severity => 2}, $some_file );
 
     # As a one-liner
-    %> perl -MPerl::Refactor=critique -e 'print critique(shift)' some_file.pm
+    %> perl -MPerl::Refactor=refactor -e 'print refactor(shift)' some_file.pm
 
 None of the other object-methods are currently supported as static
 functions.  Sorry.

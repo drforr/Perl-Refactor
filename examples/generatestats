@@ -75,7 +75,7 @@ sub summarize {
         }
 
         $types{$type}{files}++;
-        foreach my $violation ( $refactor->critique($file) ) {
+        foreach my $violation ( $refactor->refactor($file) ) {
             $files{ $relative_path }{ severities }{ $violation->severity() }++;
             $files{ $relative_path }{ policies   }{ $violation->enforcer() }++;
 

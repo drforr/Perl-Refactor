@@ -51,7 +51,7 @@ use_ok('Perl::Refactor') or BAIL_OUT(q<Can't continue.>);
 can_ok('Perl::Refactor', 'new');
 can_ok('Perl::Refactor', 'add_enforcer');
 can_ok('Perl::Refactor', 'config');
-can_ok('Perl::Refactor', 'critique');
+can_ok('Perl::Refactor', 'refactor');
 can_ok('Perl::Refactor', 'policies');
 
 #Set -profile to avoid messing with .perlrefactorrc
@@ -307,16 +307,16 @@ can_ok('Perl::Refactor::Command', 'run');
 #-----------------------------------------------------------------------------
 # Test functional interface to Perl::Refactor
 
-Perl::Refactor->import( qw(critique) );
-can_ok('main', 'critique');  #Export test
+Perl::Refactor->import( qw(refactor) );
+can_ok('main', 'refactor');  #Export test
 
 # TODO: These tests are weak. They just verify that it doesn't
 # blow up, and that at least one violation is returned.
-ok( critique( \$code ), 'Functional style, no config' );
-ok( critique( {}, \$code ), 'Functional style, empty config' );
-ok( critique( {severity => 1}, \$code ), 'Functional style, with config');
-ok( !critique(), 'Functional style, no args at all');
-ok( !critique(undef, undef), 'Functional style, undef args');
+ok( refactor( \$code ), 'Functional style, no config' );
+ok( refactor( {}, \$code ), 'Functional style, empty config' );
+ok( refactor( {severity => 1}, \$code ), 'Functional style, with config');
+ok( !refactor(), 'Functional style, no args at all');
+ok( !refactor(undef, undef), 'Functional style, undef args');
 
 #-----------------------------------------------------------------------------
 

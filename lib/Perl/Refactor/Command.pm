@@ -61,7 +61,7 @@ sub run {
     my %options    = _get_options();
     @files         = _get_input(@ARGV);
 
-    my ($violations, $had_error_in_file) = _critique(\%options, @files);
+    my ($violations, $had_error_in_file) = _refactor(\%options, @files);
 
     return $EXIT_HAD_FILE_PROBLEMS  if $had_error_in_file;
     return $EXIT_NO_FILES           if not defined $violations;
@@ -194,7 +194,7 @@ sub _get_input {
             $code_string = $EMPTY;
         }
 
-        $code_string =~ m{ \S+ }xms || die qq{Nothing to critique.\n};
+        $code_string =~ m{ \S+ }xms || die qq{Nothing to refactor.\n};
         return \$code_string;    #Convert to SCALAR ref for PPI
     }
     else {
@@ -216,10 +216,10 @@ sub _get_input {
 
 #------------------------------------------------------------------------------
 
-sub _critique {
+sub _refactor {
 
-    my ( $opts_ref, @files_to_critique ) = @_;
-    @files_to_critique || die "No perl files were found.\n";
+    my ( $opts_ref, @files_to_refactor ) = @_;
+    @files_to_refactor || die "No perl files were found.\n";
 
     # Perl::Refactor has lots of dependencies, so loading is delayed
     # until it is really needed.  This hack reduces startup time for
@@ -236,10 +236,10 @@ sub _critique {
     my $number_of_violations = undef;
     my $had_error_in_file = 0;
 
-    for my $file (@files_to_critique) {
+    for my $file (@files_to_refactor) {
 
         eval {
-            my @violations = $refactor->critique($file);
+            my @violations = $refactor->refactor($file);
             $number_of_violations += scalar @violations;
 
             if (not $opts_ref->{'-statistics-only'}) {

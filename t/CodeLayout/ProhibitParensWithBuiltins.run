@@ -41,7 +41,7 @@ $obj->close();
 $obj->prototype();
 $obj->delete();
 
-is( pcritique($enforcer, \$code), 0, $enforcer);
+is( prefactor($enforcer, \$code), 0, $enforcer);
 
 #-----------------------------------------------------------------------------
 

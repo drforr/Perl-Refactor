@@ -16,7 +16,7 @@ use Test::More;
 
 use Perl::Refactor::Violation;
 use Perl::Refactor::TestUtils qw<
-    pcritique_with_violations fcritique_with_violations subtests_in_tree
+    prefactor_with_violations frefactor_with_violations subtests_in_tree
 >;
 
 #-----------------------------------------------------------------------------
@@ -119,7 +119,7 @@ sub _run_subtest {
     if ( $subtest->{filename} ) {
         eval {
             @violations =
-                fcritique_with_violations(
+                frefactor_with_violations(
                     $enforcer,
                     \$subtest->{code},
                     $subtest->{filename},
@@ -133,7 +133,7 @@ sub _run_subtest {
     else {
         eval {
             @violations =
-                pcritique_with_violations(
+                prefactor_with_violations(
                     $enforcer,
                     \$subtest->{code},
                     $subtest->{parms},
@@ -210,7 +210,7 @@ sub _compute_test_count {
 
     my $nsubtests = 0;
     for my $subtest_with_extras ( values %{$subtests_with_extras} ) {
-        # one [pf]critique() test per subtest
+        # one [pf]refactor() test per subtest
         $nsubtests += @{ $subtest_with_extras->{subtests} };
     }
 
@@ -373,12 +373,12 @@ indicate a C<like()> test:
     ## error /Can't load Foo::Bar/
 
 If the enforcer you are testing cares about the filename of the code,
-you can indicate that C<fcritique> should be used like so (see
-C<fcritique> for more details):
+you can indicate that C<frefactor> should be used like so (see
+C<frefactor> for more details):
 
     ## filename lib/Foo/Bar.pm
 
-The value of C<parms> will get C<eval>ed and passed to C<pcritique()>,
+The value of C<parms> will get C<eval>ed and passed to C<prefactor()>,
 so be careful.
 
 In general, a subtest document runs from the C<## cut> that starts it to

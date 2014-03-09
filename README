@@ -5,7 +5,7 @@ SYNOPSIS
         use Perl::Refactor;
         my $file = shift;
         my $refactor = Perl::Refactor->new();
-        my @violations = $refactor->critique($file);
+        my @violations = $refactor->refactor($file);
         print @violations;
 
 DESCRIPTION
@@ -207,7 +207,7 @@ CONSTRUCTOR
         cause only the relevant filenames to be displayed.
 
 METHODS
-    "critique( $source_code )"
+    "refactor( $source_code )"
         Runs the $source_code through the Perl::Refactor engine using all the
         Policies that have been loaded into this engine. If $source_code is
         a scalar reference, then it is treated as a string of actual Perl
@@ -250,22 +250,22 @@ METHODS
 
 FUNCTIONAL INTERFACE
     For those folks who prefer to have a functional interface, The
-    "critique" method can be exported on request and called as a static
+    "refactor" method can be exported on request and called as a static
     function. If the first argument is a hashref, its contents are used to
     construct a new Perl::Refactor object internally. The keys of that hash
     should be the same as those supported by the "Perl::Refactor::new" method.
     Here are some examples:
 
-        use Perl::Refactor qw(critique);
+        use Perl::Refactor qw(refactor);
 
         # Use default parameters...
-        @violations = critique( $some_file );
+        @violations = refactor( $some_file );
 
         # Use custom parameters...
-        @violations = critique( {-severity => 2}, $some_file );
+        @violations = refactor( {-severity => 2}, $some_file );
 
         # As a one-liner
-        %> perl -MPerl::Refactor=critique -e 'print critique(shift)' some_file.pm
+        %> perl -MPerl::Refactor=refactor -e 'print refactor(shift)' some_file.pm
 
     None of the other object-methods are currently supported as static
     functions. Sorry.

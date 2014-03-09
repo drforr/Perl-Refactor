@@ -20,7 +20,7 @@ my $pc = Perl::Refactor->new( %pc_opts );
 my $test_file = shift @ARGV || die "Must specify a test file.\n";
 my $iters = shift @ARGV || 10;
 
-my $code_ref = sub { $pc->critique($test_file) for 1 .. $iters };
+my $code_ref = sub { $pc->refactor($test_file) for 1 .. $iters };
 my $t = timeit( 1, $code_ref, "Critqiue of $test_file");
 print "$iters iterations took: ",timestr($t),"\n";
 exit;
@@ -47,7 +47,7 @@ pc-benchmark - Measure performance of Perl::Refactor
 
 This is a simple program that uses the L<Benchmark> module to measure
 the general speed of L<Perl::Refactor>.  For the specified F<FILE>, the
-C<Perl::Refactor::critique()> function is called 100 times, with all the
+C<Perl::Refactor::refactor()> function is called 100 times, with all the
 'core' Policies enabled with their default configuration.  The total
 elapsed/system/user/ time is displayed.
 

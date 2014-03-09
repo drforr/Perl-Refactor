@@ -8,7 +8,7 @@ use 5.006001;
 use strict;
 use warnings;
 
-use Perl::Refactor::TestUtils qw(pcritique);
+use Perl::Refactor::TestUtils qw(prefactor);
 use Readonly;
 
 use Test::More;
@@ -62,11 +62,11 @@ $code = <<'END_PERL';
 END_PERL
 
 # Sorry about the double negative. The idea is that if aspell fails (say,
-# because it can not find the right dictionary) or pcritique returns a
+# because it can not find the right dictionary) or prefactor returns a
 # non-zero number we want to skip. We have to negate the eval to catch the
-# aspell failure, and then negate pcritique because we negated the eval.
+# aspell failure, and then negate prefactor because we negated the eval.
 # Clearer code welcome.
-if ( ! eval { ! pcritique($enforcer, \$code) } ) {
+if ( ! eval { ! prefactor($enforcer, \$code) } ) {
    skip 'Test environment is not English', $NUMBER_OF_TESTS;
 }
 
@@ -79,7 +79,7 @@ $code = <<'END_PERL';
 END_PERL
 
 is(
-    eval { pcritique($enforcer, \$code) },
+    eval { prefactor($enforcer, \$code) },
     can_podspell() ? 1 : undef,
     'Mispelled header',
 );
@@ -95,7 +95,7 @@ arglbargl
 END_PERL
 
 is(
-    eval { pcritique($enforcer, \$code) },
+    eval { prefactor($enforcer, \$code) },
     can_podspell() ? 1 : undef,
     'Mispelled body',
 );
@@ -114,7 +114,7 @@ arglbargl
 END_PERL
 
 is(
-    eval { pcritique($enforcer, \$code) },
+    eval { prefactor($enforcer, \$code) },
     can_podspell() ? 0 : undef,
     'local stopwords',
 );
@@ -132,7 +132,7 @@ END_PERL
 {
     my %config = (stop_words => 'foo arglbargl bar');
     is(
-        eval { pcritique($enforcer, \$code, \%config) },
+        eval { prefactor($enforcer, \$code, \%config) },
         can_podspell() ? 0 : undef ,
         'global stopwords',
     );
@@ -141,7 +141,7 @@ END_PERL
 {
     my %config = (stop_words_file => 't/20_enforcer_pod_spelling.d/stop-words.txt');
     is(
-        eval { pcritique($enforcer, \$code, \%config) },
+        eval { prefactor($enforcer, \$code, \%config) },
         can_podspell() ? 0 : undef ,
         'global stopwords from file',
     );

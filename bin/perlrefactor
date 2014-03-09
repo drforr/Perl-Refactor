@@ -35,7 +35,7 @@ ActiveState Twitter
 
 =head1 NAME
 
-C<perlrefactor> - Command-line interface to critique Perl source.
+C<perlrefactor> - Command-line interface to refactor Perl source.
 
 
 =head1 SYNOPSIS
@@ -357,7 +357,7 @@ severity and default themes are shown.
 
 Displays a condensed listing of all the
 L<Perl::Refactor::Enforcer|Perl::Refactor::Enforcer> modules that I<would> be
-enforced, if you were actually going to critique a file with this command.
+enforced, if you were actually going to refactor a file with this command.
 This is useful when you've constructed a complicated command or modified your
 F<.perlrefactorrc> file and you want to see exactly which Enforcers are going to
 be enforced (or not enforced, as the case may be). For each Enforcer, the name,

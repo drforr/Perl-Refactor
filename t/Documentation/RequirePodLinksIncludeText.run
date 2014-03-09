@@ -75,9 +75,9 @@ L<Foo> >> is still not seen as a link.
 
 =pod
 
-L<Perl::Refactor/critique> critiques a file, returning any violations found.
+L<Perl::Refactor/refactor> refactors a file, returning any violations found.
 
-L<< $refactor->critique()|Perl::Refactor/critique >> critiques a file, returning
+L<< $refactor->refactor()|Perl::Refactor/refactor >> refactors a file, returning
 any violations found.
 
 =cut
@@ -91,9 +91,9 @@ any violations found.
 
 =pod
 
-L<Perl::Refactor/critique> critiques a file, returning any violations found.
+L<Perl::Refactor/refactor> refactors a file, returning any violations found.
 
-L<< $refactor->critique()|Perl::Refactor/critique >> critiques a file, returning
+L<< $refactor->refactor()|Perl::Refactor/refactor >> refactors a file, returning
 any violations found.
 
 =cut
@@ -107,9 +107,9 @@ any violations found.
 
 =pod
 
-L</critique> critiques a file, returning any violations found.
+L</refactor> refactors a file, returning any violations found.
 
-L<critique()/critique> critiques a file, returning any violations found.
+L<refactor()/refactor> refactors a file, returning any violations found.
 
 =cut
 
@@ -122,9 +122,9 @@ L<critique()/critique> critiques a file, returning any violations found.
 
 =pod
 
-L</critique> critiques a file, returning any violations found.
+L</refactor> refactors a file, returning any violations found.
 
-L<critique()/critique> critiques a file, returning any violations found.
+L<refactor()/refactor> refactors a file, returning any violations found.
 
 =cut
 

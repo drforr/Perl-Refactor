@@ -46,7 +46,7 @@ eval 'use Test::Memory::Cycle; 1'
     my $ppi_doc    = PPI::Document->new( \$code );
     my $pc_doc     = Perl::Refactor::Document->new( '-source' => $ppi_doc );
     my $refactor   = Perl::Refactor->new( -severity => 1 );
-    my @violations = $refactor->critique( $pc_doc );
+    my @violations = $refactor->refactor( $pc_doc );
     confess 'No violations were created' if not @violations;
 
     # One test for each violation, plus one each for Refactor and Document.

@@ -37,7 +37,7 @@ sort();
 
 {sort}; # for Devel::Cover
 
-is( pcritique($enforcer, \$code), 0, $enforcer );
+is( prefactor($enforcer, \$code), 0, $enforcer );
 
 #-----------------------------------------------------------------------------
 

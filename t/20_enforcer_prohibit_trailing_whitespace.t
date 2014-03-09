@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 use Perl::Refactor::Utils qw( :characters );
-use Perl::Refactor::TestUtils qw( pcritique );
+use Perl::Refactor::TestUtils qw( prefactor );
 
 use Test::More tests => 3;
 
@@ -35,7 +35,7 @@ chomp;\t${SPACE}${SPACE}
 chomp;${SPACE}${SPACE}\t
 END_PERL
 
-is( pcritique($enforcer, \$code), 5, 'Basic failure' );
+is( prefactor($enforcer, \$code), 5, 'Basic failure' );
 
 #-----------------------------------------------------------------------------
 
@@ -48,7 +48,7 @@ ${SPACE}${SPACE}${SPACE}${SPACE}frobnicate();
 
 END_PERL
 
-is( pcritique($enforcer, \$code), 0, 'Basic passing' );
+is( prefactor($enforcer, \$code), 0, 'Basic passing' );
 
 #-----------------------------------------------------------------------------
 
@@ -58,7 +58,7 @@ ${SPACE}\$x
 END_PERL
 
 is(
-    pcritique($enforcer, \$code),
+    prefactor($enforcer, \$code),
     1,
     'Multiple lines in a single PPI::Token::Whitespace',
 );

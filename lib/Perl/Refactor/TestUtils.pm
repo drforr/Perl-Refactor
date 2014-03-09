@@ -25,9 +25,9 @@ use Perl::Refactor::EnforcerFactory (-test => 1);
 our $VERSION = '1.121';
 
 Readonly::Array our @EXPORT_OK => qw(
-    pcritique pcritique_with_violations
-    critique  critique_with_violations
-    fcritique fcritique_with_violations
+    prefactor prefactor_with_violations
+    refactor  refactor_with_violations
+    frefactor frefactor_with_violations
     subtests_in_tree
     should_skip_author_tests
     get_author_test_skip_message
@@ -50,45 +50,45 @@ sub block_perlrefactorrc {
 #-----------------------------------------------------------------------------
 # Criticize a code snippet using only one enforcer.  Returns the violations.
 
-sub pcritique_with_violations {
+sub prefactor_with_violations {
     my($enforcer, $code_ref, $config_ref) = @_;
     my $c = Perl::Refactor->new( -profile => 'NONE' );
     $c->add_enforcer(-enforcer => $enforcer, -config => $config_ref);
-    return $c->critique($code_ref);
+    return $c->refactor($code_ref);
 }
 
 #-----------------------------------------------------------------------------
 # Criticize a code snippet using only one enforcer.  Returns the number
 # of violations
 
-sub pcritique {  ##no refactor(ArgUnpacking)
-    return scalar pcritique_with_violations(@_);
+sub prefactor {  ##no refactor(ArgUnpacking)
+    return scalar prefactor_with_violations(@_);
 }
 
 #-----------------------------------------------------------------------------
 # Criticize a code snippet using a specified config.  Returns the violations.
 
-sub critique_with_violations {
+sub refactor_with_violations {
     my ($code_ref, $config_ref) = @_;
     my $c = Perl::Refactor->new( %{$config_ref} );
-    return $c->critique($code_ref);
+    return $c->refactor($code_ref);
 }
 
 #-----------------------------------------------------------------------------
 # Criticize a code snippet using a specified config.  Returns the
 # number of violations
 
-sub critique {  ##no refactor(ArgUnpacking)
-    return scalar critique_with_violations(@_);
+sub refactor {  ##no refactor(ArgUnpacking)
+    return scalar refactor_with_violations(@_);
 }
 
 #-----------------------------------------------------------------------------
-# Like pcritique_with_violations, but forces a PPI::Document::File context.
+# Like prefactor_with_violations, but forces a PPI::Document::File context.
 # The $filename arg is a Unix-style relative path, like 'Foo/Bar.pm'
 
 Readonly::Scalar my $TEMP_FILE_PERMISSIONS => oct 700;
 
-sub fcritique_with_violations {
+sub frefactor_with_violations {
     my($enforcer, $code_ref, $filename, $config_ref) = @_;
     my $c = Perl::Refactor->new( -profile => 'NONE' );
     $c->add_enforcer(-enforcer => $enforcer, -config => $config_ref);
@@ -108,7 +108,7 @@ sub fcritique_with_violations {
 
     # Use eval so we can clean up before throwing an exception in case of
     # error.
-    my @v = eval {$c->critique($file)};
+    my @v = eval {$c->refactor($file)};
     my $err = $EVAL_ERROR;
     File::Path::rmtree($dir, 0, 1);
     if ($err) {
@@ -118,11 +118,11 @@ sub fcritique_with_violations {
 }
 
 #-----------------------------------------------------------------------------
-# Like pcritique, but forces a PPI::Document::File context.  The
+# Like prefactor, but forces a PPI::Document::File context.  The
 # $filename arg is a Unix-style relative path, like 'Foo/Bar.pm'
 
-sub fcritique {  ##no refactor(ArgUnpacking)
-    return scalar fcritique_with_violations(@_);
+sub frefactor {  ##no refactor(ArgUnpacking)
+    return scalar frefactor_with_violations(@_);
 }
 
 # Note: $include_extras is not documented in the POD because I'm not
@@ -387,7 +387,7 @@ interface will go through a deprecation cycle.
 
 =head1 SYNOPSIS
 
-    use Perl::Refactor::TestUtils qw(critique pcritique fcritique);
+    use Perl::Refactor::TestUtils qw(refactor prefactor frefactor);
 
     my $code = '<<END_CODE';
     package Foo::Bar;
@@ -398,15 +398,15 @@ interface will go through a deprecation cycle.
 
     # Critique code against all loaded policies...
     my $perl_refactor_config = { -severity => 2 };
-    my $violation_count = critique( \$code, $perl_refactor_config);
+    my $violation_count = refactor( \$code, $perl_refactor_config);
 
     # Critique code against one enforcer...
     my $custom_enforcer = 'Miscellanea::ProhibitFrobulation'
-    my $violation_count = pcritique( $custom_enforcer, \$code );
+    my $violation_count = prefactor( $custom_enforcer, \$code );
 
     # Critique code against one filename-related enforcer...
     my $custom_enforcer = 'Modules::RequireFilenameMatchesPackage'
-    my $violation_count = fcritique( $custom_enforcer, \$code, 'Foo/Bar.pm' );
+    my $violation_count = frefactor( $custom_enforcer, \$code, 'Foo/Bar.pm' );
 
 
 =head1 DESCRIPTION
@@ -429,35 +429,35 @@ simply call it at the top of your F<.t> program.  Note that this is
 not easily reversible, but that should not matter.
 
 
-=item critique_with_violations( $code_string_ref, $config_ref )
+=item refactor_with_violations( $code_string_ref, $config_ref )
 
 Test a block of code against the specified Perl::Refactor::Config
 instance (or C<undef> for the default).  Returns the violations that
 occurred.
 
 
-=item critique( $code_string_ref, $config_ref )
+=item refactor( $code_string_ref, $config_ref )
 
 Test a block of code against the specified Perl::Refactor::Config
 instance (or C<undef> for the default).  Returns the number of
 violations that occurred.
 
 
-=item pcritique_with_violations( $enforcer_name, $code_string_ref, $config_ref )
+=item prefactor_with_violations( $enforcer_name, $code_string_ref, $config_ref )
 
-Like C<critique_with_violations()>, but tests only a single enforcer
+Like C<refactor_with_violations()>, but tests only a single enforcer
 instead of the whole bunch.
 
 
-=item pcritique( $enforcer_name, $code_string_ref, $config_ref )
+=item prefactor( $enforcer_name, $code_string_ref, $config_ref )
 
-Like C<critique()>, but tests only a single enforcer instead of the
+Like C<refactor()>, but tests only a single enforcer instead of the
 whole bunch.
 
 
-=item fcritique_with_violations( $enforcer_name, $code_string_ref, $filename, $config_ref )
+=item frefactor_with_violations( $enforcer_name, $code_string_ref, $filename, $config_ref )
 
-Like C<pcritique_with_violations()>, but pretends that the code was
+Like C<prefactor_with_violations()>, but pretends that the code was
 loaded from the specified filename.  This is handy for testing
 policies like C<Modules::RequireFilenameMatchesPackage> which care
 about the filename that the source derived from.
@@ -467,9 +467,9 @@ file and all necessary subdirectories will be created via
 L<File::Temp|File::Temp> and will be automatically deleted.
 
 
-=item fcritique( $enforcer_name, $code_string_ref, $filename, $config_ref )
+=item frefactor( $enforcer_name, $code_string_ref, $filename, $config_ref )
 
-Like C<pcritique()>, but pretends that the code was loaded from the
+Like C<prefactor()>, but pretends that the code was loaded from the
 specified filename.  This is handy for testing policies like
 C<Modules::RequireFilenameMatchesPackage> which care about the
 filename that the source derived from.
@@ -485,7 +485,7 @@ Searches the specified directory recursively for F<.run> files.  Each
 one found is parsed and a hash-of-list-of-hashes is returned.  The
 outer hash is keyed on enforcer short name, like
 C<Modules::RequireEndWithOne>.  The inner hash specifies a single test
-to be handed to C<pcritique()> or C<fcritique()>, including the code
+to be handed to C<prefactor()> or C<frefactor()>, including the code
 string, test name, etc.  See below for the syntax of the F<.run>
 files.
 
@@ -589,12 +589,12 @@ indicate a C<like()> test:
     ## error /Can't load Foo::Bar/
 
 If the enforcer you are testing cares about the filename of the code,
-you can indicate that C<fcritique> should be used like so (see
-C<fcritique> for more details):
+you can indicate that C<frefactor> should be used like so (see
+C<frefactor> for more details):
 
     ## filename lib/Foo/Bar.pm
 
-The value of C<parms> will get C<eval>ed and passed to C<pcritique()>,
+The value of C<parms> will get C<eval>ed and passed to C<prefactor()>,
 so be careful.
 
 In general, a subtest document runs from the C<## cut> that starts it to
