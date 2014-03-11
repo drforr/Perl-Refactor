@@ -15,15 +15,19 @@ our $VERSION = '1.121';
 Readonly::Scalar my $DESC => q{"grep" used in boolean context};
 Readonly::Scalar my $EXPL => [71,72];
 
+Readonly::Hash my %ENFORCE_MODULE_IMPORTS => (
+    'List::MoreUtils' => [qw( any )]
+);
+
 Readonly::Hash my %POSTFIX_CONDITIONALS => hashify( qw(if unless while until) );
 Readonly::Hash my %BOOLEAN_OPERATORS => hashify( qw(&& || ! not or and));
 
 #-----------------------------------------------------------------------------
 
-sub supported_parameters { return ()                     }
-sub default_severity     { return $SEVERITY_LOW          }
+sub supported_parameters { return ()                                 }
+sub default_severity     { return $SEVERITY_LOW                      }
 sub default_themes       { return qw( core pbp performance certrec ) }
-sub applies_to           { return 'PPI::Token::Word'     }
+sub applies_to           { return 'PPI::Token::Word'                 }
 
 #-----------------------------------------------------------------------------
 

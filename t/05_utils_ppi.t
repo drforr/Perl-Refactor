@@ -26,7 +26,7 @@ use PPI::Token::Word qw< >;
 
 use Perl::Refactor::Utils::PPI qw< :all >;
 
-use Test::More tests => 64;
+use Test::More tests => 80;
 
 #-----------------------------------------------------------------------------
 
@@ -372,6 +372,90 @@ can_ok('main', 'is_in_subroutine');
     );
     ## use refactor
 }
+
+#-----------------------------------------------------------------------------
+#
+
+ok !get_flattened_ppi_structure_list(),
+    q{get_flattened_ppi_structure_list(): <undef>};
+
+#    ok !get_flattened_ppi_structure_list(
+#        PPI::Document->new( \q{no Module::Name} )->child( 0 )
+#    ), q{... same with 'no $foo' in general};
+
+#-----------------------------------------------------------------------------
+# get_import_list_from_include_statement() tests
+
+ok !get_import_list_from_include_statement( ),
+    q{get_import_list_from_include_statement(): <undef>};
+ok !get_import_list_from_include_statement( 'foo' ),
+    q{get_import_list_from_include_statement( 'foo' )};
+ok !get_import_list_from_include_statement(
+    PPI::Document->new( \'' )
+), q{get_import_list_from_include_statement( PPI::Document )};
+ok !get_import_list_from_include_statement(
+    PPI::Document->new( \'$a++' )->child( 0 )
+), q{get_import_list_from_include_statement( PPI::Statement )};
+
+ok !get_import_list_from_include_statement(
+    PPI::Document->new( \q{no strict} )->child( 0 )
+), q{get_import_list_from_include_statement( 'no strict' )};
+
+ok !get_import_list_from_include_statement(
+    PPI::Document->new( \q{no Module::Name} )->child( 0 )
+), q{get_import_list_from_include_statement( 'no Module::Name' )};
+
+ok !get_import_list_from_include_statement(
+    PPI::Document->new( \q{require 'Module::Name'} )->child( 0 )
+), q{get_import_list_from_include_statement( q{require 'Module::Name'} )};
+
+ok !get_import_list_from_include_statement(
+    PPI::Document->new( \q{use 5.006001} )->child( 0 )
+), q{get_import_list_from_include_statement( 'use 5.006001' )};
+
+ok !get_import_list_from_include_statement(
+    PPI::Document->new( \q{use strict} )->child( 0 )
+), q{get_import_list_from_include_statement( 'use strict' )};
+
+ok !get_import_list_from_include_statement(
+    PPI::Document->new( \q{use Module::Name} )->child( 0 )
+), q{get_import_list_from_include_statement( 'use Module::Name' )};
+
+is_deeply [ get_import_list_from_include_statement(
+        PPI::Document->new(\q{use Module::Name 3.14159})->child( 0 )
+    ) ],
+    [ PPI::Token::Number::Float->new(3.14159) ],
+    q{get_import_list_from_include_statement( 'use Module::Name 3.14159' )};
+
+is_deeply [ get_import_list_from_include_statement(
+        PPI::Document->new(\q{use Module::Name 'a'})->child( 0 )
+    ) ],
+    [ PPI::Token::Quote::Single->new(q{'a'}) ],
+    q{get_import_list_from_include_statement( q{use Module::Name 'a'} )};
+
+is_deeply [ get_import_list_from_include_statement(
+        PPI::Document->new(\q{use Module::Name $variable})->child( 0 )
+    ) ],
+    [ '$variable' ],
+    q{get_import_list_from_include_statement( q{use Module::Name $variable} )};
+
+is_deeply [ get_import_list_from_include_statement(
+        PPI::Document->new(
+            \q{use Module::Name 'meth_1', 'meth_2'}
+        )->child( 0 )
+    ) ],
+    [ PPI::Token::Quote::Single->new(q{'meth_1'}),
+      PPI::Token::Quote::Single->new(q{'meth_2'}) ],
+    q{get_import_list_from_include_statement( q{use Module::Name 'meth_1', 'meth_2'} )};
+
+is_deeply [ get_import_list_from_include_statement(
+        PPI::Document->new(
+            \q{use Module::Name ( 'meth_1', 'meth_2' )}
+        )->child( 0 )
+    ) ],
+    [ PPI::Token::Quote::Single->new(q{'meth_1'}),
+      PPI::Token::Quote::Single->new(q{'meth_2'}) ],
+    q{get_import_list_from_include_statement( q{use Module::Name ( 'meth_1', 'meth_2' )} )};
 
 #-----------------------------------------------------------------------------
 

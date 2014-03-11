@@ -25,6 +25,8 @@ our @EXPORT_OK = qw(
     get_constant_name_element_from_declaring_statement
     get_next_element_in_same_simple_statement
     get_previous_module_used_on_same_line
+    get_flattened_ppi_structure_list
+    get_import_list_from_include_statement
 );
 
 our %EXPORT_TAGS = (
@@ -227,6 +229,65 @@ sub get_previous_module_used_on_same_line {
     return;
 }
 
+Readonly::Scalar our $SCOLON => q{;};
+Readonly::Scalar our $COMMA => q{,};
+
+sub get_flattened_ppi_structure_list {
+    my $element = shift or return;
+    return unless $element->isa('PPI::Structure::List');
+
+    return unless $element->schildren;
+    $element = $element->schild(0);
+    $element = $element->schild(0);
+
+    my @elements;
+    do {{
+        $element->isa('PPI::Token::Operator') and
+            $element->content eq $COMMA and
+            next;
+
+        $element->isa('PPI::Structure::List') and
+            push @elements, get_flattened_ppi_structure_list($element);
+      
+        !$element->isa('PPI::Structure::List') and
+            push @elements, $element;
+    }} while $element = $element->snext_sibling;
+    return @elements;
+}
+
+sub get_import_list_from_include_statement {
+    my $element = shift or return;
+    return unless $element->isa('PPI::Statement::Include');
+    return unless $element->type eq 'use';
+
+    $element = $element->schild( 0 );
+    $element = $element->snext_sibling; # Skip 'use'
+
+    # Skip 'Module::Name' first time through
+    #
+    my @imports;
+    while ( $element = $element->snext_sibling() ) {
+
+        $element->isa('PPI::Token::Structure') and
+            $element->content eq $SCOLON and
+            last;
+
+        $element->isa('PPI::Token::Operator') and
+            $element->content eq $COMMA and
+            next;
+
+        ( $element->isa('PPI::Token::Number') or
+          $element->isa('PPI::Token::Symbol') or
+          $element->isa('PPI::Token::Quote') ) and
+            push @imports, $element;
+
+        $element->isa('PPI::Structure::List') and
+            push @imports, get_flattened_ppi_structure_list( $element );
+    }
+
+    return @imports;
+}
+
 #-----------------------------------------------------------------------------
 
 1;
@@ -386,6 +447,11 @@ given the L<PPI::Token::Symbol|PPI::Token::Symbol> instance for C<$VERSION>, thi
 If the given element is in a C<use> or <require>, the return is from the
 previous C<use> or C<require> on the line, if any.
 
+=item C<get_import_list_from_include_statement( $element )>
+
+Given a L<PPI::Element|PPI::Element>, returns a list of
+L<PPI::Element|PPI::Element>s that this C<use> statement tries to import.
+If none are found, it simply returns.
 
 =back
 

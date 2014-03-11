@@ -202,10 +202,12 @@ lib/Perl/Refactor/Utils.pm
 lib/Perl/Refactor/Utils/Constants.pm
 lib/Perl/Refactor/Utils/DataConversion.pm
 lib/Perl/Refactor/Utils/McCabe.pm
+lib/Perl/Refactor/Utils/Module.pm
 lib/Perl/Refactor/Utils/Perl.pm
 lib/Perl/Refactor/Utils/POD.pm
 lib/Perl/Refactor/Utils/POD/ParseInteriorSequence.pm
 lib/Perl/Refactor/Utils/PPI.pm
+lib/Perl/Refactor/Utils/Refactor/Module.pm
 lib/Perl/Refactor/Violation.pm
 lib/Test/Perl/Refactor/Enforcer.pm
 LICENSE
