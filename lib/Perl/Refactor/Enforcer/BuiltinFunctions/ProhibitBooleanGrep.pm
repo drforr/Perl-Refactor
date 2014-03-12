@@ -6,6 +6,9 @@ use warnings;
 use Readonly;
 
 use Perl::Refactor::Utils qw{ :severities :classification hashify };
+use Perl::Refactor::Utils::PPI qw{
+    get_import_list_from_include_statement
+};
 use base 'Perl::Refactor::Enforcer';
 
 our $VERSION = '1.121';
@@ -39,6 +42,10 @@ sub violates {
     return if not _is_in_boolean_context($elem);
 
     return $self->violation( $DESC, $EXPL, $elem );
+}
+
+sub enforce {
+    my ( $self, $elem, undef ) = @_;
 }
 
 #-----------------------------------------------------------------------------

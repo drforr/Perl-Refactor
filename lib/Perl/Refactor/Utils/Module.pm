@@ -6,8 +6,6 @@ use warnings;
 
 use Readonly;
 
-use Scalar::Util qw< blessed readonly >;
-
 use Exporter 'import';
 
 our $VERSION = '1.121';
@@ -27,12 +25,13 @@ our %EXPORT_TAGS = (
 sub get_include_list {
     my $node = shift;
 
-    return if not $element;
+    return if not $node;
+    my $root = $node->top;
 
-    return $root->find( sub {
+    return @{ $root->find( sub {
         $_[1]->isa('PPI::Statement::Include') and
             $_[1]->type eq 'use'
-    } );
+    } ) };
 }
 
 #-----------------------------------------------------------------------------

@@ -7,7 +7,6 @@ use warnings;
 use Readonly;
 use List::MoreUtils qw( any );
 
-#use Perl::Refactor::Utils qw{ :characters :booleans };
 use Perl::Refactor::Utils::Module qw{ get_include_list };
 
 use Exporter 'import';
@@ -22,12 +21,28 @@ Readonly::Array our @EXPORT_OK => qw(
 
 #-----------------------------------------------------------------------------
 
+sub _tokens_to_strings {
+    my @tokens = @_;
+    my @token_words;
+    for my $token ( @tokens ) {
+        $token->isa('PPI::Token::Number') and
+            push @token_words, $token->content;
+
+        $token->isa('PPI::Token::Symbol') and
+            push @token_words, $token->content;
+
+        $token->isa('PPI::Token::Quote') and
+            push @token_words, $token->string;
+    }
+    return @token_words;
+}
+
 sub enforce_module_includes {
     my ( $node, $enforcement ) = @_;
-    my $use_statements = get_include_list( $node->top );
     my @edit_list;
-    for my $statement ( @{ $use_statements } ) {
+    for my $statement ( get_include_list( $node->top ) ) {
         my @imports = get_import_list_from_include_statement( $statement );
+        my @import_words = _tokens_to_words( @imports );
     }
 }
 

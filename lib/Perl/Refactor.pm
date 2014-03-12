@@ -181,6 +181,9 @@ sub _refactor {
                     next VIOLATION;
                 }
 
+                $enforcer->can('enforce') and
+                    $enforcer->enforce( $element, $doc );
+
                 push @violations, $violation;
                 last TYPE if defined $maximum_violations and @violations >= $maximum_violations;
             }

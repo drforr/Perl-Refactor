@@ -223,6 +223,7 @@ t/03_annotations.t
 t/03_pragmas.t
 t/04_options_processor.t
 t/05_utils.t
+t/05_utils_module.t
 t/05_utils_perl.t
 t/05_utils_pod.t
 t/05_utils_ppi.t
