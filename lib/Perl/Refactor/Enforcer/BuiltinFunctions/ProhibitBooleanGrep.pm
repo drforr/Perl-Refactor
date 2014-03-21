@@ -19,7 +19,7 @@ Readonly::Scalar my $DESC => q{"grep" used in boolean context};
 Readonly::Scalar my $EXPL => [71,72];
 
 Readonly::Hash my %ENFORCE_MODULE_IMPORTS => (
-    'List::MoreUtils' => [qw( any )]
+    'List::MoreUtils' => { any => 1 }
 );
 
 Readonly::Hash my %POSTFIX_CONDITIONALS => hashify( qw(if unless while until) );

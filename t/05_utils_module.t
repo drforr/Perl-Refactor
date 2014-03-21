@@ -14,7 +14,7 @@ use PPI::Token::Word qw< >;
 
 use Perl::Refactor::Utils::Module qw< :all >;
 
-use Test::More tests => 1;
+use Test::More tests => 5;
 
 #-----------------------------------------------------------------------------
 
@@ -33,11 +33,11 @@ ok( ! get_include_list( undef ),
 );
 
 {
-    my @includes = get_include_list(
-        PPI::Document->new(\q{use Module::Name 3.14159})
-    );
+    my $doc = PPI::Document->new(\q{use Module::Name 3.14159});
+    my @includes = get_include_list( $doc );
     ok $includes[0]->isa('PPI::Statement::Include'),
         q{get_include_list( 'use Module::Name 3.14159' )};
+    is $includes[0]->type, 'Module::Name';
 }
 
 ## use refactor

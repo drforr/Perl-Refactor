@@ -276,9 +276,7 @@ sub get_import_list_from_include_statement {
             $element->content eq $COMMA and
             next;
 
-        ( $element->isa('PPI::Token::Number') or
-          $element->isa('PPI::Token::Symbol') or
-          $element->isa('PPI::Token::Quote') ) and
+        $element->isa('PPI::Token') and
             push @imports, $element;
 
         $element->isa('PPI::Structure::List') and

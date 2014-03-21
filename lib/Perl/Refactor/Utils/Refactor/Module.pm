@@ -5,6 +5,7 @@ use strict;
 use warnings;
 
 use Readonly;
+use Scalar::Util qw( looks_like_number );
 use List::MoreUtils qw( any );
 
 use Perl::Refactor::Utils::Module qw{ get_include_list };
@@ -16,7 +17,11 @@ our $VERSION = '1.121';
 #-----------------------------------------------------------------------------
 
 Readonly::Array our @EXPORT_OK => qw(
-    enforce_module_includes
+    enforce_module_imports
+);
+
+our %EXPORT_TAGS = (
+    all => \@EXPORT_OK,
 );
 
 #-----------------------------------------------------------------------------
@@ -37,13 +42,74 @@ sub _tokens_to_strings {
     return @token_words;
 }
 
-sub enforce_module_includes {
-    my ( $node, $enforcement ) = @_;
-    my @edit_list;
-    for my $statement ( get_include_list( $node->top ) ) {
-        my @imports = get_import_list_from_include_statement( $statement );
-        my @import_words = _tokens_to_words( @imports );
+sub _ws_node {
+    my ( $whitespace ) = @_;
+    $whitespace ||= ' ';
+    my $node = PPI::Token::Whitespace->new;
+    $node->set_content( $whitespace );
+    return $node;
+}
+
+sub _comma_node {
+    my $node = PPI::Token::Operator->new;
+    $node->set_content( ',' );
+    return $node;
+}
+
+
+sub _qw_node {
+    my ( @words ) = @_;
+    my $node = PPI::Token::QuoteLike::Words->new( 'qw' );
+    $node->set_content( 'qw< ' . join( ' ', @words ) . ' >' );
+    return $node;
+}
+
+sub _comma_node {
+    my ( @words ) = @_;
+    my $node = PPI::Token::Operator->new( ',' );
+    return $node;
+}
+
+sub enforce_module_imports {
+    my ( $configuration, $include, @import ) = @_;
+
+    return if not $configuration;
+    return if not $include;
+    return if not @import;
+
+    return if not $include->isa('PPI::Statement::Include');
+    return if $include->version;
+
+    if ( $include->module eq 'base' ) {
+        my $base = $include->last_element;
+        if ( $base->isa('PPI::Token::Structure') and $base->content eq ';' ) {
+            $base = $base->sprevious_sibling;
+        }
+
+        my $ws = _ws_node( ' ' );
+        my $qw = _qw_node( @import );
+
+        if ( $base->isa('PPI::Token::Number') or
+             ( $base->isa('PPI::Token::Word') and $base->content eq 'base' ) ) {
+            $base->insert_after( $ws );
+            $ws->insert_after( $qw );
+        }
+        else {
+            my $comma = _comma_node;
+
+            $base->insert_after( $comma );
+            $comma->insert_after( $ws );
+            $ws->insert_after( $qw );
+        }
     }
+    return $include;
+
+#    my $assign =
+#$node->sprevious_sibling->sprevious_sibling->sprevious_sibling;
+#    my $head = $assign->parent->child(0);
+#    my $new_ws = "\n" . ' ' x ( $head->visual_column_number - 1 +
+#                                $self->configuration->{indent} );
+
 }
 
 __END__
@@ -73,13 +139,12 @@ interface will go through a deprecation cycle.
 
 =over
 
-=item C<enforce_module_includes( $node, $enforcements )>
+=item C<enforce_module_imports( $configuration, $include, @import )>
 
-Enforce inclusion of all modules in C<$enforcements>. If a module needs a
-particular method exported (or a tag), add it as an arrayref associated with
-the module. Note that this only enumerates C<use> statements, and does not
-take into account C<no Module::Name;> or C<require 'Module::Name';>.
-New C<use> statements are added before the first non-pragma C<use> statement.
+Enforce the inclusion of all C<@import>s in the given
+L<PPI::Statement::Include> statement. The default configuration makes the
+minimal modifications to the L<PPI::Statement::Include> statement, more
+aggressive levels compress C<'foo', 'bar'> into C<< qw< foo bar > >>.
 
 =back
 
