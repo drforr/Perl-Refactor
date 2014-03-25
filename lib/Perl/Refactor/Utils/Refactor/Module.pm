@@ -17,6 +17,7 @@ our $VERSION = '1.121';
 #-----------------------------------------------------------------------------
 
 Readonly::Array our @EXPORT_OK => qw(
+    enforce_module_bases
     enforce_module_imports
 );
 
@@ -56,7 +57,6 @@ sub _comma_node {
     return $node;
 }
 
-
 sub _qw_node {
     my ( @words ) = @_;
     my $node = PPI::Token::QuoteLike::Words->new( 'qw' );
@@ -64,11 +64,73 @@ sub _qw_node {
     return $node;
 }
 
-sub _comma_node {
-    my ( @words ) = @_;
-    my $node = PPI::Token::Operator->new( ',' );
-    return $node;
+sub enforce_module_bases {
+    my ( $configuration, $include, @base ) = @_;
+
+    return if not $configuration;
+    return if not $include;
+    return if not @base;
+
+    return if not $include->isa('PPI::Statement::Include');
+    return if $include->version;
+
+    my $base = $include->last_element;
+    if ( $base->isa('PPI::Token::Structure') and $base->content eq ';' ) {
+        $base = $base->sprevious_sibling;
+    }
+
+    my $ws = _ws_node( ' ' );
+    my $qw = _qw_node( @base );
+
+    if ( $base->isa('PPI::Token::Number') or
+         ( $base->isa('PPI::Token::Word') and $base->content eq 'base' ) ) {
+        $base->insert_after( $ws );
+        $ws->insert_after( $qw );
+    }
+    else {
+        my $comma = _comma_node;
+
+        $base->insert_after( $comma );
+        $comma->insert_after( $ws );
+        $ws->insert_after( $qw );
+    }
+    return $include;
 }
+
+sub enforce_module_vars {
+    my ( $configuration, $include, @var ) = @_;
+
+die "*** enforce_module_vars not done yet\n";
+    return if not $configuration;
+    return if not $include;
+    return if not @var;
+
+    return if not $include->isa('PPI::Statement::Include');
+    return if $include->version;
+
+    my $base = $include->last_element;
+    if ( $base->isa('PPI::Token::Structure') and $base->content eq ';' ) {
+        $base = $base->sprevious_sibling;
+    }
+
+    my $ws = _ws_node( ' ' );
+    my $qw = _qw_node( @var );
+
+    if ( $base->isa('PPI::Token::Number') or
+         ( $base->isa('PPI::Token::Word') and $base->content eq 'vars' ) ) {
+        $base->insert_after( $ws );
+        $ws->insert_after( $qw );
+    }
+    else {
+        my $comma = _comma_node;
+
+        $base->insert_after( $comma );
+        $comma->insert_after( $ws );
+        $ws->insert_after( $qw );
+    }
+    return $include;
+}
+
 
 sub enforce_module_imports {
     my ( $configuration, $include, @import ) = @_;
@@ -80,36 +142,27 @@ sub enforce_module_imports {
     return if not $include->isa('PPI::Statement::Include');
     return if $include->version;
 
-    if ( $include->module eq 'base' ) {
-        my $base = $include->last_element;
-        if ( $base->isa('PPI::Token::Structure') and $base->content eq ';' ) {
-            $base = $base->sprevious_sibling;
-        }
+    my $base = $include->last_element;
+    if ( $base->isa('PPI::Token::Structure') and $base->content eq ';' ) {
+        $base = $base->sprevious_sibling;
+    }
 
-        my $ws = _ws_node( ' ' );
-        my $qw = _qw_node( @import );
+    my $ws = _ws_node( ' ' );
+    my $qw = _qw_node( @import );
 
-        if ( $base->isa('PPI::Token::Number') or
-             ( $base->isa('PPI::Token::Word') and $base->content eq 'base' ) ) {
-            $base->insert_after( $ws );
-            $ws->insert_after( $qw );
-        }
-        else {
-            my $comma = _comma_node;
+    if ( $base->isa('PPI::Token::Number') or
+         $base->isa('PPI::Token::Word') ) {
+        $base->insert_after( $ws );
+        $ws->insert_after( $qw );
+    }
+    else {
+        my $comma = _comma_node;
 
-            $base->insert_after( $comma );
-            $comma->insert_after( $ws );
-            $ws->insert_after( $qw );
-        }
+        $base->insert_after( $comma );
+        $comma->insert_after( $ws );
+        $ws->insert_after( $qw );
     }
     return $include;
-
-#    my $assign =
-#$node->sprevious_sibling->sprevious_sibling->sprevious_sibling;
-#    my $head = $assign->parent->child(0);
-#    my $new_ws = "\n" . ' ' x ( $head->visual_column_number - 1 +
-#                                $self->configuration->{indent} );
-
 }
 
 __END__
