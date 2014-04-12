@@ -37,7 +37,8 @@ ok( ! get_include_list( undef ),
     my @includes = get_include_list( $doc );
     ok $includes[0]->isa('PPI::Statement::Include'),
         q{get_include_list( 'use Module::Name 3.14159' )};
-    is $includes[0]->type, 'Module::Name';
+    is $includes[0]->type, 'use';
+    is $includes[0]->module, 'Module::Name';
 }
 
 ## use refactor

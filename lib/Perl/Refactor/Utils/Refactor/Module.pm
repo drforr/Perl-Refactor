@@ -5,7 +5,6 @@ use strict;
 use warnings;
 
 use Readonly;
-use Scalar::Util qw( looks_like_number );
 use List::MoreUtils qw( any );
 
 use Perl::Refactor::Utils::Module qw{ get_include_list };
@@ -143,15 +142,18 @@ sub enforce_module_imports {
     return if $include->version;
 
     my $base = $include->last_element;
+    my $num_tokens = $include->children - 2;
     if ( $base->isa('PPI::Token::Structure') and $base->content eq ';' ) {
         $base = $base->sprevious_sibling;
+        $num_tokens--;
     }
 
     my $ws = _ws_node( ' ' );
     my $qw = _qw_node( @import );
 
     if ( $base->isa('PPI::Token::Number') or
-         $base->isa('PPI::Token::Word') ) {
+         $include->module eq $base->content or
+         $num_tokens == 0 ) {
         $base->insert_after( $ws );
         $ws->insert_after( $qw );
     }
