@@ -238,6 +238,7 @@ sub get_flattened_ppi_structure_list {
 
     return unless $element->schildren;
     $element = $element->schild(0);
+    $element = $element->schild(0);
 
     my @elements;
     do {{
