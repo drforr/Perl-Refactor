@@ -151,7 +151,7 @@ sub enforce_module_imports {
     my $ws = _ws_node( ' ' );
     my $qw = _qw_node( @import );
 
-    if ( $base->isa('PPI::Token::Number') or
+    if ( defined( $include->module_version ) or
          $include->module eq $base->content or
          $num_tokens == 0 ) {
         $base->insert_after( $ws );
