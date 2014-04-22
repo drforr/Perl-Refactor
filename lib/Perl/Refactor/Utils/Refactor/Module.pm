@@ -7,6 +7,7 @@ use warnings;
 use Readonly;
 use List::MoreUtils qw( any );
 
+use Perl::Refactor::Utils::PPI qw{ get_import_list_from_include_statement };
 use Perl::Refactor::Utils::Module qw{ get_include_list };
 
 use Exporter 'import';
@@ -130,6 +131,22 @@ die "*** enforce_module_vars not done yet\n";
     return $include;
 }
 
+Readonly::Scalar our $COMMA => q{,};
+Readonly::Scalar our $FCOMMA => q{=>};
+
+sub _is_comma {
+    my $element = shift;
+
+    $element->isa('PPI::Token::Operator') and
+        $element->content eq $COMMA and
+        return 1;
+
+    $element->isa('PPI::Token::Operator') and
+        $element->content eq $FCOMMA and
+        return 1;
+
+    return;
+}
 
 sub enforce_module_imports {
     my ( $configuration, $include, @import ) = @_;
@@ -140,6 +157,18 @@ sub enforce_module_imports {
 
     return if not $include->isa('PPI::Statement::Include');
     return if $include->version;
+
+    my %existing_imports =
+        map { $_ => undef } _tokens_to_strings(
+            get_import_list_from_include_statement( $include )
+        );
+    my @remaining_import;
+    for my $import ( @import ) {
+        next if exists $existing_imports{$import};
+        push @remaining_import, $import;
+    }
+    
+    return $include unless @remaining_import;
 
     my $base = $include->last_element;
     my $num_tokens = $include->children - 2;
@@ -153,6 +182,7 @@ sub enforce_module_imports {
 
     if ( defined( $include->module_version ) or
          $include->module eq $base->content or
+         _is_comma( $base ) or
          $num_tokens == 0 ) {
         $base->insert_after( $ws );
         $ws->insert_after( $qw );

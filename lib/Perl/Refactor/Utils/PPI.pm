@@ -231,6 +231,7 @@ sub get_previous_module_used_on_same_line {
 
 Readonly::Scalar our $SCOLON => q{;};
 Readonly::Scalar our $COMMA => q{,};
+Readonly::Scalar our $FCOMMA => q{=>};
 
 sub get_flattened_ppi_structure_list {
     my $element = shift or return;
@@ -244,6 +245,10 @@ sub get_flattened_ppi_structure_list {
     do {{
         $element->isa('PPI::Token::Operator') and
             $element->content eq $COMMA and
+            next;
+
+        $element->isa('PPI::Token::Operator') and
+            $element->content eq $FCOMMA and
             next;
 
         $element->isa('PPI::Structure::List') and
@@ -274,6 +279,10 @@ sub get_import_list_from_include_statement {
 
         $element->isa('PPI::Token::Operator') and
             $element->content eq $COMMA and
+            next;
+
+        $element->isa('PPI::Token::Operator') and
+            $element->content eq $FCOMMA and
             next;
 
         $element->isa('PPI::Token') and

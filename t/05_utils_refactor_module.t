@@ -10,7 +10,7 @@ use PPI::Document qw< >;
 
 use Perl::Refactor::Utils::Refactor::Module qw< :all >;
 
-use Test::More tests => 6;
+use Test::More tests => 8;
 
 #-----------------------------------------------------------------------------
 
@@ -80,8 +80,6 @@ subtest 'returns undef on bad/missing input' => sub {
     );
 };
 
-=pod
-
 subtest 'add existing import' => sub {
 
     is _enforce( q{use Module::Name 'any'}, 'any' ),
@@ -120,7 +118,7 @@ subtest 'add existing import' => sub {
         q{... no matter how deeply nested};
 
     is _enforce( q{use Module::Name [ 'any' ]}, 'any' ),
-        q{use Module::Name [ 'any' ], 'any'},
+        q{use Module::Name [ 'any' ], qw< any >},
         q{... [] references are a different matter};
 };
 
@@ -151,28 +149,28 @@ subtest 'add new import conservatively' => sub {
         q{... Or after a ( 'foo' )};
 
     is _enforce( q{use Module::Name [ ]}, 'any' ),
-        q{use Module::Name [ ], 'any'},
+        q{use Module::Name [ ], qw< any >},
         q{... or [ ]};
 
     is _enforce( q{use Module::Name [ 'croak' ]}, 'any' ),
-        q{use Module::Name [ 'croak' ], 'any'},
+        q{use Module::Name [ 'croak' ], qw< any >},
         q{... or [ 'foo' ]};
 
-    is _enforce( q{use Module::Name [ 'any' ]}, 'any' ),
-        q{use Module::Name [ 'any' ], 'any'},
-        q{... ['foo'] and 'foo' are different, don't look inside};
-
     is _enforce( q{use Module::Name { }}, 'any' ),
-        q{use Module::Name { }, 'any'},
+        q{use Module::Name { }, qw< any >},
         q{... or { }};
 
     is _enforce( q{use Module::Name { croak => 1 }}, 'any' ),
-        q{use Module::Name { croak => 1 }, 'any'},
+        q{use Module::Name { croak => 1 }, qw< any >},
         q{... or { foo => 1 }};
 
     is _enforce( q{use Module::Name 'croak', 'carp'}, 'any' ),
         q{use Module::Name 'croak', 'carp', qw< any >},
         q{... Or after multiple 'foo'};
+
+    is _enforce( q{use Module::Name 'croak',}, 'any' ),
+        q{use Module::Name 'croak', qw< any >},
+        q{... Trailing commas don't get duplicated};
 
     is _enforce( q{use Module::Name 'croak' =>}, 'any' ),
         q{use Module::Name 'croak' => qw< any >},
@@ -185,7 +183,20 @@ subtest 'add new import conservatively' => sub {
     is _enforce( q{use Module::Name 'croak' => 'yes'}, 'any' ),
         q{use Module::Name 'croak' => 'yes', qw< any >},
         q{... even if there's a term after};
+
+    subtest "don't look inside references for import names though" => sub {
+
+        is _enforce( q{use Module::Name [ 'any' ]}, 'any' ),
+            q{use Module::Name [ 'any' ], qw< any >},
+            q{... ['foo'] and 'foo' are different};
+
+        is _enforce( q{use Module::Name { any => 1 }}, 'any' ),
+            q{use Module::Name { any => 1 }, qw< any >},
+            q{... {'any' => 1} and 'any' are different};
+    };
 };
+
+=pod
 
 subtest 'module floating-point versions preserve space' => sub {
 
@@ -508,14 +519,10 @@ subtest 'module name' => sub {
 # And then inside ()s...
 
 
-=pod
-
-use $build_package;
-use $module \@{\$args[0]};
-use DBD::${driver};
-use if $] < 5.008 => "IO::Scalar";
-
-=cut
+#use $build_package;
+#use $module \@{\$args[0]};
+#use DBD::${driver};
+#use if $] < 5.008 => "IO::Scalar";
 
 ### use Module::Name -foo => 1;
 ### use Module::Name -foo => ['Foo'];
@@ -584,6 +591,8 @@ use if $] < 5.008 => "IO::Scalar";
 ### use Module::Name '""'     => sub { shift->name },
 
 ### use refactor
+
+=cut
 
 #-----------------------------------------------------------------------------
 
