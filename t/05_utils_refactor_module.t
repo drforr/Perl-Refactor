@@ -10,7 +10,7 @@ use PPI::Document qw< >;
 
 use Perl::Refactor::Utils::Refactor::Module qw< :all >;
 
-use Test::More tests => 8;
+use Test::More tests => 11;
 
 #-----------------------------------------------------------------------------
 
@@ -196,8 +196,6 @@ subtest 'add new import conservatively' => sub {
     };
 };
 
-=pod
-
 subtest 'module floating-point versions preserve space' => sub {
 
     is _enforce( q{use Module::Name -5.003}, 'any' ),
@@ -208,6 +206,7 @@ subtest 'module floating-point versions preserve space' => sub {
         q{use Module::Name 5.003 qw< any >},
         q{Versions don't need commas};
 
+=pod
     is _enforce( q{use Module::Name '5.003'}, 'any' ),
         q{use Module::Name '5.003' qw< any >},
         q{... And of course even in quotes they don't need them};
@@ -227,7 +226,10 @@ subtest 'module floating-point versions preserve space' => sub {
     is _enforce( q{use Module::Name 5.003 ( 'croak' )}, 'any' ),
         q{use Module::Name 5.003 ( 'croak' ), qw< any >},
         q{... but only the first one};
+=cut
 };
+
+=pod
 
 subtest 'module v-numbers preserve space' => sub {
 
@@ -263,6 +265,8 @@ subtest '-args treated normally' => sub {
         q{... -any is different than 'any'};
 };
 
+=cut
+
 subtest '+args treated normally' => sub {
 
     is _enforce( q{use Module::Name '+args'}, 'any' ),
@@ -285,8 +289,6 @@ subtest '&func treated normally' => sub {
         q{use Module::Name &any, qw< any >},
         q{... &any is different than 'any'};
 };
-
-=cut
 
 # Can't add imports to perl versions.
 #

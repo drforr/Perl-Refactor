@@ -4,6 +4,8 @@ use 5.006001;
 use strict;
 use warnings;
 
+use Scalar::Util qw( looks_like_number );
+
 use Readonly;
 use List::MoreUtils qw( any );
 
@@ -148,6 +150,20 @@ sub _is_comma {
     return;
 }
 
+sub _has_version {
+    my $include = shift;
+
+    $include->module_version and
+        return 1;
+
+    $include->schildren > 2 and
+        $include->schild( 2 )->isa( 'PPI::Token::Quote' ) and
+        looks_like_number( $include->schild( 2 )->string ) and
+        return 1;
+
+    return;
+}
+
 sub enforce_module_imports {
     my ( $configuration, $include, @import ) = @_;
 
@@ -180,7 +196,7 @@ sub enforce_module_imports {
     my $ws = _ws_node( ' ' );
     my $qw = _qw_node( @import );
 
-    if ( defined( $include->module_version ) or
+    if ( _has_version( $include ) or
          $include->module eq $base->content or
          _is_comma( $base ) or
          $num_tokens == 0 ) {
