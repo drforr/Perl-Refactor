@@ -206,15 +206,16 @@ subtest 'module floating-point versions preserve space' => sub {
         q{use Module::Name 5.003 qw< any >},
         q{Versions don't need commas};
 
-=pod
     is _enforce( q{use Module::Name '5.003'}, 'any' ),
         q{use Module::Name '5.003' qw< any >},
         q{... And of course even in quotes they don't need them};
 
+#=pod
     is _enforce( q{use Module::Name 5.003 -bareword}, 'any' ),
         q{use Module::Name 5.003 -bareword, qw< any >},
         q{... barewords don't get modified};
 
+#=pod
     is _enforce( q{use Module::Name 5.003 'croak'}, 'any' ),
         q{use Module::Name 5.003 'croak', qw< any >},
         q{... but only the first one};
@@ -226,7 +227,7 @@ subtest 'module floating-point versions preserve space' => sub {
     is _enforce( q{use Module::Name 5.003 ( 'croak' )}, 'any' ),
         q{use Module::Name 5.003 ( 'croak' ), qw< any >},
         q{... but only the first one};
-=cut
+#=cut
 };
 
 =pod

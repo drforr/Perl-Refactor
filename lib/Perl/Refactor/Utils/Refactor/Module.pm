@@ -133,6 +133,7 @@ die "*** enforce_module_vars not done yet\n";
     return $include;
 }
 
+Readonly::Scalar our $SCOLON => q{;};
 Readonly::Scalar our $COMMA => q{,};
 Readonly::Scalar our $FCOMMA => q{=>};
 
@@ -150,18 +151,40 @@ sub _is_comma {
     return;
 }
 
-sub _has_version {
+sub _has_existing_import {
     my $include = shift;
+    my $first = $include->schild( 0 );
+    $first = $first->snext_sibling; # skip 'use'
+    $first = $first->snext_sibling; # skip 'Module::Name'
 
-    $include->module_version and
-        return 1;
+    return 0 unless $first;
 
-    $include->schildren > 2 and
-        $include->schild( 2 )->isa( 'PPI::Token::Quote' ) and
-        looks_like_number( $include->schild( 2 )->string ) and
-        return 1;
+    $first = $first->snext_sibling if
+        $first->isa('PPI::Token::Number') or
+        ( $first->isa('PPI::Token::Quote') and
+          looks_like_number( $first->string ) ); # skip v1.2, 4.003, '4.100'
 
-    return;
+    return 0 unless $first;
+
+    return 0 if $first->isa('PPI::Token::Operator') and
+                $first->content eq $SCOLON;
+
+    return 1;
+}
+
+sub _has_trailing_comma {
+    my $include = shift;
+    my $last = $include->last_element;
+
+    $last = $last->sprevious_sibling if
+        $last->isa('PPI::Token::Operator') and
+        $last->content eq $SCOLON;
+
+    return 1 if $last->isa('PPI::Token::Operator') and
+                ( $last->content eq $COMMA or
+                  $last->content eq $FCOMMA );
+
+    return 0;
 }
 
 sub enforce_module_imports {
@@ -196,18 +219,16 @@ sub enforce_module_imports {
     my $ws = _ws_node( ' ' );
     my $qw = _qw_node( @import );
 
-    if ( _has_version( $include ) or
-         $include->module eq $base->content or
-         _is_comma( $base ) or
-         $num_tokens == 0 ) {
-        $base->insert_after( $ws );
-        $ws->insert_after( $qw );
-    }
-    else {
+    if ( _has_existing_import( $include ) and
+        !_has_trailing_comma( $include ) ) {
         my $comma = _comma_node;
 
         $base->insert_after( $comma );
         $comma->insert_after( $ws );
+        $ws->insert_after( $qw );
+    }
+    else {
+        $base->insert_after( $ws );
         $ws->insert_after( $qw );
     }
     return $include;
