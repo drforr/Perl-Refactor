@@ -210,11 +210,11 @@ subtest 'module floating-point versions preserve space' => sub {
         q{use Module::Name '5.003' qw< any >},
         q{... And of course even in quotes they don't need them};
 
-=pod
     is _enforce( q{use Module::Name 5.003 -bareword}, 'any' ),
         q{use Module::Name 5.003 -bareword, qw< any >},
         q{... barewords don't get modified};
 
+=pod
     is _enforce( q{use Module::Name 5.003 'croak'}, 'any' ),
         q{use Module::Name 5.003 'croak', qw< any >},
         q{... but only the first one};
