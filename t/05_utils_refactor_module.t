@@ -10,7 +10,7 @@ use PPI::Document qw< >;
 
 use Perl::Refactor::Utils::Refactor::Module qw< :all >;
 
-use Test::More tests => 11;
+use Test::More tests => 14;
 
 #-----------------------------------------------------------------------------
 
@@ -206,11 +206,11 @@ subtest 'module floating-point versions preserve space' => sub {
         q{use Module::Name 5.003 qw< any >},
         q{Versions don't need commas};
 
-=pod
     is _enforce( q{use Module::Name '5.003'}, 'any' ),
         q{use Module::Name '5.003' qw< any >},
         q{... And of course even in quotes they don't need them};
 
+=pod
     is _enforce( q{use Module::Name 5.003 -bareword}, 'any' ),
         q{use Module::Name 5.003 -bareword, qw< any >},
         q{... barewords don't get modified};
@@ -229,17 +229,17 @@ subtest 'module floating-point versions preserve space' => sub {
 =cut
 };
 
-=pod
-
 subtest 'module v-numbers preserve space' => sub {
 
     is _enforce( q{use Module::Name v1.2.3}, 'any' ),
         q{use Module::Name v1.2.3 qw< any >},
         q{Versions don't need commas};
 
+=pod
     is _enforce( q{use Module::Name v1.2.3 'croak'}, 'any' ),
         q{use Module::Name v1.2.3 'croak', qw< any >},
         q{... but only the first one};
+=cut
 };
 
 subtest ':all special case' => sub {
@@ -248,10 +248,12 @@ subtest ':all special case' => sub {
         q{use Module::Name ':all', qw< any >},
         q{conservative levels doesn't make assumptions};
 
+=pod
     is _enforce( { aggression => 1 },
                         q{use Module::Name ':all'}, 'any' ),
         q{use Module::Name ':all'},
         q{... but more aggressive settings assume ':all' exports all};
+=cut
 };
 
 subtest '-args treated normally' => sub {
@@ -260,12 +262,12 @@ subtest '-args treated normally' => sub {
         q{use Module::Name -args, qw< any >},
         q{-args is treated as just another token};
 
+=pod
     is _enforce( q{use Module::Name -any}, 'any' ),
         q{use Module::Name -any, qw< any >},
         q{... -any is different than 'any'};
-};
-
 =cut
+};
 
 subtest '+args treated normally' => sub {
 
